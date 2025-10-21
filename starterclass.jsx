@@ -85,6 +85,7 @@ const GOOGLE_FORM_URL_EMBED =
 const INTRO_NAME = "Starterclass Session – Customisation";
 const INTRO_START_ISO = "2025-11-08T11:00:00Z"; // Sat 08 Nov 2025 11:00 UK (UTC)
 const INTRO_END_ISO   = "2025-11-08T12:30:00Z";
+const EARLY_BIRD_DEADLINE_ISO = "2025-11-08T12:30:00Z";
 
 // Sessions (UK times in UTC). Titles updated per request.
 const SESSIONS = [
@@ -94,8 +95,8 @@ const SESSIONS = [
     date: "Sat 08 Nov 2025",
     start: "2025-11-08T11:00:00Z",
     end: "2025-11-08T12:30:00Z",
-    desc: "Customisation deep dives across Projects, GPTs, and prompts that ship.",
-    outcome: "Your tailored workspace, a guided prompt kit, and a fully working automation project.",
+    desc: "Customisation deep dives across Projects, GPTs, and prompts that deliver.",
+    outcome: "Leave with one custom GPT, a fully functional project, and prompt flows tuned for business and creative briefs.",
     track: "intro",
     outline: [
       { key: "Custom GPT build", value: 32, desc: "Collect assets, set roles, and define safe defaults.", color: "#3B5CCC" },
@@ -151,25 +152,10 @@ const SESSIONS = [
   },
   {
     k: "s5",
-    title: "Introduction to Agent Builders — Security and Safety",
+    title: "ChatGPT Agents 2 — Systems",
     date: "Sat 06 Dec 2025",
     start: "2025-12-06T11:00:00Z",
     end: "2025-12-06T12:30:00Z",
-    desc: "Credit budgeting, scopes and keys, audit trails, and safe configuration.",
-    outcome: "Confidence setting budgets, scopes, keys, and safety guardrails.",
-    track: "paid",
-    outline: [
-      { key: "Safeguard planning", value: 32, desc: "Budgets, scopes, and approvals that protect usage.", color: "#10B981" },
-      { key: "Monitoring", value: 34, desc: "Dashboards, audit trails, and accountability.", color: "#3B5CCC" },
-      { key: "Stability drills", value: 34, desc: "Incident response and rollback scenarios.", color: "#C8A145" },
-    ],
-  },
-  {
-    k: "s6",
-    title: "ChatGPT Agents 2 — Systems",
-    date: "Sat 13 Dec 2025",
-    start: "2025-12-13T11:00:00Z",
-    end: "2025-12-13T12:30:00Z",
     desc: "Add agents to existing systems · System case study: Storytelling and Filmmaking · brief to beats to script pipeline · tasteful image workflows.",
     outcome: "Brief to beats to script pipeline and image generation workflow.",
     track: "paid",
@@ -180,11 +166,27 @@ const SESSIONS = [
     ],
   },
   {
+    k: "s6",
+    title: "Introduction to Agent Builders — Security and Safety",
+    date: "Sat 13 Dec 2025",
+    start: "2025-12-13T11:00:00Z",
+    end: "2025-12-13T12:30:00Z",
+    desc: "Credit budgeting, scopes and keys, audit trails, and safe configuration.",
+    outcome: "Confidence setting budgets, scopes, keys, and safety guardrails.",
+    track: "paid",
+    outline: [
+      { key: "Safeguard planning", value: 32, desc: "Budgets, scopes, and approvals that protect usage.", color: "#10B981" },
+      { key: "Monitoring", value: 34, desc: "Dashboards, audit trails, and accountability.", color: "#3B5CCC" },
+      { key: "Stability drills", value: 34, desc: "Incident response and rollback scenarios.", color: "#C8A145" },
+    ],
+  },
+  { k: "break", title: "Winter break", date: "—", start: "", end: "", desc: "—", outcome: "—", track: "break" },
+  {
     k: "s7",
     title: "AgentKit — Create Your First Agent",
-    date: "Sat 20 Dec 2025",
-    start: "2025-12-20T11:00:00Z",
-    end: "2025-12-20T12:30:00Z",
+    date: "Sat 10 Jan 2026",
+    start: "2026-01-10T11:00:00Z",
+    end: "2026-01-10T12:30:00Z",
     desc: "Stand up a planning and memory agent with web, docs, and sheets tools.",
     outcome: "A live AgentKit agent solving a real micro workflow.",
     track: "paid",
@@ -194,13 +196,12 @@ const SESSIONS = [
       { key: "Live scenario", value: 33, desc: "Ship a micro workflow end to end with feedback.", color: "#C8A145" },
     ],
   },
-  { k: "break", title: "Winter break", date: "—", start: "", end: "", desc: "—", outcome: "—", track: "break" },
   {
     k: "s8",
     title: "N8N — Create Your First Agent",
-    date: "Sat 10 Jan 2026",
-    start: "2026-01-10T11:00:00Z",
-    end: "2026-01-10T12:30:00Z",
+    date: "Sat 24 Jan 2026",
+    start: "2026-01-24T11:00:00Z",
+    end: "2026-01-24T12:30:00Z",
     desc: "Trigger, process, and notify flows via webhooks, Sheets, and Gmail.",
     outcome: "A working N8N flow with approvals and logging.",
     track: "paid",
@@ -213,9 +214,9 @@ const SESSIONS = [
   {
     k: "s9",
     title: "N8N Deep Dive — Advanced Agent",
-    date: "Sat 17 Jan 2026",
-    start: "2026-01-17T11:00:00Z",
-    end: "2026-01-17T12:30:00Z",
+    date: "Sat 07 Feb 2026",
+    start: "2026-02-07T11:00:00Z",
+    end: "2026-02-07T12:30:00Z",
     desc: "Branching, retries, queues, observability, and error handling.",
     outcome: "Branching, retries, queues, observability, and graceful recovery.",
     track: "paid",
@@ -228,9 +229,9 @@ const SESSIONS = [
   {
     k: "s10",
     title: "Deployment — Orchestrate the System",
-    date: "Sat 24 Jan 2026",
-    start: "2026-01-24T11:00:00Z",
-    end: "2026-01-24T12:30:00Z",
+    date: "Sat 21 Feb 2026",
+    start: "2026-02-21T11:00:00Z",
+    end: "2026-02-21T12:30:00Z",
     desc: "Agents, N8N, site, CI/CD, runbooks, and rollback planning.",
     outcome: "A deployment playbook with CI/CD, runbooks, and rollback routines.",
     track: "paid",
@@ -271,15 +272,15 @@ const MODULE_VALUATIONS = [
   },
   {
     key: "s5",
-    label: "Introduction to Agent Builders — Security and Safety",
-    baseValue: 380,
-    deliverable: "Safeguards, monitoring, and incident routines that keep trust high.",
-  },
-  {
-    key: "s6",
     label: "ChatGPT Agents 2 — Systems",
     baseValue: 410,
     deliverable: "Story-to-script systems and visual workflows tuned for quality.",
+  },
+  {
+    key: "s6",
+    label: "Introduction to Agent Builders — Security and Safety",
+    baseValue: 380,
+    deliverable: "Safeguards, monitoring, and incident routines that keep trust high.",
   },
   {
     key: "s7",
@@ -308,6 +309,19 @@ const MODULE_VALUATIONS = [
     weight: 1.07,
   },
 ];
+
+const MODULE_VALUATION_MAP = MODULE_VALUATIONS.reduce((acc, module) => {
+  acc[module.key] = module;
+  return acc;
+}, {});
+
+function resolveModuleValuation(key) {
+  const meta = MODULE_VALUATION_MAP[key];
+  if (!meta) return null;
+  const weight = meta.weight ?? 1;
+  const value = Math.round(meta.baseValue * weight);
+  return { ...meta, value };
+}
 
 // Royal interactive PIE colours
 const PIE_TOPICS = [
@@ -519,7 +533,7 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
         cy={cy}
         r={82}
         style={{
-          fill: isDark ? "#0B0B1A" : palette.surface,
+          fill: isDark ? "#0B0B1A" : palette.surfaceSoft,
           stroke: isDark ? "rgba(255,255,255,0.1)" : palette.border,
         }}
       />
@@ -530,154 +544,223 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
 // Client Value Calculator focused on a single participant
 function ClientValueCalculator() {
   const { palette } = useTheme();
-  const [hours, setHours] = useState(3);
-  const [focus, setFocus] = useState("steady");
-
-  const focusModes = {
-    steady: {
-      label: "Steady build",
-      description: "Weekly practice keeps momentum",
-      multiplier: 1,
+  const monthConfig = useMemo(
+    () => [
+      {
+        key: "nov",
+        label: "November build month",
+        description: "Canvas, Projects, and agent foundations",
+        cost: 150,
+        modules: ["s2", "s3", "s4"],
+      },
+      {
+        key: "dec",
+        label: "December mastery month",
+        description: "Systems storytelling and safety drills",
+        cost: 0,
+        modules: ["s5", "s6"],
+      },
+      {
+        key: "jan",
+        label: "New year systems month",
+        description: "AgentKit, N8N builds, and deployment",
+        cost: 150,
+        modules: ["s7", "s8", "s9", "s10"],
+      },
+    ],
+    []
+  );
+  const monthOrder = useMemo(() => monthConfig.map((month) => month.key), [monthConfig]);
+  const [activeMonths, setActiveMonths] = useState(monthOrder);
+  const monthData = useMemo(
+    () =>
+      monthConfig.map((month) => {
+        const modules = month.modules
+          .map((key) => resolveModuleValuation(key))
+          .filter(Boolean);
+        const value = modules.reduce((sum, module) => sum + module.value, 0);
+        return { ...month, modules, value };
+      }),
+    [monthConfig]
+  );
+  const toggleMonth = useCallback(
+    (key) => {
+      setActiveMonths((prev) => {
+        const nextSet = new Set(prev);
+        if (nextSet.has(key)) {
+          nextSet.delete(key);
+        } else {
+          nextSet.add(key);
+        }
+        return monthOrder.filter((monthKey) => nextSet.has(monthKey));
+      });
     },
-    accelerator: {
-      label: "Launch sprint",
-      description: "Short sprint before go-live",
-      multiplier: 1.18,
-    },
-    immersion: {
-      label: "Immersive practice",
-      description: "Deep dive for rapid mastery",
-      multiplier: 1.32,
-    },
-  };
+    [monthOrder]
+  );
 
-  const practiceMultiplier = useMemo(() => 0.9 + hours * 0.09, [hours]);
-  const valuations = useMemo(() => {
-    const focusBoost = focusModes[focus]?.multiplier ?? 1;
-    return MODULE_VALUATIONS.map((module) => {
-      const moduleBoost = module.weight ?? 1;
-      const value = Math.round(module.baseValue * practiceMultiplier * focusBoost * moduleBoost);
-      return { ...module, value };
-    });
-  }, [focus, focusModes, practiceMultiplier]);
+  const activeSet = useMemo(() => new Set(activeMonths), [activeMonths]);
+  const selectedMonths = useMemo(
+    () => monthData.filter((month) => activeSet.has(month.key)),
+    [monthData, activeSet]
+  );
 
-  const introValue = valuations.find((item) => item.key === "intro")?.value ?? 0;
-  const paidValuations = valuations.filter((item) => item.key !== "intro");
-  const paidValue = paidValuations.reduce((sum, item) => sum + item.value, 0);
-  const fullValue = introValue + paidValue;
-  const tuition = 1850;
-  const uplift = Math.max(0, fullValue - introValue);
-  const netValue = fullValue - tuition;
-  const averageModule = paidValuations.length ? Math.round(paidValue / paidValuations.length) : 0;
-  const tuitionBalance = Math.max(0, tuition - introValue);
-  let coveredByModule = null;
-  let running = 0;
-  for (const module of paidValuations) {
-    running += module.value;
-    if (running >= tuitionBalance && coveredByModule === null) {
-      coveredByModule = module.label;
-    }
-  }
+  const introValuation = resolveModuleValuation("intro");
+  const introValue = introValuation?.value ?? 0;
+  const selectedCost = selectedMonths.reduce((sum, month) => sum + month.cost, 0);
+  const selectedValue = selectedMonths.reduce((sum, month) => sum + month.value, 0);
+  const paidModules = selectedMonths.flatMap((month) => month.modules);
+  const totalValue = introValue + selectedValue;
+  const netAfterTuition = totalValue - selectedCost;
+  const netPaidOnly = selectedValue - selectedCost;
+  const allMonthsSelected = monthData.every((month) => activeSet.has(month.key));
+
+  const {
+    d: earlyBirdDays,
+    h: earlyBirdHours,
+    m: earlyBirdMinutes,
+    s: earlyBirdSeconds,
+    expired: earlyBirdExpired,
+  } = useCountdown(EARLY_BIRD_DEADLINE_ISO);
 
   const stats = [
-    { label: "Intro session value", value: `£${introValue.toLocaleString()}`, hint: "Starterclass Session – Customisation" },
-    { label: "Full certification value", value: `£${fullValue.toLocaleString()}`, hint: "10 modules including intro" },
-    { label: "Additional value unlocked", value: `£${uplift.toLocaleString()}`, hint: "Completing every module" },
-    { label: "Net after tuition", value: `£${netValue.toLocaleString()}`, hint: "Tuition £1,850", emphasis: true },
+    {
+      label: "Free intro value",
+      value: `£${introValue.toLocaleString()}`,
+      hint: "Starterclass Session – Customisation",
+    },
+    {
+      label: "Selected module value",
+      value: `£${selectedValue.toLocaleString()}`,
+      hint: `${paidModules.length} module${paidModules.length === 1 ? "" : "s"}`,
+    },
+    {
+      label: "Monthly investment",
+      value: `£${selectedCost.toLocaleString()}`,
+      hint: selectedMonths.some((month) => month.cost === 0)
+        ? "December payment waived"
+        : "Pay for chosen months",
+    },
+    {
+      label: "Net value after tuition",
+      value: `£${netAfterTuition.toLocaleString()}`,
+      hint: "Intro remains free",
+      emphasis: true,
+    },
   ];
 
   return (
-    <GlowCard className="p-6">
+    <GlowCard className="p-6 space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h3 className="text-xl font-semibold">Client Value Calculator</h3>
           <p className="mt-1 text-sm" style={{ color: palette.textSecondary }}>
-            Estimate the personal value of completing the full Starterclass track as a solo participant. Adjust how much time you will put into practice each week.
+            See the value you unlock as a solo participant. Pick the months you plan to join—the intro session stays free.
           </p>
         </div>
-        <Badge>Booking Helper</Badge>
+        <Badge>Value focus</Badge>
       </div>
 
-      <div className="mt-5 grid gap-4 sm:grid-cols-2">
-        <Slider
-          label="Weekly implementation hours"
-          min={1}
-          max={6}
-          step={1}
-          value={hours}
-          onChange={setHours}
-          suffix={`${hours}h`}
-        />
-        <div>
-          <div className="flex items-center justify-between mb-2 text-xs" style={{ color: palette.textSecondary }}>
-            <span>Practice mode</span>
-            <span>{focusModes[focus].description}</span>
+      <div
+        className="rounded-2xl p-4"
+        style={{
+          border: `1px solid ${palette.border}`,
+          background: palette.surfaceSoft,
+        }}
+      >
+        {earlyBirdExpired ? (
+          <div className="text-sm font-semibold" style={{ color: palette.textSecondary }}>
+            The early bird window has closed, but the £300 plan still spreads tuition by month.
           </div>
-          <div className="grid grid-cols-3 gap-2">
-            {Object.entries(focusModes).map(([key, config]) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setFocus(key)}
-                className="rounded-2xl px-3 py-2 text-xs font-semibold transition"
-                style={{
-                  border: `1px solid ${palette.border}`,
-                  background:
-                    focus === key
-                      ? `linear-gradient(135deg, ${palette.accentPrimary}CC, ${palette.accentSecondary}CC)`
-                      : palette.surfaceSoft,
-                  color: focus === key ? "#ffffff" : palette.textPrimary,
-                  boxShadow: focus === key ? palette.buttonShadow : "none",
-                }}
-              >
-                {config.label}
-              </button>
-            ))}
+        ) : (
+          <div>
+            <div className="text-xs uppercase tracking-[0.22em]" style={{ color: palette.textMuted }}>
+              Early bird premium
+            </div>
+            <div className="mt-1 flex flex-wrap items-baseline gap-2">
+              <span className="text-lg font-semibold" style={{ color: palette.textPrimary }}>
+                Pay £255 before 08 Nov, 12:30
+              </span>
+              {allMonthsSelected && selectedCost === 300 && (
+                <span className="text-xs font-semibold" style={{ color: palette.accentPrimary }}>
+                  Save £45 on the full track
+                </span>
+              )}
+            </div>
+            <div className="mt-2 text-xs" style={{ color: palette.textSecondary }}>
+              {earlyBirdDays}d {String(earlyBirdHours).padStart(2, "0")}h {String(earlyBirdMinutes).padStart(2, "0")}m {String(earlyBirdSeconds).padStart(2, "0")}s remaining.
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
-      <div className="mt-6 grid gap-3 grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 grid-cols-2">
+        {monthData.map((month) => {
+          const active = activeSet.has(month.key);
+          return (
+            <button
+              key={month.key}
+              type="button"
+              onClick={() => toggleMonth(month.key)}
+              className="rounded-2xl p-4 text-left transition"
+              style={{
+                border: `1px solid ${palette.border}`,
+                background: active
+                  ? `linear-gradient(135deg, ${palette.accentPrimary}22, ${palette.accentSecondary}22)`
+                  : palette.surfaceSoft,
+                color: palette.textPrimary,
+                boxShadow: active ? palette.buttonShadow : "none",
+              }}
+              aria-pressed={active}
+            >
+              <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em]" style={{ color: palette.textMuted }}>
+                <span>{month.cost ? `£${month.cost}` : "£0"}</span>
+                <span>{month.cost ? "per month" : "Payment holiday"}</span>
+              </div>
+              <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>
+                {month.label}
+              </div>
+              <div className="mt-2 text-xs" style={{ color: palette.textSecondary }}>
+                {month.description}
+              </div>
+              <div className="mt-3 rounded-xl px-3 py-2 text-xs font-semibold" style={{
+                border: `1px solid ${palette.border}`,
+                background: palette.surface,
+                color: palette.textPrimary,
+              }}>
+                Estimated value £{month.value.toLocaleString()}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="grid gap-3 grid-cols-2">
         {stats.map((stat) => (
           <Stat key={stat.label} {...stat} />
         ))}
       </div>
 
-      <div className="mt-6 rounded-2xl p-4" style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}>
-        <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>
-          When tuition is covered
-        </div>
-        <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
-          Tuition for the full package is £{tuition.toLocaleString()}. With your current settings, the value of the modules catches up once you complete <strong>{coveredByModule || "the track"}</strong>.
-        </p>
-        <p className="mt-2 text-xs" style={{ color: palette.textMuted }}>
-          Average value per paid module: £{averageModule.toLocaleString()}. Keep these numbers in mind while comparing the intro-only route.
-        </p>
-      </div>
-
-      <div className="mt-6">
-        <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>
-          Module value snapshot
-        </div>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          {valuations.map((module) => (
-            <div
-              key={module.key}
-              className="relative overflow-hidden rounded-2xl p-4 transition"
-              style={{
-                border: `1px solid ${palette.border}`,
-                background:
-                  module.key === "intro"
-                    ? `linear-gradient(135deg, ${palette.accentPrimary}1a, ${palette.accentSecondary}1a)`
-                    : palette.surfaceSoft,
+      <div className="grid gap-3 grid-cols-2">
+        {(() => {
+          const moduleCards = [];
+          if (introValuation) moduleCards.push({ ...introValuation, key: "intro" });
+          moduleCards.push(...paidModules);
+          return moduleCards.length ? (
+            moduleCards.map((module) => (
+              <div
+                key={module.key}
+                className="rounded-2xl p-4"
+                style={{
+                  border: `1px solid ${palette.border}`,
+                background: module.key === "intro"
+                  ? `linear-gradient(135deg, ${palette.accentPrimary}1a, ${palette.accentSecondary}1a)`
+                  : palette.surfaceSoft,
                 color: palette.textPrimary,
               }}
             >
-              <div className="flex items-baseline justify-between gap-2">
-                <span className="text-xs uppercase tracking-[0.18em]" style={{ color: palette.textMuted }}>
-                  {module.key === "intro" ? "Intro" : "Module"}
-                </span>
-                <span className="text-sm font-semibold">£{module.value.toLocaleString()}</span>
+              <div className="flex items-baseline justify-between text-xs uppercase tracking-[0.18em]" style={{ color: palette.textMuted }}>
+                <span>{module.key === "intro" ? "Intro" : "Module"}</span>
+                <span>£{module.value.toLocaleString()}</span>
               </div>
               <div className="mt-1 text-sm font-semibold" style={{ color: palette.textPrimary }}>
                 {module.label}
@@ -686,38 +769,27 @@ function ClientValueCalculator() {
                 {module.deliverable}
               </div>
             </div>
-          ))}
-        </div>
+          ))
+          ) : (
+            <div
+              className="col-span-2 rounded-2xl p-4 text-sm"
+              style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft, color: palette.textSecondary }}
+            >
+              Select a month to see its modules and value breakdown.
+            </div>
+          );
+        })()}
       </div>
 
-      <p className="mt-6 text-xs" style={{ color: palette.textMuted }}>
-        Numbers reflect a single participant. Update your practice time to see how much value you keep unlocking across the certification.
+      <p className="text-xs" style={{ color: palette.textMuted }}>
+        Figures reflect one participant. Monthly payments mean you can focus on a single month without committing to the rest.
       </p>
+      {paidModules.length > 0 && (
+        <p className="text-xs" style={{ color: palette.textSecondary }}>
+          Net gain from paid modules alone: £{netPaidOnly.toLocaleString()}.
+        </p>
+      )}
     </GlowCard>
-  );
-}
-
-function Slider({ label, min, max, step, value, onChange, suffix }) {
-  const id = label.replace(/\s+/g, "-").toLowerCase();
-  const { palette } = useTheme();
-  return (
-    <label htmlFor={id} className="block">
-      <div className="flex items-center justify-between mb-1">
-        <div className="text-xs" style={{ color: palette.textSecondary }}>{label}</div>
-        <div className="text-xs font-semibold" style={{ color: palette.textPrimary }}>{suffix}</div>
-      </div>
-      <input
-        id={id}
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full"
-        style={{ accentColor: palette.accentPrimary }}
-      />
-    </label>
   );
 }
 
@@ -1225,6 +1297,7 @@ function StarterclassLuxuryV8() {
                   );
                 }
                 const open = openModule === s.k;
+                const moduleValuation = resolveModuleValuation(s.k);
                 return (
                   <div
                     key={s.k}
@@ -1257,7 +1330,7 @@ function StarterclassLuxuryV8() {
                     </button>
                     {open && (
                       <div className="px-5 pb-5 space-y-4 text-sm" style={{ color: palette.textSecondary }}>
-                        <div className="grid md:grid-cols-3 gap-3">
+                        <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-3">
                           <div className="rounded-2xl p-3" style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}>
                             <div className="text-xs" style={{ color: palette.textMuted }}>Date</div>
                             <div className="font-semibold" style={{ color: palette.textPrimary }}>{s.date}</div>
@@ -1272,6 +1345,13 @@ function StarterclassLuxuryV8() {
                             <div className="text-xs" style={{ color: palette.textMuted }}>Outcome</div>
                             <div className="font-semibold" style={{ color: palette.textPrimary }}>{s.outcome}</div>
                           </div>
+                          {moduleValuation && (
+                            <div className="rounded-2xl p-3" style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}>
+                              <div className="text-xs" style={{ color: palette.textMuted }}>Estimated value</div>
+                              <div className="font-semibold" style={{ color: palette.textPrimary }}>£{moduleValuation.value.toLocaleString()}</div>
+                              <div className="text-xs mt-1" style={{ color: palette.textSecondary }}>{moduleValuation.deliverable}</div>
+                            </div>
+                          )}
                         </div>
                         <ModuleOutline segments={s.outline} />
                         <div className="flex flex-wrap gap-3">
@@ -1522,6 +1602,73 @@ function PieBlock() {
             Focus detail: {active?.desc}
           </div>
         </div>
+      </div>
+      <style>{`@keyframes pieRotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}`}</style>
+    </div>
+  );
+}
+
+function ModuleOutline({ segments = [] }) {
+  const fallback = useMemo(
+    () => [
+      { key: "Overview", value: 1, desc: "Module outline preview.", color: "#C8A145" },
+    ],
+    []
+  );
+  const outline = segments && segments.length ? segments : fallback;
+  const [focus, setFocus] = useState(0);
+  const { palette } = useTheme();
+
+  useEffect(() => {
+    if (!outline.length) return undefined;
+    const id = setInterval(() => {
+      setFocus((prev) => (prev + 1) % outline.length);
+    }, 8000);
+    return () => clearInterval(id);
+  }, [outline.length]);
+
+  const active = outline[focus] ?? outline[0];
+  const total = outline.reduce((sum, seg) => sum + (seg.value || 0), 0) || 1;
+  const share = Math.round(((active?.value || 0) / total) * 100);
+
+  return (
+    <div className="grid md:grid-cols-2 gap-4 items-center">
+      <div className="relative w-full max-w-[240px] mx-auto">
+        <div className="relative">
+          <Pie topics={outline} activeIndex={focus} onSelect={setFocus} />
+        </div>
+        <div
+          className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center px-4"
+          style={{ color: palette.textPrimary }}
+        >
+          <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{share}%</div>
+          <div className="mt-1 text-sm font-semibold">{active?.key}</div>
+        </div>
+      </div>
+      <div className="space-y-3">
+        {outline.map((seg, idx) => (
+          <button
+            key={seg.key}
+            type="button"
+            onMouseEnter={() => setFocus(idx)}
+            onFocus={() => setFocus(idx)}
+            className="w-full rounded-2xl p-3 text-left transition"
+            style={{
+              border: `1px solid ${palette.border}`,
+              background: idx === focus ? palette.surface : palette.surfaceSoft,
+              color: palette.textPrimary,
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <span className="h-2 w-2 rounded-full" style={{ background: seg.color }} />
+              <div className="font-semibold text-sm">{seg.key}</div>
+              <div className="ml-auto text-xs" style={{ color: palette.textMuted }}>
+                {Math.round(((seg.value || 0) / total) * 100)}%
+              </div>
+            </div>
+            <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{seg.desc}</div>
+          </button>
+        ))}
       </div>
       <style>{`@keyframes pieRotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}`}</style>
     </div>
