@@ -42,10 +42,38 @@ const SESSIONS = [
 
 // Royal interactive PIE colours
 const PIE_TOPICS = [
-  { key: "Projects",  value: 25, desc: "Configure boundaries, attach knowledge, set safe defaults.",             color: "#C8A145" }, // gold
-  { key: "GPTs",      value: 25, desc: "Build private GPTs with the right tools and context.",                    color: "#3B5CCC" }, // royal blue
-  { key: "Prompts",    value: 25, desc: "Roles, constraints, examples; prompts that hold under load.",           color: "#8B5CF6" }, // amethyst
-  { key: "Guardrails", value: 25, desc: "Token budgets, evaluation notes, safe behavior by design.",             color: "#10B981" }, // emerald
+  {
+    key: "Projects",
+    value: 25,
+    desc: "Configure boundaries, attach knowledge, set safe defaults.",
+    headline: "Projects locked and ready",
+    outcome: "Leave with two project templates you can clone for client or internal work.",
+    color: "#C8A145",
+  }, // gold
+  {
+    key: "GPTs",
+    value: 25,
+    desc: "Build private GPTs with the right tools and context.",
+    headline: "Private GPTs wired for work",
+    outcome: "Wire a private GPT to your workspace with guardrails and context packs.",
+    color: "#3B5CCC",
+  }, // royal blue
+  {
+    key: "Prompts",
+    value: 25,
+    desc: "Roles, constraints, examples; prompts that hold under load.",
+    headline: "Prompts that stay sharp",
+    outcome: "Turn repeat prompts into ready-to-use playbooks with examples and fallbacks.",
+    color: "#8B5CF6",
+  }, // amethyst
+  {
+    key: "Guardrails",
+    value: 25,
+    desc: "Token budgets, evaluation notes, safe behavior by design.",
+    headline: "Guardrails that keep quality high",
+    outcome: "Set budgets, checks, and review loops so outputs stay on brief.",
+    color: "#10B981",
+  }, // emerald
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -129,75 +157,102 @@ function useCountdown(targetISO) {
 function polarToCartesian(cx, cy, r, angle) { const rad = ((angle - 90) * Math.PI) / 180.0; return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) }; }
 function arcPath(x, y, r, startAngle, endAngle) { const start = polarToCartesian(x, y, r, endAngle); const end = polarToCartesian(x, y, r, startAngle); const largeArcFlag = endAngle - startAngle <= 180 ? 0 : 1; return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y} L ${x} ${y} Z`; }
 
-function Pie({ topics = PIE_TOPICS, active, setActive }) {
+function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
   const total = topics.reduce((a, b) => a + b.value, 0);
-  let angle = 0; const cx = 180, cy = 160, r = 140;
+  let angle = 0;
+  const cx = 180;
+  const cy = 160;
+  const r = 140;
   return (
     <svg viewBox="0 0 360 320" className="w-full h-full">
-      {topics.map((t) => {
-        const start = angle; const end = angle + (t.value / total) * 360; angle = end;
-        const isActive = active === t.key; const fill = t.color;
+      {topics.map((t, idx) => {
+        const start = angle;
+        const end = angle + (t.value / total) * 360;
+        angle = end;
+        const isActive = activeIndex === idx;
+        const fill = t.color;
         return (
           <path
             key={t.key}
             d={arcPath(cx, cy, isActive ? r + 10 : r, start, end)}
-            style={{ fill: isActive ? fill : `${fill}33`, transition: "all 280ms" }}
-            onMouseEnter={() => setActive(t.key)}
+            style={{
+              fill: fill,
+              opacity: isActive ? 1 : 0.35,
+              transition: "all 420ms ease",
+              filter: isActive ? "drop-shadow(0 0 12px rgba(255,255,255,0.2))" : "none",
+            }}
+            onMouseEnter={() => onSelect(idx)}
           />
         );
       })}
-      <circle cx={cx} cy={cy} r={72} className="fill-[#0B0B1A] stroke-white/10" />
-      <text x={cx} y={cy - 6} textAnchor="middle" className="fill-white text-[14px] font-semibold">{active}</text>
-      <text x={cx} y={cy + 16} textAnchor="middle" className="fill-white/70 text-[10px]">Starterclass Session</text>
+      <circle cx={cx} cy={cy} r={82} className="fill-[#0B0B1A] stroke-white/10" />
     </svg>
   );
 }
 
 // Collapsible sliders‑only Client Value Calculator
 function ClientValueCalculator() {
-  const [open, setOpen] = useState(false);
-  const [traffic, setTraffic] = useState(5000);
-  const [conv, setConv] = useState(2.5);
-  const [deal, setDeal] = useState(300);
-  const [lvr, setLvr] = useState(1.6);
-  const [hours, setHours] = useState(40);
-  const [rate, setRate] = useState(55);
+  const [open, setOpen] = useState(true);
+  const [team, setTeam] = useState(3);
+  const [hoursIntro, setHoursIntro] = useState(2);
+  const [extraHours, setExtraHours] = useState(4);
+  const [hourlyValue, setHourlyValue] = useState(75);
+  const [projectsPerQuarter, setProjectsPerQuarter] = useState(2);
+  const [projectValue, setProjectValue] = useState(1200);
 
-  const monthlyDeals = traffic * (conv / 100);
-  const monthlyRevenue = monthlyDeals * deal;
-  const lifetimeRevenue = monthlyRevenue * lvr;
-  const opsSavings = hours * rate;
-  const annualImpact = (lifetimeRevenue + opsSavings) * 12;
+  const fullTrackInvestment = 1850;
+
+  const introMonthly = team * hoursIntro * hourlyValue * 4;
+  const fullMonthly = team * (hoursIntro + extraHours) * hourlyValue * 4 + (projectsPerQuarter * projectValue) / 3;
+  const upliftMonthly = Math.max(0, fullMonthly - introMonthly);
+  const annualUplift = upliftMonthly * 12;
+  const paybackWeeks = upliftMonthly > 0 ? Math.ceil((fullTrackInvestment / upliftMonthly) * 4) : null;
 
   return (
     <GlowCard className="p-6">
-      <div className="flex items-center justify-between gap-3">
-        <h3 className="text-xl font-semibold">Client Value Calculator</h3>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h3 className="text-xl font-semibold">Full Track Value Calculator</h3>
+          <p className="mt-1 text-sm text-white/70 max-w-xl">
+            Estimate the uplift from bringing your team through the full programme instead of only the complimentary intro.
+          </p>
+        </div>
         <div className="flex items-center gap-2">
-          <Badge>Advanced</Badge>
+          <Badge>ROI Model</Badge>
           <GlassButton className="px-3 py-1 text-sm" onClick={() => setOpen((v) => !v)}>{open ? "Hide" : "Open"}</GlassButton>
         </div>
       </div>
       {open && (
         <div className="mt-5 animate-[fadeIn_300ms_ease]">
           <div className="grid md:grid-cols-2 gap-6">
-            <Slider label="Monthly traffic / leads" min={0} max={20000} step={100} value={traffic} onChange={setTraffic} suffix={Math.round(traffic)} />
-            <Slider label="Conversion rate (%)" min={0} max={20} step={0.1} value={conv} onChange={setConv} suffix={`${conv.toFixed(1)}%`} />
-            <Slider label="Avg deal size (£)" min={0} max={2000} step={10} value={deal} onChange={setDeal} suffix={`£${deal}`} />
-            <Slider label="Lifetime revenue multiple" min={0.5} max={5} step={0.1} value={lvr} onChange={setLvr} suffix={`×${lvr.toFixed(1)}`} />
-            <Slider label="Hours saved / month" min={0} max={200} step={5} value={hours} onChange={setHours} suffix={`${hours}h`} />
-            <Slider label="Effective hourly value (£)" min={0} max={300} step={5} value={rate} onChange={setRate} suffix={`£${rate}`} />
+            <Slider label="Team members attending" min={1} max={12} step={1} value={team} onChange={setTeam} suffix={team} />
+            <Slider label="Weekly hours saved after intro" min={0} max={6} step={0.5} value={hoursIntro} onChange={setHoursIntro} suffix={`${hoursIntro.toFixed(1)}h`} />
+            <Slider label="Extra weekly hours unlocked in full track" min={0} max={12} step={0.5} value={extraHours} onChange={setExtraHours} suffix={`${extraHours.toFixed(1)}h`} />
+            <Slider label="Value of an hour for this team (£)" min={20} max={250} step={5} value={hourlyValue} onChange={setHourlyValue} suffix={`£${hourlyValue}`} />
+            <Slider label="Automation projects shipped per quarter" min={0} max={6} step={1} value={projectsPerQuarter} onChange={setProjectsPerQuarter} suffix={projectsPerQuarter} />
+            <Slider label="Value created per project (£)" min={200} max={5000} step={100} value={projectValue} onChange={setProjectValue} suffix={`£${projectValue}`} />
           </div>
           <div className="mt-6 grid md:grid-cols-3 gap-4">
-            <Stat label="Monthly revenue" value={`£${Math.round(monthlyRevenue).toLocaleString()}`} />
-            <Stat label="Lifetime‑adjusted" value={`£${Math.round(lifetimeRevenue).toLocaleString()}`} />
-            <Stat label="Ops savings / mo" value={`£${Math.round(opsSavings).toLocaleString()}`} />
+            <Stat label="Intro only (monthly)" value={`£${Math.round(introMonthly).toLocaleString()}`} />
+            <Stat label="Full track (monthly)" value={`£${Math.round(fullMonthly).toLocaleString()}`} />
+            <Stat label="Monthly uplift" value={`£${Math.round(upliftMonthly).toLocaleString()}`} />
           </div>
-          <div className="mt-4 p-4 rounded-2xl border border-white/10 bg-white/5">
-            <div className="text-sm text-white/70">Projected annual impact</div>
-            <div className="text-3xl font-bold">£{Math.round(annualImpact).toLocaleString()}</div>
+          <div className="mt-4 grid md:grid-cols-2 gap-4">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="text-sm text-white/70">Projected annual uplift</div>
+              <div className="text-3xl font-bold">£{Math.round(annualUplift).toLocaleString()}</div>
+            </div>
+            <div className="rounded-2xl border border-[#C8A145]/30 bg-gradient-to-br from-[#C8A145]/15 to-transparent p-4">
+              <div className="text-sm text-white/70">Full track investment</div>
+              <div className="text-3xl font-bold">£{fullTrackInvestment.toLocaleString()}</div>
+              {paybackWeeks && (
+                <div className="mt-2 text-xs text-white/70">Break-even in approximately {paybackWeeks} weeks of uplift.</div>
+              )}
+            </div>
           </div>
-          <p className="text-xs text-white/50 mt-2">Directional model — plug in your real numbers for planning.</p>
+          <p className="text-xs text-white/50 mt-3">
+            Adjust the numbers to match your pipeline and internal rates. Many teams recover the investment with their first two automation projects.
+          </p>
         </div>
       )}
     </GlowCard>
@@ -229,18 +284,6 @@ function Stat({ label, value }) {
 // Calendar helpers
 function toGoogleDateRange(startISO, endISO) { const fmt = (d) => new Date(d).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z"); return `${fmt(startISO)}/${fmt(endISO)}`; }
 function googleCalUrl({ title, startISO, endISO, details = "", location = "Online" }) { const base = "https://www.google.com/calendar/render?action=TEMPLATE"; const params = new URLSearchParams({ text: title, dates: toGoogleDateRange(startISO, endISO), details, location }); return `${base}&${params.toString()}`; }
-function icsFile({ title, startISO, endISO, details = "", location = "Online" }) {
-  const dtstamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
-  const uid = `${dtstamp}@icuni.org`;
-  const dtstart = new Date(startISO).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
-  const dtend = new Date(endISO).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
-  const ics = [
-    "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//ICUNI//Starterclass//EN","BEGIN:VEVENT",
-    `UID:${uid}`,`DTSTAMP:${dtstamp}`,`DTSTART:${dtstart}`,`DTEND:${dtend}`,`SUMMARY:${title}`,`DESCRIPTION:${details.replace(/\n/g, "\\n")}`,`LOCATION:${location}`,
-    "END:VEVENT","END:VCALENDAR",
-  ].join("\r\n");
-  return new Blob([ics], { type: "text/calendar;charset=utf-8" });
-}
 
 // Decorative interactive graphics
 function Orbits() {
@@ -283,7 +326,6 @@ function StarterclassLuxuryV8() {
 
   function openForm() { setModalOpen(true); }
   function revealPaidAndGoCurriculum() { setShowPaid(true); try { localStorage.setItem("sc_paid_reveal", "1"); } catch {} setTab("curriculum"); requestAnimationFrame(() => document.getElementById("curriculum-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" })); }
-  function downloadICS(startISO, endISO, title) { const blob = icsFile({ title, startISO, endISO, details: `${title} — part of ICUNI Starterclass`, location: "Online (Zoom)" }); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = `${title.replace(/\s+/g, "_")}.ics`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); }
 
   return (
     <main className="min-h-screen text-white" style={{background:"linear-gradient(180deg,#0B0B1A,#0B0B1A 60%,#0E0E24)"}}>
@@ -312,7 +354,7 @@ function StarterclassLuxuryV8() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <div className="text-xs uppercase tracking-widest text-white/70">Starterclass by ICUNI</div>
-              <h1 className="mt-2 text-4xl md:text-6xl font-extrabold leading-[1.05]">Make ChatGPT work like a teammate.</h1>
+              <h1 className="mt-2 text-4xl md:text-6xl font-extrabold leading-[1.05]">Make AI work like a teammate.</h1>
               <p className="mt-3 text-white/80 text-lg max-w-2xl">
                 Tune Projects, build private GPTs, lock good prompts into muscle memory, and add guardrails so outputs don’t drift. One focused session. Practical, not theory.
               </p>
@@ -321,14 +363,28 @@ function StarterclassLuxuryV8() {
                 <div><span className="text-white/60">Your Time:</span> {formatLocalRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
               </div>
               {/* Countdown */}
-              <div className="mt-4 flex items-center gap-2">
-                {[['D', d], ['H', h], ['M', m], ['S', s]].map(([lbl, val]) => (
-                  <span key={lbl} className="inline-flex items-center justify-center gap-1 px-2 py-1 rounded-xl border border-[#C8A145]/30 bg-white/5 text-xs">
-                    <span className="font-mono">{String(val).padStart(2, '0')}</span>
-                    <span className="text-white/60">{lbl}</span>
-                  </span>
-                ))}
-                {!expired && <span className="text-xs text-white/60 ml-1">until start</span>}
+              <div className="mt-6">
+                <div className="text-xs uppercase tracking-[0.2em] text-white/50">Next session begins in</div>
+                <div className="mt-3 grid grid-cols-4 gap-3 max-w-md">
+                  {[
+                    ["Days", d],
+                    ["Hours", h],
+                    ["Minutes", m],
+                    ["Seconds", s],
+                  ].map(([label, val]) => (
+                    <div
+                      key={label}
+                      className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.08] px-3 py-4 text-center shadow-[0_0_0_1px_rgba(200,161,69,0.15)_inset]"
+                    >
+                      <div className="text-[2.25rem] leading-none font-semibold font-mono tracking-tight">
+                        {String(val).padStart(2, "0")}
+                      </div>
+                      <div className="mt-2 text-xs uppercase tracking-[0.28em] text-white/60">{label}</div>
+                      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                    </div>
+                  ))}
+                </div>
+                {!expired && <div className="mt-3 text-xs text-white/60">Reminder emails go out 24 hours before we open the Zoom room.</div>}
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
                 <Badge>Projects</Badge><Badge>GPTs</Badge><Badge>Prompts</Badge><Badge>Guardrails</Badge>
@@ -339,8 +395,14 @@ function StarterclassLuxuryV8() {
               </div>
               {/* Calendar actions */}
               <div className="mt-3 flex flex-wrap gap-3 text-xs">
-                <a className="underline hover:text-white" href={googleCalUrl({ title: INTRO_NAME, startISO: INTRO_START_ISO, endISO: INTRO_END_ISO, details: `${INTRO_NAME} — ICUNI Starterclass`, location: 'Online (Zoom)' })} target="_blank" rel="noreferrer">Add to Google Calendar</a>
-                <button className="underline hover:text-white" onClick={() => downloadICS(INTRO_START_ISO, INTRO_END_ISO, INTRO_NAME)}>Download .ics</button>
+                <a
+                  className="underline hover:text-white"
+                  href={googleCalUrl({ title: INTRO_NAME, startISO: INTRO_START_ISO, endISO: INTRO_END_ISO, details: `${INTRO_NAME} — ICUNI Starterclass`, location: "Online (Zoom)" })}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Add to calendar
+                </a>
               </div>
               <div className="mt-3 text-xs text-white/60">Replays are available to full‑track registrants.</div>
             </div>
@@ -480,8 +542,7 @@ function StarterclassLuxuryV8() {
                       )}
 
                       <div className="flex flex-wrap gap-3">
-                        <GlassButton className="mt-2" onClick={() => window.open(googleCalUrl({ title: s.title, startISO: s.start, endISO: s.end, details: `${s.title} — ICUNI Starterclass`, location: 'Online (Zoom)' }), '_blank')}>Add to Google</GlassButton>
-                        <GlassButton className="mt-2" onClick={() => downloadICS(s.start, s.end, s.title)}>Download .ics</GlassButton>
+                        <GlassButton className="mt-2" onClick={() => window.open(googleCalUrl({ title: s.title, startISO: s.start, endISO: s.end, details: `${s.title} — ICUNI Starterclass`, location: 'Online (Zoom)' }), '_blank')}>Add to calendar</GlassButton>
                         {s.track === 'intro' ? (
                           <GlassButton className="mt-2" onClick={() => setModalOpen(true)}>Reserve seat</GlassButton>
                         ) : showPaid ? (
@@ -628,19 +689,58 @@ function StarterclassLuxuryV8() {
 window.StarterclassLuxuryV8 = StarterclassLuxuryV8;
 
 function PieBlock() {
-  const [active, setActive] = useState(PIE_TOPICS[0].key);
-  const activeColor = PIE_TOPICS.find(t => t.key === active)?.color || "#C8A145";
+  const topics = PIE_TOPICS;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const active = topics[activeIndex] ?? topics[0];
+
+  useEffect(() => {
+    if (paused) return;
+    const id = setInterval(() => {
+      setActiveIndex((idx) => (idx + 1) % topics.length);
+    }, 10000);
+    return () => clearInterval(id);
+  }, [paused]);
+
+  const activeColor = active?.color ?? "#C8A145";
+
   return (
-    <div className="relative">
-      {/* Glow stays behind the pie, tint follows active color */}
-      <div className="absolute -inset-6 -z-10 rounded-[2rem] blur-2xl" style={{ background: `radial-gradient(circle at center, ${activeColor}30, transparent 60%)` }} />
+    <div
+      className="relative"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div
+        className="absolute -inset-6 -z-10 rounded-[2rem] blur-2xl"
+        style={{ background: `radial-gradient(circle at center, ${activeColor}26, transparent 65%)` }}
+      />
       <div className="grid grid-cols-1 gap-4">
-        <Pie topics={PIE_TOPICS} active={active} setActive={setActive} />
-        <div className="rounded-2xl border border-[#C8A145]/20 bg-white/5 p-3">
-          <div className="text-xs text-white/60">Focus</div>
-          <div className="text-sm font-medium">{PIE_TOPICS.find(t=>t.key===active)?.desc}</div>
+        <div className="relative mx-auto w-full max-w-[360px]">
+          <div
+            className="relative"
+            style={{
+              animation: "pieRotate 120s linear infinite",
+              animationPlayState: paused ? "paused" : "running",
+            }}
+          >
+            <Pie topics={topics} activeIndex={activeIndex} onSelect={setActiveIndex} />
+          </div>
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+            <div className="text-xs uppercase tracking-[0.28em] text-white/50">{active?.key}</div>
+            <div className="mt-2 text-lg font-semibold leading-snug">{active?.headline}</div>
+            <div className="mt-2 text-xs text-white/70 leading-relaxed max-w-[200px]">{active?.desc}</div>
+            <div className="mt-3 text-[0.65rem] uppercase tracking-[0.36em] text-white/40">{Math.round(active?.value)}% of session focus</div>
+          </div>
+        </div>
+        <div className="rounded-2xl border border-[#C8A145]/20 bg-white/5 p-4">
+          <div className="text-xs uppercase tracking-[0.28em] text-white/50">Outcome</div>
+          <div className="mt-2 text-sm font-medium text-white/90">{active?.outcome}</div>
+          <div className="mt-3 rounded-xl border border-white/10 bg-white/5 p-3 text-xs text-white/70">
+            Why it matters: {active?.desc}
+          </div>
         </div>
       </div>
+      <style>{`@keyframes pieRotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}`}</style>
     </div>
   );
 }
