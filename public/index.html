@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>ICUNI Starterclass</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0B0B1A] text-white">
+  <div id="root"></div>
+  <script src="./app.js"></script>
+  <script>
+    if (!window.StarterclassLuxuryV8) {
+      console.error("StarterclassLuxuryV8 component failed to load");
+    } else {
+      ReactDOM.createRoot(document.getElementById("root")).render(
+        React.createElement(window.StarterclassLuxuryV8)
+      );
+    }
+  </script>
+</body>
+</html>
