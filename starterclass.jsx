@@ -69,8 +69,8 @@ function useTheme() {
  * - Paid track gated; sliders‑only Client Value Calculator (hide/show)
  * - Curriculum/Overview animated cards
  * - Renamed modules:
- *    • s6 title → "ChatGPT Agents 2 — Systems" (desc/outcome unchanged)
- *    • s5 title → "Introduction to Agent Builders — Security and Safety" (desc/outcome unchanged)
+ *    • s6 title to "ChatGPT Agents 2 — Systems" (desc/outcome unchanged)
+ *    • s5 title to "Introduction to Agent Builders — Security and Safety" (desc/outcome unchanged)
  * - Subtle interactive graphics (orbits & sparkles) that don’t distract
  * - N8N capitalization; Google Form embed fixed
  * TailwindCSS assumed. Single‑file React; Canvas‑ready.
@@ -150,21 +150,6 @@ const SESSIONS = [
     ],
   },
   {
-    k: "s6",
-    title: "ChatGPT Agents 2 — Systems",
-    date: "Sat 13 Dec 2025",
-    start: "2025-12-13T11:00:00Z",
-    end: "2025-12-13T12:30:00Z",
-    desc: "Add agents to existing systems · System case study: Storytelling and Filmmaking · brief→beats→script pipeline · tasteful image workflows.",
-    outcome: "Brief→beats→script pipeline and image generation workflow.",
-    track: "paid",
-    outline: [
-      { key: "Systems design", value: 33, desc: "Map dependencies and orchestrate data flows.", color: "#C8A145" },
-      { key: "Story pipeline", value: 34, desc: "Turn briefs into beats, scripts, and creative assets.", color: "#8B5CF6" },
-      { key: "Image workflow", value: 33, desc: "Prompt, select, and polish visuals with guardrails.", color: "#3B5CCC" },
-    ],
-  },
-  {
     k: "s5",
     title: "Introduction to Agent Builders — Security and Safety",
     date: "Sat 06 Dec 2025",
@@ -177,6 +162,21 @@ const SESSIONS = [
       { key: "Safeguard planning", value: 32, desc: "Budgets, scopes, and approvals that protect usage.", color: "#10B981" },
       { key: "Monitoring", value: 34, desc: "Dashboards, audit trails, and accountability.", color: "#3B5CCC" },
       { key: "Stability drills", value: 34, desc: "Incident response and rollback scenarios.", color: "#C8A145" },
+    ],
+  },
+  {
+    k: "s6",
+    title: "ChatGPT Agents 2 — Systems",
+    date: "Sat 13 Dec 2025",
+    start: "2025-12-13T11:00:00Z",
+    end: "2025-12-13T12:30:00Z",
+    desc: "Add agents to existing systems · System case study: Storytelling and Filmmaking · brief to beats to script pipeline · tasteful image workflows.",
+    outcome: "Brief to beats to script pipeline and image generation workflow.",
+    track: "paid",
+    outline: [
+      { key: "Systems design", value: 33, desc: "Map dependencies and orchestrate data flows.", color: "#C8A145" },
+      { key: "Story pipeline", value: 34, desc: "Turn briefs into beats, scripts, and creative assets.", color: "#8B5CF6" },
+      { key: "Image workflow", value: 33, desc: "Prompt, select, and polish visuals with guardrails.", color: "#3B5CCC" },
     ],
   },
   {
@@ -239,6 +239,73 @@ const SESSIONS = [
       { key: "Runbooks", value: 34, desc: "Support plans, incident playbooks, and checklists.", color: "#C8A145" },
       { key: "Review loops", value: 33, desc: "CPD evidence, reporting, and handover.", color: "#10B981" },
     ],
+  },
+];
+
+const MODULE_VALUATIONS = [
+  {
+    key: "intro",
+    label: INTRO_NAME,
+    baseValue: 540,
+    deliverable: "Custom GPT configured around your brief.",
+    weight: 1.05,
+  },
+  {
+    key: "s2",
+    label: "Canvas Deep Dive · Codex Foundations",
+    baseValue: 360,
+    deliverable: "Canvas workspace and Codex habits that save hours each week.",
+  },
+  {
+    key: "s3",
+    label: "Projects & GPTs Immersion",
+    baseValue: 420,
+    deliverable: "Project blueprint and private GPT ready for production use.",
+    weight: 1.08,
+  },
+  {
+    key: "s4",
+    label: "ChatGPT Agents 1 — Prompts, Processes, Internal Tools",
+    baseValue: 400,
+    deliverable: "Agent patterns with prompts, logs, and retry strategy baked in.",
+  },
+  {
+    key: "s5",
+    label: "Introduction to Agent Builders — Security and Safety",
+    baseValue: 380,
+    deliverable: "Safeguards, monitoring, and incident routines that keep trust high.",
+  },
+  {
+    key: "s6",
+    label: "ChatGPT Agents 2 — Systems",
+    baseValue: 410,
+    deliverable: "Story-to-script systems and visual workflows tuned for quality.",
+  },
+  {
+    key: "s7",
+    label: "AgentKit — Create Your First Agent",
+    baseValue: 440,
+    deliverable: "AgentKit build with memory and live scenario walkthrough.",
+    weight: 1.06,
+  },
+  {
+    key: "s8",
+    label: "N8N — Create Your First Agent",
+    baseValue: 320,
+    deliverable: "Automated N8N flow with approvals and clear reporting.",
+  },
+  {
+    key: "s9",
+    label: "N8N Deep Dive — Advanced Agent",
+    baseValue: 330,
+    deliverable: "Resilient automations with branching, retries, and observability.",
+  },
+  {
+    key: "s10",
+    label: "Deployment — Orchestrate the System",
+    baseValue: 460,
+    deliverable: "Deployment playbook, runbooks, and CPD-ready evidence pack.",
+    weight: 1.07,
   },
 ];
 
@@ -418,6 +485,8 @@ function polarToCartesian(cx, cy, r, angle) { const rad = ((angle - 90) * Math.P
 function arcPath(x, y, r, startAngle, endAngle) { const start = polarToCartesian(x, y, r, endAngle); const end = polarToCartesian(x, y, r, startAngle); const largeArcFlag = endAngle - startAngle <= 180 ? 0 : 1; return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y} L ${x} ${y} Z`; }
 
 function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
+  const { palette, theme } = useTheme();
+  const isDark = theme === "dark";
   const total = topics.reduce((a, b) => a + b.value, 0);
   let angle = 0;
   const cx = 180;
@@ -445,127 +514,185 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
           />
         );
       })}
-      <circle cx={cx} cy={cy} r={82} className="fill-[#0B0B1A] stroke-white/10" />
+      <circle
+        cx={cx}
+        cy={cy}
+        r={82}
+        style={{
+          fill: isDark ? "#0B0B1A" : palette.surface,
+          stroke: isDark ? "rgba(255,255,255,0.1)" : palette.border,
+        }}
+      />
     </svg>
   );
 }
 
-// Collapsible sliders‑only Client Value Calculator
+// Client Value Calculator focused on a single participant
 function ClientValueCalculator() {
   const { palette } = useTheme();
-  const [team, setTeam] = useState(3);
-  const [hourlyValue, setHourlyValue] = useState(80);
-  const [pace, setPace] = useState("steady");
+  const [hours, setHours] = useState(3);
+  const [focus, setFocus] = useState("steady");
 
-  const paceConfigs = {
+  const focusModes = {
     steady: {
-      label: "Steady rollout",
-      introHours: 1.5,
-      fullHours: 4.5,
-      automationValue: 1500,
-      promptValue: 420,
-      customGptValue: 620,
+      label: "Steady build",
+      description: "Weekly practice keeps momentum",
+      multiplier: 1,
     },
-    momentum: {
-      label: "Momentum team",
-      introHours: 2,
-      fullHours: 6,
-      automationValue: 1900,
-      promptValue: 540,
-      customGptValue: 720,
+    accelerator: {
+      label: "Launch sprint",
+      description: "Short sprint before go-live",
+      multiplier: 1.18,
     },
-    sprint: {
-      label: "Sprint launch",
-      introHours: 2.5,
-      fullHours: 7,
-      automationValue: 2300,
-      promptValue: 680,
-      customGptValue: 840,
+    immersion: {
+      label: "Immersive practice",
+      description: "Deep dive for rapid mastery",
+      multiplier: 1.32,
     },
   };
 
-  const activePace = paceConfigs[pace];
-  const fullTrackInvestment = 1850;
-  const introMonthly = team * hourlyValue * activePace.introHours * 4;
-  const bonusQuarterly = activePace.automationValue + activePace.promptValue + activePace.customGptValue;
-  const fullMonthly = team * hourlyValue * activePace.fullHours * 4 + bonusQuarterly / 3;
-  const upliftMonthly = Math.max(0, fullMonthly - introMonthly);
-  const quarterImpact = upliftMonthly * 3;
-  const annualImpact = upliftMonthly * 12;
-  const roi = upliftMonthly > 0 ? ((annualImpact - fullTrackInvestment) / fullTrackInvestment) * 100 : 0;
-  const paybackWeeks = upliftMonthly > 0 ? Math.ceil((fullTrackInvestment / upliftMonthly) * 4) : null;
-  const perDeliverable = (bonusQuarterly / 3).toFixed(0);
+  const practiceMultiplier = useMemo(() => 0.9 + hours * 0.09, [hours]);
+  const valuations = useMemo(() => {
+    const focusBoost = focusModes[focus]?.multiplier ?? 1;
+    return MODULE_VALUATIONS.map((module) => {
+      const moduleBoost = module.weight ?? 1;
+      const value = Math.round(module.baseValue * practiceMultiplier * focusBoost * moduleBoost);
+      return { ...module, value };
+    });
+  }, [focus, focusModes, practiceMultiplier]);
+
+  const introValue = valuations.find((item) => item.key === "intro")?.value ?? 0;
+  const paidValuations = valuations.filter((item) => item.key !== "intro");
+  const paidValue = paidValuations.reduce((sum, item) => sum + item.value, 0);
+  const fullValue = introValue + paidValue;
+  const tuition = 1850;
+  const uplift = Math.max(0, fullValue - introValue);
+  const netValue = fullValue - tuition;
+  const averageModule = paidValuations.length ? Math.round(paidValue / paidValuations.length) : 0;
+  const tuitionBalance = Math.max(0, tuition - introValue);
+  let coveredByModule = null;
+  let running = 0;
+  for (const module of paidValuations) {
+    running += module.value;
+    if (running >= tuitionBalance && coveredByModule === null) {
+      coveredByModule = module.label;
+    }
+  }
+
+  const stats = [
+    { label: "Intro session value", value: `£${introValue.toLocaleString()}`, hint: "Starterclass Session – Customisation" },
+    { label: "Full certification value", value: `£${fullValue.toLocaleString()}`, hint: "10 modules including intro" },
+    { label: "Additional value unlocked", value: `£${uplift.toLocaleString()}`, hint: "Completing every module" },
+    { label: "Net after tuition", value: `£${netValue.toLocaleString()}`, hint: "Tuition £1,850", emphasis: true },
+  ];
 
   return (
     <GlowCard className="p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h3 className="text-xl font-semibold">Full Track Value Calculator</h3>
+          <h3 className="text-xl font-semibold">Client Value Calculator</h3>
           <p className="mt-1 text-sm" style={{ color: palette.textSecondary }}>
-            Compare the complimentary intro with the full package that delivers a custom GPT, a working project, and prompt systems that score in business and creative work.
+            Estimate the personal value of completing the full Starterclass track as a solo participant. Adjust how much time you will put into practice each week.
           </p>
         </div>
         <Badge>Booking Helper</Badge>
       </div>
 
-      <div className="mt-6 grid gap-5 md:grid-cols-3">
-        <Slider label="Team members enrolling" min={1} max={12} step={1} value={team} onChange={setTeam} suffix={`${team}`} />
-        <Slider label="Value per hour (GBP)" min={20} max={250} step={5} value={hourlyValue} onChange={setHourlyValue} suffix={`£${hourlyValue}`} />
+      <div className="mt-5 grid gap-4 sm:grid-cols-2">
+        <Slider
+          label="Weekly implementation hours"
+          min={1}
+          max={6}
+          step={1}
+          value={hours}
+          onChange={setHours}
+          suffix={`${hours}h`}
+        />
         <div>
           <div className="flex items-center justify-between mb-2 text-xs" style={{ color: palette.textSecondary }}>
-            <span>Pace after the cohort</span>
-            <span>{paceConfigs[pace].label}</span>
+            <span>Practice mode</span>
+            <span>{focusModes[focus].description}</span>
           </div>
-          <div className="flex rounded-2xl overflow-hidden" style={{ border: `1px solid ${palette.border}` }}>
-            {Object.entries(paceConfigs).map(([key, cfg]) => (
+          <div className="grid grid-cols-3 gap-2">
+            {Object.entries(focusModes).map(([key, config]) => (
               <button
                 key={key}
                 type="button"
-                onClick={() => setPace(key)}
-                className="flex-1 px-3 py-2 text-xs font-semibold"
+                onClick={() => setFocus(key)}
+                className="rounded-2xl px-3 py-2 text-xs font-semibold transition"
                 style={{
-                  background: pace === key ? `linear-gradient(135deg, ${palette.accentPrimary}, ${palette.accentSecondary})` : palette.surfaceSoft,
-                  color: pace === key ? "#ffffff" : palette.textPrimary,
-                  transition: "background 200ms ease",
+                  border: `1px solid ${palette.border}`,
+                  background:
+                    focus === key
+                      ? `linear-gradient(135deg, ${palette.accentPrimary}CC, ${palette.accentSecondary}CC)`
+                      : palette.surfaceSoft,
+                  color: focus === key ? "#ffffff" : palette.textPrimary,
+                  boxShadow: focus === key ? palette.buttonShadow : "none",
                 }}
               >
-                {cfg.label.split(" ")[0]}
+                {config.label}
               </button>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-5">
-        <Stat label="Intro impact / month" value={`£${Math.round(introMonthly).toLocaleString()}`} hint="Complimentary session only" />
-        <Stat label="Full track / month" value={`£${Math.round(fullMonthly).toLocaleString()}`} hint="After every module" />
-        <Stat label="Monthly uplift" value={`£${Math.round(upliftMonthly).toLocaleString()}`} hint="Beyond the intro" emphasis />
-        <Stat label="Quarterly impact" value={`£${Math.round(quarterImpact).toLocaleString()}`} hint="Three month view" />
-        <Stat label="Annual ROI" value={`${Math.round(roi)}%`} hint="After tuition" />
+      <div className="mt-6 grid gap-3 grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat) => (
+          <Stat key={stat.label} {...stat} />
+        ))}
       </div>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <div className="rounded-2xl p-4" style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}>
-          <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>Deliverables you leave with</div>
-          <ul className="mt-2 space-y-2 text-sm" style={{ color: palette.textSecondary }}>
-            <li>• A custom GPT wired to your workflows (valued at £{activePace.customGptValue})</li>
-            <li>• One automation project ready to run (valued at £{activePace.automationValue})</li>
-            <li>• Prompt libraries that score in business and creative briefs (valued at £{activePace.promptValue})</li>
-          </ul>
-          <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>
-            Average value per deliverable: £{Number(perDeliverable).toLocaleString()}.
-          </div>
+      <div className="mt-6 rounded-2xl p-4" style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}>
+        <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>
+          When tuition is covered
         </div>
-        <div className="rounded-2xl p-4" style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}>
-          <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>Payback expectations</div>
-          <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
-            Tuition for the full package is £{fullTrackInvestment.toLocaleString()}. With your current inputs you reach break-even {paybackWeeks ? `in about ${paybackWeeks} weeks.` : "once the uplift turns positive."}
-          </p>
-          <p className="mt-2 text-xs" style={{ color: palette.textMuted }}>
-            Update the sliders to match your context. The calculator keeps your settings in this browser while you review the curriculum.
-          </p>
+        <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
+          Tuition for the full package is £{tuition.toLocaleString()}. With your current settings, the value of the modules catches up once you complete <strong>{coveredByModule || "the track"}</strong>.
+        </p>
+        <p className="mt-2 text-xs" style={{ color: palette.textMuted }}>
+          Average value per paid module: £{averageModule.toLocaleString()}. Keep these numbers in mind while comparing the intro-only route.
+        </p>
+      </div>
+
+      <div className="mt-6">
+        <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>
+          Module value snapshot
+        </div>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          {valuations.map((module) => (
+            <div
+              key={module.key}
+              className="relative overflow-hidden rounded-2xl p-4 transition"
+              style={{
+                border: `1px solid ${palette.border}`,
+                background:
+                  module.key === "intro"
+                    ? `linear-gradient(135deg, ${palette.accentPrimary}1a, ${palette.accentSecondary}1a)`
+                    : palette.surfaceSoft,
+                color: palette.textPrimary,
+              }}
+            >
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-xs uppercase tracking-[0.18em]" style={{ color: palette.textMuted }}>
+                  {module.key === "intro" ? "Intro" : "Module"}
+                </span>
+                <span className="text-sm font-semibold">£{module.value.toLocaleString()}</span>
+              </div>
+              <div className="mt-1 text-sm font-semibold" style={{ color: palette.textPrimary }}>
+                {module.label}
+              </div>
+              <div className="mt-2 text-xs" style={{ color: palette.textSecondary }}>
+                {module.deliverable}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
+
+      <p className="mt-6 text-xs" style={{ color: palette.textMuted }}>
+        Numbers reflect a single participant. Update your practice time to see how much value you keep unlocking across the certification.
+      </p>
     </GlowCard>
   );
 }
@@ -686,6 +813,26 @@ function StarterclassLuxuryV8() {
   const sessions = useMemo(() => SESSIONS, []);
   const { d, h, m, s, expired } = useCountdown(INTRO_START_ISO);
   const palette = useMemo(() => getPalette(theme), [theme]);
+  const heroHighlights = useMemo(
+    () => [
+      {
+        icon: "🛠️",
+        title: "Custom GPT built for you",
+        sub: "We configure it live using your brief and assets.",
+      },
+      {
+        icon: "🚀",
+        title: "Automation ready to ship",
+        sub: "Leave with one workflow already mapped and tested.",
+      },
+      {
+        icon: "🎯",
+        title: "Prompt kits that deliver",
+        sub: "Business and creative prompts packaged for results.",
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -810,7 +957,17 @@ function StarterclassLuxuryV8() {
           </button>
           <div className="flex flex-wrap items-center gap-3 justify-end">
             <GlassButton variant="secondary" onClick={toggleTheme} className="px-4 py-2 text-sm">
-              {theme === "dark" ? "Bright mode" : "Dark mode"}
+              {theme === "dark" ? (
+                <>
+                  <span aria-hidden="true">🌞</span>
+                  <span>Bright mode</span>
+                </>
+              ) : (
+                <>
+                  <span aria-hidden="true">🌙</span>
+                  <span>Dark mode</span>
+                </>
+              )}
             </GlassButton>
             <GlassButton onClick={openForm}>Book {INTRO_NAME}</GlassButton>
             <GlassButton variant="secondary" onClick={revealPaidAndGoCurriculum} className="px-5 py-3">
@@ -847,9 +1004,32 @@ function StarterclassLuxuryV8() {
                 Customise your workspace, wire a private GPT, and sharpen prompts that deliver while the interface stays calm enough for deep focus.
               </p>
               <div className="mt-5 grid sm:grid-cols-3 gap-3">
-                {["Custom GPT for your team", "One automation project ready", "Prompt kits for business & creative wins"].map((item) => (
-                  <div key={item} className="rounded-2xl border border-white/10 bg-white/5 p-3 text-sm" style={{ borderColor: palette.border }}>
-                    <div style={{ color: palette.textSecondary }}>{item}</div>
+                {heroHighlights.map((feature) => (
+                  <div
+                    key={feature.title}
+                    className="group relative overflow-hidden rounded-2xl border p-4 text-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-xl"
+                    style={{
+                      borderColor: palette.border,
+                      background: palette.surfaceSoft,
+                    }}
+                  >
+                    <div
+                      className="absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                      style={{
+                        background: `linear-gradient(135deg, ${palette.accentPrimary}22, ${palette.accentSecondary}22)`,
+                      }}
+                    />
+                    <div className="relative flex items-start gap-3">
+                      <span className="text-xl" aria-hidden="true">{feature.icon}</span>
+                      <div>
+                        <div className="font-semibold" style={{ color: palette.textPrimary }}>
+                          {feature.title}
+                        </div>
+                        <div className="mt-1 text-xs leading-relaxed" style={{ color: palette.textSecondary }}>
+                          {feature.sub}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -872,8 +1052,11 @@ function StarterclassLuxuryV8() {
                       className="relative overflow-hidden rounded-[1.75rem] px-5 py-6 text-center"
                       style={{
                         border: `1px solid ${palette.border}`,
-                        background: `linear-gradient(160deg, ${palette.surfaceSoft}, rgba(255,255,255,0.92))`,
-                        boxShadow: palette.shadow,
+                        background:
+                          theme === "dark"
+                            ? "linear-gradient(160deg, rgba(20,20,40,0.92), rgba(11,11,26,0.9))"
+                            : `linear-gradient(160deg, ${palette.surfaceSoft}, rgba(255,255,255,0.92))`,
+                        boxShadow: theme === "dark" ? "0 24px 48px rgba(5,0,45,0.45)" : palette.shadow,
                       }}
                     >
                       <div className="font-mono font-bold" style={{ fontSize: "2.8rem", color: palette.textPrimary }}>
@@ -911,6 +1094,9 @@ function StarterclassLuxuryV8() {
                   Add to calendar
                 </a>
                 <span style={{ color: palette.textMuted }}>Replays unlock for full-track members.</span>
+                <span className="basis-full" style={{ color: palette.textMuted }}>
+                  Completing the registration form automatically schedules this first session in your calendar.
+                </span>
               </div>
             </div>
             <div>
@@ -1001,10 +1187,11 @@ function StarterclassLuxuryV8() {
                 </ul>
                 <button
                   onClick={() => setTab("curriculum")}
-                  className="mt-4 text-sm underline underline-offset-4"
+                  className="mt-4 inline-flex items-center gap-2 text-sm underline underline-offset-4"
                   style={{ color: palette.accentSecondary }}
                 >
-                  See full schedule →
+                  <span aria-hidden="true">🗓️</span>
+                  <span>View full schedule</span>
                 </button>
               </GlowCard>
 
@@ -1202,7 +1389,7 @@ function StarterclassLuxuryV8() {
               <iframe title="Starterclass Registration" src={GOOGLE_FORM_URL_EMBED} className="h-full w-full" frameBorder="0" marginHeight={0} marginWidth={0}>Loading…</iframe>
             </div>
             <div className="px-4 md:px-6 py-3 text-xs" style={{ color: palette.textMuted, borderTop: `1px solid ${palette.border}` }}>
-              Replays are available to full-track registrants. You’ll receive calendar invites and materials by email.
+              Replays are available to full-track registrants. Submitting this form auto-schedules the first session in your calendar and emails the prep materials.
             </div>
           </div>
         </div>
