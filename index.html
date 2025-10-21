@@ -14,7 +14,7 @@
     const { useEffect, useMemo, useState, useRef, useCallback } = React;
     // Code from starterclass.jsx begins
 
-    import React, { useEffect, useMemo, useState } from "react";
+    // import React, { useEffect, useMemo, useState } from "react";
 
 /**
  * Starterclass by ICUNI — Luxury V8 (Royal Palette)
@@ -287,9 +287,9 @@ function Sparkles() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Main Component
+//
 // ─────────────────────────────────────────────────────────────────────────────
-export default function StarterclassLuxuryV8() {
+  function StarterclassLuxuryV8() {
   const [tab, setTab] = useState("overview");
   const [modalOpen, setModalOpen] = useState(false);
   const [showPaid, setShowPaid] = useState(() => { if (typeof window === "undefined") return false; try { return localStorage.getItem("sc_paid_reveal") === "1"; } catch { return false; } });
