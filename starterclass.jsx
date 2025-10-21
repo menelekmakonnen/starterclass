@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+const { useEffect, useMemo, useState } = React;
 
 /**
  * Starterclass by ICUNI — Luxury V8 (Royal Palette)
@@ -270,7 +270,7 @@ function Sparkles() {
 // ─────────────────────────────────────────────────────────────────────────────
 // Main Component
 // ─────────────────────────────────────────────────────────────────────────────
-export default function StarterclassLuxuryV8() {
+function StarterclassLuxuryV8() {
   const [tab, setTab] = useState("overview");
   const [modalOpen, setModalOpen] = useState(false);
   const [showPaid, setShowPaid] = useState(() => { if (typeof window === "undefined") return false; try { return localStorage.getItem("sc_paid_reveal") === "1"; } catch { return false; } });
@@ -624,6 +624,8 @@ export default function StarterclassLuxuryV8() {
     </main>
   );
 }
+
+window.StarterclassLuxuryV8 = StarterclassLuxuryV8;
 
 function PieBlock() {
   const [active, setActive] = useState(PIE_TOPICS[0].key);
