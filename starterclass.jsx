@@ -834,9 +834,9 @@ function StarterclassLuxuryV8() {
   });
   const [activeModule, setActiveModule] = useState("intro");
   const [heroGlowPoint, setHeroGlowPoint] = useState({ x: 0.5, y: 0.5 });
-  const [isHeroGlowActive, setIsHeroGlowActive] = useState(false);
+  const [heroGlowActive, setHeroGlowActive] = useState(false);
   const [siteGlowPoint, setSiteGlowPoint] = useState({ x: 0.5, y: 0.5 });
-  const [isSiteGlowActive, setIsSiteGlowActive] = useState(false);
+  const [siteGlowActive, setSiteGlowActive] = useState(false);
   const [theme, setTheme] = useState(() => {
     if (typeof window === "undefined") return "light";
     try {
@@ -875,6 +875,11 @@ function StarterclassLuxuryV8() {
 
   const heroTitleRef = useRef(null);
   const siteTitleRef = useRef(null);
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
 
   const heroTitleRef = useRef(null);
   const siteTitleRef = useRef(null);
@@ -989,7 +994,7 @@ function StarterclassLuxuryV8() {
   }, []);
 
   const heroTitleStyle = useMemo(() => {
-    if (!isHeroGlowActive) {
+    if (!heroGlowActive) {
       return { color: palette.textPrimary, transition: "color 160ms ease" };
     }
     return {
@@ -999,10 +1004,10 @@ function StarterclassLuxuryV8() {
       textShadow: `0 0 24px ${palette.accentGlow}`,
       transition: "background-position 120ms ease",
     };
-  }, [isHeroGlowActive, heroGlowPoint, palette]);
+  }, [heroGlowActive, heroGlowPoint, palette]);
 
   const siteTitleStyle = useMemo(() => {
-    if (!isSiteGlowActive) {
+    if (!siteGlowActive) {
       return { color: palette.textPrimary, transition: "color 160ms ease" };
     }
     return {
@@ -1012,7 +1017,7 @@ function StarterclassLuxuryV8() {
       textShadow: `0 0 18px ${palette.accentGlow}`,
       transition: "background-position 120ms ease",
     };
-  }, [isSiteGlowActive, siteGlowPoint, palette]);
+  }, [siteGlowActive, siteGlowPoint, palette]);
 
   const upcomingModules = useMemo(
     () => sessions.filter((s) => s.track === "paid").slice(0, 3),
@@ -1090,11 +1095,11 @@ function StarterclassLuxuryV8() {
                 type="button"
                 onClick={() => window.location.reload()}
                 onMouseMove={(event) => {
-                  setIsSiteGlowActive(true);
+                  setSiteGlowActive(true);
                   updateGlow(event, siteTitleRef, setSiteGlowPoint);
                 }}
                 onMouseLeave={() => {
-                  setIsSiteGlowActive(false);
+                  setSiteGlowActive(false);
                   setSiteGlowPoint({ x: 0.5, y: 0.5 });
                 }}
                 className="text-base md:text-lg font-semibold tracking-tight"
@@ -1154,11 +1159,11 @@ function StarterclassLuxuryV8() {
                   className="mt-4 text-3xl md:text-5xl font-bold tracking-tight"
                   style={heroTitleStyle}
                   onMouseMove={(event) => {
-                    setIsHeroGlowActive(true);
+                    setHeroGlowActive(true);
                     updateGlow(event, heroTitleRef, setHeroGlowPoint);
                   }}
                   onMouseLeave={() => {
-                    setIsHeroGlowActive(false);
+                    setHeroGlowActive(false);
                     setHeroGlowPoint({ x: 0.5, y: 0.5 });
                   }}
                 >
