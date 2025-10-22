@@ -834,9 +834,9 @@ function StarterclassLuxuryV8() {
   });
   const [activeModule, setActiveModule] = useState("intro");
   const [heroGlowPoint, setHeroGlowPoint] = useState({ x: 0.5, y: 0.5 });
-  const [heroActive, setHeroActive] = useState(false);
+  const [isHeroGlowActive, setIsHeroGlowActive] = useState(false);
   const [siteGlowPoint, setSiteGlowPoint] = useState({ x: 0.5, y: 0.5 });
-  const [siteActive, setSiteActive] = useState(false);
+  const [isSiteGlowActive, setIsSiteGlowActive] = useState(false);
   const [theme, setTheme] = useState(() => {
     if (typeof window === "undefined") return "light";
     try {
@@ -875,6 +875,11 @@ function StarterclassLuxuryV8() {
 
   const heroTitleRef = useRef(null);
   const siteTitleRef = useRef(null);
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
 
   const heroTitleRef = useRef(null);
   const siteTitleRef = useRef(null);
@@ -984,7 +989,7 @@ function StarterclassLuxuryV8() {
   }, []);
 
   const heroTitleStyle = useMemo(() => {
-    if (!heroActive) {
+    if (!isHeroGlowActive) {
       return { color: palette.textPrimary, transition: "color 160ms ease" };
     }
     return {
@@ -994,10 +999,10 @@ function StarterclassLuxuryV8() {
       textShadow: `0 0 24px ${palette.accentGlow}`,
       transition: "background-position 120ms ease",
     };
-  }, [heroActive, heroGlowPoint, palette]);
+  }, [isHeroGlowActive, heroGlowPoint, palette]);
 
   const siteTitleStyle = useMemo(() => {
-    if (!siteActive) {
+    if (!isSiteGlowActive) {
       return { color: palette.textPrimary, transition: "color 160ms ease" };
     }
     return {
@@ -1007,7 +1012,7 @@ function StarterclassLuxuryV8() {
       textShadow: `0 0 18px ${palette.accentGlow}`,
       transition: "background-position 120ms ease",
     };
-  }, [siteActive, siteGlowPoint, palette]);
+  }, [isSiteGlowActive, siteGlowPoint, palette]);
 
   const upcomingModules = useMemo(
     () => sessions.filter((s) => s.track === "paid").slice(0, 3),
@@ -1085,11 +1090,11 @@ function StarterclassLuxuryV8() {
                 type="button"
                 onClick={() => window.location.reload()}
                 onMouseMove={(event) => {
-                  setSiteActive(true);
+                  setIsSiteGlowActive(true);
                   updateGlow(event, siteTitleRef, setSiteGlowPoint);
                 }}
                 onMouseLeave={() => {
-                  setSiteActive(false);
+                  setIsSiteGlowActive(false);
                   setSiteGlowPoint({ x: 0.5, y: 0.5 });
                 }}
                 className="text-base md:text-lg font-semibold tracking-tight"
@@ -1149,11 +1154,11 @@ function StarterclassLuxuryV8() {
                   className="mt-4 text-3xl md:text-5xl font-bold tracking-tight"
                   style={heroTitleStyle}
                   onMouseMove={(event) => {
-                    setHeroActive(true);
+                    setIsHeroGlowActive(true);
                     updateGlow(event, heroTitleRef, setHeroGlowPoint);
                   }}
                   onMouseLeave={() => {
-                    setHeroActive(false);
+                    setIsHeroGlowActive(false);
                     setHeroGlowPoint({ x: 0.5, y: 0.5 });
                   }}
                 >
