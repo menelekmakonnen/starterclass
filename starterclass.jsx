@@ -83,9 +83,9 @@ const GOOGLE_FORM_URL_EMBED =
   "https://docs.google.com/forms/d/e/1FAIpQLScmdBVzUHMAhe2hX7bW3ns6EeOw4D7RTyMDBT_C8XGemzjs-w/viewform?embedded=true";
 
 const INTRO_NAME = "Starterclass Session – Customisation";
-const INTRO_START_ISO = "2025-11-08T11:00:00Z"; // Sat 08 Nov 2025 11:00 UK (UTC)
-const INTRO_END_ISO   = "2025-11-08T12:30:00Z";
-const EARLY_BIRD_DEADLINE_ISO = "2025-11-08T12:30:00Z";
+const INTRO_START_ISO = "2025-11-15T11:00:00Z"; // Sat 15 Nov 2025 11:00 UK (UTC)
+const INTRO_END_ISO = "2025-11-15T12:30:00Z";
+const EARLY_BIRD_DEADLINE_ISO = "2025-11-15T12:30:00Z";
 
 // Sessions (UK times in UTC). Titles updated per request.
 const SESSIONS = [
@@ -93,9 +93,9 @@ const SESSIONS = [
     k: "intro",
     month: "nov",
     title: INTRO_NAME,
-    date: "Sat 08 Nov 2025",
-    start: "2025-11-08T11:00:00Z",
-    end: "2025-11-08T12:30:00Z",
+    date: "Sat 15 Nov 2025",
+    start: "2025-11-15T11:00:00Z",
+    end: "2025-11-15T12:30:00Z",
     desc: "Customisation deep dives across Projects, GPTs, and prompts that deliver.",
     outcome: "Leave with one custom GPT, a fully functional project, and prompt flows tuned for business and creative briefs.",
     track: "intro",
@@ -110,9 +110,9 @@ const SESSIONS = [
     k: "s2",
     month: "nov",
     title: "Canvas Deep Dive · Codex Foundations",
-    date: "Sat 15 Nov 2025",
-    start: "2025-11-15T11:00:00Z",
-    end: "2025-11-15T12:30:00Z",
+    date: "Sat 22 Nov 2025",
+    start: "2025-11-22T11:00:00Z",
+    end: "2025-11-22T12:30:00Z",
     desc: "Canvas as the build surface, Codex for repos, and dependable outputs.",
     outcome: "Confident Canvas workflows and Codex patterns you can rely on.",
     track: "paid",
@@ -126,9 +126,9 @@ const SESSIONS = [
     k: "s3",
     month: "nov",
     title: "Projects & GPTs Immersion",
-    date: "Sat 22 Nov 2025",
-    start: "2025-11-22T11:00:00Z",
-    end: "2025-11-22T12:30:00Z",
+    date: "Sat 29 Nov 2025",
+    start: "2025-11-29T11:00:00Z",
+    end: "2025-11-29T12:30:00Z",
     desc: "Design clean Projects, build private GPTs with tools and knowledge packs.",
     outcome: "A production-ready Project and a private GPT wired to it with care.",
     track: "paid",
@@ -140,11 +140,11 @@ const SESSIONS = [
   },
   {
     k: "s4",
-    month: "nov",
+    month: "dec",
     title: "ChatGPT Agents 1 — Prompts, Processes, Internal Tools",
-    date: "Sat 29 Nov 2025",
-    start: "2025-11-29T11:00:00Z",
-    end: "2025-11-29T12:30:00Z",
+    date: "Sat 06 Dec 2025",
+    start: "2025-12-06T11:00:00Z",
+    end: "2025-12-06T12:30:00Z",
     desc: "Agent roles, retries, logs, idempotency, and prompt architecture that holds under load.",
     outcome: "Agent template with roles, retries, logs, and idempotency baked in.",
     track: "paid",
@@ -158,9 +158,9 @@ const SESSIONS = [
     k: "s5",
     month: "dec",
     title: "ChatGPT Agents 2 — Systems",
-    date: "Sat 06 Dec 2025",
-    start: "2025-12-06T11:00:00Z",
-    end: "2025-12-06T12:30:00Z",
+    date: "Sat 13 Dec 2025",
+    start: "2025-12-13T11:00:00Z",
+    end: "2025-12-13T12:30:00Z",
     desc: "Add agents to existing systems through a storytelling automation case study.",
     outcome: "Brief to beats to script pipeline and image generation workflow.",
     track: "paid",
@@ -174,9 +174,9 @@ const SESSIONS = [
     k: "s6",
     month: "dec",
     title: "Introduction to Agent Builders — Security and Safety",
-    date: "Sat 13 Dec 2025",
-    start: "2025-12-13T11:00:00Z",
-    end: "2025-12-13T12:30:00Z",
+    date: "Sat 20 Dec 2025",
+    start: "2025-12-20T11:00:00Z",
+    end: "2025-12-20T12:30:00Z",
     desc: "Credit budgeting, scopes and keys, audit trails, and safe configuration.",
     outcome: "Confidence setting budgets, scopes, keys, and safety guardrails.",
     track: "paid",
@@ -254,8 +254,8 @@ const SESSIONS = [
 ];
 
 const MONTH_BUNDLES = [
-  { key: "nov", label: "November build month", priceUSD: 100, modules: ["intro", "s2", "s3", "s4"] },
-  { key: "dec", label: "December systems month", priceUSD: 100, modules: ["s5", "s6"] },
+  { key: "nov", label: "November build month", priceUSD: 100, modules: ["intro", "s2", "s3"] },
+  { key: "dec", label: "December systems month", priceUSD: 100, modules: ["s4", "s5", "s6"] },
   { key: "jan", label: "January launch month", priceUSD: 100, modules: ["s7", "s8", "s9", "s10"] },
 ];
 
@@ -424,6 +424,20 @@ const TESTIMONIALS = [
     role: "Screenwriter",
     win: "Weekly drafts ready with less stress and more joy",
   },
+  {
+    quote:
+      "My partner and I were stuck arguing about wedding plans. The private GPT we built now tracks decisions and tone so we talk things through before emotions boil over.",
+    name: "Amara J.",
+    role: "Producer balancing a long-distance engagement",
+    win: "Shared reflection prompts diffused the relationship drama",
+  },
+  {
+    quote:
+      "I used the automation walkthrough to map my job hunt. Two weeks later I presented the workflow in interviews and moved from hospitality into a sales ops role.",
+    name: "Omar N.",
+    role: "Career changer pivoting into tech",
+    win: "Live-built automation became the centrepiece of my portfolio",
+  },
 ];
 
 const SOCIAL_PROOF_LOGOS = [
@@ -469,7 +483,7 @@ const CERTIFICATE_POINTS = [
 ];
 
 const CERTIFICATE_IMAGE =
-  "data:image/svg+xml,%3Csvg%20xmlns%3D'http://www.w3.org/2000/svg'%20width%3D'420'%20height%3D'280'%20viewBox%3D'0%200%20420%20280'%3E%3Crect%20width%3D'420'%20height%3D'280'%20rx%3D'36'%20fill%3D'%23F8F5FF'/%3E%3Crect%20x%3D'24'%20y%3D'24'%20width%3D'372'%20height%3D'232'%20rx%3D'24'%20fill%3D'%23FFFFFF'%20stroke%3D'%23C8A145'%20stroke-width%3D'3'/%3E%3Ctext%20x%3D'210'%20y%3D'96'%20text-anchor%3D'middle'%20fill%3D'%23331F66'%20font-family%3D'Inter,%20Arial'%20font-size%3D'24'%3EStarterclass%20Certificate%3C/text%3E%3Ctext%20x%3D'210'%20y%3D'140'%20text-anchor%3D'middle'%20fill%3D'%23514687'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3EThis%20acknowledges%20successful%20completion%3C/text%3E%3Ctext%20x%3D'210'%20y%3D'168'%20text-anchor%3D'middle'%20fill%3D'%23514687'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3Eof%20the%20Starterclass%20Full%20Track.%3C/text%3E%3Ctext%20x%3D'210'%20y%3D'210'%20text-anchor%3D'middle'%20fill%3D'%23C8A145'%20font-family%3D'Inter,%20Arial'%20font-size%3D'32'%3EICUNI%3C/text%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22480%22%20height%3D%22320%22%20viewBox%3D%220%200%20480%20320%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23F9F5FF%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23EFE7FF%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22border%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23D8B25C%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%238B5CF6%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22480%22%20height%3D%22320%22%20rx%3D%2236%22%20fill%3D%22url(%23bg)%22/%3E%0A%20%20%3Crect%20x%3D%2228%22%20y%3D%2228%22%20width%3D%22424%22%20height%3D%22264%22%20rx%3D%2224%22%20fill%3D%22%23FFFFFF%22%20stroke%3D%22url(%23border)%22%20stroke-width%3D%223%22/%3E%0A%20%20%3Crect%20x%3D%2244%22%20y%3D%2244%22%20width%3D%22392%22%20height%3D%22232%22%20rx%3D%2220%22%20fill%3D%22rgba(255,255,255,0.82)%22%20stroke%3D%22rgba(200,161,69,0.25)%22/%3E%0A%20%20%3Ctext%20x%3D%22240%22%20y%3D%22120%22%20text-anchor%3D%22middle%22%20fill%3D%22%23281A52%22%20font-family%3D%22Playfair%20Display,%20serif%22%20font-size%3D%2228%22%3ECertificate%20of%20Completion%3C/text%3E%0A%20%20%3Ctext%20x%3D%22240%22%20y%3D%22155%22%20text-anchor%3D%22middle%22%20fill%3D%22%23514687%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2216%22%3EAwarded%20to%20participants%20who%20complete%20the%3C/text%3E%0A%20%20%3Ctext%20x%3D%22240%22%20y%3D%22178%22%20text-anchor%3D%22middle%22%20fill%3D%22%23514687%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2216%22%3EStarterclass%20Full%20Track%20by%20ICUNI%3C/text%3E%0A%20%20%3Cline%20x1%3D%22140%22%20y1%3D%22214%22%20x2%3D%22340%22%20y2%3D%22214%22%20stroke%3D%22%23C8A145%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3Ctext%20x%3D%22240%22%20y%3D%22234%22%20text-anchor%3D%22middle%22%20fill%3D%22%237A62B8%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2214%22%3EValidated%20projects%20%C2%B7%20Documented%20automations%20%C2%B7%20CPD%20evidence%20filed%3C/text%3E%0A%20%20%3Ctext%20x%3D%22120%22%20y%3D%22260%22%20fill%3D%22%23967742%22%20font-family%3D%22Great%20Vibes,%20cursive%22%20font-size%3D%2220%22%3EMikael%20Gabriel%3C/text%3E%0A%20%20%3Ctext%20x%3D%22120%22%20y%3D%22278%22%20fill%3D%22%23514687%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2210%22%3EProgramme%20Lead%3C/text%3E%0A%20%20%3Ctext%20x%3D%22360%22%20y%3D%22260%22%20fill%3D%22%23967742%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2212%22%20text-anchor%3D%22end%22%3ECertificate%20ID%3A%20SC-2025%3C/text%3E%0A%20%20%3Ctext%20x%3D%22360%22%20y%3D%22278%22%20fill%3D%22%23514687%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2210%22%20text-anchor%3D%22end%22%3EIssued%20digitally%20with%20verification%20link%3C/text%3E%0A%3C/svg%3E";
 
 const ANNOUNCEMENT_KEYS = ["live", "countdown", "earlybird"];
 
@@ -671,15 +685,15 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
   const isDark = theme === "dark";
   const total = topics.reduce((a, b) => a + b.value, 0);
   let angle = 0;
-  const cx = 180;
-  const cy = 160;
-  const r = 140;
+  const cx = 200;
+  const cy = 180;
+  const r = 160;
   const titleId = useMemo(() => `pie-title-${Math.random().toString(36).slice(2, 7)}`, []);
   const descId = `${titleId}-desc`;
   const description = topics.map((t) => `${t.key} ${Math.round((t.value / total) * 100)}%`).join(", ");
   return (
     <svg
-      viewBox="0 0 360 320"
+      viewBox="0 0 400 360"
       className="w-full h-full"
       role="img"
       aria-labelledby={titleId}
@@ -720,7 +734,7 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
       <circle
         cx={cx}
         cy={cy}
-        r={82}
+        r={96}
         style={{
           fill: isDark ? "#0B0B1A" : palette.surfaceSoft,
           stroke: isDark ? "rgba(255,255,255,0.1)" : palette.border,
@@ -731,7 +745,7 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
 }
 
 // Client Value Calculator focused on a single participant
-function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
+function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onExplore }) {
   const { palette } = useTheme();
   const [hours, setHours] = useState(2);
   const [focus, setFocus] = useState("foundation");
@@ -752,7 +766,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
         detail: "Ideal when you’re testing the waters or can’t commit beyond November just yet. Complete the form above to lock your spot and receive the calendar invite.",
         cta: "Reserve your seat",
         action: () => onIntro?.(),
-        secondary: { label: `See the Full Track (${price(3)})`, action: () => onFull?.({ months: 3 }) },
+        secondary: { label: `See the Full Track (${price(3)})`, action: () => onExplore?.({ months: 3 }) },
         focusNotes: {
           foundation: "Start with the intro to get your workspace wired without extra commitments.",
           build: "Book the intro, then decide if you want November once you see the build rhythm.",
@@ -765,7 +779,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
         summary: "Keep momentum after the intro with Canvas, Projects, and GPT labs paced for one person.",
         detail: "You’ll spread tuition across November with zero payments due until then. Submit the intro form now and we’ll follow up with the November enrollment steps.",
         cta: "Hold my November seat",
-        action: () => onFull?.({ months: 1 }),
+        action: () => onFull?.({ months: 1, plan: "november" }),
         secondary: { label: "Reserve the free intro first", action: () => onIntro?.() },
         focusNotes: {
           foundation: "Adds the November labs to cement the fundamentals you learn in Session 0.",
@@ -779,7 +793,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
         summary: "Add safety, orchestration, and platform depth before the January launch push.",
         detail: "Payments split across November and January — December is tuition-free. Complete the registration form to reserve this two-month arc.",
         cta: "Join the two-month arc",
-        action: () => onFull?.({ months: 2 }),
+        action: () => onFull?.({ months: 2, plan: "november_december" }),
         secondary: { label: "Reserve intro access", action: () => onIntro?.() },
         focusNotes: {
           foundation: "Graduate from fundamentals into agent safety and orchestration.",
@@ -793,7 +807,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
         summary: "January adds live AgentKit and N8N builds so you deploy a working automation.",
         detail: `Pay ${price(1)} in November, pause in December, and settle the final ${price(1)} in January. Submit the form and we’ll send the full-track agreement within 24 hours.`,
         cta: "Get the Full Track",
-        action: () => onFull?.({ months: 3 }),
+        action: () => onFull?.({ months: 3, plan: "full_track" }),
         secondary: { label: "Book the intro seat", action: () => onIntro?.() },
         focusNotes: {
           foundation: "Ready for the full build marathon with guided support through January.",
@@ -807,7 +821,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
         summary: "Use office hours, labs, and peer critique to ship an end-to-end agent system.",
         detail: "You’ll stay accountable through January and graduate with the CPD certificate. Completing the form lets us schedule a quick intake to tune the track for you.",
         cta: "Commit to the Full Track",
-        action: () => onFull?.({ months: 3, intensive: true }),
+        action: () => onFull?.({ months: 3, plan: "full_track_accountability", intensive: true }),
         secondary: { label: "Reserve the intro", action: () => onIntro?.() },
         focusNotes: {
           foundation: "Adds accountability so you never lose momentum after the intro.",
@@ -816,7 +830,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
         },
       },
     };
-  }, [currency, formatCurrency, onFull, onIntro]);
+  }, [currency, formatCurrency, onFull, onIntro, onExplore]);
 
   const resultKey = useMemo(() => {
     if (hours <= 1) {
@@ -1079,7 +1093,7 @@ function StarterclassLuxuryV8() {
   const announcementMessages = useMemo(() => {
     const timeMessage = d > 0 ? `Next session in ${d} day${d === 1 ? "" : "s"}` : expired ? "Doors opening now" : "Next session today";
     return [
-      "Live on 08 Nov · 11:00 UK",
+      "Live on 15 Nov · 11:00 UK",
       timeMessage,
       "Early-bird 15% ends when the intro ends",
     ];
@@ -1128,7 +1142,7 @@ function StarterclassLuxuryV8() {
     if (!testimonials.length) return undefined;
     const rotation = setInterval(() => {
       setActiveTestimonial((idx) => (idx + 1) % testimonials.length);
-    }, 14000);
+    }, 20000);
     return () => clearInterval(rotation);
   }, [testimonials.length]);
 
@@ -1243,12 +1257,27 @@ function StarterclassLuxuryV8() {
       setShowPaid(true);
       try { localStorage.setItem("sc_paid_reveal", "1"); } catch {}
     }
-    track("fulltrack_cta_click", { location: source });
+    track("fulltrack_cta_click", { location: source, intent: "explore" });
     setTab("curriculum");
     setActiveModule("s2");
     requestAnimationFrame(() => {
       document.getElementById("curriculum-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+  }
+
+  function triggerFullTrackForm(source = "full_track", detail = {}) {
+    if (!showPaid) {
+      setShowPaid(true);
+      try { localStorage.setItem("sc_paid_reveal", "1"); } catch {}
+    }
+    track("fulltrack_cta_click", { location: source, intent: "enrol", ...detail });
+    setTab("fulltrack");
+    setFullTrackExpanded(true);
+    setActiveModule("s2");
+    requestAnimationFrame(() => {
+      document.getElementById("full-track-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    setModalOpen(true);
   }
 
   function openCalendarModal(location) {
@@ -1317,23 +1346,6 @@ function StarterclassLuxuryV8() {
                 >
                   Starterclass · ICUNI
                 </button>
-                <nav className="hidden md:flex items-center gap-2 text-xs">
-                  {NAV_LINKS.map((item) => (
-                    <button
-                      key={item.href}
-                      type="button"
-                      onClick={() => handleNavClick(item.href)}
-                      className="px-3 py-2 rounded-full transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                      style={{
-                        border: `1px solid ${palette.border}`,
-                        background: palette.surfaceSoft,
-                        color: palette.textSecondary,
-                      }}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </nav>
               </div>
               <div className="order-3 md:order-none w-full md:w-auto flex justify-center">
                 <button
@@ -1368,14 +1380,6 @@ function StarterclassLuxuryV8() {
                     </button>
                   ))}
                 </div>
-                <button
-                  type="button"
-                  className="md:hidden rounded-full border px-3 py-2 text-xs"
-                  style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}
-                  onClick={() => handleNavClick("#overview-tab")}
-                >
-                  Menu
-                </button>
               </div>
             </div>
             <div
@@ -1519,98 +1523,6 @@ function StarterclassLuxuryV8() {
               </div>
               <div>
                 <PieBlock />
-              </div>
-            </div>
-          </GlowCard>
-        </Section>
-
-        <Section className="pb-14">
-          <div className="flex flex-col gap-6">
-            <div className="flex items-center justify-between flex-wrap gap-3">
-              <h2 className="text-xl font-semibold">What comes after the intro</h2>
-              <button
-                type="button"
-                onClick={() => {
-                  revealPaidAndGoCurriculum("track_preview");
-                  scrollToFullTrack();
-                }}
-                className="text-sm underline underline-offset-4"
-                style={{ color: palette.accentSecondary }}
-              >
-                Explore the full track
-              </button>
-            </div>
-            <div className="grid md:grid-cols-3 gap-4">
-              {upcomingModules.map((module) => (
-                <GlowCard key={module.k} className="p-4">
-                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Included in Full Track</div>
-                  <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>{module.title}</div>
-                  <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{module.outcome}</div>
-                  <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>{module.date} · {formatUKRange(module.start, module.end)}</div>
-                </GlowCard>
-              ))}
-            </div>
-          </div>
-        </Section>
-
-        <Section className="pb-16" id="reviews">
-          <GlowCard className="p-6 md:p-10">
-            <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-start">
-              <div className="space-y-5">
-                <div className="text-sm uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Reviews</div>
-                <blockquote
-                  className="text-xl leading-relaxed"
-                  style={{ color: palette.textPrimary }}
-                  aria-live="polite"
-                >
-                  “{testimonial.quote}”
-                </blockquote>
-                <div className="text-sm" style={{ color: palette.textSecondary }}>
-                  {testimonial.name} · {testimonial.role}
-                </div>
-                <div className="text-xs uppercase tracking-[0.26em]" style={{ color: palette.textMuted }}>
-                  {testimonial.win}
-                </div>
-                <div className="flex items-center gap-2" role="tablist" aria-label="Testimonials">
-                  {testimonials.map((item, index) => (
-                    <button
-                      key={item.name}
-                      type="button"
-                      onClick={() => setActiveTestimonial(index)}
-                      className="h-2.5 w-2.5 rounded-full"
-                      style={{
-                        background: index === activeTestimonial ? palette.accentPrimary : palette.border,
-                        border: `1px solid ${palette.border}`,
-                      }}
-                      aria-label={`Show testimonial from ${item.name}`}
-                      aria-pressed={index === activeTestimonial}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="space-y-4">
-                <div className="rounded-2xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Trusted by teams at</div>
-                  <div className="grid grid-cols-2 gap-3">
-                    {SOCIAL_PROOF_LOGOS.map((logo) => (
-                      <span
-                        key={logo.name}
-                        className="flex h-14 items-center justify-center rounded-xl border"
-                        style={{ borderColor: palette.border, background: palette.surface }}
-                      >
-                        <img src={logo.src} alt={`${logo.name} logo`} className="max-h-8 w-auto" loading="lazy" />
-                      </span>
-                    ))}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => triggerIntroForm("reviews_cta")}
-                    className="text-xs underline underline-offset-4"
-                    style={{ color: palette.accentSecondary }}
-                  >
-                    Reserve your intro seat
-                  </button>
-                </div>
               </div>
             </div>
           </GlowCard>
@@ -1786,7 +1698,8 @@ function StarterclassLuxuryV8() {
                     currency={currency}
                     formatCurrency={formatCurrency}
                     onIntro={() => triggerIntroForm("cvc_intro")}
-                    onFull={() => revealPaidAndGoCurriculum("cvc_full")}
+                    onFull={(detail) => triggerFullTrackForm("cvc_full", detail || {})}
+                    onExplore={() => revealPaidAndGoCurriculum("cvc_explore")}
                   />
                 )}
               </div>
@@ -1821,23 +1734,26 @@ function StarterclassLuxuryV8() {
                   onToggle={(event) => setFullTrackExpanded(event.currentTarget.open)}
                   className="space-y-5"
                 >
-                  <summary className="flex flex-col gap-2 cursor-pointer">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <h3 className="text-2xl font-semibold">Full Track enrolment</h3>
+                  <summary className="flex flex-wrap items-center justify-between gap-2 cursor-pointer">
+                    <h3 className="text-2xl font-semibold">Full Track enrolment</h3>
+                    <span className="text-xs" style={{ color: palette.textMuted }}>
+                      {fullTrackExpanded ? "Hide details" : "Tap to view tuition & enrol"}
+                    </span>
+                  </summary>
+                  <div className="space-y-5 pt-2">
+                    <div className="space-y-2 text-sm" style={{ color: palette.textSecondary }}>
+                      <p>
+                        {formatCurrency(fullTrackTotalUSD)} total · pay {formatCurrency(fullTrackMonthlyUSD)} per month across November, December, and January with the early-bird applied automatically.
+                      </p>
                       <span className="text-xs" style={{ color: palette.textMuted }}>
                         {earlyBirdActive
                           ? `Early-bird window closes in ${earlyBird.d}d ${String(earlyBird.h).padStart(2, "0")}h ${String(earlyBird.m).padStart(2, "0")}m`
                           : "Early-bird window closed"}
                       </span>
+                      <span className="block text-xs" style={{ color: palette.textMuted }}>
+                        {earlyBirdActive ? "15% early-bird active until the intro ends" : "Early-bird wrapped · standard tuition applies"}
+                      </span>
                     </div>
-                    <p className="text-sm" style={{ color: palette.textSecondary }}>
-                      {formatCurrency(fullTrackTotalUSD)} total · pay {formatCurrency(fullTrackMonthlyUSD)} per month across November, December, and January with the early-bird applied automatically.
-                    </p>
-                    <span className="text-xs" style={{ color: palette.textMuted }}>
-                      {earlyBirdActive ? "15% early-bird active until the intro ends" : "Early-bird wrapped · standard tuition applies"}
-                    </span>
-                  </summary>
-                  <div className="space-y-5 pt-2">
                     <ul className="grid md:grid-cols-2 gap-4">
                       {FULL_TRACK_OUTCOMES.map((item) => (
                         <li key={item} className="rounded-2xl border p-4 text-sm" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
@@ -1847,7 +1763,10 @@ function StarterclassLuxuryV8() {
                     </ul>
                     <div className="flex flex-wrap gap-3">
                       <div ref={fullTrackPrimaryCtaRef}>
-                        <GlassButton onClick={() => revealPaidAndGoCurriculum("full_track_section")} className="px-6 py-3">
+                        <GlassButton
+                          onClick={() => triggerFullTrackForm("full_track_section", { plan: "full_track" })}
+                          className="px-6 py-3"
+                        >
                           Get the Full Track
                         </GlassButton>
                       </div>
@@ -1917,7 +1836,7 @@ function StarterclassLuxuryV8() {
               <GlowCard className="p-6 space-y-4">
                 <h3 className="text-xl font-semibold">About the Instructor</h3>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-3 text-sm" style={{ color: palette.textSecondary }}>
+                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
                     <p><strong style={{ color: palette.textPrimary }}>Mikael Gabriel</strong> — AI nerd & consultant who has been shipping GPT workflows since 2021.</p>
                     <p>
                       I prototype with ChatGPT, Claude, Midjourney, Leonardo, and the quieter frontier models. The work covers internal automations, marketing ops, production pipelines, and the infrastructure that keeps them running.
@@ -1925,8 +1844,6 @@ function StarterclassLuxuryV8() {
                     <p>
                       My approach is practical: take complex AI systems and make them usable for people who still have a day job. You’ll feel that balance in every module.
                     </p>
-                  </div>
-                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
                     <div className="aspect-video overflow-hidden rounded-2xl border" style={{ borderColor: palette.border }}>
                       <iframe
                         title="Meet the instructor"
@@ -1936,6 +1853,8 @@ function StarterclassLuxuryV8() {
                         className="h-full w-full"
                       />
                     </div>
+                  </div>
+                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
                     <div>
                       <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Snapshot</div>
                       <ul className="mt-2 space-y-2 list-disc pl-5">
@@ -1991,6 +1910,128 @@ function StarterclassLuxuryV8() {
         )}
         </Section>
 
+        <Section className="pb-16" id="reviews">
+          <GlowCard className="p-6 md:p-10">
+            <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-start">
+              <div className="space-y-5">
+                <div className="text-sm uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Reviews</div>
+                <blockquote
+                  className="text-xl leading-relaxed"
+                  style={{ color: palette.textPrimary }}
+                  aria-live="polite"
+                >
+                  “{testimonial.quote}”
+                </blockquote>
+                <div className="text-sm" style={{ color: palette.textSecondary }}>
+                  {testimonial.name} · {testimonial.role}
+                </div>
+                <div className="text-xs uppercase tracking-[0.26em]" style={{ color: palette.textMuted }}>
+                  {testimonial.win}
+                </div>
+                <div className="flex items-center gap-2" role="tablist" aria-label="Testimonials">
+                  {testimonials.map((item, index) => (
+                    <button
+                      key={item.name}
+                      type="button"
+                      onClick={() => setActiveTestimonial(index)}
+                      className="h-2.5 w-2.5 rounded-full"
+                      style={{
+                        background: index === activeTestimonial ? palette.accentPrimary : palette.border,
+                        border: `1px solid ${palette.border}`,
+                      }}
+                      aria-label={`Show testimonial from ${item.name}`}
+                      aria-pressed={index === activeTestimonial}
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="rounded-2xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Trusted by teams at</div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {SOCIAL_PROOF_LOGOS.map((logo) => (
+                      <span
+                        key={logo.name}
+                        className="flex h-14 items-center justify-center rounded-xl border"
+                        style={{ borderColor: palette.border, background: palette.surface }}
+                      >
+                        <img src={logo.src} alt={`${logo.name} logo`} className="max-h-8 w-auto" loading="lazy" />
+                      </span>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => triggerIntroForm("reviews_cta")}
+                    className="text-xs underline underline-offset-4"
+                    style={{ color: palette.accentSecondary }}
+                  >
+                    Reserve your intro seat
+                  </button>
+                </div>
+              </div>
+            </div>
+          </GlowCard>
+        </Section>
+
+        <Section className="pb-14">
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <h2 className="text-xl font-semibold">What comes after the intro</h2>
+              <button
+                type="button"
+                onClick={() => {
+                  revealPaidAndGoCurriculum("track_preview");
+                  scrollToFullTrack();
+                }}
+                className="text-sm underline underline-offset-4"
+                style={{ color: palette.accentSecondary }}
+              >
+                Explore the full track
+              </button>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {upcomingModules.map((module) => (
+                <GlowCard key={module.k} className="p-4">
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Included in Full Track</div>
+                  <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>{module.title}</div>
+                  <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{module.outcome}</div>
+                  <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>{module.date} · {formatUKRange(module.start, module.end)}</div>
+                </GlowCard>
+              ))}
+            </div>
+          )}
+
+        {tab === "faq" && (
+          <div className="mt-8 grid md:grid-cols-2 gap-4" id="faq">
+            {FAQ_ITEMS.map((item) => {
+              const expanded = openFaq === item.question;
+              const panelId = `faq-panel-${item.question.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+              return (
+                <GlowCard key={item.question} className="p-0" aria-expanded={expanded}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq((prev) => (prev === item.question ? "" : item.question))}
+                    className="flex w-full items-center justify-between gap-3 px-6 py-4 text-left"
+                    aria-controls={panelId}
+                    aria-expanded={expanded}
+                    style={{ color: palette.textPrimary }}
+                  >
+                    <span className="text-sm font-semibold">{item.question}</span>
+                    <span aria-hidden="true" className="text-xl" style={{ color: palette.textSecondary }}>
+                      {expanded ? "–" : "+"}
+                    </span>
+                  </button>
+                  {expanded && (
+                    <div id={panelId} className="px-6 pb-6 text-sm" style={{ color: palette.textSecondary }}>
+                      {item.answer}
+                    </div>
+                  )}
+                </GlowCard>
+              );
+            })}
+          </div>
+        </Section>
+
         <BackToTop />
 
         <footer className="mt-24 mb-16">
@@ -2011,7 +2052,7 @@ function StarterclassLuxuryV8() {
             <div className="mx-auto max-w-5xl px-4 pb-6">
               <GlowCard className="px-5 py-4 flex flex-wrap items-center justify-between gap-3">
                 <div className="text-sm" style={{ color: palette.textSecondary }}>
-                  Reserve your seat for Session 0 (08 Nov · 11:00 UK)
+                  Reserve your seat for Session 0 (15 Nov · 11:00 UK)
                 </div>
                 <div className="flex items-center gap-2">
                   <GlassButton onClick={() => triggerIntroForm("sticky_bar")} className="px-5 py-2 text-sm">
@@ -2193,7 +2234,7 @@ function PieBlock() {
         style={{ background: `radial-gradient(circle at center, ${activeColor}26, transparent 65%)` }}
       />
       <div className="grid grid-cols-1 gap-4">
-        <div className="relative mx-auto w-full max-w-[420px]">
+        <div className="relative mx-auto w-full max-w-[480px]">
           <div
             className="relative"
             style={{
@@ -2352,7 +2393,7 @@ function CalendarModal({ onClose, onAdd }) {
         <div className="p-6 space-y-4" style={{ color: palette.textSecondary }}>
           <p className="text-sm">Pop open your calendar now so the session is locked in.</p>
           <GlassButton onClick={onAdd} className="w-full justify-center px-6 py-3 text-sm">
-            Add 08 Nov · 11:00 UK to calendar
+            Add 15 Nov · 11:00 UK to calendar
           </GlassButton>
         </div>
       </div>
