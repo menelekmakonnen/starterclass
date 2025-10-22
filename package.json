@@ -1,0 +1,19 @@
+{
+  "name": "starterclass",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel starterclass.jsx --out-file public/app.js --no-babelrc --presets @babel/preset-env,@babel/preset-react"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@babel/cli": "^7.25.0",
+    "@babel/core": "^7.25.0",
+    "@babel/preset-env": "^7.25.0",
+    "@babel/preset-react": "^7.24.7"
+  }
+}
