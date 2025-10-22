@@ -268,27 +268,29 @@ const CURRENCIES = {
 const HERO_HIGHLIGHTS = [
   {
     icon: "🛠️",
-    title: "Custom GPT built live",
-    sub: "Bring your use-case and watch us configure a private GPT with your files, tone, and guardrails in real time.",
+    title: "Your private GPT",
+    sub: "We build a helper that knows your files, tone, and daily tasks so it feels like a teammate right away.",
   },
   {
     icon: "🛰️",
-    title: "Automation ready to ship",
-    sub: "Follow the workflow blueprint we use with clients so you can deploy an automation immediately after the session.",
+    title: "Workflow, ready to run",
+    sub: "See how a simple automation can take work off your plate—even if you’ve never touched an AI tool before.",
   },
   {
     icon: "🗂️",
-    title: "Prompt kits that deliver",
-    sub: "Leave with tested prompt packs, scorecards, and iteration scripts that keep producing publish-ready work.",
+    title: "Prompt kit you can trust",
+    sub: "Leave with prompts and checklists that keep ideas sharp for business, creative, or personal projects.",
   },
 ];
 
 const NAV_LINKS = [
-  { href: "#overview-tab", label: "Overview" },
-  { href: "#curriculum-anchor", label: "Curriculum" },
-  { href: "#cpd", label: "CPD" },
-  { href: "#instructor", label: "Instructor" },
-  { href: "#faq", label: "FAQ" },
+  { href: "#overview-tab", label: "Overview", tab: "overview" },
+  { href: "#reviews", label: "Reviews" },
+  { href: "#curriculum-anchor", label: "Curriculum", tab: "curriculum" },
+  { href: "#full-track-panel", label: "Full Track", tab: "fulltrack" },
+  { href: "#certificate", label: "Certificate", tab: "certificate" },
+  { href: "#instructor", label: "Instructor", tab: "instructor" },
+  { href: "#faq", label: "FAQ", tab: "faq" },
 ];
 
 const OVERVIEW_WINS = [
@@ -340,67 +342,134 @@ const FAQ_ITEMS = [
     answer:
       "No. Everything is built with visual tooling. Optional code snippets are explained in plain language for non-technical professionals.",
   },
+  {
+    question: "Who is the intro best suited for?",
+    answer:
+      "Business leaders, consultants, freelancers, and operators who want to put AI to work quickly without hiring a developer.",
+  },
+  {
+    question: "Can I join just one month of the Full Track?",
+    answer:
+      "Yes. Each month is priced separately so you can focus on the modules that match your goals—pay for November, January, or both.",
+  },
+  {
+    question: "What tools will we touch?",
+    answer:
+      "Session 0 uses ChatGPT Projects and Custom GPTs. Later modules add N8N, AgentKit, and other no-code platforms, with guided walkthroughs.",
+  },
+  {
+    question: "How do I add the session to my calendar?",
+    answer:
+      "Submit the registration form and tap the calendar button. We’ll also send a confirmation email with the event details.",
+  },
+  {
+    question: "Will I get support after the intro?",
+    answer:
+      "You’ll receive follow-up resources and a prompt kit. Full Track participants also get office hours and build clinics.",
+  },
+  {
+    question: "Can I expense this through my company?",
+    answer:
+      "Yes. We issue invoices and receipts with CPD details so you can expense or reclaim professional development budgets.",
+  },
 ];
 
 const TESTIMONIALS = [
   {
     quote:
-      "The intro sprint had me presenting a working GPT agent to stakeholders the next day. Mikael’s frameworks cut straight through the noise.",
-    name: "Amelia C.",
-    role: "Innovation Lead, Media & Comms",
-    metric: "Presented a GPT roadmap within 24 hours",
+      "I finally organised my family’s care calendar with a GPT that speaks like me. It’s saving arguments and last-minute scrambles every week.",
+    name: "Hannah L.",
+    role: "Producer & parent of three",
+    win: "Family admin now lives in a shared GPT workspace",
   },
   {
     quote:
-      "I walked in with prompt chaos and left with a private GPT, workflow map, and confidence to brief my team. Zero coding, maximum clarity.",
-    name: "Derrick O.",
-    role: "Managing Partner, Strategy Consultancy",
-    metric: "Saved 6 hours/week after the first build",
+      "The intro gave me language I could use with therapy clients. I now walk them through weekly reflections powered by the prompt kit we built together.",
+    name: "Daniel M.",
+    role: "Therapist",
+    win: "Sessions include AI-guided check-ins clients actually finish",
   },
   {
     quote:
-      "The session gave me language to sell AI services. By the end of the month I’d closed two retainers based on the automation kit.",
-    name: "Leila M.",
-    role: "Creative Producer",
-    metric: "Closed £8k in new client work",
+      "I’m in the middle of a career change and the automation demo became my pitch. I booked two coffee chats and a contract within a fortnight.",
+    name: "Riya S.",
+    role: "Strategy consultant pivoting to ops",
+    win: "Used the workflow map to secure new-role interviews",
+  },
+  {
+    quote:
+      "I sell handmade pieces online. The prompts we built now draft listings and customer replies in minutes. I finally have evenings back.",
+    name: "Kwesi A.",
+    role: "Founder, home goods studio",
+    win: "Freed up 5 hours a week on customer messaging",
+  },
+  {
+    quote:
+      "I help couples plan weddings. The private GPT keeps track of tone, budget, and preferences so planning calls stay calm and fun.",
+    name: "Marta G.",
+    role: "Relationship-focused event planner",
+    win: "Introduced AI planning to 6 active clients without friction",
+  },
+  {
+    quote:
+      "Sales used to mean late-night follow-ups. Now the automation we sketched sends warm check-ins and reminders—my pipeline finally feels human again.",
+    name: "Luis P.",
+    role: "SaaS account executive",
+    win: "Personalised follow-ups converted two dormant deals",
+  },
+  {
+    quote:
+      "I brought the intro back to my creative writing group. We now use the prompt kit to unblock drafts without losing our voices.",
+    name: "Jess T.",
+    role: "Screenwriter",
+    win: "Weekly drafts ready with less stress and more joy",
   },
 ];
 
 const SOCIAL_PROOF_LOGOS = [
-  { name: "Allied Media", src: "https://cdn.starterclass.icuni.org/logos/allied.svg" },
-  { name: "Studio North", src: "https://cdn.starterclass.icuni.org/logos/studionorth.svg" },
-  { name: "Brightline Ops", src: "https://cdn.starterclass.icuni.org/logos/brightline.svg" },
-  { name: "Orbital Films", src: "https://cdn.starterclass.icuni.org/logos/orbital.svg" },
+  {
+    name: "Allied Media",
+    src: "data:image/svg+xml,%3Csvg%20xmlns%3D'http://www.w3.org/2000/svg'%20width%3D'160'%20height%3D'48'%20viewBox%3D'0%200%20160%2048'%3E%3Crect%20width%3D'160'%20height%3D'48'%20rx%3D'16'%20fill%3D'%23E9E3FF'/%3E%3Ctext%20x%3D'80'%20y%3D'30'%20text-anchor%3D'middle'%20fill%3D'%233B2E66'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3EAllied%3C/text%3E%3C/svg%3E",
+  },
+  {
+    name: "Studio North",
+    src: "data:image/svg+xml,%3Csvg%20xmlns%3D'http://www.w3.org/2000/svg'%20width%3D'160'%20height%3D'48'%20viewBox%3D'0%200%20160%2048'%3E%3Crect%20width%3D'160'%20height%3D'48'%20rx%3D'16'%20fill%3D'%23FCEFD6'/%3E%3Ctext%20x%3D'80'%20y%3D'30'%20text-anchor%3D'middle'%20fill%3D'%23452D18'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3ENorth%3C/text%3E%3C/svg%3E",
+  },
+  {
+    name: "Brightline Ops",
+    src: "data:image/svg+xml,%3Csvg%20xmlns%3D'http://www.w3.org/2000/svg'%20width%3D'160'%20height%3D'48'%20viewBox%3D'0%200%20160%2048'%3E%3Crect%20width%3D'160'%20height%3D'48'%20rx%3D'16'%20fill%3D'%23E2F7FF'/%3E%3Ctext%20x%3D'80'%20y%3D'30'%20text-anchor%3D'middle'%20fill%3D'%23224455'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3EOPS%3C/text%3E%3C/svg%3E",
+  },
+  {
+    name: "Orbital Films",
+    src: "data:image/svg+xml,%3Csvg%20xmlns%3D'http://www.w3.org/2000/svg'%20width%3D'160'%20height%3D'48'%20viewBox%3D'0%200%20160%2048'%3E%3Crect%20width%3D'160'%20height%3D'48'%20rx%3D'16'%20fill%3D'%23EDE9FF'/%3E%3Ctext%20x%3D'80'%20y%3D'30'%20text-anchor%3D'middle'%20fill%3D'%23331F66'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3EOrbital%3C/text%3E%3C/svg%3E",
+  },
 ];
 
 const TRUST_BADGES = [
-  { label: "CPD Accredited", icon: "📜" },
-  { label: "Stripe Secure Payments", icon: "🔒" },
+  { label: "CPD-accredited pathway", icon: "🎓" },
   { label: "Trusted by 50+ professionals", icon: "🤝" },
 ];
 
-const REVIEWS_LINK = "https://airtable.com/shrReviewsStarterclass";
-
-const MICRO_GALLERY = [
+const CERTIFICATE_POINTS = [
   {
-    title: "Canvas workspace",
-    caption: "Structure briefs, outputs, and review loops in one place.",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%27%23F3EEFF%27/%3E%0A%20%20%3Crect%20x%3D%2724%27%20y%3D%2732%27%20width%3D%27272%27%20height%3D%2732%27%20rx%3D%2712%27%20fill%3D%27%23D9C7FF%27/%3E%0A%20%20%3Crect%20x%3D%2724%27%20y%3D%2776%27%20width%3D%27168%27%20height%3D%2724%27%20rx%3D%2710%27%20fill%3D%27%23B99FF8%27/%3E%0A%20%20%3Crect%20x%3D%27200%27%20y%3D%2776%27%20width%3D%2796%27%20height%3D%2724%27%20rx%3D%2710%27%20fill%3D%27%23E7DFFF%27/%3E%0A%20%20%3Crect%20x%3D%2724%27%20y%3D%27112%27%20width%3D%27120%27%20height%3D%2720%27%20rx%3D%278%27%20fill%3D%27%23C8A145%27/%3E%0A%20%20%3Crect%20x%3D%27152%27%20y%3D%27112%27%20width%3D%27144%27%20height%3D%2720%27%20rx%3D%278%27%20fill%3D%27%23F0E6FF%27/%3E%0A%3C/svg%3E",
-    alt: "Stylised Canvas workspace with neatly arranged sections.",
+    key: "evidence",
+    title: "We track the work",
+    detail: "Attendance, live builds, and deployment reviews feed the CPD audit trail.",
   },
   {
-    title: "N8N flow",
-    caption: "Visualise the automation path you deploy in January.",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%270F1026%27/%3E%0A%20%20%3Cpath%20d%3D%27M70%2090%20H250%27%20stroke%3D%278B5CF6%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Ccircle%20cx%3D%2770%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%23C8A145%27/%3E%0A%20%20%3Ccircle%20cx%3D%27160%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%233B5CCC%27/%3E%0A%20%20%3Ccircle%20cx%3D%27250%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%278B5CF6%27/%3E%0A%20%20%3Cpath%20d%3D%27M160%2090%20V132%27%20stroke%3D%273B5CCC%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Crect%20x%3D%27146%27%20y%3D%27132%27%20width%3D%2728%27%20height%3D%2718%27%20rx%3D%276%27%20fill%3D%271B1D3F%27/%3E%0A%3C/svg%3E",
-    alt: "Stylised N8N workflow with connected nodes.",
+    key: "recognition",
+    title: "Recognised credits",
+    detail: "Use the certificate for professional reviews, appraisals, or continuing education reports.",
   },
   {
-    title: "Agent response log",
-    caption: "See the guardrails and outputs your agent shares back.",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%27101626%27/%3E%0A%20%20%3Crect%20x%3D%2730%27%20y%3D%2738%27%20width%3D%27260%27%20height%3D%2736%27%20rx%3D%2714%27%20fill%3D%271F2A3A%27/%3E%0A%20%20%3Crect%20x%3D%2730%27%20y%3D%2790%27%20width%3D%27260%27%20height%3D%2736%27%20rx%3D%2714%27%20fill%3D%271F2A3A%27/%3E%0A%20%20%3Ctext%20x%3D%2750%27%20y%3D%2763%27%20fill%3D%27%23C8A145%27%20font-size%3D%2716%27%20font-family%3D%27Helvetica%20Neue%2C%20Arial%27%3EAgent%20Reply%3C/text%3E%0A%20%20%3Ctext%20x%3D%2750%27%20y%3D%27115%27%20fill%3D%278B5CF6%27%20font-size%3D%2714%27%20font-family%3D%27Helvetica%20Neue%2C%20Arial%27%3E%22Workflow%20executed.%20Report%20ready.%22%3C/text%3E%0A%3C/svg%3E",
-    alt: "Stylised agent chat log confirming workflow completion.",
+    key: "community",
+    title: "Keep building",
+    detail: "Finish all ten modules to unlock alumni-only build clinics and private workflows.",
   },
 ];
+
+const CERTIFICATE_IMAGE =
+  "data:image/svg+xml,%3Csvg%20xmlns%3D'http://www.w3.org/2000/svg'%20width%3D'420'%20height%3D'280'%20viewBox%3D'0%200%20420%20280'%3E%3Crect%20width%3D'420'%20height%3D'280'%20rx%3D'36'%20fill%3D'%23F8F5FF'/%3E%3Crect%20x%3D'24'%20y%3D'24'%20width%3D'372'%20height%3D'232'%20rx%3D'24'%20fill%3D'%23FFFFFF'%20stroke%3D'%23C8A145'%20stroke-width%3D'3'/%3E%3Ctext%20x%3D'210'%20y%3D'96'%20text-anchor%3D'middle'%20fill%3D'%23331F66'%20font-family%3D'Inter,%20Arial'%20font-size%3D'24'%3EStarterclass%20Certificate%3C/text%3E%3Ctext%20x%3D'210'%20y%3D'140'%20text-anchor%3D'middle'%20fill%3D'%23514687'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3EThis%20acknowledges%20successful%20completion%3C/text%3E%3Ctext%20x%3D'210'%20y%3D'168'%20text-anchor%3D'middle'%20fill%3D'%23514687'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3Eof%20the%20Starterclass%20Full%20Track.%3C/text%3E%3Ctext%20x%3D'210'%20y%3D'210'%20text-anchor%3D'middle'%20fill%3D'%23C8A145'%20font-family%3D'Inter,%20Arial'%20font-size%3D'32'%3EICUNI%3C/text%3E%3C/svg%3E";
 
 const ANNOUNCEMENT_KEYS = ["live", "countdown", "earlybird"];
 
@@ -992,6 +1061,8 @@ function StarterclassLuxuryV8() {
   const [showTerms, setShowTerms] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showContact, setShowContact] = useState(false);
+  const [fullTrackExpanded, setFullTrackExpanded] = useState(false);
+  const [certificateFocus, setCertificateFocus] = useState(CERTIFICATE_POINTS[0]?.key || "evidence");
 
   const heroHeadlineGlowRef = useRef(null);
   const siteLabelGlowRef = useRef(null);
@@ -1015,6 +1086,22 @@ function StarterclassLuxuryV8() {
   }, [d, expired]);
   const testimonials = TESTIMONIALS;
   const testimonial = testimonials[activeTestimonial] || testimonials[0];
+  const navTabMap = useMemo(() => {
+    const map = {};
+    NAV_LINKS.forEach((link) => {
+      if (link.tab) {
+        map[link.href] = link.tab;
+      }
+    });
+    return map;
+  }, []);
+  const activeCertificate = useMemo(
+    () => CERTIFICATE_POINTS.find((point) => point.key === certificateFocus) || CERTIFICATE_POINTS[0],
+    [certificateFocus]
+  );
+  const earlyBirdActive = !earlyBird.expired;
+  const fullTrackTotalUSD = earlyBirdActive ? 255 : 300;
+  const fullTrackMonthlyUSD = earlyBirdActive ? 85 : 100;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -1041,7 +1128,7 @@ function StarterclassLuxuryV8() {
     if (!testimonials.length) return undefined;
     const rotation = setInterval(() => {
       setActiveTestimonial((idx) => (idx + 1) % testimonials.length);
-    }, 9000);
+    }, 14000);
     return () => clearInterval(rotation);
   }, [testimonials.length]);
 
@@ -1170,7 +1257,11 @@ function StarterclassLuxuryV8() {
   }
 
   function scrollToFullTrack() {
-    document.getElementById("full-track")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTab("fulltrack");
+    setFullTrackExpanded(true);
+    requestAnimationFrame(() => {
+      document.getElementById("full-track-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
 
   function handleCalendarClick(location) {
@@ -1207,8 +1298,8 @@ function StarterclassLuxuryV8() {
           }}
         >
           <Section className="py-3 space-y-3">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-4 flex-1 min-w-[220px]">
                 <button
                   ref={siteLabelGlowRef}
                   type="button"
@@ -1244,7 +1335,18 @@ function StarterclassLuxuryV8() {
                   ))}
                 </nav>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="order-3 md:order-none w-full md:w-auto flex justify-center">
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="rounded-full border p-2 text-xl"
+                  style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+                  aria-label={activeTheme === "dark" ? "Switch to bright mode" : "Switch to dark mode"}
+                >
+                  {activeTheme === "dark" ? "☀️" : "🌙"}
+                </button>
+              </div>
+              <div className="flex items-center gap-3 ml-auto">
                 <div
                   className="flex rounded-full border"
                   style={{ borderColor: palette.border, background: palette.surfaceSoft }}
@@ -1266,15 +1368,6 @@ function StarterclassLuxuryV8() {
                     </button>
                   ))}
                 </div>
-                <button
-                  type="button"
-                  onClick={toggleTheme}
-                  className="rounded-full border px-3 py-2 text-lg"
-                  style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
-                  aria-label={activeTheme === "dark" ? "Switch to bright mode" : "Switch to dark mode"}
-                >
-                  {activeTheme === "dark" ? "☀️" : "🌙"}
-                </button>
                 <button
                   type="button"
                   className="md:hidden rounded-full border px-3 py-2 text-xs"
@@ -1315,7 +1408,7 @@ function StarterclassLuxuryV8() {
                   Make AI work like a teammate
                 </h1>
                 <p className="mt-4 text-lg max-w-2xl" style={{ color: palette.textSecondary }}>
-                  In 90 minutes, you’ll leave with a configured Project, a private GPT, and prompt kits that deliver.
+                  In 90 minutes you’ll wire up a workspace, switch on a private GPT, and leave with prompts you can put to work that same afternoon.
                 </p>
                 <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
                   {heroAudienceLine}
@@ -1344,27 +1437,6 @@ function StarterclassLuxuryV8() {
                       </div>
                     </div>
                   ))}
-                </div>
-                <div className="mt-6 flex flex-wrap items-center gap-3 text-xs" style={{ color: palette.textMuted }}>
-                  <span>Trusted by teams at</span>
-                  {SOCIAL_PROOF_LOGOS.map((logo) => (
-                    <span
-                      key={logo.name}
-                      className="inline-flex items-center justify-center rounded-full border px-3 py-1"
-                      style={{ borderColor: palette.border, background: palette.surfaceSoft }}
-                    >
-                      <img src={logo.src} alt={`${logo.name} logo`} className="h-4 w-auto" loading="lazy" />
-                    </span>
-                  ))}
-                  <a
-                    href={REVIEWS_LINK}
-                    className="underline underline-offset-2"
-                    style={{ color: palette.accentSecondary }}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Read attendee reviews
-                  </a>
                 </div>
                 <div className="mt-5 text-sm space-y-1" style={{ color: palette.textSecondary }}>
                   <div><span style={{ color: palette.textMuted }}>UK Time:</span> {formatUKRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
@@ -1436,6 +1508,14 @@ function StarterclassLuxuryV8() {
                     </span>
                   ))}
                 </div>
+                <button
+                  type="button"
+                  onClick={() => handleNavClick("#reviews")}
+                  className="mt-3 text-xs underline underline-offset-4"
+                  style={{ color: palette.accentSecondary }}
+                >
+                  Read attendee reviews
+                </button>
               </div>
               <div>
                 <PieBlock />
@@ -1473,11 +1553,11 @@ function StarterclassLuxuryV8() {
           </div>
         </Section>
 
-        <Section className="pb-16">
+        <Section className="pb-16" id="reviews">
           <GlowCard className="p-6 md:p-10">
             <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-start">
               <div className="space-y-5">
-                <div className="text-sm uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Proof from the room</div>
+                <div className="text-sm uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Reviews</div>
                 <blockquote
                   className="text-xl leading-relaxed"
                   style={{ color: palette.textPrimary }}
@@ -1489,7 +1569,7 @@ function StarterclassLuxuryV8() {
                   {testimonial.name} · {testimonial.role}
                 </div>
                 <div className="text-xs uppercase tracking-[0.26em]" style={{ color: palette.textMuted }}>
-                  {testimonial.metric}
+                  {testimonial.win}
                 </div>
                 <div className="flex items-center gap-2" role="tablist" aria-label="Testimonials">
                   {testimonials.map((item, index) => (
@@ -1509,67 +1589,29 @@ function StarterclassLuxuryV8() {
                 </div>
               </div>
               <div className="space-y-4">
-                <div className="aspect-video overflow-hidden rounded-2xl border" style={{ borderColor: palette.border }}>
-                  <iframe
-                    title="Meet the instructor"
-                    src="https://www.youtube.com/embed/ke4bYVQjRBE"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    className="h-full w-full"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>What you’ll build</div>
-                  <div className="grid gap-3">
-                    {MICRO_GALLERY.map((item) => (
-                      <figure key={item.title} className="rounded-2xl overflow-hidden border" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                        <img src={item.src} alt={item.alt} className="w-full" loading="lazy" />
-                        <figcaption className="px-4 py-3 text-xs" style={{ color: palette.textSecondary }}>
-                          <span className="font-semibold" style={{ color: palette.textPrimary }}>{item.title}</span> — {item.caption}
-                        </figcaption>
-                      </figure>
+                <div className="rounded-2xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Trusted by teams at</div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {SOCIAL_PROOF_LOGOS.map((logo) => (
+                      <span
+                        key={logo.name}
+                        className="flex h-14 items-center justify-center rounded-xl border"
+                        style={{ borderColor: palette.border, background: palette.surface }}
+                      >
+                        <img src={logo.src} alt={`${logo.name} logo`} className="max-h-8 w-auto" loading="lazy" />
+                      </span>
                     ))}
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => triggerIntroForm("reviews_cta")}
+                    className="text-xs underline underline-offset-4"
+                    style={{ color: palette.accentSecondary }}
+                  >
+                    Reserve your intro seat
+                  </button>
                 </div>
               </div>
-            </div>
-          </GlowCard>
-        </Section>
-
-        <Section id="full-track" ref={fullTrackSectionAnchorRef} className="pb-16">
-          <GlowCard className="p-6 md:p-10 space-y-6">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <h2 className="text-2xl font-semibold">Full Track enrolment</h2>
-                <p className="mt-2 text-sm max-w-2xl" style={{ color: palette.textSecondary }}>
-                  {formatCurrency(300)} · 15% off if you register before the intro ends. Pay {formatCurrency(100)} per month across November, December, and January.
-                </p>
-              </div>
-              <div className="text-xs" style={{ color: palette.textMuted }}>
-                Early-bird window closes in {earlyBird.d}d {String(earlyBird.h).padStart(2, "0")}h {String(earlyBird.m).padStart(2, "0")}m.
-              </div>
-            </div>
-            <ul className="grid md:grid-cols-2 gap-4">
-              {FULL_TRACK_OUTCOMES.map((item) => (
-                <li key={item} className="rounded-2xl border p-4 text-sm" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div className="flex flex-wrap gap-3">
-              <div ref={fullTrackPrimaryCtaRef}>
-                <GlassButton onClick={() => revealPaidAndGoCurriculum("full_track_section")} className="px-6 py-3">
-                  Get the Full Track
-                </GlassButton>
-              </div>
-              <button
-                type="button"
-                onClick={() => triggerIntroForm("full_track_secondary")}
-                className="text-sm underline underline-offset-4"
-                style={{ color: palette.textSecondary }}
-              >
-                Reserve the intro seat first
-              </button>
             </div>
           </GlowCard>
         </Section>
@@ -1582,7 +1624,8 @@ function StarterclassLuxuryV8() {
             {[
               { k: "overview", t: "Overview" },
               { k: "curriculum", t: "Curriculum" },
-              { k: "cpd", t: "CPD Credits" },
+              { k: "fulltrack", t: "Full Track" },
+              { k: "certificate", t: "Certificate" },
               { k: "instructor", t: "Meet your instructor" },
               { k: "faq", t: "FAQ" },
             ].map(({ k, t }) => (
@@ -1591,6 +1634,12 @@ function StarterclassLuxuryV8() {
                 onClick={() => {
                   if (k === "curriculum") {
                     revealPaidAndGoCurriculum("tab_switch");
+                  } else if (k === "fulltrack") {
+                    setTab(k);
+                    setFullTrackExpanded(true);
+                    requestAnimationFrame(() => {
+                      document.getElementById("full-track-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    });
                   } else {
                     setTab(k);
                   }
@@ -1683,7 +1732,8 @@ function StarterclassLuxuryV8() {
               <div className="lg:col-span-8 space-y-6">
                 {monthBundles.map((bundle) => {
                   const filtered = sessions.filter((s) => s.month === bundle.key && s.track !== "break");
-                  const monthLabel = `${bundle.label} · ${formatCurrency(bundle.priceUSD)}`;
+                  const monthPrice = earlyBirdActive ? Math.round(bundle.priceUSD * 0.85) : bundle.priceUSD;
+                  const monthLabel = `${bundle.label} · ${formatCurrency(monthPrice)}`;
                   return (
                     <div key={bundle.key} className="space-y-4">
                       <div className="flex items-center justify-between">
@@ -1747,38 +1797,115 @@ function StarterclassLuxuryV8() {
                     {monthBundles.map((bundle) => (
                       <li key={bundle.key} className="flex items-center justify-between">
                         <span>{bundle.label}</span>
-                        <span style={{ color: palette.textPrimary }}>{formatCurrency(bundle.priceUSD)}</span>
+                        <span style={{ color: palette.textPrimary }}>
+                          {formatCurrency(earlyBirdActive ? Math.round(bundle.priceUSD * 0.85) : bundle.priceUSD)}
+                        </span>
                       </li>
                     ))}
                   </ul>
+                  <div className="text-xs" style={{ color: palette.textMuted }}>
+                    {earlyBirdActive
+                      ? "Early-bird applied · pay in your chosen currency"
+                      : "Early-bird passed · standard tuition shown in your currency"}
+                  </div>
                 </GlowCard>
               </div>
             </div>
           )}
 
-          {tab === "cpd" && (
-            <div className="mt-8" id="cpd">
-              <GlowCard className="p-6 space-y-4">
-                <h3 className="text-xl font-semibold">Certified progress</h3>
-                <p className="text-sm" style={{ color: palette.textSecondary }}>
-                  Complete all ten modules and you’ll receive an ICUNI certificate carrying CPD points. We track attendance, project submissions, and the final deployment to validate the award.
-                </p>
-                <div className="grid sm:grid-cols-2 gap-3 text-sm" style={{ color: palette.textSecondary }}>
-                  <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                    <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Evidence we collect</div>
-                    <ul className="mt-2 space-y-2 list-disc pl-5">
-                      <li>Session attendance and live build checkpoints</li>
-                      <li>Module deliverables stored in your portfolio</li>
-                      <li>Deployment runbook signed off in January</li>
+          {tab === "fulltrack" && (
+            <div className="mt-8" id="full-track-panel" ref={fullTrackSectionAnchorRef}>
+              <GlowCard className="p-6 md:p-8">
+                <details
+                  open={fullTrackExpanded}
+                  onToggle={(event) => setFullTrackExpanded(event.currentTarget.open)}
+                  className="space-y-5"
+                >
+                  <summary className="flex flex-col gap-2 cursor-pointer">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <h3 className="text-2xl font-semibold">Full Track enrolment</h3>
+                      <span className="text-xs" style={{ color: palette.textMuted }}>
+                        {earlyBirdActive
+                          ? `Early-bird window closes in ${earlyBird.d}d ${String(earlyBird.h).padStart(2, "0")}h ${String(earlyBird.m).padStart(2, "0")}m`
+                          : "Early-bird window closed"}
+                      </span>
+                    </div>
+                    <p className="text-sm" style={{ color: palette.textSecondary }}>
+                      {formatCurrency(fullTrackTotalUSD)} total · pay {formatCurrency(fullTrackMonthlyUSD)} per month across November, December, and January with the early-bird applied automatically.
+                    </p>
+                    <span className="text-xs" style={{ color: palette.textMuted }}>
+                      {earlyBirdActive ? "15% early-bird active until the intro ends" : "Early-bird wrapped · standard tuition applies"}
+                    </span>
+                  </summary>
+                  <div className="space-y-5 pt-2">
+                    <ul className="grid md:grid-cols-2 gap-4">
+                      {FULL_TRACK_OUTCOMES.map((item) => (
+                        <li key={item} className="rounded-2xl border p-4 text-sm" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
+                          {item}
+                        </li>
+                      ))}
                     </ul>
+                    <div className="flex flex-wrap gap-3">
+                      <div ref={fullTrackPrimaryCtaRef}>
+                        <GlassButton onClick={() => revealPaidAndGoCurriculum("full_track_section")} className="px-6 py-3">
+                          Get the Full Track
+                        </GlassButton>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => triggerIntroForm("full_track_secondary")}
+                        className="text-sm underline underline-offset-4"
+                        style={{ color: palette.textSecondary }}
+                      >
+                        Reserve the intro seat first
+                      </button>
+                    </div>
                   </div>
-                  <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                    <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>How it helps</div>
-                    <ul className="mt-2 space-y-2 list-disc pl-5">
-                      <li>Use the certificate for internal CPD reporting</li>
-                      <li>Showcase your agent build as part of professional appraisals</li>
-                      <li>Unlock alumni-only build clinics during the next cohort</li>
-                    </ul>
+                </details>
+              </GlowCard>
+            </div>
+          )}
+
+          {tab === "certificate" && (
+            <div className="mt-8" id="certificate">
+              <GlowCard className="p-6 md:p-8">
+                <div className="grid lg:grid-cols-[1fr_1fr] gap-6 items-start">
+                  <div className="rounded-3xl border overflow-hidden" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                    <img src={CERTIFICATE_IMAGE} alt="Starterclass certificate preview" className="w-full" loading="lazy" />
+                  </div>
+                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
+                    <p>
+                      Complete all ten modules and we issue an ICUNI certificate with CPD points. Every live build, submission, and deployment review feeds the evidence we file on your behalf.
+                    </p>
+                    <div className="grid gap-3">
+                      {CERTIFICATE_POINTS.map((point) => {
+                        const active = point.key === activeCertificate.key;
+                        return (
+                          <button
+                            key={point.key}
+                            type="button"
+                            onMouseEnter={() => setCertificateFocus(point.key)}
+                            onFocus={() => setCertificateFocus(point.key)}
+                            onClick={() => setCertificateFocus(point.key)}
+                            className="rounded-2xl border p-4 text-left transition"
+                            style={{
+                              borderColor: palette.border,
+                              background: active ? palette.surface : palette.surfaceSoft,
+                              color: palette.textPrimary,
+                            }}
+                          >
+                            <div className="font-semibold text-sm">{point.title}</div>
+                            <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>
+                              {point.detail}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="rounded-2xl border p-4 text-xs" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
+                      <span style={{ color: palette.textPrimary, fontWeight: 600 }}>Current focus:</span> {activeCertificate.title}
+                      <div className="mt-1">{activeCertificate.detail}</div>
+                    </div>
                   </div>
                 </div>
               </GlowCard>
@@ -1800,6 +1927,15 @@ function StarterclassLuxuryV8() {
                     </p>
                   </div>
                   <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
+                    <div className="aspect-video overflow-hidden rounded-2xl border" style={{ borderColor: palette.border }}>
+                      <iframe
+                        title="Meet the instructor"
+                        src="https://www.youtube.com/embed/ke4bYVQjRBE"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        className="h-full w-full"
+                      />
+                    </div>
                     <div>
                       <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Snapshot</div>
                       <ul className="mt-2 space-y-2 list-disc pl-5">
@@ -2057,7 +2193,7 @@ function PieBlock() {
         style={{ background: `radial-gradient(circle at center, ${activeColor}26, transparent 65%)` }}
       />
       <div className="grid grid-cols-1 gap-4">
-        <div className="relative mx-auto w-full max-w-[360px]">
+        <div className="relative mx-auto w-full max-w-[420px]">
           <div
             className="relative"
             style={{
@@ -2067,10 +2203,10 @@ function PieBlock() {
           >
             <Pie topics={topics} activeIndex={activeIndex} onSelect={setActiveIndex} />
           </div>
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center px-6" style={{ color: palette.textPrimary }}>
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center px-8" style={{ color: palette.textPrimary }}>
             <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{active?.key}</div>
             <div className="mt-2 text-lg font-semibold leading-snug">{active?.headline}</div>
-            <div className="mt-2 text-xs leading-relaxed max-w-[220px]" style={{ color: palette.textSecondary }}>{active?.desc}</div>
+            <div className="mt-2 text-xs leading-relaxed max-w-[260px]" style={{ color: palette.textSecondary }}>{active?.desc}</div>
             <div className="mt-3 text-[0.65rem] uppercase tracking-[0.36em]" style={{ color: palette.textMuted }}>{Math.round(active?.value)}% of session focus</div>
           </div>
         </div>
@@ -2226,15 +2362,28 @@ function CalendarModal({ onClose, onAdd }) {
   const handleNavClick = useCallback(
     (href) => {
       track("nav_click", { href });
-      const el = document.querySelector(href);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      const tabTarget = navTabMap[href];
+      if (tabTarget) {
+        if (tabTarget === "curriculum") {
+          revealPaidAndGoCurriculum("nav_link");
+        } else {
+          setTab(tabTarget);
+          if (tabTarget === "fulltrack") {
+            setFullTrackExpanded(true);
+          }
+        }
       }
+      requestAnimationFrame(() => {
+        const el = document.querySelector(href);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
     },
-    []
+    [navTabMap, revealPaidAndGoCurriculum]
   );
 
-  const heroAudienceLine = "Session 0 is free for business leaders, consultants, and operators—no coding required.";
+  const heroAudienceLine = "Session 0 is free for business leaders, consultants, and curious operators—no coding needed.";
   const stickyShouldRender = stickyVisible && !stickyDismissed;
   const handleStickyDismiss = useCallback(() => {
     setStickyDismissed(true);
