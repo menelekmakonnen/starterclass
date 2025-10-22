@@ -859,6 +859,37 @@ function StarterclassLuxuryV8() {
   const [showTerms, setShowTerms] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showContact, setShowContact] = useState(false);
+  const [openModule, setOpenModule] = useState("intro");
+  const [heroGlow, setHeroGlow] = useState({ x: 0.5, y: 0.5 });
+  const [heroActive, setHeroActive] = useState(false);
+  const [siteGlow, setSiteGlow] = useState({ x: 0.5, y: 0.5 });
+  const [siteActive, setSiteActive] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") return "light";
+    try {
+      return localStorage.getItem("sc_theme_pref") || "light";
+    } catch {
+      return "light";
+    }
+  });
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
 
   const heroTitleRef = useRef(null);
   const siteTitleRef = useRef(null);
