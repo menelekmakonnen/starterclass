@@ -1962,6 +1962,46 @@ function StarterclassLuxuryV8() {
                 </GlowCard>
               ))}
             </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {upcomingModules.map((module) => (
+                <GlowCard key={module.k} className="p-4">
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Included in Full Track</div>
+                  <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>{module.title}</div>
+                  <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{module.outcome}</div>
+                  <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>{module.date} · {formatUKRange(module.start, module.end)}</div>
+                </GlowCard>
+              ))}
+            </div>
+          )}
+
+        {tab === "faq" && (
+          <div className="mt-8 grid md:grid-cols-2 gap-4" id="faq">
+            {FAQ_ITEMS.map((item) => {
+              const expanded = openFaq === item.question;
+              const panelId = `faq-panel-${item.question.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+              return (
+                <GlowCard key={item.question} className="p-0" aria-expanded={expanded}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq((prev) => (prev === item.question ? "" : item.question))}
+                    className="flex w-full items-center justify-between gap-3 px-6 py-4 text-left"
+                    aria-controls={panelId}
+                    aria-expanded={expanded}
+                    style={{ color: palette.textPrimary }}
+                  >
+                    <span className="text-sm font-semibold">{item.question}</span>
+                    <span aria-hidden="true" className="text-xl" style={{ color: palette.textSecondary }}>
+                      {expanded ? "–" : "+"}
+                    </span>
+                  </button>
+                  {expanded && (
+                    <div id={panelId} className="px-6 pb-6 text-sm" style={{ color: palette.textSecondary }}>
+                      {item.answer}
+                    </div>
+                  )}
+                </GlowCard>
+              );
+            })}
           </div>
         </Section>
         <>
