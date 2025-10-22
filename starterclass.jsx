@@ -832,7 +832,7 @@ function StarterclassLuxuryV8() {
       return false;
     }
   });
-  const [openModule, setOpenModule] = useState("intro");
+  const [activeModule, setActiveModule] = useState("intro");
   const [heroGlow, setHeroGlow] = useState({ x: 0.5, y: 0.5 });
   const [heroActive, setHeroActive] = useState(false);
   const [siteGlow, setSiteGlow] = useState({ x: 0.5, y: 0.5 });
@@ -875,6 +875,11 @@ function StarterclassLuxuryV8() {
 
   const heroTitleRef = useRef(null);
   const siteTitleRef = useRef(null);
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
 
   const heroTitleRef = useRef(null);
   const siteTitleRef = useRef(null);
@@ -1025,7 +1030,7 @@ function StarterclassLuxuryV8() {
     }
     track("fulltrack_cta_click", { location: source });
     setTab("curriculum");
-    setOpenModule("s2");
+    setActiveModule("s2");
     requestAnimationFrame(() => {
       document.getElementById("curriculum-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
@@ -1459,13 +1464,13 @@ function StarterclassLuxuryV8() {
                       </div>
                       <div className="space-y-4">
                         {filtered.map((module) => {
-                          const open = openModule === module.k;
+                          const open = activeModule === module.k;
                           return (
                             <div key={module.k} className="rounded-3xl border" style={{ borderColor: palette.border, background: palette.surface }}>
                               <button
                                 type="button"
                                 className="w-full px-5 py-4 flex items-start gap-4 text-left"
-                                onClick={() => setOpenModule((prev) => (prev === module.k ? "" : module.k))}
+                                onClick={() => setActiveModule((prev) => (prev === module.k ? "" : module.k))}
                               >
                                 <div className="flex-1">
                                   <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{module.date}</div>
@@ -1790,91 +1795,6 @@ function PieBlock() {
             Focus detail: {active?.desc}
           </div>
         </div>
-        <div
-          className="rounded-2xl p-5 space-y-3"
-          style={{
-            border: `1px solid ${palette.border}`,
-            background: palette.surfaceSoft,
-            color: palette.textPrimary,
-          }}
-        >
-          <div className="text-xs uppercase tracking-[0.32em]" style={{ color: palette.textMuted }}>Outcome</div>
-          <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>{active?.outcome}</div>
-          <div className="rounded-2xl p-3" style={{ border: `1px solid ${palette.border}`, background: palette.surface }}>
-            <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Toolkit highlight</div>
-            <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>{active?.toolkit}</div>
-          </div>
-          <div className="text-xs" style={{ color: palette.textMuted }}>
-            Focus detail: {active?.desc}
-          </div>
-        </div>
-      </div>
-      <style>{`@keyframes pieRotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}`}</style>
-    </div>
-  );
-}
-
-function ModuleOutlineChart({ segments = [] }) {
-  const fallback = useMemo(
-    () => [
-      { key: "Overview", value: 1, desc: "Module outline preview.", color: "#C8A145" },
-    ],
-    []
-  );
-  const outline = segments && segments.length ? segments : fallback;
-  const [focus, setFocus] = useState(0);
-  const { palette } = useTheme();
-
-  useEffect(() => {
-    if (!outline.length) return undefined;
-    const id = setInterval(() => {
-      setFocus((prev) => (prev + 1) % outline.length);
-    }, 8000);
-    return () => clearInterval(id);
-  }, [outline.length]);
-
-  const active = outline[focus] ?? outline[0];
-  const total = outline.reduce((sum, seg) => sum + (seg.value || 0), 0) || 1;
-  const share = Math.round(((active?.value || 0) / total) * 100);
-
-  return (
-    <div className="grid md:grid-cols-2 gap-4 items-center">
-      <div className="relative w-full max-w-[240px] mx-auto">
-        <div className="relative">
-          <Pie topics={outline} activeIndex={focus} onSelect={setFocus} />
-        </div>
-        <div
-          className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center px-4"
-          style={{ color: palette.textPrimary }}
-        >
-          <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{share}%</div>
-          <div className="mt-1 text-sm font-semibold">{active?.key}</div>
-        </div>
-      </div>
-      <div className="space-y-3">
-        {outline.map((seg, idx) => (
-          <button
-            key={seg.key}
-            type="button"
-            onMouseEnter={() => setFocus(idx)}
-            onFocus={() => setFocus(idx)}
-            className="w-full rounded-2xl p-3 text-left transition"
-            style={{
-              border: `1px solid ${palette.border}`,
-              background: idx === focus ? palette.surface : palette.surfaceSoft,
-              color: palette.textPrimary,
-            }}
-          >
-            <div className="flex items-center gap-3">
-              <span className="h-2 w-2 rounded-full" style={{ background: seg.color }} />
-              <div className="font-semibold text-sm">{seg.key}</div>
-              <div className="ml-auto text-xs" style={{ color: palette.textMuted }}>
-                {Math.round(((seg.value || 0) / total) * 100)}%
-              </div>
-            </div>
-            <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{seg.desc}</div>
-          </button>
-        ))}
       </div>
       <style>{`@keyframes pieRotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}`}</style>
     </div>
