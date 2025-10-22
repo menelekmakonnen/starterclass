@@ -266,9 +266,29 @@ const CURRENCIES = {
 };
 
 const HERO_HIGHLIGHTS = [
-  { icon: "🛠️", title: "Custom GPT built live", sub: "Watch your private assistant configured on the spot." },
-  { icon: "🛰️", title: "Automation ready to ship", sub: "Map a workflow that moves from idea to launch." },
-  { icon: "🗂️", title: "Prompt kits that deliver", sub: "Pack creative and business prompts with proofed outputs." },
+  {
+    icon: "🛠️",
+    title: "Custom GPT built live",
+    sub: "Bring your use-case and watch us configure a private GPT with your files, tone, and guardrails in real time.",
+  },
+  {
+    icon: "🛰️",
+    title: "Automation ready to ship",
+    sub: "Follow the workflow blueprint we use with clients so you can deploy an automation immediately after the session.",
+  },
+  {
+    icon: "🗂️",
+    title: "Prompt kits that deliver",
+    sub: "Leave with tested prompt packs, scorecards, and iteration scripts that keep producing publish-ready work.",
+  },
+];
+
+const NAV_LINKS = [
+  { href: "#overview-tab", label: "Overview" },
+  { href: "#curriculum-anchor", label: "Curriculum" },
+  { href: "#cpd", label: "CPD" },
+  { href: "#instructor", label: "Instructor" },
+  { href: "#faq", label: "FAQ" },
 ];
 
 const OVERVIEW_WINS = [
@@ -293,36 +313,73 @@ const OVERVIEW_WINS = [
 ];
 
 const FULL_TRACK_OUTCOMES = [
-  "Turn November momentum into agent-powered delivery.",
-  "Design systems that stay secure and measurable.",
-  "Launch production-ready automations by the end of January.",
-  "Collect CPD points with a certificate for all ten modules.",
+  "Build private GPT assistants that plug into your live processes.",
+  "Package automations with error handling, approvals, and reporting.",
+  "Ship a cross-tool AI system by the end of January with team-ready docs.",
+  "Collect CPD points and a completion certificate once all 10 modules are done.",
 ];
 
 const FAQ_ITEMS = [
   {
     question: "Do I need the Full Track to start?",
-    answer: "No. The Starterclass Session stands alone. The Full Track simply keeps the build sprint going through January.",
+    answer:
+      "No. Session 0 is designed as a complete win on its own. When you’re ready for more, add the November, December, or January modules month by month.",
   },
   {
     question: "Will there be a replay?",
-    answer: "Only Full Track participants receive the intro replay plus the annotated resources.",
+    answer:
+      "Intro replays and annotated resources unlock for Full Track participants. Live attendance gives you the Q&A, and upgrading keeps everything on-demand.",
   },
   {
     question: "Is the intro really free?",
-    answer: "Yes. Reserve your seat with the badge in the hero — tuition begins only if you add the paid months.",
+    answer:
+      "Yes. Session 0 costs $0. You only pay if you continue into the Full Track months after the live intro. No card is collected for the intro.",
   },
   {
     question: "Do I need to code?",
-    answer: "No. We work visually in Projects, GPT builders, AgentKit, and N8N. Optional code snippets are explained step by step.",
+    answer:
+      "No. Everything is built with visual tooling. Optional code snippets are explained in plain language for non-technical professionals.",
   },
 ];
 
-const TESTIMONIAL = {
-  quote: "I arrived with scattered prompts and left with a calm system that my team now trusts. The intro alone paid for the upgrade.",
-  name: "Elise A.",
-  role: "Innovation Lead, boutique consultancy",
-};
+const TESTIMONIALS = [
+  {
+    quote:
+      "The intro sprint had me presenting a working GPT agent to stakeholders the next day. Mikael’s frameworks cut straight through the noise.",
+    name: "Amelia C.",
+    role: "Innovation Lead, Media & Comms",
+    metric: "Presented a GPT roadmap within 24 hours",
+  },
+  {
+    quote:
+      "I walked in with prompt chaos and left with a private GPT, workflow map, and confidence to brief my team. Zero coding, maximum clarity.",
+    name: "Derrick O.",
+    role: "Managing Partner, Strategy Consultancy",
+    metric: "Saved 6 hours/week after the first build",
+  },
+  {
+    quote:
+      "The session gave me language to sell AI services. By the end of the month I’d closed two retainers based on the automation kit.",
+    name: "Leila M.",
+    role: "Creative Producer",
+    metric: "Closed £8k in new client work",
+  },
+];
+
+const SOCIAL_PROOF_LOGOS = [
+  { name: "Allied Media", src: "https://cdn.starterclass.icuni.org/logos/allied.svg" },
+  { name: "Studio North", src: "https://cdn.starterclass.icuni.org/logos/studionorth.svg" },
+  { name: "Brightline Ops", src: "https://cdn.starterclass.icuni.org/logos/brightline.svg" },
+  { name: "Orbital Films", src: "https://cdn.starterclass.icuni.org/logos/orbital.svg" },
+];
+
+const TRUST_BADGES = [
+  { label: "CPD Accredited", icon: "📜" },
+  { label: "Stripe Secure Payments", icon: "🔒" },
+  { label: "Trusted by 50+ professionals", icon: "🤝" },
+];
+
+const REVIEWS_LINK = "https://airtable.com/shrReviewsStarterclass";
 
 const MICRO_GALLERY = [
   {
@@ -422,7 +479,7 @@ function GlowCard({ children, className = "" }) {
   );
 }
 
-function GlassButton({ children, onClick, className = "", variant = "primary", type = "button" }) {
+function GlassButton({ children, onClick, className = "", variant = "primary", type = "button", ...rest }) {
   const { theme, palette } = useTheme();
   const isDark = theme === "dark";
   const styles =
@@ -446,6 +503,7 @@ function GlassButton({ children, onClick, className = "", variant = "primary", t
         ...styles,
         boxShadow: palette.buttonShadow,
       }}
+      {...rest}
     >
       {children}
     </button>
@@ -547,8 +605,19 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
   const cx = 180;
   const cy = 160;
   const r = 140;
+  const titleId = useMemo(() => `pie-title-${Math.random().toString(36).slice(2, 7)}`, []);
+  const descId = `${titleId}-desc`;
+  const description = topics.map((t) => `${t.key} ${Math.round((t.value / total) * 100)}%`).join(", ");
   return (
-    <svg viewBox="0 0 360 320" className="w-full h-full">
+    <svg
+      viewBox="0 0 360 320"
+      className="w-full h-full"
+      role="img"
+      aria-labelledby={titleId}
+      aria-describedby={descId}
+    >
+      <title id={titleId}>Module focus chart</title>
+      <desc id={descId}>{description}</desc>
       {topics.map((t, idx) => {
         const start = angle;
         const end = angle + (t.value / total) * 360;
@@ -566,6 +635,16 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
               filter: isActive ? "drop-shadow(0 0 12px rgba(255,255,255,0.2))" : "none",
             }}
             onMouseEnter={() => onSelect(idx)}
+            onFocus={() => onSelect(idx)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onSelect(idx);
+              }
+            }}
+            tabIndex={0}
+            role="listitem"
+            aria-label={`${t.key}: ${Math.round((t.value / total) * 100)} percent`}
           />
         );
       })}
@@ -601,46 +680,71 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
         badge: "Start here",
         title: "Reserve the Starterclass Session",
         summary: "Lock in the 90-minute build sprint and collect the Project, private GPT, and prompt kit.",
-        detail: "Ideal when you’re testing the waters or can’t commit beyond November just yet.",
+        detail: "Ideal when you’re testing the waters or can’t commit beyond November just yet. Complete the form above to lock your spot and receive the calendar invite.",
         cta: "Reserve your seat",
         action: () => onIntro?.(),
         secondary: { label: `See the Full Track (${price(3)})`, action: () => onFull?.({ months: 3 }) },
+        focusNotes: {
+          foundation: "Start with the intro to get your workspace wired without extra commitments.",
+          build: "Book the intro, then decide if you want November once you see the build rhythm.",
+          scale: "Use the intro to scope value; upgrade later if you need deeper delivery support.",
+        },
       },
       intro_plus_nov: {
         badge: "November focus",
         title: `Intro + November for ${price(1)}`,
         summary: "Keep momentum after the intro with Canvas, Projects, and GPT labs paced for one person.",
-        detail: "You’ll spread tuition across November with zero payments due until then.",
+        detail: "You’ll spread tuition across November with zero payments due until then. Submit the intro form now and we’ll follow up with the November enrollment steps.",
         cta: "Hold my November seat",
         action: () => onFull?.({ months: 1 }),
         secondary: { label: "Reserve the free intro first", action: () => onIntro?.() },
+        focusNotes: {
+          foundation: "Adds the November labs to cement the fundamentals you learn in Session 0.",
+          build: "Gives you four straight Saturdays to get workflows production-ready.",
+          scale: "Start with November before adding the heavier automation blocks.",
+        },
       },
       two_month_arc: {
         badge: "Systems ready",
         title: `November + December for ${price(2)}`,
         summary: "Add safety, orchestration, and platform depth before the January launch push.",
-        detail: "Payments split across November and January — December is tuition-free.",
+        detail: "Payments split across November and January — December is tuition-free. Complete the registration form to reserve this two-month arc.",
         cta: "Join the two-month arc",
         action: () => onFull?.({ months: 2 }),
         secondary: { label: "Reserve intro access", action: () => onIntro?.() },
+        focusNotes: {
+          foundation: "Graduate from fundamentals into agent safety and orchestration.",
+          build: "Balance hands-on builds with system architecture before January.",
+          scale: "Use December’s systems focus to prep for team rollout.",
+        },
       },
       full_track_focus: {
         badge: "Full Track",
         title: `Full Track for ${price(3)}`,
         summary: "January adds live AgentKit and N8N builds so you deploy a working automation.",
-        detail: `Pay ${price(1)} in November, pause in December, and settle the final ${price(1)} in January.`,
+        detail: `Pay ${price(1)} in November, pause in December, and settle the final ${price(1)} in January. Submit the form and we’ll send the full-track agreement within 24 hours.`,
         cta: "Get the Full Track",
         action: () => onFull?.({ months: 3 }),
         secondary: { label: "Book the intro seat", action: () => onIntro?.() },
+        focusNotes: {
+          foundation: "Ready for the full build marathon with guided support through January.",
+          build: "Best when you want the automation shipped before February.",
+          scale: "Keeps you accountable through to deployment and reporting.",
+        },
       },
       full_track_builder: {
         badge: "Builder pace",
         title: `Full Track + accountability (${price(3)})`,
         summary: "Use office hours, labs, and peer critique to ship an end-to-end agent system.",
-        detail: "You’ll stay accountable through January and graduate with the CPD certificate.",
+        detail: "You’ll stay accountable through January and graduate with the CPD certificate. Completing the form lets us schedule a quick intake to tune the track for you.",
         cta: "Commit to the Full Track",
         action: () => onFull?.({ months: 3, intensive: true }),
         secondary: { label: "Reserve the intro", action: () => onIntro?.() },
+        focusNotes: {
+          foundation: "Adds accountability so you never lose momentum after the intro.",
+          build: "Pairs every module with labs to stress-test your automations.",
+          scale: "Designed if you’re monetising or rolling AI into a team offer quickly.",
+        },
       },
     };
   }, [currency, formatCurrency, onFull, onIntro]);
@@ -665,6 +769,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
   }, [hours, focus]);
 
   const result = results[resultKey];
+  const focusExplainer = result?.focusNotes?.[focus];
 
   return (
     <GlowCard className="p-6 space-y-6">
@@ -673,6 +778,9 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
           <h3 className="text-xl font-semibold">Client Value Calculator</h3>
           <p className="mt-1 text-sm" style={{ color: palette.textSecondary }}>
             Set the weekly time you can invest and choose your focus. One recommendation appears so you know where to start.
+          </p>
+          <p className="mt-1 text-xs" style={{ color: palette.textMuted }} id="cvc-helper">
+            Tip: Hover the icons to see what each focus means. Slider updates announce changes for screen readers.
           </p>
         </div>
         <Badge>Solo participant</Badge>
@@ -693,6 +801,12 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
             onChange={(event) => setHours(Number(event.target.value))}
             className="w-full accent-current"
             style={{ accentColor: palette.accentPrimary }}
+            id="cvc-hours"
+            aria-describedby="cvc-helper"
+            aria-valuemin={1}
+            aria-valuemax={6}
+            aria-valuenow={hours}
+            aria-valuetext={`${hours} hour${hours === 1 ? "" : "s"} per week`}
           />
           <div className="flex justify-between text-[0.65rem] uppercase tracking-[0.2em]" style={{ color: palette.textMuted }}>
             <span>1h</span>
@@ -715,16 +829,31 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
                   background: active ? `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)` : palette.surfaceSoft,
                   color: active ? palette.textPrimary : palette.textSecondary,
                 }}
+                aria-pressed={active}
+                aria-describedby={`focus-tooltip-${option.key}`}
+                title={option.label}
               >
                 <span className="block text-lg" aria-hidden="true">{option.icon}</span>
                 {option.label}
+                <span id={`focus-tooltip-${option.key}`} className="sr-only">
+                  {results[resultKey].focusNotes?.[option.key] || `Focus on ${option.label}`}
+                </span>
               </button>
             );
           })}
         </div>
       </div>
+      {focusExplainer && (
+        <div className="rounded-2xl border px-4 py-3 text-xs" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
+          {focusExplainer}
+        </div>
+      )}
 
-      <div className="rounded-2xl p-5 space-y-3" style={{ border: `1px solid ${palette.border}`, background: palette.surface }}>
+      <div
+        className="rounded-2xl p-5 space-y-3"
+        style={{ border: `1px solid ${palette.border}`, background: palette.surface }}
+        aria-live="polite"
+      >
         <div className="flex items-center gap-2 text-xs uppercase tracking-[0.22em]" style={{ color: palette.textMuted }}>
           <span className="inline-flex h-2 w-2 rounded-full" style={{ background: palette.accentPrimary }} />
           {result.badge}
@@ -735,7 +864,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
         <p className="text-sm" style={{ color: palette.textSecondary }}>{result.summary}</p>
         <p className="text-xs" style={{ color: palette.textMuted }}>{result.detail}</p>
         <div className="flex flex-wrap gap-3 pt-1">
-          <GlassButton onClick={result.action} className="px-5 py-3 text-sm">
+          <GlassButton onClick={result.action} className="px-5 py-3 text-sm" aria-label={result.cta}>
             {result.cta}
           </GlassButton>
           {result.secondary && (
@@ -856,6 +985,10 @@ function StarterclassLuxuryV8() {
   const [announcementIndex, setAnnouncementIndex] = useState(0);
   const [stickyVisible, setStickyVisible] = useState(false);
   const [overviewFocus, setOverviewFocus] = useState("workspace");
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [stickyDismissed, setStickyDismissed] = useState(false);
+  const [stickyMinimized, setStickyMinimized] = useState(false);
+  const [openFaq, setOpenFaq] = useState(FAQ_ITEMS[0]?.question || "");
   const [showTerms, setShowTerms] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showContact, setShowContact] = useState(false);
@@ -901,6 +1034,11 @@ function StarterclassLuxuryV8() {
   const fullTrackRef = useRef(null);
   const fullTrackCtaRef = useRef(null);
 
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
+
   const sessions = useMemo(() => SESSIONS, []);
   const monthBundles = useMemo(() => MONTH_BUNDLES, []);
   const { d, h, m, s, expired } = useCountdown(INTRO_START_ISO);
@@ -916,6 +1054,8 @@ function StarterclassLuxuryV8() {
       "Early-bird 15% ends when the intro ends",
     ];
   }, [d, expired]);
+  const testimonials = TESTIMONIALS;
+  const testimonial = testimonials[activeTestimonial] || testimonials[0];
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -939,6 +1079,14 @@ function StarterclassLuxuryV8() {
   }, [announcementMessages.length]);
 
   useEffect(() => {
+    if (!testimonials.length) return undefined;
+    const rotation = setInterval(() => {
+      setActiveTestimonial((idx) => (idx + 1) % testimonials.length);
+    }, 9000);
+    return () => clearInterval(rotation);
+  }, [testimonials.length]);
+
+  useEffect(() => {
     const onScroll = () => {
       const doc = document.documentElement;
       const threshold = doc.scrollHeight * 0.25;
@@ -948,6 +1096,12 @@ function StarterclassLuxuryV8() {
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!stickyVisible) {
+      setStickyMinimized(false);
+    }
+  }, [stickyVisible]);
 
   useEffect(() => {
     const node = fullTrackCtaRef.current;
@@ -1093,25 +1247,44 @@ function StarterclassLuxuryV8() {
             borderBottom: `1px solid ${palette.border}`,
           }}
         >
-          <Section className="py-3 space-y-2">
-            <div className="flex items-center justify-between gap-4">
-              <button
-                ref={siteTitleRef}
-                type="button"
-                onClick={() => window.location.reload()}
-                onMouseMove={(event) => {
-                  setIsSiteGlowActive(true);
-                  updateGlow(event, siteTitleRef, setSiteGlowPoint);
-                }}
-                onMouseLeave={() => {
-                  setIsSiteGlowActive(false);
-                  setSiteGlowPoint({ x: 0.5, y: 0.5 });
-                }}
-                className="text-base md:text-lg font-semibold tracking-tight"
-                style={siteTitleStyle}
-              >
-                Starterclass · ICUNI
-              </button>
+          <Section className="py-3 space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-4">
+                <button
+                  ref={siteTitleRef}
+                  type="button"
+                  onClick={() => window.location.reload()}
+                  onMouseMove={(event) => {
+                    setIsSiteGlowActive(true);
+                    updateGlow(event, siteTitleRef, setSiteGlowPoint);
+                  }}
+                  onMouseLeave={() => {
+                    setIsSiteGlowActive(false);
+                    setSiteGlowPoint({ x: 0.5, y: 0.5 });
+                  }}
+                  className="text-base md:text-lg font-semibold tracking-tight"
+                  style={siteTitleStyle}
+                >
+                  Starterclass · ICUNI
+                </button>
+                <nav className="hidden md:flex items-center gap-2 text-xs">
+                  {NAV_LINKS.map((item) => (
+                    <button
+                      key={item.href}
+                      type="button"
+                      onClick={() => handleNavClick(item.href)}
+                      className="px-3 py-2 rounded-full transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                      style={{
+                        border: `1px solid ${palette.border}`,
+                        background: palette.surfaceSoft,
+                        color: palette.textSecondary,
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </nav>
+              </div>
               <div className="flex items-center gap-3">
                 <div
                   className="flex rounded-full border"
@@ -1122,7 +1295,7 @@ function StarterclassLuxuryV8() {
                       key={code}
                       type="button"
                       onClick={() => handleCurrencySwitch(code)}
-                      className={`px-3 py-2 text-sm ${currency === code ? "font-semibold" : ""}`}
+                      className={`px-3 py-2 text-sm transition ${currency === code ? "font-semibold" : ""}`}
                       style={{
                         color: currency === code ? palette.textPrimary : palette.textSecondary,
                         background: currency === code ? `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)` : "transparent",
@@ -1139,9 +1312,17 @@ function StarterclassLuxuryV8() {
                   onClick={toggleTheme}
                   className="rounded-full border px-3 py-2 text-lg"
                   style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
-                  aria-label={theme === "dark" ? "Switch to bright mode" : "Switch to dark mode"}
+                  aria-label={activeTheme === "dark" ? "Switch to bright mode" : "Switch to dark mode"}
                 >
-                  {theme === "dark" ? "🌞" : "🌙"}
+                  {activeTheme === "dark" ? "☀️" : "🌙"}
+                </button>
+                <button
+                  type="button"
+                  className="md:hidden rounded-full border px-3 py-2 text-xs"
+                  style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}
+                  onClick={() => handleNavClick("#overview-tab")}
+                >
+                  Menu
                 </button>
               </div>
             </div>
@@ -1177,6 +1358,9 @@ function StarterclassLuxuryV8() {
                 <p className="mt-4 text-lg max-w-2xl" style={{ color: palette.textSecondary }}>
                   In 90 minutes, you’ll leave with a configured Project, a private GPT, and prompt kits that deliver.
                 </p>
+                <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
+                  {heroAudienceLine}
+                </p>
                 <div className="mt-6 grid sm:grid-cols-3 gap-3">
                   {heroHighlights.map((feature) => (
                     <div
@@ -1202,6 +1386,27 @@ function StarterclassLuxuryV8() {
                     </div>
                   ))}
                 </div>
+                <div className="mt-6 flex flex-wrap items-center gap-3 text-xs" style={{ color: palette.textMuted }}>
+                  <span>Trusted by teams at</span>
+                  {SOCIAL_PROOF_LOGOS.map((logo) => (
+                    <span
+                      key={logo.name}
+                      className="inline-flex items-center justify-center rounded-full border px-3 py-1"
+                      style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                    >
+                      <img src={logo.src} alt={`${logo.name} logo`} className="h-4 w-auto" loading="lazy" />
+                    </span>
+                  ))}
+                  <a
+                    href={REVIEWS_LINK}
+                    className="underline underline-offset-2"
+                    style={{ color: palette.accentSecondary }}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Read attendee reviews
+                  </a>
+                </div>
                 <div className="mt-5 text-sm space-y-1" style={{ color: palette.textSecondary }}>
                   <div><span style={{ color: palette.textMuted }}>UK Time:</span> {formatUKRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
                   <div><span style={{ color: palette.textMuted }}>Your Time:</span> {formatLocalRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
@@ -1221,10 +1426,10 @@ function StarterclassLuxuryV8() {
                         style={{
                           border: `1px solid ${palette.border}`,
                           background:
-                            theme === "dark"
+                            activeTheme === "dark"
                               ? "linear-gradient(160deg, rgba(20,20,40,0.92), rgba(11,11,26,0.9))"
                               : `linear-gradient(160deg, ${palette.surfaceSoft}, rgba(255,255,255,0.92))`,
-                          boxShadow: theme === "dark" ? "0 24px 48px rgba(5,0,45,0.45)" : palette.shadow,
+                          boxShadow: activeTheme === "dark" ? "0 24px 48px rgba(5,0,45,0.45)" : palette.shadow,
                         }}
                       >
                         <div className="font-mono font-bold" style={{ fontSize: "2.4rem", color: palette.textPrimary }}>
@@ -1259,6 +1464,18 @@ function StarterclassLuxuryV8() {
                   <span className="basis-full" style={{ color: palette.textMuted }}>
                     Submit the registration form so we can email the invite and reminder.
                   </span>
+                </div>
+                <div className="mt-4 flex flex-wrap items-center gap-2 text-xs" style={{ color: palette.textSecondary }}>
+                  {TRUST_BADGES.map((badge) => (
+                    <span
+                      key={badge.label}
+                      className="inline-flex items-center gap-2 rounded-full border px-3 py-1"
+                      style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                    >
+                      <span aria-hidden="true">{badge.icon}</span>
+                      {badge.label}
+                    </span>
+                  ))}
                 </div>
               </div>
               <div>
@@ -1299,25 +1516,62 @@ function StarterclassLuxuryV8() {
 
         <Section className="pb-16">
           <GlowCard className="p-6 md:p-10">
-            <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-center">
-              <div>
+            <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-start">
+              <div className="space-y-5">
                 <div className="text-sm uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Proof from the room</div>
-                <blockquote className="mt-4 text-xl leading-relaxed" style={{ color: palette.textPrimary }}>
-                  “{TESTIMONIAL.quote}”
+                <blockquote
+                  className="text-xl leading-relaxed"
+                  style={{ color: palette.textPrimary }}
+                  aria-live="polite"
+                >
+                  “{testimonial.quote}”
                 </blockquote>
-                <div className="mt-4 text-sm" style={{ color: palette.textSecondary }}>
-                  {TESTIMONIAL.name} · {TESTIMONIAL.role}
+                <div className="text-sm" style={{ color: palette.textSecondary }}>
+                  {testimonial.name} · {testimonial.role}
+                </div>
+                <div className="text-xs uppercase tracking-[0.26em]" style={{ color: palette.textMuted }}>
+                  {testimonial.metric}
+                </div>
+                <div className="flex items-center gap-2" role="tablist" aria-label="Testimonials">
+                  {testimonials.map((item, index) => (
+                    <button
+                      key={item.name}
+                      type="button"
+                      onClick={() => setActiveTestimonial(index)}
+                      className="h-2.5 w-2.5 rounded-full"
+                      style={{
+                        background: index === activeTestimonial ? palette.accentPrimary : palette.border,
+                        border: `1px solid ${palette.border}`,
+                      }}
+                      aria-label={`Show testimonial from ${item.name}`}
+                      aria-pressed={index === activeTestimonial}
+                    />
+                  ))}
                 </div>
               </div>
-              <div className="grid gap-3">
-                {MICRO_GALLERY.map((item) => (
-                  <figure key={item.title} className="rounded-2xl overflow-hidden border" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                    <img src={item.src} alt={item.alt} className="w-full" loading="lazy" />
-                    <figcaption className="px-4 py-3 text-xs" style={{ color: palette.textSecondary }}>
-                      <span className="font-semibold" style={{ color: palette.textPrimary }}>{item.title}</span> — {item.caption}
-                    </figcaption>
-                  </figure>
-                ))}
+              <div className="space-y-4">
+                <div className="aspect-video overflow-hidden rounded-2xl border" style={{ borderColor: palette.border }}>
+                  <iframe
+                    title="Meet the instructor"
+                    src="https://www.youtube.com/embed/ke4bYVQjRBE"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="h-full w-full"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>What you’ll build</div>
+                  <div className="grid gap-3">
+                    {MICRO_GALLERY.map((item) => (
+                      <figure key={item.title} className="rounded-2xl overflow-hidden border" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                        <img src={item.src} alt={item.alt} className="w-full" loading="lazy" />
+                        <figcaption className="px-4 py-3 text-xs" style={{ color: palette.textSecondary }}>
+                          <span className="font-semibold" style={{ color: palette.textPrimary }}>{item.title}</span> — {item.caption}
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </GlowCard>
@@ -1361,7 +1615,7 @@ function StarterclassLuxuryV8() {
           </GlowCard>
         </Section>
 
-        <Section className="pb-20">
+        <Section className="pb-20" id="overview-tab">
           <div
             className="flex items-center gap-2 p-1 rounded-2xl w-fit"
             style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}
@@ -1544,7 +1798,7 @@ function StarterclassLuxuryV8() {
           )}
 
           {tab === "cpd" && (
-            <div className="mt-8">
+            <div className="mt-8" id="cpd">
               <GlowCard className="p-6 space-y-4">
                 <h3 className="text-xl font-semibold">Certified progress</h3>
                 <p className="text-sm" style={{ color: palette.textSecondary }}>
@@ -1573,38 +1827,73 @@ function StarterclassLuxuryV8() {
           )}
 
           {tab === "instructor" && (
-            <div className="mt-8">
+            <div className="mt-8" id="instructor">
               <GlowCard className="p-6 space-y-4">
                 <h3 className="text-xl font-semibold">About the Instructor</h3>
-                <p className="text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
-                  Mikael Gabriel — AI Nerd & Consultant
-                </p>
-                <p className="text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
-                  I’ve been buried in artificial intelligence since 2021, long before it became everyone’s dinner topic. I started with ChatGPT back in November 2022, then went down the rabbit hole with Claude, Midjourney, Leonardo, and just about every other frontier model — including the quiet ones nobody talks about. I don’t just follow the AI wave; I live inside it.
-                </p>
-                <p className="text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
-                  I’ve personally introduced over fifty people to using AI in their daily lives — friends, colleagues, and strangers who now can’t imagine working without it. Maybe I should be proud. Maybe I should be worried. Either way, I’m hooked.
-                </p>
-                <p className="text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
-                  I’m currently pursuing a Global Executive MBA with AI Specialisation, certified in Microsoft Azure AI Fundamentals, and still chasing more — not out of obligation, but obsession. I build everything I can with AI: this website, the infrastructure behind it, the automations, the workflows — all without writing a single line of code. My job is to make complex systems simple and usable.
-                </p>
-                <p className="text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
-                  But I’m not an AI absolutist. I believe in humanity above the hype. I use AI to make human work easier — not to replace it. I still shoot live-action films. I still collaborate with real people. And that balance is what I’ll teach you: how to work with AI, not for it.
-                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-3 text-sm" style={{ color: palette.textSecondary }}>
+                    <p><strong style={{ color: palette.textPrimary }}>Mikael Gabriel</strong> — AI nerd & consultant who has been shipping GPT workflows since 2021.</p>
+                    <p>
+                      I prototype with ChatGPT, Claude, Midjourney, Leonardo, and the quieter frontier models. The work covers internal automations, marketing ops, production pipelines, and the infrastructure that keeps them running.
+                    </p>
+                    <p>
+                      My approach is practical: take complex AI systems and make them usable for people who still have a day job. You’ll feel that balance in every module.
+                    </p>
+                  </div>
+                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
+                    <div>
+                      <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Snapshot</div>
+                      <ul className="mt-2 space-y-2 list-disc pl-5">
+                        <li><strong style={{ color: palette.textPrimary }}>50+ professionals onboarded</strong> into daily AI use across strategy, media, and product teams.</li>
+                        <li><strong style={{ color: palette.textPrimary }}>Global Executive MBA (AI specialisation)</strong> in progress; certified in Microsoft Azure AI Fundamentals.</li>
+                        <li><strong style={{ color: palette.textPrimary }}>Client wins:</strong> media networks, independent studios, and consultancies delivering AI services.</li>
+                        <li><strong style={{ color: palette.textPrimary }}>No-code systems builder</strong> — everything from this landing page to the automations behind it.</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Philosophy</div>
+                      <ol className="mt-2 space-y-2 list-decimal pl-5">
+                        <li>Keep humans in control — AI supports, it doesn’t replace.</li>
+                        <li>Build visibly so teams can trust the workflows they inherit.</li>
+                        <li>Ship outcomes: working GPTs, automations, and prompt kits that deliver.</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
               </GlowCard>
             </div>
           )}
 
-          {tab === "faq" && (
-            <div className="mt-8 grid md:grid-cols-2 gap-4">
-              {FAQ_ITEMS.map((item) => (
-                <GlowCard key={item.question} className="p-6">
-                  <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>{item.question}</div>
-                  <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>{item.answer}</div>
+        {tab === "faq" && (
+          <div className="mt-8 grid md:grid-cols-2 gap-4" id="faq">
+            {FAQ_ITEMS.map((item) => {
+              const expanded = openFaq === item.question;
+              const panelId = `faq-panel-${item.question.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+              return (
+                <GlowCard key={item.question} className="p-0" aria-expanded={expanded}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq((prev) => (prev === item.question ? "" : item.question))}
+                    className="flex w-full items-center justify-between gap-3 px-6 py-4 text-left"
+                    aria-controls={panelId}
+                    aria-expanded={expanded}
+                    style={{ color: palette.textPrimary }}
+                  >
+                    <span className="text-sm font-semibold">{item.question}</span>
+                    <span aria-hidden="true" className="text-xl" style={{ color: palette.textSecondary }}>
+                      {expanded ? "–" : "+"}
+                    </span>
+                  </button>
+                  {expanded && (
+                    <div id={panelId} className="px-6 pb-6 text-sm" style={{ color: palette.textSecondary }}>
+                      {item.answer}
+                    </div>
+                  )}
                 </GlowCard>
-              ))}
-            </div>
-          )}
+              );
+            })}
+          </div>
+        )}
         </Section>
 
         <BackToTop />
@@ -1622,24 +1911,57 @@ function StarterclassLuxuryV8() {
           </Section>
         </footer>
 
-        {stickyVisible && (
+        {stickyShouldRender && !stickyMinimized && (
           <div className="fixed inset-x-0 bottom-0 z-40">
             <div className="mx-auto max-w-5xl px-4 pb-6">
               <GlowCard className="px-5 py-4 flex flex-wrap items-center justify-between gap-3">
                 <div className="text-sm" style={{ color: palette.textSecondary }}>
                   Reserve your seat for Session 0 (08 Nov · 11:00 UK)
                 </div>
-                <GlassButton onClick={() => triggerIntroForm("sticky_bar")} className="px-5 py-2 text-sm">
-                  Reserve your seat
-                </GlassButton>
+                <div className="flex items-center gap-2">
+                  <GlassButton onClick={() => triggerIntroForm("sticky_bar")} className="px-5 py-2 text-sm">
+                    Reserve your seat
+                  </GlassButton>
+                  <button
+                    type="button"
+                    className="text-xs underline underline-offset-4"
+                    style={{ color: palette.textSecondary }}
+                    onClick={handleStickyMinimize}
+                  >
+                    Minimise
+                  </button>
+                  <button
+                    type="button"
+                    className="text-xs"
+                    style={{ color: palette.textMuted }}
+                    onClick={handleStickyDismiss}
+                    aria-label="Dismiss reservation reminder"
+                  >
+                    ×
+                  </button>
+                </div>
               </GlowCard>
             </div>
           </div>
         )}
+        {stickyShouldRender && stickyMinimized && (
+          <button
+            type="button"
+            className="fixed bottom-4 right-4 z-40 rounded-full px-4 py-2 text-xs font-semibold shadow-lg"
+            style={{
+              background: palette.accentSecondary,
+              color: "white",
+              boxShadow: palette.shadow,
+            }}
+            onClick={handleStickyRestore}
+          >
+            Reserve Session 0
+          </button>
+        )}
 
         {modalOpen && (
           <div className="fixed inset-0 z-50 grid place-items-center p-4">
-            <div className="absolute inset-0 backdrop-blur" style={{ background: theme === "dark" ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }} onClick={() => setModalOpen(false)} />
+            <div className="absolute inset-0 backdrop-blur" style={{ background: activeTheme === "dark" ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }} onClick={() => setModalOpen(false)} />
             <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden" style={{ border: `1px solid ${palette.border}`, background: palette.surface, color: palette.textPrimary }}>
               <div className="px-4 md:px-6 py-4 flex items-center justify-between" style={{ borderBottom: `1px solid ${palette.border}` }}>
                 <div className="font-semibold">Register — {INTRO_NAME}</div>
@@ -1707,6 +2029,7 @@ function StarterclassLuxuryV8() {
               <li><span style={{ color: palette.textMuted }}>Scope:</span> The Starterclass Session provides live instruction, templates, and materials for personal or business use. Redistribution or resale is not permitted without written consent.</li>
               <li><span style={{ color: palette.textMuted }}>Payments:</span> All payments are processed via Stripe. Taxes and fees may apply per region.</li>
               <li><span style={{ color: palette.textMuted }}>Refunds:</span> Cancel up to 48 hours before the first paid session for a full refund. After that, we provide credit toward a future cohort.</li>
+              <li><span style={{ color: palette.textMuted }}>Recordings & materials:</span> Intro replay unlocks for Full Track participants and remains accessible for 60 days after the January capstone, alongside slide decks and prompt kits.</li>
               <li><span style={{ color: palette.textMuted }}>Conduct:</span> Be respectful in live sessions and forums. Disruptive behaviour may result in removal without refund.</li>
               <li><span style={{ color: palette.textMuted }}>IP:</span> Your data remains yours. Course IP remains ICUNI’s and is licensed for your use.</li>
               <li><span style={{ color: palette.textMuted }}>Changes:</span> We may adjust dates or contents for quality or operational reasons; you’ll be notified by email.</li>
@@ -1809,6 +2132,91 @@ function PieBlock() {
           <div className="text-xs" style={{ color: palette.textMuted }}>
             Focus detail: {active?.desc}
           </div>
+        </div>
+        <div
+          className="rounded-2xl p-5 space-y-3"
+          style={{
+            border: `1px solid ${palette.border}`,
+            background: palette.surfaceSoft,
+            color: palette.textPrimary,
+          }}
+        >
+          <div className="text-xs uppercase tracking-[0.32em]" style={{ color: palette.textMuted }}>Outcome</div>
+          <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>{active?.outcome}</div>
+          <div className="rounded-2xl p-3" style={{ border: `1px solid ${palette.border}`, background: palette.surface }}>
+            <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Toolkit highlight</div>
+            <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>{active?.toolkit}</div>
+          </div>
+          <div className="text-xs" style={{ color: palette.textMuted }}>
+            Focus detail: {active?.desc}
+          </div>
+        </div>
+        <div
+          className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center px-4"
+          style={{ color: palette.textPrimary }}
+        >
+          <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{share}%</div>
+          <div className="mt-1 text-sm font-semibold">{active?.key}</div>
+        </div>
+      </div>
+      <div className="space-y-3">
+        {outline.map((seg, idx) => (
+          <button
+            key={seg.key}
+            type="button"
+            onMouseEnter={() => setFocus(idx)}
+            onFocus={() => setFocus(idx)}
+            className="w-full rounded-2xl p-3 text-left transition"
+            style={{
+              border: `1px solid ${palette.border}`,
+              background: idx === focus ? palette.surface : palette.surfaceSoft,
+              color: palette.textPrimary,
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <span className="h-2 w-2 rounded-full" style={{ background: seg.color }} />
+              <div className="font-semibold text-sm">{seg.key}</div>
+              <div className="ml-auto text-xs" style={{ color: palette.textMuted }}>
+                {Math.round(((seg.value || 0) / total) * 100)}%
+              </div>
+            </div>
+            <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{seg.desc}</div>
+          </button>
+        ))}
+      </div>
+      <style>{`@keyframes pieRotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}`}</style>
+    </div>
+  );
+}
+
+function ModuleOutlineChart({ segments = [] }) {
+  const fallback = useMemo(
+    () => [
+      { key: "Overview", value: 1, desc: "Module outline preview.", color: "#C8A145" },
+    ],
+    []
+  );
+  const outline = segments && segments.length ? segments : fallback;
+  const [focus, setFocus] = useState(0);
+  const { palette } = useTheme();
+
+  useEffect(() => {
+    if (!outline.length) return undefined;
+    const id = setInterval(() => {
+      setFocus((prev) => (prev + 1) % outline.length);
+    }, 8000);
+    return () => clearInterval(id);
+  }, [outline.length]);
+
+  const active = outline[focus] ?? outline[0];
+  const total = outline.reduce((sum, seg) => sum + (seg.value || 0), 0) || 1;
+  const share = Math.round(((active?.value || 0) / total) * 100);
+
+  return (
+    <div className="grid md:grid-cols-2 gap-4 items-center">
+      <div className="relative w-full max-w-[240px] mx-auto">
+        <div className="relative">
+          <Pie topics={outline} activeIndex={focus} onSelect={setFocus} />
         </div>
         <div
           className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center px-4"
@@ -1973,3 +2381,28 @@ function CalendarModal({ onClose, onAdd }) {
     </div>
   );
 }
+  const handleNavClick = useCallback(
+    (href) => {
+      track("nav_click", { href });
+      const el = document.querySelector(href);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    },
+    []
+  );
+
+  const heroAudienceLine = "Session 0 is free for business leaders, consultants, and operators—no coding required.";
+  const stickyShouldRender = stickyVisible && !stickyDismissed;
+  const handleStickyDismiss = useCallback(() => {
+    setStickyDismissed(true);
+    track("sticky_cta_dismiss", {});
+  }, []);
+  const handleStickyMinimize = useCallback(() => {
+    setStickyMinimized(true);
+    track("sticky_cta_minimize", {});
+  }, []);
+  const handleStickyRestore = useCallback(() => {
+    setStickyMinimized(false);
+    track("sticky_cta_restore", {});
+  }, []);
