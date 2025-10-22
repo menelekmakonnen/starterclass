@@ -1039,6 +1039,11 @@ function StarterclassLuxuryV8() {
   const fullTrackRef = useRef(null);
   const fullTrackCtaRef = useRef(null);
 
+  const heroHeadlineRef = useRef(null);
+  const siteLabelRef = useRef(null);
+  const fullTrackSectionRef = useRef(null);
+  const fullTrackCtaButtonRef = useRef(null);
+
   const sessions = useMemo(() => SESSIONS, []);
   const monthBundles = useMemo(() => MONTH_BUNDLES, []);
   const { d, h, m, s, expired } = useCountdown(INTRO_START_ISO);
@@ -1104,7 +1109,7 @@ function StarterclassLuxuryV8() {
   }, [stickyVisible]);
 
   useEffect(() => {
-    const node = fullTrackCtaRef.current;
+    const node = fullTrackCtaButtonRef.current;
     if (!node || typeof IntersectionObserver === "undefined") return undefined;
     let seen = false;
     const observer = new IntersectionObserver((entries) => {
@@ -1117,7 +1122,7 @@ function StarterclassLuxuryV8() {
     }, { threshold: 0.4 });
     observer.observe(node);
     return () => observer.disconnect();
-  }, [fullTrackCtaRef]);
+  }, [fullTrackCtaButtonRef]);
 
   const themeClass = activeTheme === "dark" ? "theme-dark" : "theme-light";
   const themeOverrides = useMemo(() => {
@@ -1152,7 +1157,7 @@ function StarterclassLuxuryV8() {
     setter({ x, y });
   }, []);
 
-  const heroTitleStyle = useMemo(() => {
+  const heroHeadlineStyle = useMemo(() => {
     if (!isHeroGlowActive) {
       return { color: palette.textPrimary, transition: "color 160ms ease" };
     }
@@ -1165,7 +1170,7 @@ function StarterclassLuxuryV8() {
     };
   }, [isHeroGlowActive, heroGlowPoint, palette]);
 
-  const siteTitleStyle = useMemo(() => {
+  const siteLabelStyle = useMemo(() => {
     if (!isSiteGlowActive) {
       return { color: palette.textPrimary, transition: "color 160ms ease" };
     }
@@ -1251,19 +1256,19 @@ function StarterclassLuxuryV8() {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-4">
                 <button
-                  ref={siteTitleRef}
+                  ref={siteLabelRef}
                   type="button"
                   onClick={() => window.location.reload()}
                   onMouseMove={(event) => {
                     setIsSiteGlowActive(true);
-                    updateGlow(event, siteTitleRef, setSiteGlowPoint);
+                    updateGlow(event, siteLabelRef, setSiteGlowPoint);
                   }}
                   onMouseLeave={() => {
                     setIsSiteGlowActive(false);
                     setSiteGlowPoint({ x: 0.5, y: 0.5 });
                   }}
                   className="text-base md:text-lg font-semibold tracking-tight"
-                  style={siteTitleStyle}
+                  style={siteLabelStyle}
                 >
                   Starterclass · ICUNI
                 </button>
@@ -1341,12 +1346,12 @@ function StarterclassLuxuryV8() {
               <div>
                 <Badge>Intro session · no payment required</Badge>
                 <h1
-                  ref={heroTitleRef}
+                  ref={heroHeadlineRef}
                   className="mt-4 text-3xl md:text-5xl font-bold tracking-tight"
-                  style={heroTitleStyle}
+                  style={heroHeadlineStyle}
                   onMouseMove={(event) => {
                     setIsHeroGlowActive(true);
-                    updateGlow(event, heroTitleRef, setHeroGlowPoint);
+                    updateGlow(event, heroHeadlineRef, setHeroGlowPoint);
                   }}
                   onMouseLeave={() => {
                     setIsHeroGlowActive(false);
@@ -1577,7 +1582,7 @@ function StarterclassLuxuryV8() {
           </GlowCard>
         </Section>
 
-        <Section id="full-track" ref={fullTrackRef} className="pb-16">
+        <Section id="full-track" ref={fullTrackSectionRef} className="pb-16">
           <GlowCard className="p-6 md:p-10 space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
@@ -1598,7 +1603,7 @@ function StarterclassLuxuryV8() {
               ))}
             </ul>
             <div className="flex flex-wrap gap-3">
-              <div ref={fullTrackCtaRef}>
+              <div ref={fullTrackCtaButtonRef}>
                 <GlassButton onClick={() => revealPaidAndGoCurriculum("full_track_section")} className="px-6 py-3">
                   Get the Full Track
                 </GlassButton>
@@ -2113,24 +2118,6 @@ function PieBlock() {
             <div className="mt-2 text-lg font-semibold leading-snug">{active?.headline}</div>
             <div className="mt-2 text-xs leading-relaxed max-w-[220px]" style={{ color: palette.textSecondary }}>{active?.desc}</div>
             <div className="mt-3 text-[0.65rem] uppercase tracking-[0.36em]" style={{ color: palette.textMuted }}>{Math.round(active?.value)}% of session focus</div>
-          </div>
-        </div>
-        <div
-          className="rounded-2xl p-5 space-y-3"
-          style={{
-            border: `1px solid ${palette.border}`,
-            background: palette.surfaceSoft,
-            color: palette.textPrimary,
-          }}
-        >
-          <div className="text-xs uppercase tracking-[0.32em]" style={{ color: palette.textMuted }}>Outcome</div>
-          <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>{active?.outcome}</div>
-          <div className="rounded-2xl p-3" style={{ border: `1px solid ${palette.border}`, background: palette.surface }}>
-            <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Toolkit highlight</div>
-            <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>{active?.toolkit}</div>
-          </div>
-          <div className="text-xs" style={{ color: palette.textMuted }}>
-            Focus detail: {active?.desc}
           </div>
         </div>
         <div
