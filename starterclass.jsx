@@ -834,10 +834,10 @@ function StarterclassLuxuryV8() {
   });
   const [activeModule, setActiveModule] = useState("intro");
   const [heroGlowPoint, setHeroGlowPoint] = useState({ x: 0.5, y: 0.5 });
-  const [heroGlowActive, setHeroGlowActive] = useState(false);
+  const [isHeroGlowActive, setIsHeroGlowActive] = useState(false);
   const [siteGlowPoint, setSiteGlowPoint] = useState({ x: 0.5, y: 0.5 });
-  const [siteGlowActive, setSiteGlowActive] = useState(false);
-  const [theme, setTheme] = useState(() => {
+  const [isSiteGlowActive, setIsSiteGlowActive] = useState(false);
+  const [activeTheme, setActiveTheme] = useState(() => {
     if (typeof window === "undefined") return "light";
     try {
       return localStorage.getItem("sc_theme_pref") || "light";
@@ -896,11 +896,16 @@ function StarterclassLuxuryV8() {
   const fullTrackRef = useRef(null);
   const fullTrackCtaRef = useRef(null);
 
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
+
   const sessions = useMemo(() => SESSIONS, []);
   const monthBundles = useMemo(() => MONTH_BUNDLES, []);
   const { d, h, m, s, expired } = useCountdown(INTRO_START_ISO);
   const earlyBird = useCountdown(EARLY_BIRD_DEADLINE_ISO);
-  const palette = useMemo(() => getPalette(theme), [theme]);
+  const palette = useMemo(() => getPalette(activeTheme), [activeTheme]);
   const formatCurrency = useCallback((amountUSD, forced) => formatCurrencyValue(amountUSD, forced || currency), [currency]);
   const heroHighlights = HERO_HIGHLIGHTS;
   const announcementMessages = useMemo(() => {
@@ -915,7 +920,7 @@ function StarterclassLuxuryV8() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
-        localStorage.setItem("sc_theme_pref", theme);
+        localStorage.setItem("sc_theme_pref", activeTheme);
       } catch {}
       try {
         localStorage.setItem("sc_currency", currency);
@@ -923,7 +928,7 @@ function StarterclassLuxuryV8() {
     }
     document.body.style.background = palette.simpleBackground;
     document.body.style.color = palette.textPrimary;
-  }, [theme, palette, currency]);
+  }, [activeTheme, palette, currency]);
 
   useEffect(() => {
     if (!announcementMessages.length) return undefined;
@@ -960,9 +965,9 @@ function StarterclassLuxuryV8() {
     return () => observer.disconnect();
   }, [fullTrackCtaRef]);
 
-  const themeClass = theme === "dark" ? "theme-dark" : "theme-light";
+  const themeClass = activeTheme === "dark" ? "theme-dark" : "theme-light";
   const themeOverrides = useMemo(() => {
-    if (theme !== "light") return "";
+    if (activeTheme !== "light") return "";
     return `
       .theme-light [class*="text-white"] { color: ${palette.textPrimary} !important; }
       .theme-light [class*="text-white/90"] { color: ${palette.textPrimary} !important; }
@@ -978,10 +983,10 @@ function StarterclassLuxuryV8() {
       .theme-light [class*="border-[#C8A145]/20"] { border-color: ${palette.border} !important; }
       .theme-light [class*="shadow-[0_0_0_1px_rgba(200,161,69,0.15)_inset]"] { box-shadow: inset 0 0 0 1px ${palette.border} !important; }
     `;
-  }, [theme, palette]);
+  }, [activeTheme, palette]);
 
   const toggleTheme = useCallback(() => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    setActiveTheme((prev) => (prev === "dark" ? "light" : "dark"));
   }, []);
 
   const updateGlow = useCallback((event, ref, setter) => {
@@ -994,7 +999,7 @@ function StarterclassLuxuryV8() {
   }, []);
 
   const heroTitleStyle = useMemo(() => {
-    if (!heroGlowActive) {
+    if (!isHeroGlowActive) {
       return { color: palette.textPrimary, transition: "color 160ms ease" };
     }
     return {
@@ -1004,10 +1009,10 @@ function StarterclassLuxuryV8() {
       textShadow: `0 0 24px ${palette.accentGlow}`,
       transition: "background-position 120ms ease",
     };
-  }, [heroGlowActive, heroGlowPoint, palette]);
+  }, [isHeroGlowActive, heroGlowPoint, palette]);
 
   const siteTitleStyle = useMemo(() => {
-    if (!siteGlowActive) {
+    if (!isSiteGlowActive) {
       return { color: palette.textPrimary, transition: "color 160ms ease" };
     }
     return {
@@ -1017,7 +1022,7 @@ function StarterclassLuxuryV8() {
       textShadow: `0 0 18px ${palette.accentGlow}`,
       transition: "background-position 120ms ease",
     };
-  }, [siteGlowActive, siteGlowPoint, palette]);
+  }, [isSiteGlowActive, siteGlowPoint, palette]);
 
   const upcomingModules = useMemo(
     () => sessions.filter((s) => s.track === "paid").slice(0, 3),
@@ -1065,7 +1070,7 @@ function StarterclassLuxuryV8() {
   }
 
   return (
-    <ThemeProvider theme={theme} palette={palette}>
+    <ThemeProvider theme={activeTheme} palette={palette}>
       <main
         className={`min-h-screen ${themeClass}`}
         style={{
@@ -1095,11 +1100,11 @@ function StarterclassLuxuryV8() {
                 type="button"
                 onClick={() => window.location.reload()}
                 onMouseMove={(event) => {
-                  setSiteGlowActive(true);
+                  setIsSiteGlowActive(true);
                   updateGlow(event, siteTitleRef, setSiteGlowPoint);
                 }}
                 onMouseLeave={() => {
-                  setSiteGlowActive(false);
+                  setIsSiteGlowActive(false);
                   setSiteGlowPoint({ x: 0.5, y: 0.5 });
                 }}
                 className="text-base md:text-lg font-semibold tracking-tight"
@@ -1159,11 +1164,11 @@ function StarterclassLuxuryV8() {
                   className="mt-4 text-3xl md:text-5xl font-bold tracking-tight"
                   style={heroTitleStyle}
                   onMouseMove={(event) => {
-                    setHeroGlowActive(true);
+                    setIsHeroGlowActive(true);
                     updateGlow(event, heroTitleRef, setHeroGlowPoint);
                   }}
                   onMouseLeave={() => {
-                    setHeroGlowActive(false);
+                    setIsHeroGlowActive(false);
                     setHeroGlowPoint({ x: 0.5, y: 0.5 });
                   }}
                 >
@@ -1805,6 +1810,38 @@ function PieBlock() {
             Focus detail: {active?.desc}
           </div>
         </div>
+        <div
+          className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center px-4"
+          style={{ color: palette.textPrimary }}
+        >
+          <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{share}%</div>
+          <div className="mt-1 text-sm font-semibold">{active?.key}</div>
+        </div>
+      </div>
+      <div className="space-y-3">
+        {outline.map((seg, idx) => (
+          <button
+            key={seg.key}
+            type="button"
+            onMouseEnter={() => setFocus(idx)}
+            onFocus={() => setFocus(idx)}
+            className="w-full rounded-2xl p-3 text-left transition"
+            style={{
+              border: `1px solid ${palette.border}`,
+              background: idx === focus ? palette.surface : palette.surfaceSoft,
+              color: palette.textPrimary,
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <span className="h-2 w-2 rounded-full" style={{ background: seg.color }} />
+              <div className="font-semibold text-sm">{seg.key}</div>
+              <div className="ml-auto text-xs" style={{ color: palette.textMuted }}>
+                {Math.round(((seg.value || 0) / total) * 100)}%
+              </div>
+            </div>
+            <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{seg.desc}</div>
+          </button>
+        ))}
       </div>
       <style>{`@keyframes pieRotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}`}</style>
     </div>
