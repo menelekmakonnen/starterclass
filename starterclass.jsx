@@ -859,6 +859,42 @@ function StarterclassLuxuryV8() {
   const [showTerms, setShowTerms] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showContact, setShowContact] = useState(false);
+  const [openModule, setOpenModule] = useState("intro");
+  const [heroGlow, setHeroGlow] = useState({ x: 0.5, y: 0.5 });
+  const [heroActive, setHeroActive] = useState(false);
+  const [siteGlow, setSiteGlow] = useState({ x: 0.5, y: 0.5 });
+  const [siteActive, setSiteActive] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") return "light";
+    try {
+      return localStorage.getItem("sc_theme_pref") || "light";
+    } catch {
+      return "light";
+    }
+  });
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
+
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
 
   const heroTitleRef = useRef(null);
   const siteTitleRef = useRef(null);
@@ -1774,6 +1810,38 @@ function PieBlock() {
             Focus detail: {active?.desc}
           </div>
         </div>
+        <div
+          className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center px-4"
+          style={{ color: palette.textPrimary }}
+        >
+          <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{share}%</div>
+          <div className="mt-1 text-sm font-semibold">{active?.key}</div>
+        </div>
+      </div>
+      <div className="space-y-3">
+        {outline.map((seg, idx) => (
+          <button
+            key={seg.key}
+            type="button"
+            onMouseEnter={() => setFocus(idx)}
+            onFocus={() => setFocus(idx)}
+            className="w-full rounded-2xl p-3 text-left transition"
+            style={{
+              border: `1px solid ${palette.border}`,
+              background: idx === focus ? palette.surface : palette.surfaceSoft,
+              color: palette.textPrimary,
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <span className="h-2 w-2 rounded-full" style={{ background: seg.color }} />
+              <div className="font-semibold text-sm">{seg.key}</div>
+              <div className="ml-auto text-xs" style={{ color: palette.textMuted }}>
+                {Math.round(((seg.value || 0) / total) * 100)}%
+              </div>
+            </div>
+            <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{seg.desc}</div>
+          </button>
+        ))}
       </div>
       <style>{`@keyframes pieRotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}`}</style>
     </div>
