@@ -251,19 +251,19 @@ const CURRENCIES = {
 
 const HERO_HIGHLIGHTS = [
   {
-    icon: "🤖",
-    title: "Private GPT built live",
-    sub: "Bring a brief or file. We configure a custom GPT that answers in your voice before the session ends.",
-  },
-  {
     icon: "🗂️",
-    title: "Workspace set for action",
-    sub: "Structure a Project with guardrails so you know exactly where every task and draft lives.",
+    title: "Projects with your voice",
+    sub: "Say what you need once. We shape a Project so every request routes itself with your tone and priorities.",
   },
   {
-    icon: "📝",
-    title: "Prompt kit to reuse",
-    sub: "Download ready-to-go prompts for business, creative, and personal wins you can try the same day.",
+    icon: "🛠️",
+    title: "Mini-build ready to share",
+    sub: "Describe the vibe. Leave with a working microsite or automation you can hand to clients or teammates.",
+  },
+  {
+    icon: "🔑",
+    title: "Prompt kit that unlocks answers",
+    sub: "Learn the exact phrasing that gets business, creative, and personal wins without guesswork.",
   },
 ];
 
@@ -299,17 +299,17 @@ const FAQ_ITEMS = [
   {
     question: "Do I need the Full Track to start?",
     answer:
-      "No. Session 0 is designed as a complete win on its own. When you’re ready for more, add the November, December, or January modules month by month.",
+      "No. The Starterclass is designed as a complete win on its own. When you’re ready for more, add the November, December, or January modules month by month.",
   },
   {
     question: "Will there be a replay?",
     answer:
-      "Intro replays and annotated resources unlock for Full Track participants. Live attendance gives you the Q&A, and upgrading keeps everything on-demand.",
+      "Starterclass replays and annotated resources unlock for Full Track participants. Live attendance gives you the Q&A, and upgrading keeps everything on-demand.",
   },
   {
-    question: "Is the intro really free?",
+    question: "Is the Starterclass really free?",
     answer:
-      "Yes. Session 0 costs $0. You only pay if you continue into the Full Track months after the live intro. No card is collected for the intro.",
+      "Yes. The Starterclass costs $0. You only pay if you continue into the Full Track months after the live experience. No card is collected for the Starterclass.",
   },
   {
     question: "Do I need to code?",
@@ -317,7 +317,7 @@ const FAQ_ITEMS = [
       "No. Everything is built with visual tooling. Optional code snippets are explained in plain language for non-technical professionals.",
   },
   {
-    question: "Who is the intro best suited for?",
+    question: "Who is the Starterclass best suited for?",
     answer:
       "Business leaders, consultants, freelancers, and operators who want to put AI to work quickly without hiring a developer.",
   },
@@ -329,7 +329,7 @@ const FAQ_ITEMS = [
   {
     question: "What tools will we touch?",
     answer:
-      "Session 0 uses ChatGPT Projects and Custom GPTs. Later modules add N8N, AgentKit, and other no-code platforms, with guided walkthroughs.",
+      "The Starterclass uses ChatGPT Projects and Custom GPTs. Later modules add N8N, AgentKit, and other no-code platforms, with guided walkthroughs.",
   },
   {
     question: "How do I add the session to my calendar?",
@@ -337,7 +337,7 @@ const FAQ_ITEMS = [
       "Submit the registration form and tap the calendar button. We’ll also send a confirmation email with the event details.",
   },
   {
-    question: "Will I get support after the intro?",
+    question: "Will I get support after the Starterclass?",
     answer:
       "You’ll receive follow-up resources and a prompt kit. Full Track participants also get office hours and build clinics.",
   },
@@ -358,7 +358,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "The intro gave me language I could use with therapy clients. I now walk them through weekly reflections powered by the prompt kit we built together.",
+      "The Starterclass gave me language I could use with therapy clients. I now walk them through weekly reflections powered by the prompt kit we built together.",
     name: "Daniel M.",
     role: "Therapist",
     win: "Sessions include AI-guided check-ins clients actually finish",
@@ -393,7 +393,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "I brought the intro back to my creative writing group. We now use the prompt kit to unblock drafts without losing our voices.",
+      "I brought the Starterclass back to my creative writing group. We now use the prompt kit to unblock drafts without losing our voices.",
     name: "Jess T.",
     role: "Screenwriter",
     win: "Weekly drafts ready with less stress and more joy",
@@ -464,41 +464,32 @@ const ANNOUNCEMENT_KEYS = ["live", "countdown", "earlybird"];
 // Royal interactive PIE colours
 const PIE_TOPICS = [
   {
-    key: "Projects",
-    value: 28,
-    desc: "Lay out boards, notes, and hand-offs so every request has a home.",
-    headline: "Workspace ready before you log off",
-    outcome: "A Project space with lanes, guardrails, and shared context you can use tomorrow.",
-    toolkit: "Project template, intake checklist, and follow-up prompts.",
+    key: "Projects & Personality",
+    value: 36,
+    desc: "One-word briefs become action steps when your workspace mirrors your tone and priorities.",
+    headline: "Say it once, your workspace runs with it",
+    outcome: "A personality-rich Project board that routes every request and keeps context ready.",
+    toolkit: "Reusable board template, tone sliders, and follow-up automations.",
     color: "#C8A145",
-  }, // gold
+  },
   {
-    key: "GPTs",
-    value: 27,
-    desc: "Collect tone, files, and examples so replies sound like you.",
-    headline: "Your private GPT comes to life",
-    outcome: "A custom GPT that knows your resources and responds with your voice.",
-    toolkit: "Uploaded knowledge packs, starter instructions, and guardrail notes.",
+    key: "Vibe Coding Basics",
+    value: 32,
+    desc: "Describe the experience you want and watch AI scaffold a microsite or automation in real time.",
+    headline: "Tell the vibe, ship a working mini-build",
+    outcome: "A guided build that outputs a shareable mini-app or workflow blueprint.",
+    toolkit: "Code handoff, automation blueprint, and safety checklist.",
     color: "#3B5CCC",
-  }, // royal blue
+  },
   {
-    key: "Prompts",
-    value: 25,
-    desc: "Test-and-tweak loops for business, creative, and personal wins.",
-    headline: "Prompt kit you can trust",
-    outcome: "Reusable prompt flows for outreach, storytelling, and planning.",
-    toolkit: "Prompt cards, scorecard, and iteration checklist.",
+    key: "Prompt Like a Pro",
+    value: 32,
+    desc: "Prompt loops demystified for business, creative, and personal wins without jargon.",
+    headline: "Know exactly what to say for results",
+    outcome: "Prompt frameworks for sales, stories, decisions, and daily productivity.",
+    toolkit: "Prompt cards, feedback loops, and guardrail heuristics.",
     color: "#8B5CF6",
-  }, // amethyst
-  {
-    key: "Guardrails",
-    value: 20,
-    desc: "Quick safety checks, budgets, and review rhythms.",
-    headline: "Quality checks baked in",
-    outcome: "Lightweight guardrails so outputs stay on brief and respectful.",
-    toolkit: "Escalation cues, budget tracker, and reflection prompts.",
-    color: "#10B981",
-  }, // emerald
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -735,28 +726,28 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onEx
     return {
       intro_solo: {
         badge: "Start here",
-        title: "Reserve the Starterclass Session",
+        title: "Reserve the Starterclass",
         summary: "Lock in the 90-minute build sprint and collect the Project, private GPT, and prompt kit.",
         detail: "Ideal when you’re testing the waters or can’t commit beyond November just yet. Complete the form above to lock your spot and receive the calendar invite.",
         cta: "Reserve your seat",
         action: () => onIntro?.(),
         secondary: { label: `See the Full Track (${price(3)})`, action: () => onExplore?.({ months: 3 }) },
         focusNotes: {
-          foundation: "Start with the intro to get your workspace wired without extra commitments.",
-          build: "Book the intro, then decide if you want November once you see the build rhythm.",
-          scale: "Use the intro to scope value; upgrade later if you need deeper delivery support.",
+          foundation: "Start with the Starterclass to get your workspace wired without extra commitments.",
+          build: "Book the Starterclass, then decide if you want November once you feel the build rhythm.",
+          scale: "Use the Starterclass to scope value; upgrade later if you need deeper delivery support.",
         },
       },
       intro_plus_nov: {
         badge: "November focus",
-        title: `Intro + November for ${price(1)}`,
-        summary: "Keep momentum after the intro with Canvas, Projects, and GPT labs paced for one person.",
-        detail: "You’ll spread tuition across November with zero payments due until then. Submit the intro form now and we’ll follow up with the November enrollment steps.",
+        title: `Starterclass + November for ${price(1)}`,
+        summary: "Keep momentum after the Starterclass with Canvas, Projects, and GPT labs paced for one person.",
+        detail: "You’ll spread tuition across November with zero payments due until then. Submit the Starterclass form now and we’ll follow up with the November enrollment steps.",
         cta: "Hold my November seat",
         action: () => onFull?.({ months: 1, plan: "november" }),
-        secondary: { label: "Reserve the free intro first", action: () => onIntro?.() },
+        secondary: { label: "Reserve the free Starterclass first", action: () => onIntro?.() },
         focusNotes: {
-          foundation: "Adds the November labs to cement the fundamentals you learn in Session 0.",
+          foundation: "Adds the November labs to cement the fundamentals you learn in the Starterclass.",
           build: "Gives you four straight Saturdays to get workflows production-ready.",
           scale: "Start with November before adding the heavier automation blocks.",
         },
@@ -768,7 +759,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onEx
         detail: "Payments split across November and January — December is tuition-free. Complete the registration form to reserve this two-month arc.",
         cta: "Join the two-month arc",
         action: () => onFull?.({ months: 2, plan: "november_december" }),
-        secondary: { label: "Reserve intro access", action: () => onIntro?.() },
+        secondary: { label: "Reserve Starterclass access", action: () => onIntro?.() },
         focusNotes: {
           foundation: "Graduate from fundamentals into agent safety and orchestration.",
           build: "Balance hands-on builds with system architecture before January.",
@@ -782,7 +773,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onEx
         detail: `Pay ${price(1)} in November, pause in December, and settle the final ${price(1)} in January. Submit the form and we’ll send the full-track agreement within 24 hours.`,
         cta: "Get the Full Track",
         action: () => onFull?.({ months: 3, plan: "full_track" }),
-        secondary: { label: "Book the intro seat", action: () => onIntro?.() },
+        secondary: { label: "Book the Starterclass seat", action: () => onIntro?.() },
         focusNotes: {
           foundation: "Ready for the full build marathon with guided support through January.",
           build: "Best when you want the automation shipped before February.",
@@ -796,9 +787,9 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onEx
         detail: "You’ll stay accountable through January and graduate with the CPD certificate. Completing the form lets us schedule a quick intake to tune the track for you.",
         cta: "Commit to the Full Track",
         action: () => onFull?.({ months: 3, plan: "full_track_accountability", intensive: true }),
-        secondary: { label: "Reserve the intro", action: () => onIntro?.() },
+        secondary: { label: "Reserve the Starterclass", action: () => onIntro?.() },
         focusNotes: {
-          foundation: "Adds accountability so you never lose momentum after the intro.",
+          foundation: "Adds accountability so you never lose momentum after the Starterclass.",
           build: "Pairs every module with labs to stress-test your automations.",
           scale: "Designed if you’re monetising or rolling AI into a team offer quickly.",
         },
@@ -1069,7 +1060,7 @@ function StarterclassLuxuryV8() {
     return [
       "Live on 15 Nov · 11:00 UK",
       timeMessage,
-      "Early-bird 15% ends when the intro ends",
+      "Early-bird 15% ends when the Starterclass ends",
     ];
   }, [d, expired]);
   const testimonials = TESTIMONIALS;
@@ -1208,6 +1199,11 @@ function StarterclassLuxuryV8() {
     [sessions]
   );
 
+  const upcomingSchedule = useMemo(
+    () => sessions.filter((s) => s.track !== "break").slice(0, 3),
+    [sessions]
+  );
+
   const handleCurrencySwitch = useCallback((code) => {
     setCurrency(code);
   }, []);
@@ -1324,7 +1320,7 @@ function StarterclassLuxuryV8() {
                 </button>
               </div>
               <div className="ml-auto hidden md:flex items-center text-xs font-semibold uppercase tracking-[0.24em]" style={{ color: palette.textSecondary }}>
-                Free intro · 90 minutes
+                Free Starterclass · 90 minutes
               </div>
             </div>
             <div
@@ -1352,7 +1348,7 @@ function StarterclassLuxuryV8() {
                   Free 90-min AI Starterclass
                 </div>
                 <div className="mt-3">
-                  <Badge>Intro session · no payment required</Badge>
+                  <Badge>Starterclass · no payment required</Badge>
                 </div>
                 <h1
                   ref={heroHeadlineGlowRef}
@@ -1521,7 +1517,7 @@ function StarterclassLuxuryV8() {
               <div className="grid lg:grid-cols-12 gap-8">
                 <div className="lg:col-span-7 space-y-6">
                   <GlowCard className="p-6 space-y-5">
-                    <h3 className="text-xl font-semibold">What this intro unlocks</h3>
+                    <h3 className="text-xl font-semibold">What this Starterclass unlocks</h3>
                     <div className="grid sm:grid-cols-3 gap-3">
                       {OVERVIEW_WINS.map((win) => {
                         const isActive = overviewFocus === win.key;
@@ -1545,9 +1541,9 @@ function StarterclassLuxuryV8() {
                       })}
                     </div>
                     <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                      <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Full track teaser</div>
+                      <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Thinking ahead</div>
                       <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
-                        Session 0 counts toward the full track. When you’re ready, add the monthly bundles from {formatCurrency(85)} with the early-bird or {formatCurrency(100)} after.
+                        The Starterclass counts toward the full track. When you’re ready, add the monthly bundles from {formatCurrency(85)} with the early-bird or {formatCurrency(100)} after.
                       </div>
                     </div>
                   </GlowCard>
@@ -1555,20 +1551,57 @@ function StarterclassLuxuryV8() {
                 <div className="lg:col-span-5 space-y-6">
                   <GlowCard className="p-6">
                     <h3 className="text-xl font-semibold">Next live times</h3>
-                    <ul className="mt-3 space-y-3">
-                      {sessions.filter((s) => s.track !== "break").slice(0, 4).map((s) => (
-                        <li key={s.k} className="flex items-start gap-3">
-                          <span className="w-32 text-sm" style={{ color: palette.textMuted }}>{s.date}</span>
-                          <div>
-                            <div className="text-xs" style={{ color: palette.textMuted }}>UK: {formatUKRange(s.start, s.end)}</div>
-                            <div className="text-xs" style={{ color: palette.textMuted }}>Your: {formatLocalRange(s.start, s.end)}</div>
-                            <div className="mt-1 text-sm font-semibold" style={{ color: palette.textPrimary }}>{s.title}</div>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="mt-3 space-y-3">
+                      {upcomingSchedule.map((s) => {
+                        const isStarterclassSlot = s.track === "intro";
+                        const badgeLabel = isStarterclassSlot ? "Free Starterclass" : "Full Track";
+                        const handleSlotClick = () => {
+                          if (isStarterclassSlot) {
+                            triggerIntroForm("next_live_schedule");
+                          } else {
+                            revealPaidAndGoCurriculum("next_live_schedule");
+                          }
+                        };
+                        return (
+                          <button
+                            key={s.k}
+                            type="button"
+                            onClick={handleSlotClick}
+                            className="w-full rounded-2xl border p-4 text-left transition hover:-translate-y-0.5 focus:-translate-y-0.5"
+                            style={{
+                              borderColor: palette.border,
+                              background: palette.surfaceSoft,
+                              color: palette.textPrimary,
+                            }}
+                          >
+                            <div className="flex flex-wrap items-center justify-between gap-2 text-xs" style={{ color: palette.textMuted }}>
+                              <span className="font-semibold text-sm" style={{ color: palette.textPrimary }}>
+                                {s.date}
+                              </span>
+                              <span
+                                className="inline-flex items-center gap-1 rounded-full px-2 py-0.5"
+                                style={{
+                                  border: `1px solid ${palette.border}`,
+                                  background: palette.surface,
+                                  color: isStarterclassSlot ? palette.accentPrimary : palette.accentSecondary,
+                                }}
+                              >
+                                {badgeLabel}
+                              </span>
+                            </div>
+                            <div className="mt-2 flex flex-wrap gap-4 text-xs" style={{ color: palette.textMuted }}>
+                              <span>UK: {formatUKRange(s.start, s.end)}</span>
+                              <span>Your: {formatLocalRange(s.start, s.end)}</span>
+                            </div>
+                            <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>
+                              {s.title}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                     <div className="mt-4 text-xs" style={{ color: palette.textMuted }}>
-                      Can’t make it live? We’ll help you switch cohorts — the intro stays free.
+                      Ready for more after the Starterclass? Explore the curriculum tab to see how the Full Track expands these builds.
                     </div>
                   </GlowCard>
                   {showPaid && (
@@ -1726,7 +1759,7 @@ function StarterclassLuxuryV8() {
                     </ul>
                     <div className="text-xs" style={{ color: palette.textMuted }}>
                       {earlyBirdActive
-                        ? "15% early-bird active until the intro ends"
+                        ? "15% early-bird active until the Starterclass ends"
                         : "Early-bird wrapped · standard tuition applies"}
                     </div>
                   </GlowCard>
@@ -1735,7 +1768,7 @@ function StarterclassLuxuryV8() {
                     <div className="text-sm" style={{ color: palette.textSecondary }}>
                       {earlyBirdActive
                         ? `Secure the discount within ${earlyBird.d}d ${String(earlyBird.h).padStart(2, "0")}h ${String(earlyBird.m).padStart(2, "0")}m.`
-                        : "The intro window closed the early-bird. Tuition reverts to $300 equivalent."}
+                        : "The Starterclass window closed the early-bird. Tuition reverts to $300 equivalent."}
                     </div>
                     <div className="flex flex-wrap gap-2 text-xs" style={{ color: palette.textMuted }}>
                       <span>Pay per month in your chosen currency.</span>
@@ -1790,7 +1823,7 @@ function StarterclassLuxuryV8() {
                           className="text-sm underline underline-offset-4"
                           style={{ color: palette.textSecondary }}
                         >
-                          Reserve the intro seat first
+                          Reserve the Starterclass seat first
                         </button>
                       </div>
                     </div>
@@ -1928,7 +1961,7 @@ function StarterclassLuxuryV8() {
                     className="text-xs underline underline-offset-4"
                     style={{ color: palette.accentSecondary }}
                   >
-                    Reserve your intro seat
+                    Reserve your Starterclass seat
                   </button>
                 </div>
               </div>
@@ -1939,7 +1972,7 @@ function StarterclassLuxuryV8() {
         <Section className="pb-14">
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between flex-wrap gap-3">
-              <h2 className="text-xl font-semibold">What comes after the intro</h2>
+              <h2 className="text-xl font-semibold">What comes after the Starterclass</h2>
               <button
                 type="button"
                 onClick={() => {
@@ -1962,46 +1995,6 @@ function StarterclassLuxuryV8() {
                 </GlowCard>
               ))}
             </div>
-            <div className="grid md:grid-cols-3 gap-4">
-              {upcomingModules.map((module) => (
-                <GlowCard key={module.k} className="p-4">
-                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Included in Full Track</div>
-                  <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>{module.title}</div>
-                  <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{module.outcome}</div>
-                  <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>{module.date} · {formatUKRange(module.start, module.end)}</div>
-                </GlowCard>
-              ))}
-            </div>
-          )}
-
-        {tab === "faq" && (
-          <div className="mt-8 grid md:grid-cols-2 gap-4" id="faq">
-            {FAQ_ITEMS.map((item) => {
-              const expanded = openFaq === item.question;
-              const panelId = `faq-panel-${item.question.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-              return (
-                <GlowCard key={item.question} className="p-0" aria-expanded={expanded}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq((prev) => (prev === item.question ? "" : item.question))}
-                    className="flex w-full items-center justify-between gap-3 px-6 py-4 text-left"
-                    aria-controls={panelId}
-                    aria-expanded={expanded}
-                    style={{ color: palette.textPrimary }}
-                  >
-                    <span className="text-sm font-semibold">{item.question}</span>
-                    <span aria-hidden="true" className="text-xl" style={{ color: palette.textSecondary }}>
-                      {expanded ? "–" : "+"}
-                    </span>
-                  </button>
-                  {expanded && (
-                    <div id={panelId} className="px-6 pb-6 text-sm" style={{ color: palette.textSecondary }}>
-                      {item.answer}
-                    </div>
-                  )}
-                </GlowCard>
-              );
-            })}
           </div>
         </Section>
         <>
@@ -2026,7 +2019,7 @@ function StarterclassLuxuryV8() {
               <div className="mx-auto max-w-5xl px-4 pb-6">
                 <GlowCard className="px-5 py-4 flex flex-wrap items-center justify-between gap-3">
                   <div className="text-sm" style={{ color: palette.textSecondary }}>
-                    Reserve your seat for Session 0 (15 Nov · 11:00 UK)
+                    Reserve your seat for the Starterclass (15 Nov · 11:00 UK)
                   </div>
                   <div className="flex items-center gap-2">
                     <GlassButton onClick={() => triggerIntroForm("sticky_bar")} className="px-5 py-2 text-sm">
@@ -2065,7 +2058,7 @@ function StarterclassLuxuryV8() {
               }}
               onClick={handleStickyRestore}
             >
-              Reserve Session 0
+              Reserve the Starterclass
             </button>
           )}
 
@@ -2139,7 +2132,7 @@ function StarterclassLuxuryV8() {
                 <li><span style={{ color: palette.textMuted }}>Scope:</span> The Starterclass Session provides live instruction, templates, and materials for personal or business use. Redistribution or resale is not permitted without written consent.</li>
                 <li><span style={{ color: palette.textMuted }}>Payments:</span> All payments are processed via Stripe. Taxes and fees may apply per region.</li>
                 <li><span style={{ color: palette.textMuted }}>Refunds:</span> Cancel up to 48 hours before the first paid session for a full refund. After that, we provide credit toward a future cohort.</li>
-                <li><span style={{ color: palette.textMuted }}>Recordings & materials:</span> Intro replay unlocks for Full Track participants and remains accessible for 60 days after the January capstone, alongside slide decks and prompt kits.</li>
+                <li><span style={{ color: palette.textMuted }}>Recordings & materials:</span> Starterclass replay unlocks for Full Track participants and remains accessible for 60 days after the January capstone, alongside slide decks and prompt kits.</li>
                 <li><span style={{ color: palette.textMuted }}>Conduct:</span> Be respectful in live sessions and forums. Disruptive behaviour may result in removal without refund.</li>
                 <li><span style={{ color: palette.textMuted }}>IP:</span> Your data remains yours. Course IP remains ICUNI’s and is licensed for your use.</li>
                 <li><span style={{ color: palette.textMuted }}>Changes:</span> We may adjust dates or contents for quality or operational reasons; you’ll be notified by email.</li>
@@ -2396,7 +2389,7 @@ function CalendarModal({ onClose, onAdd }) {
     [revealPaidAndGoCurriculum]
   );
 
-  const heroAudienceLine = "Session 0 is free for business leaders, consultants, and curious operators—no coding needed.";
+const heroAudienceLine = "This Starterclass is free for business leaders, consultants, and curious operators—no coding required.";
   const stickyShouldRender = stickyVisible && !stickyDismissed;
   const handleStickyDismiss = useCallback(() => {
     setStickyDismissed(true);
