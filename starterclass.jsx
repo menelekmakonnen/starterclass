@@ -91,6 +91,7 @@ const EARLY_BIRD_DEADLINE_ISO = "2025-11-08T12:30:00Z";
 const SESSIONS = [
   {
     k: "intro",
+    month: "nov",
     title: INTRO_NAME,
     date: "Sat 08 Nov 2025",
     start: "2025-11-08T11:00:00Z",
@@ -107,6 +108,7 @@ const SESSIONS = [
   },
   {
     k: "s2",
+    month: "nov",
     title: "Canvas Deep Dive · Codex Foundations",
     date: "Sat 15 Nov 2025",
     start: "2025-11-15T11:00:00Z",
@@ -122,6 +124,7 @@ const SESSIONS = [
   },
   {
     k: "s3",
+    month: "nov",
     title: "Projects & GPTs Immersion",
     date: "Sat 22 Nov 2025",
     start: "2025-11-22T11:00:00Z",
@@ -137,6 +140,7 @@ const SESSIONS = [
   },
   {
     k: "s4",
+    month: "nov",
     title: "ChatGPT Agents 1 — Prompts, Processes, Internal Tools",
     date: "Sat 29 Nov 2025",
     start: "2025-11-29T11:00:00Z",
@@ -152,11 +156,12 @@ const SESSIONS = [
   },
   {
     k: "s5",
+    month: "dec",
     title: "ChatGPT Agents 2 — Systems",
     date: "Sat 06 Dec 2025",
     start: "2025-12-06T11:00:00Z",
     end: "2025-12-06T12:30:00Z",
-    desc: "Add agents to existing systems · System case study: Storytelling and Filmmaking · brief to beats to script pipeline · tasteful image workflows.",
+    desc: "Add agents to existing systems through a storytelling automation case study.",
     outcome: "Brief to beats to script pipeline and image generation workflow.",
     track: "paid",
     outline: [
@@ -167,6 +172,7 @@ const SESSIONS = [
   },
   {
     k: "s6",
+    month: "dec",
     title: "Introduction to Agent Builders — Security and Safety",
     date: "Sat 13 Dec 2025",
     start: "2025-12-13T11:00:00Z",
@@ -180,9 +186,10 @@ const SESSIONS = [
       { key: "Stability drills", value: 34, desc: "Incident response and rollback scenarios.", color: "#C8A145" },
     ],
   },
-  { k: "break", title: "Winter break", date: "—", start: "", end: "", desc: "—", outcome: "—", track: "break" },
+  { k: "break", month: "dec", title: "Winter break", date: "—", start: "", end: "", desc: "—", outcome: "—", track: "break" },
   {
     k: "s7",
+    month: "jan",
     title: "AgentKit — Create Your First Agent",
     date: "Sat 10 Jan 2026",
     start: "2026-01-10T11:00:00Z",
@@ -198,10 +205,11 @@ const SESSIONS = [
   },
   {
     k: "s8",
+    month: "jan",
     title: "N8N — Create Your First Agent",
-    date: "Sat 24 Jan 2026",
-    start: "2026-01-24T11:00:00Z",
-    end: "2026-01-24T12:30:00Z",
+    date: "Sat 17 Jan 2026",
+    start: "2026-01-17T11:00:00Z",
+    end: "2026-01-17T12:30:00Z",
     desc: "Trigger, process, and notify flows via webhooks, Sheets, and Gmail.",
     outcome: "A working N8N flow with approvals and logging.",
     track: "paid",
@@ -213,10 +221,11 @@ const SESSIONS = [
   },
   {
     k: "s9",
+    month: "jan",
     title: "N8N Deep Dive — Advanced Agent",
-    date: "Sat 07 Feb 2026",
-    start: "2026-02-07T11:00:00Z",
-    end: "2026-02-07T12:30:00Z",
+    date: "Sat 24 Jan 2026",
+    start: "2026-01-24T11:00:00Z",
+    end: "2026-01-24T12:30:00Z",
     desc: "Branching, retries, queues, observability, and error handling.",
     outcome: "Branching, retries, queues, observability, and graceful recovery.",
     track: "paid",
@@ -228,10 +237,11 @@ const SESSIONS = [
   },
   {
     k: "s10",
+    month: "jan",
     title: "Deployment — Orchestrate the System",
-    date: "Sat 21 Feb 2026",
-    start: "2026-02-21T11:00:00Z",
-    end: "2026-02-21T12:30:00Z",
+    date: "Sat 31 Jan 2026",
+    start: "2026-01-31T11:00:00Z",
+    end: "2026-01-31T12:30:00Z",
     desc: "Agents, N8N, site, CI/CD, runbooks, and rollback planning.",
     outcome: "A deployment playbook with CI/CD, runbooks, and rollback routines.",
     track: "paid",
@@ -243,85 +253,99 @@ const SESSIONS = [
   },
 ];
 
-const MODULE_VALUATIONS = [
+const MONTH_BUNDLES = [
+  { key: "nov", label: "November build month", priceUSD: 100, modules: ["intro", "s2", "s3", "s4"] },
+  { key: "dec", label: "December systems month", priceUSD: 100, modules: ["s5", "s6"] },
+  { key: "jan", label: "January launch month", priceUSD: 100, modules: ["s7", "s8", "s9", "s10"] },
+];
+
+const CURRENCIES = {
+  USD: { symbol: "$", rate: 1, label: "USD" },
+  GBP: { symbol: "£", rate: 0.82, label: "GBP" },
+  GHS: { symbol: "₵", rate: 13.1, label: "GHS" },
+};
+
+const HERO_HIGHLIGHTS = [
+  { icon: "🛠️", title: "Custom GPT built live", sub: "Watch your private assistant configured on the spot." },
+  { icon: "🛰️", title: "Automation ready to ship", sub: "Map a workflow that moves from idea to launch." },
+  { icon: "🗂️", title: "Prompt kits that deliver", sub: "Pack creative and business prompts with proofed outputs." },
+];
+
+const OVERVIEW_WINS = [
   {
-    key: "intro",
-    label: INTRO_NAME,
-    baseValue: 540,
-    deliverable: "Custom GPT configured around your brief.",
-    weight: 1.05,
+    key: "workspace",
+    label: "Workspace wired",
+    headline: "Project dashboard ready before you log off.",
+    detail: "We guide you through structuring a ChatGPT Project with guardrails and hand-off notes.",
   },
   {
-    key: "s2",
-    label: "Canvas Deep Dive · Codex Foundations",
-    baseValue: 360,
-    deliverable: "Canvas workspace and Codex habits that save hours each week.",
+    key: "gpt",
+    label: "Private GPT configured",
+    headline: "Your assistant remembers context and files.",
+    detail: "Collect knowledge packs, set tone-of-voice, and add the right tools during the live build.",
   },
   {
-    key: "s3",
-    label: "Projects & GPTs Immersion",
-    baseValue: 420,
-    deliverable: "Project blueprint and private GPT ready for production use.",
-    weight: 1.08,
-  },
-  {
-    key: "s4",
-    label: "ChatGPT Agents 1 — Prompts, Processes, Internal Tools",
-    baseValue: 400,
-    deliverable: "Agent patterns with prompts, logs, and retry strategy baked in.",
-  },
-  {
-    key: "s5",
-    label: "ChatGPT Agents 2 — Systems",
-    baseValue: 410,
-    deliverable: "Story-to-script systems and visual workflows tuned for quality.",
-  },
-  {
-    key: "s6",
-    label: "Introduction to Agent Builders — Security and Safety",
-    baseValue: 380,
-    deliverable: "Safeguards, monitoring, and incident routines that keep trust high.",
-  },
-  {
-    key: "s7",
-    label: "AgentKit — Create Your First Agent",
-    baseValue: 440,
-    deliverable: "AgentKit build with memory and live scenario walkthrough.",
-    weight: 1.06,
-  },
-  {
-    key: "s8",
-    label: "N8N — Create Your First Agent",
-    baseValue: 320,
-    deliverable: "Automated N8N flow with approvals and clear reporting.",
-  },
-  {
-    key: "s9",
-    label: "N8N Deep Dive — Advanced Agent",
-    baseValue: 330,
-    deliverable: "Resilient automations with branching, retries, and observability.",
-  },
-  {
-    key: "s10",
-    label: "Deployment — Orchestrate the System",
-    baseValue: 460,
-    deliverable: "Deployment playbook, runbooks, and CPD-ready evidence pack.",
-    weight: 1.07,
+    key: "prompts",
+    label: "Prompt kit shipped",
+    headline: "Reusable prompt flows tuned for business and creative briefs.",
+    detail: "Every attendee leaves with test scripts, scorecards, and a prompt kit that keeps delivering.",
   },
 ];
 
-const MODULE_VALUATION_MAP = MODULE_VALUATIONS.reduce((acc, module) => {
-  acc[module.key] = module;
-  return acc;
-}, {});
+const FULL_TRACK_OUTCOMES = [
+  "Turn November momentum into agent-powered delivery.",
+  "Design systems that stay secure and measurable.",
+  "Launch production-ready automations by the end of January.",
+  "Collect CPD points with a certificate for all ten modules.",
+];
 
-function resolveModuleValuation(key) {
-  const meta = MODULE_VALUATION_MAP[key];
-  if (!meta) return null;
-  const weight = meta.weight ?? 1;
-  const value = Math.round(meta.baseValue * weight);
-  return { ...meta, value };
-}
+const FAQ_ITEMS = [
+  {
+    question: "Do I need the Full Track to start?",
+    answer: "No. The Starterclass Session stands alone. The Full Track simply keeps the build sprint going through January.",
+  },
+  {
+    question: "Will there be a replay?",
+    answer: "Only Full Track participants receive the intro replay plus the annotated resources.",
+  },
+  {
+    question: "Is the intro really free?",
+    answer: "Yes. Reserve your seat with the badge in the hero — tuition begins only if you add the paid months.",
+  },
+  {
+    question: "Do I need to code?",
+    answer: "No. We work visually in Projects, GPT builders, AgentKit, and N8N. Optional code snippets are explained step by step.",
+  },
+];
+
+const TESTIMONIAL = {
+  quote: "I arrived with scattered prompts and left with a calm system that my team now trusts. The intro alone paid for the upgrade.",
+  name: "Elise A.",
+  role: "Innovation Lead, boutique consultancy",
+};
+
+const MICRO_GALLERY = [
+  {
+    title: "Canvas workspace",
+    caption: "Structure briefs, outputs, and review loops in one place.",
+    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%27%23F3EEFF%27/%3E%0A%20%20%3Crect%20x%3D%2724%27%20y%3D%2732%27%20width%3D%27272%27%20height%3D%2732%27%20rx%3D%2712%27%20fill%3D%27%23D9C7FF%27/%3E%0A%20%20%3Crect%20x%3D%2724%27%20y%3D%2776%27%20width%3D%27168%27%20height%3D%2724%27%20rx%3D%2710%27%20fill%3D%27%23B99FF8%27/%3E%0A%20%20%3Crect%20x%3D%27200%27%20y%3D%2776%27%20width%3D%2796%27%20height%3D%2724%27%20rx%3D%2710%27%20fill%3D%27%23E7DFFF%27/%3E%0A%20%20%3Crect%20x%3D%2724%27%20y%3D%27112%27%20width%3D%27120%27%20height%3D%2720%27%20rx%3D%278%27%20fill%3D%27%23C8A145%27/%3E%0A%20%20%3Crect%20x%3D%27152%27%20y%3D%27112%27%20width%3D%27144%27%20height%3D%2720%27%20rx%3D%278%27%20fill%3D%27%23F0E6FF%27/%3E%0A%3C/svg%3E",
+    alt: "Stylised Canvas workspace with neatly arranged sections.",
+  },
+  {
+    title: "N8N flow",
+    caption: "Visualise the automation path you deploy in January.",
+    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%270F1026%27/%3E%0A%20%20%3Cpath%20d%3D%27M70%2090%20H250%27%20stroke%3D%278B5CF6%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Ccircle%20cx%3D%2770%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%23C8A145%27/%3E%0A%20%20%3Ccircle%20cx%3D%27160%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%233B5CCC%27/%3E%0A%20%20%3Ccircle%20cx%3D%27250%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%278B5CF6%27/%3E%0A%20%20%3Cpath%20d%3D%27M160%2090%20V132%27%20stroke%3D%273B5CCC%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Crect%20x%3D%27146%27%20y%3D%27132%27%20width%3D%2728%27%20height%3D%2718%27%20rx%3D%276%27%20fill%3D%271B1D3F%27/%3E%0A%3C/svg%3E",
+    alt: "Stylised N8N workflow with connected nodes.",
+  },
+  {
+    title: "Agent response log",
+    caption: "See the guardrails and outputs your agent shares back.",
+    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%27101626%27/%3E%0A%20%20%3Crect%20x%3D%2730%27%20y%3D%2738%27%20width%3D%27260%27%20height%3D%2736%27%20rx%3D%2714%27%20fill%3D%271F2A3A%27/%3E%0A%20%20%3Crect%20x%3D%2730%27%20y%3D%2790%27%20width%3D%27260%27%20height%3D%2736%27%20rx%3D%2714%27%20fill%3D%271F2A3A%27/%3E%0A%20%20%3Ctext%20x%3D%2750%27%20y%3D%2763%27%20fill%3D%27%23C8A145%27%20font-size%3D%2716%27%20font-family%3D%27Helvetica%20Neue%2C%20Arial%27%3EAgent%20Reply%3C/text%3E%0A%20%20%3Ctext%20x%3D%2750%27%20y%3D%27115%27%20fill%3D%278B5CF6%27%20font-size%3D%2714%27%20font-family%3D%27Helvetica%20Neue%2C%20Arial%27%3E%22Workflow%20executed.%20Report%20ready.%22%3C/text%3E%0A%3C/svg%3E",
+    alt: "Stylised agent chat log confirming workflow completion.",
+  },
+];
+
+const ANNOUNCEMENT_KEYS = ["live", "countdown", "earlybird"];
 
 // Royal interactive PIE colours
 const PIE_TOPICS = [
@@ -398,7 +422,7 @@ function GlowCard({ children, className = "" }) {
   );
 }
 
-function GlassButton({ children, onClick, className = "", variant = "primary" }) {
+function GlassButton({ children, onClick, className = "", variant = "primary", type = "button" }) {
   const { theme, palette } = useTheme();
   const isDark = theme === "dark";
   const styles =
@@ -415,7 +439,7 @@ function GlassButton({ children, onClick, className = "", variant = "primary" })
         };
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
       className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold transition shadow-lg ${className}`}
       style={{
@@ -485,6 +509,23 @@ function formatLocalRange(startISO, endISO) {
   const opts = { hour: "2-digit", minute: "2-digit", hour12: false };
   return `${new Date(startISO).toLocaleTimeString([], opts)}–${new Date(endISO).toLocaleTimeString([], opts)} (${tz})`;
 }
+function formatCurrencyValue(amountUSD, currencyCode) {
+  const currency = CURRENCIES[currencyCode] || CURRENCIES.USD;
+  const formatter = new Intl.NumberFormat('en', { style: 'currency', currency: currency.label, minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  return formatter.format(amountUSD * currency.rate);
+}
+
+function track(eventName, detail = {}) {
+  if (typeof window === 'undefined') return;
+  const payload = { event: eventName, detail, timestamp: new Date().toISOString() };
+  if (Array.isArray(window.dataLayer)) {
+    window.dataLayer.push(payload);
+  }
+  if (typeof window.dispatchEvent === 'function') {
+    window.dispatchEvent(new CustomEvent(eventName, { detail: payload }));
+  }
+}
+
 function useCountdown(targetISO) {
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => { const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id); }, []);
@@ -542,256 +583,177 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
 }
 
 // Client Value Calculator focused on a single participant
-function ClientValueCalculator() {
+function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
   const { palette } = useTheme();
-  const monthConfig = useMemo(
-    () => [
-      {
-        key: "nov",
-        label: "November build month",
-        description: "Canvas, Projects, and agent foundations",
-        cost: 150,
-        modules: ["s2", "s3", "s4"],
-      },
-      {
-        key: "dec",
-        label: "December mastery month",
-        description: "Systems storytelling and safety drills",
-        cost: 0,
-        modules: ["s5", "s6"],
-      },
-      {
-        key: "jan",
-        label: "New year systems month",
-        description: "AgentKit, N8N builds, and deployment",
-        cost: 150,
-        modules: ["s7", "s8", "s9", "s10"],
-      },
-    ],
-    []
-  );
-  const monthOrder = useMemo(() => monthConfig.map((month) => month.key), [monthConfig]);
-  const [activeMonths, setActiveMonths] = useState(monthOrder);
-  const monthData = useMemo(
-    () =>
-      monthConfig.map((month) => {
-        const modules = month.modules
-          .map((key) => resolveModuleValuation(key))
-          .filter(Boolean);
-        const value = modules.reduce((sum, module) => sum + module.value, 0);
-        return { ...month, modules, value };
-      }),
-    [monthConfig]
-  );
-  const toggleMonth = useCallback(
-    (key) => {
-      setActiveMonths((prev) => {
-        const nextSet = new Set(prev);
-        if (nextSet.has(key)) {
-          nextSet.delete(key);
-        } else {
-          nextSet.add(key);
-        }
-        return monthOrder.filter((monthKey) => nextSet.has(monthKey));
-      });
-    },
-    [monthOrder]
-  );
+  const [hours, setHours] = useState(2);
+  const [focus, setFocus] = useState("foundation");
 
-  const activeSet = useMemo(() => new Set(activeMonths), [activeMonths]);
-  const selectedMonths = useMemo(
-    () => monthData.filter((month) => activeSet.has(month.key)),
-    [monthData, activeSet]
-  );
-
-  const introValuation = resolveModuleValuation("intro");
-  const introValue = introValuation?.value ?? 0;
-  const selectedCost = selectedMonths.reduce((sum, month) => sum + month.cost, 0);
-  const selectedValue = selectedMonths.reduce((sum, month) => sum + month.value, 0);
-  const paidModules = selectedMonths.flatMap((month) => month.modules);
-  const totalValue = introValue + selectedValue;
-  const netAfterTuition = totalValue - selectedCost;
-  const netPaidOnly = selectedValue - selectedCost;
-  const allMonthsSelected = monthData.every((month) => activeSet.has(month.key));
-
-  const {
-    d: earlyBirdDays,
-    h: earlyBirdHours,
-    m: earlyBirdMinutes,
-    s: earlyBirdSeconds,
-    expired: earlyBirdExpired,
-  } = useCountdown(EARLY_BIRD_DEADLINE_ISO);
-
-  const stats = [
-    {
-      label: "Free intro value",
-      value: `£${introValue.toLocaleString()}`,
-      hint: "Starterclass Session – Customisation",
-    },
-    {
-      label: "Selected module value",
-      value: `£${selectedValue.toLocaleString()}`,
-      hint: `${paidModules.length} module${paidModules.length === 1 ? "" : "s"}`,
-    },
-    {
-      label: "Monthly investment",
-      value: `£${selectedCost.toLocaleString()}`,
-      hint: selectedMonths.some((month) => month.cost === 0)
-        ? "December payment waived"
-        : "Pay for chosen months",
-    },
-    {
-      label: "Net value after tuition",
-      value: `£${netAfterTuition.toLocaleString()}`,
-      hint: "Intro remains free",
-      emphasis: true,
-    },
+  const focusOptions = [
+    { key: "foundation", label: "Foundation", icon: "🧱" },
+    { key: "build", label: "Build workflows", icon: "🛠️" },
+    { key: "scale", label: "Scale delivery", icon: "📈" },
   ];
 
+  const results = useMemo(() => {
+    const price = (months) => formatCurrency(100 * months, currency);
+    return {
+      intro_solo: {
+        badge: "Start here",
+        title: "Reserve the Starterclass Session",
+        summary: "Lock in the 90-minute build sprint and collect the Project, private GPT, and prompt kit.",
+        detail: "Ideal when you’re testing the waters or can’t commit beyond November just yet.",
+        cta: "Reserve your seat",
+        action: () => onIntro?.(),
+        secondary: { label: `See the Full Track (${price(3)})`, action: () => onFull?.({ months: 3 }) },
+      },
+      intro_plus_nov: {
+        badge: "November focus",
+        title: `Intro + November for ${price(1)}`,
+        summary: "Keep momentum after the intro with Canvas, Projects, and GPT labs paced for one person.",
+        detail: "You’ll spread tuition across November with zero payments due until then.",
+        cta: "Hold my November seat",
+        action: () => onFull?.({ months: 1 }),
+        secondary: { label: "Reserve the free intro first", action: () => onIntro?.() },
+      },
+      two_month_arc: {
+        badge: "Systems ready",
+        title: `November + December for ${price(2)}`,
+        summary: "Add safety, orchestration, and platform depth before the January launch push.",
+        detail: "Payments split across November and January — December is tuition-free.",
+        cta: "Join the two-month arc",
+        action: () => onFull?.({ months: 2 }),
+        secondary: { label: "Reserve intro access", action: () => onIntro?.() },
+      },
+      full_track_focus: {
+        badge: "Full Track",
+        title: `Full Track for ${price(3)}`,
+        summary: "January adds live AgentKit and N8N builds so you deploy a working automation.",
+        detail: `Pay ${price(1)} in November, pause in December, and settle the final ${price(1)} in January.`,
+        cta: "Get the Full Track",
+        action: () => onFull?.({ months: 3 }),
+        secondary: { label: "Book the intro seat", action: () => onIntro?.() },
+      },
+      full_track_builder: {
+        badge: "Builder pace",
+        title: `Full Track + accountability (${price(3)})`,
+        summary: "Use office hours, labs, and peer critique to ship an end-to-end agent system.",
+        detail: "You’ll stay accountable through January and graduate with the CPD certificate.",
+        cta: "Commit to the Full Track",
+        action: () => onFull?.({ months: 3, intensive: true }),
+        secondary: { label: "Reserve the intro", action: () => onIntro?.() },
+      },
+    };
+  }, [currency, formatCurrency, onFull, onIntro]);
+
+  const resultKey = useMemo(() => {
+    if (hours <= 1) {
+      return focus === "foundation" ? "intro_solo" : "intro_plus_nov";
+    }
+    if (hours <= 2) {
+      return focus === "foundation" ? "intro_plus_nov" : "two_month_arc";
+    }
+    if (hours <= 3) {
+      return focus === "scale" ? "full_track_focus" : "two_month_arc";
+    }
+    if (hours <= 4) {
+      return focus === "scale" ? "full_track_focus" : "two_month_arc";
+    }
+    if (hours <= 5) {
+      return focus === "scale" ? "full_track_focus" : "full_track_builder";
+    }
+    return "full_track_builder";
+  }, [hours, focus]);
+
+  const result = results[resultKey];
+
   return (
-    <GlowCard className="p-6 space-y-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+    <GlowCard className="p-6 space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h3 className="text-xl font-semibold">Client Value Calculator</h3>
           <p className="mt-1 text-sm" style={{ color: palette.textSecondary }}>
-            See the value you unlock as a solo participant. Pick the months you plan to join—the intro session stays free.
+            Set the weekly time you can invest and choose your focus. One recommendation appears so you know where to start.
           </p>
         </div>
-        <Badge>Value focus</Badge>
+        <Badge>Solo participant</Badge>
       </div>
 
-      <div
-        className="rounded-2xl p-4"
-        style={{
-          border: `1px solid ${palette.border}`,
-          background: palette.surfaceSoft,
-        }}
-      >
-        {earlyBirdExpired ? (
-          <div className="text-sm font-semibold" style={{ color: palette.textSecondary }}>
-            The early bird window has closed, but the £300 plan still spreads tuition by month.
+      <div className="space-y-4">
+        <div>
+          <div className="flex items-center justify-between text-xs" style={{ color: palette.textMuted }}>
+            <span>Weekly focus hours</span>
+            <span>{hours}h / week</span>
           </div>
-        ) : (
-          <div>
-            <div className="text-xs uppercase tracking-[0.22em]" style={{ color: palette.textMuted }}>
-              Early bird premium
-            </div>
-            <div className="mt-1 flex flex-wrap items-baseline gap-2">
-              <span className="text-lg font-semibold" style={{ color: palette.textPrimary }}>
-                Pay £255 before 08 Nov, 12:30
-              </span>
-              {allMonthsSelected && selectedCost === 300 && (
-                <span className="text-xs font-semibold" style={{ color: palette.accentPrimary }}>
-                  Save £45 on the full track
-                </span>
-              )}
-            </div>
-            <div className="mt-2 text-xs" style={{ color: palette.textSecondary }}>
-              {earlyBirdDays}d {String(earlyBirdHours).padStart(2, "0")}h {String(earlyBirdMinutes).padStart(2, "0")}m {String(earlyBirdSeconds).padStart(2, "0")}s remaining.
-            </div>
+          <input
+            type="range"
+            min="1"
+            max="6"
+            step="1"
+            value={hours}
+            onChange={(event) => setHours(Number(event.target.value))}
+            className="w-full accent-current"
+            style={{ accentColor: palette.accentPrimary }}
+          />
+          <div className="flex justify-between text-[0.65rem] uppercase tracking-[0.2em]" style={{ color: palette.textMuted }}>
+            <span>1h</span>
+            <span>3h</span>
+            <span>6h</span>
           </div>
-        )}
-      </div>
+        </div>
 
-      <div className="grid gap-3 grid-cols-2">
-        {monthData.map((month) => {
-          const active = activeSet.has(month.key);
-          return (
-            <button
-              key={month.key}
-              type="button"
-              onClick={() => toggleMonth(month.key)}
-              className="rounded-2xl p-4 text-left transition"
-              style={{
-                border: `1px solid ${palette.border}`,
-                background: active
-                  ? `linear-gradient(135deg, ${palette.accentPrimary}22, ${palette.accentSecondary}22)`
-                  : palette.surfaceSoft,
-                color: palette.textPrimary,
-                boxShadow: active ? palette.buttonShadow : "none",
-              }}
-              aria-pressed={active}
-            >
-              <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em]" style={{ color: palette.textMuted }}>
-                <span>{month.cost ? `£${month.cost}` : "£0"}</span>
-                <span>{month.cost ? "per month" : "Payment holiday"}</span>
-              </div>
-              <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>
-                {month.label}
-              </div>
-              <div className="mt-2 text-xs" style={{ color: palette.textSecondary }}>
-                {month.description}
-              </div>
-              <div className="mt-3 rounded-xl px-3 py-2 text-xs font-semibold" style={{
-                border: `1px solid ${palette.border}`,
-                background: palette.surface,
-                color: palette.textPrimary,
-              }}>
-                Estimated value £{month.value.toLocaleString()}
-              </div>
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="grid gap-3 grid-cols-2">
-        {stats.map((stat) => (
-          <Stat key={stat.label} {...stat} />
-        ))}
-      </div>
-
-      <div className="grid gap-3 grid-cols-2">
-        {(() => {
-          const moduleCards = [];
-          if (introValuation) moduleCards.push({ ...introValuation, key: "intro" });
-          moduleCards.push(...paidModules);
-          return moduleCards.length ? (
-            moduleCards.map((module) => (
-              <div
-                key={module.key}
-                className="rounded-2xl p-4"
+        <div className="grid grid-cols-3 gap-2">
+          {focusOptions.map((option) => {
+            const active = focus === option.key;
+            return (
+              <button
+                key={option.key}
+                type="button"
+                onClick={() => setFocus(option.key)}
+                className="rounded-2xl px-3 py-3 text-sm font-semibold transition"
                 style={{
-                  border: `1px solid ${palette.border}`,
-                background: module.key === "intro"
-                  ? `linear-gradient(135deg, ${palette.accentPrimary}1a, ${palette.accentSecondary}1a)`
-                  : palette.surfaceSoft,
-                color: palette.textPrimary,
-              }}
-            >
-              <div className="flex items-baseline justify-between text-xs uppercase tracking-[0.18em]" style={{ color: palette.textMuted }}>
-                <span>{module.key === "intro" ? "Intro" : "Module"}</span>
-                <span>£{module.value.toLocaleString()}</span>
-              </div>
-              <div className="mt-1 text-sm font-semibold" style={{ color: palette.textPrimary }}>
-                {module.label}
-              </div>
-              <div className="mt-2 text-xs" style={{ color: palette.textSecondary }}>
-                {module.deliverable}
-              </div>
-            </div>
-          ))
-          ) : (
-            <div
-              className="col-span-2 rounded-2xl p-4 text-sm"
-              style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft, color: palette.textSecondary }}
-            >
-              Select a month to see its modules and value breakdown.
-            </div>
-          );
-        })()}
+                  border: `1px solid ${active ? palette.accentPrimary : palette.border}`,
+                  background: active ? `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)` : palette.surfaceSoft,
+                  color: active ? palette.textPrimary : palette.textSecondary,
+                }}
+              >
+                <span className="block text-lg" aria-hidden="true">{option.icon}</span>
+                {option.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      <p className="text-xs" style={{ color: palette.textMuted }}>
-        Figures reflect one participant. Monthly payments mean you can focus on a single month without committing to the rest.
-      </p>
-      {paidModules.length > 0 && (
-        <p className="text-xs" style={{ color: palette.textSecondary }}>
-          Net gain from paid modules alone: £{netPaidOnly.toLocaleString()}.
-        </p>
-      )}
+      <div className="rounded-2xl p-5 space-y-3" style={{ border: `1px solid ${palette.border}`, background: palette.surface }}>
+        <div className="flex items-center gap-2 text-xs uppercase tracking-[0.22em]" style={{ color: palette.textMuted }}>
+          <span className="inline-flex h-2 w-2 rounded-full" style={{ background: palette.accentPrimary }} />
+          {result.badge}
+        </div>
+        <div className="text-lg font-semibold" style={{ color: palette.textPrimary }}>
+          {result.title}
+        </div>
+        <p className="text-sm" style={{ color: palette.textSecondary }}>{result.summary}</p>
+        <p className="text-xs" style={{ color: palette.textMuted }}>{result.detail}</p>
+        <div className="flex flex-wrap gap-3 pt-1">
+          <GlassButton onClick={result.action} className="px-5 py-3 text-sm">
+            {result.cta}
+          </GlassButton>
+          {result.secondary && (
+            <button
+              type="button"
+              onClick={result.secondary.action}
+              className="text-xs underline underline-offset-4"
+              style={{ color: palette.textSecondary }}
+            >
+              {result.secondary.label}
+            </button>
+          )}
+        </div>
+      </div>
     </GlowCard>
   );
 }
+
 
 function Stat({ label, value, hint, emphasis = false }) {
   const { palette } = useTheme();
@@ -861,7 +823,39 @@ function Sparkles() {
 function StarterclassLuxuryV8() {
   const [tab, setTab] = useState("overview");
   const [modalOpen, setModalOpen] = useState(false);
-  const [showPaid, setShowPaid] = useState(() => { if (typeof window === "undefined") return false; try { return localStorage.getItem("sc_paid_reveal") === "1"; } catch { return false; } });
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [showPaid, setShowPaid] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      return localStorage.getItem("sc_paid_reveal") === "1";
+    } catch {
+      return false;
+    }
+  });
+  const [openModule, setOpenModule] = useState("intro");
+  const [heroGlow, setHeroGlow] = useState({ x: 0.5, y: 0.5 });
+  const [heroActive, setHeroActive] = useState(false);
+  const [siteGlow, setSiteGlow] = useState({ x: 0.5, y: 0.5 });
+  const [siteActive, setSiteActive] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") return "light";
+    try {
+      return localStorage.getItem("sc_theme_pref") || "light";
+    } catch {
+      return "light";
+    }
+  });
+  const [currency, setCurrency] = useState(() => {
+    if (typeof window === "undefined") return "USD";
+    try {
+      return localStorage.getItem("sc_currency") || "USD";
+    } catch {
+      return "USD";
+    }
+  });
+  const [announcementIndex, setAnnouncementIndex] = useState(0);
+  const [stickyVisible, setStickyVisible] = useState(false);
+  const [overviewFocus, setOverviewFocus] = useState("workspace");
   const [showTerms, setShowTerms] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showContact, setShowContact] = useState(false);
@@ -882,37 +876,74 @@ function StarterclassLuxuryV8() {
   const heroTitleRef = useRef(null);
   const siteTitleRef = useRef(null);
 
+  const heroTitleRef = useRef(null);
+  const siteTitleRef = useRef(null);
+  const fullTrackRef = useRef(null);
+  const fullTrackCtaRef = useRef(null);
+
   const sessions = useMemo(() => SESSIONS, []);
+  const monthBundles = useMemo(() => MONTH_BUNDLES, []);
   const { d, h, m, s, expired } = useCountdown(INTRO_START_ISO);
+  const earlyBird = useCountdown(EARLY_BIRD_DEADLINE_ISO);
   const palette = useMemo(() => getPalette(theme), [theme]);
-  const heroHighlights = useMemo(
-    () => [
-      {
-        icon: "🛠️",
-        title: "Custom GPT built for you",
-        sub: "We configure it live using your brief and assets.",
-      },
-      {
-        icon: "🚀",
-        title: "Automation ready to ship",
-        sub: "Leave with one workflow already mapped and tested.",
-      },
-      {
-        icon: "🎯",
-        title: "Prompt kits that deliver",
-        sub: "Business and creative prompts packaged for results.",
-      },
-    ],
-    []
-  );
+  const formatCurrency = useCallback((amountUSD, forced) => formatCurrencyValue(amountUSD, forced || currency), [currency]);
+  const heroHighlights = HERO_HIGHLIGHTS;
+  const announcementMessages = useMemo(() => {
+    const timeMessage = d > 0 ? `Next session in ${d} day${d === 1 ? "" : "s"}` : expired ? "Doors opening now" : "Next session today";
+    return [
+      "Live on 08 Nov · 11:00 UK",
+      timeMessage,
+      "Early-bird 15% ends when the intro ends",
+    ];
+  }, [d, expired]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      try { localStorage.setItem("sc_theme_pref", theme); } catch {}
+      try {
+        localStorage.setItem("sc_theme_pref", theme);
+      } catch {}
+      try {
+        localStorage.setItem("sc_currency", currency);
+      } catch {}
     }
     document.body.style.background = palette.simpleBackground;
     document.body.style.color = palette.textPrimary;
-  }, [theme, palette]);
+  }, [theme, palette, currency]);
+
+  useEffect(() => {
+    if (!announcementMessages.length) return undefined;
+    const id = setInterval(() => {
+      setAnnouncementIndex((idx) => (idx + 1) % announcementMessages.length);
+    }, 6000);
+    return () => clearInterval(id);
+  }, [announcementMessages.length]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const threshold = doc.scrollHeight * 0.25;
+      setStickyVisible(window.scrollY > threshold);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const node = fullTrackCtaRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return undefined;
+    let seen = false;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !seen) {
+          seen = true;
+          track("fulltrack_cta_view", { location: "full_track_section" });
+        }
+      });
+    }, { threshold: 0.4 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [fullTrackCtaRef]);
 
   const themeClass = theme === "dark" ? "theme-dark" : "theme-light";
   const themeOverrides = useMemo(() => {
@@ -973,13 +1004,49 @@ function StarterclassLuxuryV8() {
     };
   }, [siteActive, siteGlow, palette]);
 
-  function openForm() { setModalOpen(true); }
-  function revealPaidAndGoCurriculum() {
-    setShowPaid(true);
-    try { localStorage.setItem("sc_paid_reveal", "1"); } catch {}
+  const upcomingModules = useMemo(
+    () => sessions.filter((s) => s.track === "paid").slice(0, 3),
+    [sessions]
+  );
+
+  const handleCurrencySwitch = useCallback((code) => {
+    setCurrency(code);
+  }, []);
+
+  function triggerIntroForm(source) {
+    track("intro_cta_click", { location: source });
+    setModalOpen(true);
+  }
+
+  function revealPaidAndGoCurriculum(source = "hero_secondary") {
+    if (!showPaid) {
+      setShowPaid(true);
+      try { localStorage.setItem("sc_paid_reveal", "1"); } catch {}
+    }
+    track("fulltrack_cta_click", { location: source });
     setTab("curriculum");
     setOpenModule("s2");
-    requestAnimationFrame(() => document.getElementById("curriculum-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+    requestAnimationFrame(() => {
+      document.getElementById("curriculum-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  function openCalendarModal(location) {
+    track("calendar_modal_open", { location });
+    setCalendarOpen(true);
+  }
+
+  function scrollToFullTrack() {
+    document.getElementById("full-track")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function handleCalendarClick(location) {
+    track("calendar_add", { location });
+    window.open(
+      googleCalUrl({ title: INTRO_NAME, startISO: INTRO_START_ISO, endISO: INTRO_END_ISO, details: `${INTRO_NAME} — ICUNI Starterclass`, location: "Online (Zoom)" }),
+      "_blank",
+      "noopener"
+    );
   }
 
   return (
@@ -993,546 +1060,667 @@ function StarterclassLuxuryV8() {
         }}
       >
         {themeOverrides && <style>{themeOverrides}</style>}
-      {/* Ambient royal glow */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute -top-56 left-1/2 -translate-x-1/2 h-[70vh] w-[90vw]" style={{background:"radial-gradient(ellipse at center, rgba(139,92,246,0.18), transparent 60%)"}} />
-        <div className="absolute bottom-0 right-0 h-80 w-80" style={{background:"radial-gradient(circle at center, rgba(200,161,69,0.12), transparent 60%)"}} />
-      </div>
 
-      {/* Top bar */}
-      <header
-        className="sticky top-0 z-40 backdrop-blur"
-        style={{
-          background: palette.headerBg,
-          borderBottom: `1px solid ${palette.border}`,
-        }}
-      >
-        <Section className="py-3 flex items-center justify-between gap-4">
-          <button
-            ref={siteTitleRef}
-            type="button"
-            onClick={() => window.location.reload()}
-            onMouseMove={(event) => {
-              setSiteActive(true);
-              updateGlow(event, siteTitleRef, setSiteGlow);
-            }}
-            onMouseLeave={() => {
-              setSiteActive(false);
-              setSiteGlow({ x: 0.5, y: 0.5 });
-            }}
-            className="text-base md:text-lg font-semibold tracking-tight"
-            style={{
-              ...siteTitleStyle,
-            }}
-          >
-            Starterclass · ICUNI
-          </button>
-          <div className="flex flex-wrap items-center gap-3 justify-end">
-            <GlassButton variant="secondary" onClick={toggleTheme} className="px-4 py-2 text-sm">
-              {theme === "dark" ? (
-                <>
-                  <span aria-hidden="true">🌞</span>
-                  <span>Bright mode</span>
-                </>
-              ) : (
-                <>
-                  <span aria-hidden="true">🌙</span>
-                  <span>Dark mode</span>
-                </>
-              )}
-            </GlassButton>
-            <GlassButton onClick={openForm}>Book {INTRO_NAME}</GlassButton>
-            <GlassButton variant="secondary" onClick={revealPaidAndGoCurriculum} className="px-5 py-3">
-              Explore the full track
-            </GlassButton>
-          </div>
-        </Section>
-      </header>
-
-      {/* HERO: copy + pie + countdown + calendar + subtle orbits */}
-      <Section className="pt-12 md:pt-20">
-        <GlowCard className="overflow-hidden p-8 md:p-10 relative">
-          <Orbits />
-          <Sparkles />
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div>
-              <Badge>Live on 8 Nov · 90 minutes</Badge>
-              <h1
-                ref={heroTitleRef}
-                className="mt-4 text-4xl md:text-6xl font-extrabold leading-[1.04]"
-                style={heroTitleStyle}
-                onMouseMove={(event) => {
-                  setHeroActive(true);
-                  updateGlow(event, heroTitleRef, setHeroGlow);
-                }}
-                onMouseLeave={() => {
-                  setHeroActive(false);
-                  setHeroGlow({ x: 0.5, y: 0.5 });
-                }}
-              >
-                Make AI work like a teammate
-              </h1>
-              <p className="mt-4 text-lg max-w-2xl" style={{ color: palette.textSecondary }}>
-                Customise your workspace, wire a private GPT, and sharpen prompts that deliver while the interface stays calm enough for deep focus.
-              </p>
-              <div className="mt-5 grid sm:grid-cols-3 gap-3">
-                {heroHighlights.map((feature) => (
-                  <div
-                    key={feature.title}
-                    className="group relative overflow-hidden rounded-2xl border p-4 text-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-xl"
-                    style={{
-                      borderColor: palette.border,
-                      background: palette.surfaceSoft,
-                    }}
-                  >
-                    <div
-                      className="absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                      style={{
-                        background: `linear-gradient(135deg, ${palette.accentPrimary}22, ${palette.accentSecondary}22)`,
-                      }}
-                    />
-                    <div className="relative flex items-start gap-3">
-                      <span className="text-xl" aria-hidden="true">{feature.icon}</span>
-                      <div>
-                        <div className="font-semibold" style={{ color: palette.textPrimary }}>
-                          {feature.title}
-                        </div>
-                        <div className="mt-1 text-xs leading-relaxed" style={{ color: palette.textSecondary }}>
-                          {feature.sub}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-5 text-sm space-y-1" style={{ color: palette.textSecondary }}>
-                <div><span style={{ color: palette.textMuted }}>UK Time:</span> {formatUKRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
-                <div><span style={{ color: palette.textMuted }}>Your Time:</span> {formatLocalRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
-              </div>
-              {/* Countdown */}
-              <div className="mt-8">
-                <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Next session begins in</div>
-                <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
-                  {[
-                    ["Days", d],
-                    ["Hours", h],
-                    ["Minutes", m],
-                    ["Seconds", s],
-                  ].map(([label, val]) => (
-                    <div
-                      key={label}
-                      className="relative overflow-hidden rounded-[1.75rem] px-5 py-6 text-center"
-                      style={{
-                        border: `1px solid ${palette.border}`,
-                        background:
-                          theme === "dark"
-                            ? "linear-gradient(160deg, rgba(20,20,40,0.92), rgba(11,11,26,0.9))"
-                            : `linear-gradient(160deg, ${palette.surfaceSoft}, rgba(255,255,255,0.92))`,
-                        boxShadow: theme === "dark" ? "0 24px 48px rgba(5,0,45,0.45)" : palette.shadow,
-                      }}
-                    >
-                      <div className="font-mono font-bold" style={{ fontSize: "2.8rem", color: palette.textPrimary }}>
-                        {String(val).padStart(2, "0")}
-                      </div>
-                      <div className="mt-3 text-xs uppercase tracking-[0.32em]" style={{ color: palette.textMuted }}>{label}</div>
-                    </div>
-                  ))}
-                </div>
-                {!expired && (
-                  <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>
-                    Reminder emails arrive 24 hours before we open the Zoom room.
-                  </div>
-                )}
-              </div>
-              <div className="mt-4 flex flex-wrap gap-3">
-                <GlassButton onClick={openForm}>Reserve your seat</GlassButton>
-                <GlassButton variant="secondary" onClick={revealPaidAndGoCurriculum} className="px-5 py-3">
-                  Explore the full track
-                </GlassButton>
-              </div>
-              {/* Calendar actions */}
-              <div className="mt-4 flex flex-wrap gap-3 text-xs items-center">
-                <a
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-semibold"
-                  style={{
-                    border: `1px solid ${palette.border}`,
-                    background: palette.surfaceSoft,
-                    color: palette.textPrimary,
-                  }}
-                  href={googleCalUrl({ title: INTRO_NAME, startISO: INTRO_START_ISO, endISO: INTRO_END_ISO, details: `${INTRO_NAME} — ICUNI Starterclass`, location: "Online (Zoom)" })}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Add to calendar
-                </a>
-                <span style={{ color: palette.textMuted }}>Replays unlock for full-track members.</span>
-                <span className="basis-full" style={{ color: palette.textMuted }}>
-                  Completing the registration form automatically schedules this first session in your calendar.
-                </span>
-              </div>
-            </div>
-            <div>
-              <PieBlock />
-            </div>
-          </div>
-        </GlowCard>
-      </Section>
-
-      {/* Tabs */}
-      <Section className="mt-12">
-        <div
-          className="flex items-center gap-2 p-1 rounded-2xl w-fit"
-          style={{
-            border: `1px solid ${palette.border}`,
-            background: palette.surfaceSoft,
-          }}
-        >
-          {[
-            { k: "overview", t: "Overview" },
-            { k: "curriculum", t: "Curriculum" },
-            { k: "faq", t: "FAQ" },
-          ].map(({ k, t }) => (
-            <button
-              key={k}
-              onClick={() => setTab(k)}
-              className="px-4 py-2 rounded-xl text-sm font-semibold transition"
-              style={{
-                background: tab === k ? `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)` : "transparent",
-                color: tab === k ? palette.textPrimary : palette.textSecondary,
-                border: tab === k ? `1px solid ${palette.border}` : "1px solid transparent",
-              }}
-            >
-              {t}
-            </button>
-          ))}
+        <div className="pointer-events-none fixed inset-0 -z-10">
+          <div className="absolute -top-56 left-1/2 -translate-x-1/2 h-[70vh] w-[90vw]" style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.18), transparent 60%)" }} />
+          <div className="absolute bottom-0 right-0 h-80 w-80" style={{ background: "radial-gradient(circle at center, rgba(200,161,69,0.12), transparent 60%)" }} />
         </div>
 
-        {/* Overview */}
-        {tab === "overview" && (
-          <div className="mt-8 grid lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-7 space-y-6">
-              <GlowCard className="p-6">
-                <h3 className="text-xl font-semibold">What you’ll gain in {INTRO_NAME}</h3>
-                <ul className="mt-3 space-y-2 leading-relaxed list-disc pl-5" style={{ color: palette.textSecondary }}>
-                  <li>One custom GPT wired to your workflow</li>
-                  <li>A fully functional project that ships outcomes fast</li>
-                  <li>Prompt recipes that score in business and creative briefs</li>
-                </ul>
-                <div className="mt-4 grid sm:grid-cols-3 gap-3">
-                  {[
-                    ["Live experience", "90 focused minutes with guided customisation."],
-                    ["Replay", "Available for full-track members after the broadcast."],
-                    ["Bring your work", "Apply lessons to your real brief during the session."],
-                  ].map(([h, p], i) => (
-                    <div
-                      key={i}
-                      className="rounded-2xl p-4 transition"
+        <header
+          className="sticky top-0 z-40 backdrop-blur"
+          style={{
+            background: palette.headerBg,
+            borderBottom: `1px solid ${palette.border}`,
+          }}
+        >
+          <Section className="py-3 space-y-2">
+            <div className="flex items-center justify-between gap-4">
+              <button
+                ref={siteTitleRef}
+                type="button"
+                onClick={() => window.location.reload()}
+                onMouseMove={(event) => {
+                  setSiteActive(true);
+                  updateGlow(event, siteTitleRef, setSiteGlow);
+                }}
+                onMouseLeave={() => {
+                  setSiteActive(false);
+                  setSiteGlow({ x: 0.5, y: 0.5 });
+                }}
+                className="text-base md:text-lg font-semibold tracking-tight"
+                style={siteTitleStyle}
+              >
+                Starterclass · ICUNI
+              </button>
+              <div className="flex items-center gap-3">
+                <div
+                  className="flex rounded-full border"
+                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                >
+                  {Object.entries(CURRENCIES).map(([code, meta]) => (
+                    <button
+                      key={code}
+                      type="button"
+                      onClick={() => handleCurrencySwitch(code)}
+                      className={`px-3 py-2 text-sm ${currency === code ? "font-semibold" : ""}`}
                       style={{
-                        border: `1px solid ${palette.border}`,
-                        background: palette.surfaceSoft,
+                        color: currency === code ? palette.textPrimary : palette.textSecondary,
+                        background: currency === code ? `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)` : "transparent",
+                        borderRadius: "9999px",
                       }}
+                      aria-label={`Show pricing in ${meta.label}`}
                     >
-                      <div className="text-sm font-medium" style={{ color: palette.textPrimary }}>{h}</div>
-                      <div className="text-xs mt-1" style={{ color: palette.textSecondary }}>{p}</div>
+                      {meta.symbol}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="rounded-full border px-3 py-2 text-lg"
+                  style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+                  aria-label={theme === "dark" ? "Switch to bright mode" : "Switch to dark mode"}
+                >
+                  {theme === "dark" ? "🌞" : "🌙"}
+                </button>
+              </div>
+            </div>
+            <div
+              className="text-xs uppercase tracking-[0.28em]"
+              style={{ color: palette.textMuted }}
+            >
+              {announcementMessages[announcementIndex]}
+            </div>
+          </Section>
+        </header>
+
+        <Section className="pt-10 pb-16">
+          <GlowCard className="p-6 md:p-10">
+            <div className="grid lg:grid-cols-2 gap-10 items-center">
+              <div>
+                <Badge>Intro session · no payment required</Badge>
+                <h1
+                  ref={heroTitleRef}
+                  className="mt-4 text-3xl md:text-5xl font-bold tracking-tight"
+                  style={heroTitleStyle}
+                  onMouseMove={(event) => {
+                    setHeroActive(true);
+                    updateGlow(event, heroTitleRef, setHeroGlow);
+                  }}
+                  onMouseLeave={() => {
+                    setHeroActive(false);
+                    setHeroGlow({ x: 0.5, y: 0.5 });
+                  }}
+                >
+                  Make AI work like a teammate
+                </h1>
+                <p className="mt-4 text-lg max-w-2xl" style={{ color: palette.textSecondary }}>
+                  In 90 minutes, you’ll leave with a configured Project, a private GPT, and prompt kits that deliver.
+                </p>
+                <div className="mt-6 grid sm:grid-cols-3 gap-3">
+                  {heroHighlights.map((feature) => (
+                    <div
+                      key={feature.title}
+                      className="group relative overflow-hidden rounded-2xl border p-4 text-sm transition-transform duration-200 hover:-translate-y-1"
+                      style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                    >
+                      <div
+                        className="absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                        style={{ background: `linear-gradient(135deg, ${palette.accentPrimary}22, ${palette.accentSecondary}22)` }}
+                      />
+                      <div className="relative flex items-start gap-3">
+                        <span className="text-xl" aria-hidden="true">{feature.icon}</span>
+                        <div>
+                          <div className="font-semibold" style={{ color: palette.textPrimary }}>
+                            {feature.title}
+                          </div>
+                          <div className="mt-1 text-xs leading-relaxed" style={{ color: palette.textSecondary }}>
+                            {feature.sub}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
-              </GlowCard>
-
-              {showPaid && <ClientValueCalculator />}
-            </div>
-
-            <div className="lg:col-span-5 space-y-6">
-              <GlowCard className="p-6">
-                <h3 className="text-xl font-semibold">Next live times</h3>
-                <ul className="mt-3 space-y-3">
-                  {sessions.filter((s) => s.track !== "break").slice(0, 4).map((s) => (
-                    <li key={s.k} className="flex items-start gap-3">
-                      <span className="w-32 text-sm" style={{ color: palette.textMuted }}>{s.date}</span>
-                      <div>
-                        <div className="text-xs" style={{ color: palette.textMuted }}>UK: {formatUKRange(s.start, s.end)}</div>
-                        <div className="text-xs" style={{ color: palette.textMuted }}>Your: {formatLocalRange(s.start, s.end)}</div>
-                        <div className="font-medium" style={{ color: palette.textPrimary }}>{s.title}</div>
+                <div className="mt-5 text-sm space-y-1" style={{ color: palette.textSecondary }}>
+                  <div><span style={{ color: palette.textMuted }}>UK Time:</span> {formatUKRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
+                  <div><span style={{ color: palette.textMuted }}>Your Time:</span> {formatLocalRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
+                </div>
+                <div className="mt-8">
+                  <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Next session begins in</div>
+                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
+                    {[
+                      ["Days", d],
+                      ["Hours", h],
+                      ["Minutes", m],
+                      ["Seconds", s],
+                    ].map(([label, val]) => (
+                      <div
+                        key={label}
+                        className="relative overflow-hidden rounded-[1.75rem] px-5 py-6 text-center"
+                        style={{
+                          border: `1px solid ${palette.border}`,
+                          background:
+                            theme === "dark"
+                              ? "linear-gradient(160deg, rgba(20,20,40,0.92), rgba(11,11,26,0.9))"
+                              : `linear-gradient(160deg, ${palette.surfaceSoft}, rgba(255,255,255,0.92))`,
+                          boxShadow: theme === "dark" ? "0 24px 48px rgba(5,0,45,0.45)" : palette.shadow,
+                        }}
+                      >
+                        <div className="font-mono font-bold" style={{ fontSize: "2.4rem", color: palette.textPrimary }}>
+                          {String(val).padStart(2, "0")}
+                        </div>
+                        <div className="mt-3 text-xs uppercase tracking-[0.32em]" style={{ color: palette.textMuted }}>{label}</div>
                       </div>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={() => setTab("curriculum")}
-                  className="mt-4 inline-flex items-center gap-2 text-sm underline underline-offset-4"
-                  style={{ color: palette.accentSecondary }}
-                >
-                  <span aria-hidden="true">🗓️</span>
-                  <span>View full schedule</span>
-                </button>
-              </GlowCard>
-
-              <GlowCard className="p-6">
-                <div className="flex flex-wrap gap-3">
-                  <GlassButton onClick={openForm}>Book {INTRO_NAME}</GlassButton>
-                  <GlassButton variant="secondary" onClick={revealPaidAndGoCurriculum} className="px-5 py-3">
-                    Explore more
+                    ))}
+                  </div>
+                  {!expired && (
+                    <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>
+                      Reminder emails arrive 24 hours before we open the Zoom room.
+                    </div>
+                  )}
+                </div>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <GlassButton onClick={() => triggerIntroForm("hero_primary")}>Reserve your seat</GlassButton>
+                  <GlassButton variant="secondary" onClick={() => revealPaidAndGoCurriculum("hero_secondary")} className="px-5 py-3">
+                    Explore the full track
                   </GlassButton>
                 </div>
-              </GlowCard>
+                <div className="mt-4 flex flex-wrap gap-3 text-xs items-center">
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-semibold"
+                    style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft, color: palette.textPrimary }}
+                    onClick={() => openCalendarModal("hero_button")}
+                  >
+                    Add to calendar
+                  </button>
+                  <span style={{ color: palette.textMuted }}>Replays unlock for Full Track participants.</span>
+                  <span className="basis-full" style={{ color: palette.textMuted }}>
+                    Submit the registration form so we can email the invite and reminder.
+                  </span>
+                </div>
+              </div>
+              <div>
+                <PieBlock />
+              </div>
+            </div>
+          </GlowCard>
+        </Section>
+
+        <Section className="pb-14">
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <h2 className="text-xl font-semibold">What comes after the intro</h2>
+              <button
+                type="button"
+                onClick={() => {
+                  revealPaidAndGoCurriculum("track_preview");
+                  scrollToFullTrack();
+                }}
+                className="text-sm underline underline-offset-4"
+                style={{ color: palette.accentSecondary }}
+              >
+                Explore the full track
+              </button>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {upcomingModules.map((module) => (
+                <GlowCard key={module.k} className="p-4">
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Included in Full Track</div>
+                  <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>{module.title}</div>
+                  <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{module.outcome}</div>
+                  <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>{module.date} · {formatUKRange(module.start, module.end)}</div>
+                </GlowCard>
+              ))}
             </div>
           </div>
-        )}
+        </Section>
 
-        {/* Curriculum */}
-        {tab === "curriculum" && (
-          <div id="curriculum-anchor" className="mt-10 grid lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-8 space-y-4">
-              {sessions.map((s) => {
-                if (s.track === "break") {
+        <Section className="pb-16">
+          <GlowCard className="p-6 md:p-10">
+            <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-center">
+              <div>
+                <div className="text-sm uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Proof from the room</div>
+                <blockquote className="mt-4 text-xl leading-relaxed" style={{ color: palette.textPrimary }}>
+                  “{TESTIMONIAL.quote}”
+                </blockquote>
+                <div className="mt-4 text-sm" style={{ color: palette.textSecondary }}>
+                  {TESTIMONIAL.name} · {TESTIMONIAL.role}
+                </div>
+              </div>
+              <div className="grid gap-3">
+                {MICRO_GALLERY.map((item) => (
+                  <figure key={item.title} className="rounded-2xl overflow-hidden border" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                    <img src={item.src} alt={item.alt} className="w-full" loading="lazy" />
+                    <figcaption className="px-4 py-3 text-xs" style={{ color: palette.textSecondary }}>
+                      <span className="font-semibold" style={{ color: palette.textPrimary }}>{item.title}</span> — {item.caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          </GlowCard>
+        </Section>
+
+        <Section id="full-track" ref={fullTrackRef} className="pb-16">
+          <GlowCard className="p-6 md:p-10 space-y-6">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-semibold">Full Track enrolment</h2>
+                <p className="mt-2 text-sm max-w-2xl" style={{ color: palette.textSecondary }}>
+                  {formatCurrency(300)} · 15% off if you register before the intro ends. Pay {formatCurrency(100)} per month across November, December, and January.
+                </p>
+              </div>
+              <div className="text-xs" style={{ color: palette.textMuted }}>
+                Early-bird window closes in {earlyBird.d}d {String(earlyBird.h).padStart(2, "0")}h {String(earlyBird.m).padStart(2, "0")}m.
+              </div>
+            </div>
+            <ul className="grid md:grid-cols-2 gap-4">
+              {FULL_TRACK_OUTCOMES.map((item) => (
+                <li key={item} className="rounded-2xl border p-4 text-sm" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="flex flex-wrap gap-3">
+              <div ref={fullTrackCtaRef}>
+                <GlassButton onClick={() => revealPaidAndGoCurriculum("full_track_section")} className="px-6 py-3">
+                  Get the Full Track
+                </GlassButton>
+              </div>
+              <button
+                type="button"
+                onClick={() => triggerIntroForm("full_track_secondary")}
+                className="text-sm underline underline-offset-4"
+                style={{ color: palette.textSecondary }}
+              >
+                Reserve the intro seat first
+              </button>
+            </div>
+          </GlowCard>
+        </Section>
+
+        <Section className="pb-20">
+          <div
+            className="flex items-center gap-2 p-1 rounded-2xl w-fit"
+            style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}
+          >
+            {[
+              { k: "overview", t: "Overview" },
+              { k: "curriculum", t: "Curriculum" },
+              { k: "cpd", t: "CPD Credits" },
+              { k: "instructor", t: "Meet your instructor" },
+              { k: "faq", t: "FAQ" },
+            ].map(({ k, t }) => (
+              <button
+                key={k}
+                onClick={() => {
+                  if (k === "curriculum") {
+                    revealPaidAndGoCurriculum("tab_switch");
+                  } else {
+                    setTab(k);
+                  }
+                }}
+                className="px-4 py-2 rounded-xl text-sm font-semibold transition"
+                style={{
+                  background: tab === k ? `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)` : "transparent",
+                  color: tab === k ? palette.textPrimary : palette.textSecondary,
+                  border: tab === k ? `1px solid ${palette.border}` : "1px solid transparent",
+                }}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+
+          {tab === "overview" && (
+            <div className="mt-8 grid lg:grid-cols-12 gap-8">
+              <div className="lg:col-span-7 space-y-6">
+                <GlowCard className="p-6 space-y-5">
+                  <h3 className="text-xl font-semibold">What this intro unlocks</h3>
+                  <div className="grid sm:grid-cols-3 gap-3">
+                    {OVERVIEW_WINS.map((win) => {
+                      const isActive = overviewFocus === win.key;
+                      return (
+                        <button
+                          key={win.key}
+                          type="button"
+                          onClick={() => setOverviewFocus(win.key)}
+                          className="rounded-2xl p-4 text-left transition"
+                          style={{
+                            border: `1px solid ${isActive ? palette.accentPrimary : palette.border}`,
+                            background: isActive ? `linear-gradient(135deg, ${palette.accentPrimary}22, ${palette.accentSecondary}22)` : palette.surfaceSoft,
+                            color: palette.textPrimary,
+                          }}
+                        >
+                          <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{win.label}</div>
+                          <div className="mt-2 text-sm font-semibold">{win.headline}</div>
+                          <div className="mt-2 text-xs" style={{ color: palette.textSecondary }}>{win.detail}</div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                    <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Full track teaser</div>
+                    <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
+                      This Starterclass Session counts as one of ten modules. Add months when you are ready — each bundle is {formatCurrency(100)}.
+                    </div>
+                  </div>
+                </GlowCard>
+              </div>
+              <div className="lg:col-span-5 space-y-6">
+                <GlowCard className="p-6">
+                  <h3 className="text-xl font-semibold">Next live times</h3>
+                  <ul className="mt-3 space-y-3">
+                    {sessions.filter((s) => s.track !== "break").slice(0, 4).map((s) => (
+                      <li key={s.k} className="flex items-start gap-3">
+                        <span className="w-32 text-sm" style={{ color: palette.textMuted }}>{s.date}</span>
+                        <div>
+                          <div className="text-xs" style={{ color: palette.textMuted }}>UK: {formatUKRange(s.start, s.end)}</div>
+                          <div className="text-xs" style={{ color: palette.textMuted }}>Your: {formatLocalRange(s.start, s.end)}</div>
+                          <div className="font-medium" style={{ color: palette.textPrimary }}>{s.title}</div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                  <button
+                    onClick={() => revealPaidAndGoCurriculum("overview_preview")}
+                    className="mt-4 inline-flex items-center gap-2 text-sm underline underline-offset-4"
+                    style={{ color: palette.accentSecondary }}
+                  >
+                    <span aria-hidden="true">🗓️</span>
+                    <span>View full schedule</span>
+                  </button>
+                </GlowCard>
+                <GlowCard className="p-6">
+                  <div className="flex flex-wrap gap-3">
+                    <GlassButton onClick={() => triggerIntroForm("overview_section")}>Reserve your seat</GlassButton>
+                    <GlassButton variant="secondary" onClick={() => revealPaidAndGoCurriculum("overview_section")} className="px-5 py-3">
+                      Explore curriculum
+                    </GlassButton>
+                  </div>
+                </GlowCard>
+              </div>
+            </div>
+          )}
+
+          {tab === "curriculum" && (
+            <div id="curriculum-anchor" className="mt-10 grid lg:grid-cols-12 gap-8">
+              <div className="lg:col-span-8 space-y-6">
+                {monthBundles.map((bundle) => {
+                  const filtered = sessions.filter((s) => s.month === bundle.key && s.track !== "break");
+                  const monthLabel = `${bundle.label} · ${formatCurrency(bundle.priceUSD)}`;
                   return (
-                    <div
-                      key={s.k}
-                      className="rounded-3xl p-5 text-sm"
-                      style={{ border: `1px dashed ${palette.border}`, color: palette.textSecondary }}
-                    >
-                      <div className="font-semibold" style={{ color: palette.textPrimary }}>Season break</div>
-                      <div>Reset week to consolidate builds before we rejoin for the final modules.</div>
+                    <div key={bundle.key} className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-semibold">{monthLabel}</h3>
+                        <div className="text-xs" style={{ color: palette.textMuted }}>Weekly cadence · pay per month</div>
+                      </div>
+                      <div className="space-y-4">
+                        {filtered.map((module) => {
+                          const open = openModule === module.k;
+                          return (
+                            <div key={module.k} className="rounded-3xl border" style={{ borderColor: palette.border, background: palette.surface }}>
+                              <button
+                                type="button"
+                                className="w-full px-5 py-4 flex items-start gap-4 text-left"
+                                onClick={() => setOpenModule((prev) => (prev === module.k ? "" : module.k))}
+                              >
+                                <div className="flex-1">
+                                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{module.date}</div>
+                                  <div className="mt-1 font-semibold" style={{ color: palette.textPrimary }}>{module.title}</div>
+                                  <div className="mt-1 text-sm" style={{ color: palette.textSecondary }}>{module.desc}</div>
+                                </div>
+                                <div className="text-xs" style={{ color: palette.textMuted }}>{formatUKRange(module.start, module.end)}</div>
+                                <div className="ml-auto text-xl" aria-hidden="true" style={{ color: palette.textSecondary }}>
+                                  {open ? "–" : "+"}
+                                </div>
+                              </button>
+                              {open && (
+                                <div className="px-5 pb-5">
+                                  <ModuleOutlineChart segments={module.outline} />
+                                  <div className="mt-4 rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                                    <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>What you accomplish</div>
+                                    <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>{module.outcome}</div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                        {bundle.key === "dec" && (
+                          <div className="rounded-3xl border p-5 text-sm" style={{ borderColor: palette.border, color: palette.textSecondary, background: palette.surfaceSoft }}>
+                            Winter break: pause to refine builds before January resumes.
+                          </div>
+                        )}
+                      </div>
                     </div>
                   );
-                }
-                const open = openModule === s.k;
-                const moduleValuation = resolveModuleValuation(s.k);
-                return (
-                  <div
-                    key={s.k}
-                    className="rounded-3xl transition-all"
-                    style={{
-                      border: `1px solid ${palette.border}`,
-                      background: open ? palette.surface : palette.surfaceSoft,
-                      boxShadow: open ? palette.shadow : "none",
-                    }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setOpenModule(open ? "" : s.k)}
-                      className="w-full flex items-start justify-between gap-4 p-5 text-left"
-                    >
-                      <div className="flex-1 pr-4">
-                        <div className="font-semibold text-base" style={{ color: palette.textPrimary }}>{s.title}</div>
-                        <div className="mt-1 text-sm" style={{ color: palette.textSecondary }}>{s.desc}</div>
-                      </div>
-                      <div className="hidden md:flex flex-col items-end gap-1" style={{ color: palette.textMuted }}>
-                        <span className="text-sm">{s.date}</span>
-                        <span className="text-xs">{formatUKRange(s.start, s.end)}</span>
-                      </div>
-                      <span
-                        className="text-xl font-semibold"
-                        style={{ color: palette.textPrimary, transition: "transform 200ms ease" }}
-                      >
-                        {open ? "–" : "＋"}
-                      </span>
-                    </button>
-                    {open && (
-                      <div className="px-5 pb-5 space-y-4 text-sm" style={{ color: palette.textSecondary }}>
-                        <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-3">
-                          <div className="rounded-2xl p-3" style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}>
-                            <div className="text-xs" style={{ color: palette.textMuted }}>Date</div>
-                            <div className="font-semibold" style={{ color: palette.textPrimary }}>{s.date}</div>
-                            <div className="text-xs mt-1" style={{ color: palette.textMuted }}>UK: {formatUKRange(s.start, s.end)}</div>
-                            <div className="text-xs" style={{ color: palette.textMuted }}>Your: {formatLocalRange(s.start, s.end)}</div>
-                          </div>
-                          <div className="rounded-2xl p-3" style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}>
-                            <div className="text-xs" style={{ color: palette.textMuted }}>Focus</div>
-                            <div className="font-semibold" style={{ color: palette.textPrimary }}>{s.desc}</div>
-                          </div>
-                          <div className="rounded-2xl p-3" style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}>
-                            <div className="text-xs" style={{ color: palette.textMuted }}>Outcome</div>
-                            <div className="font-semibold" style={{ color: palette.textPrimary }}>{s.outcome}</div>
-                          </div>
-                          {moduleValuation && (
-                            <div className="rounded-2xl p-3" style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}>
-                              <div className="text-xs" style={{ color: palette.textMuted }}>Estimated value</div>
-                              <div className="font-semibold" style={{ color: palette.textPrimary }}>£{moduleValuation.value.toLocaleString()}</div>
-                              <div className="text-xs mt-1" style={{ color: palette.textSecondary }}>{moduleValuation.deliverable}</div>
-                            </div>
-                          )}
-                        </div>
-                        <ModuleOutlineChart segments={s.outline} />
-                        <div className="flex flex-wrap gap-3">
-                          <GlassButton
-                            variant="secondary"
-                            onClick={() => window.open(googleCalUrl({ title: s.title, startISO: s.start, endISO: s.end, details: `${s.title} — ICUNI Starterclass`, location: "Online (Zoom)" }), "_blank")}
-                            className="px-5 py-2"
-                          >
-                            Add to calendar
-                          </GlassButton>
-                          {s.track === "intro" ? (
-                            <GlassButton onClick={() => setModalOpen(true)} className="px-5 py-2">
-                              Reserve seat
-                            </GlassButton>
-                          ) : showPaid ? (
-                            <GlassButton onClick={() => setModalOpen(true)} className="px-5 py-2">
-                              Join track
-                            </GlassButton>
-                          ) : (
-                            <GlassButton onClick={revealPaidAndGoCurriculum} className="px-5 py-2">
-                              Unlock modules
-                            </GlassButton>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-            <div className="lg:col-span-4 space-y-6">
-              {showPaid ? (
-                <ClientValueCalculator />
-              ) : (
-                <GlowCard className="p-6">
-                  <h3 className="text-xl font-semibold">Start with {INTRO_NAME}</h3>
-                  <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
-                    Customisation, Projects, GPTs, and prompts build your base. Unlock the remaining modules when you are ready for the full certification path.
-                  </p>
-                  <GlassButton onClick={openForm} className="mt-4">
-                    Reserve your seat
-                  </GlassButton>
+                })}
+                {showPaid && (
+                  <ClientValueCalculator
+                    currency={currency}
+                    formatCurrency={formatCurrency}
+                    onIntro={() => triggerIntroForm("cvc_intro")}
+                    onFull={() => revealPaidAndGoCurriculum("cvc_full")}
+                  />
+                )}
+              </div>
+              <div className="lg:col-span-4 space-y-6">
+                <GlowCard className="p-6 space-y-4">
+                  <h3 className="text-lg font-semibold">Monthly investment</h3>
+                  <ul className="space-y-3 text-sm" style={{ color: palette.textSecondary }}>
+                    {monthBundles.map((bundle) => (
+                      <li key={bundle.key} className="flex items-center justify-between">
+                        <span>{bundle.label}</span>
+                        <span style={{ color: palette.textPrimary }}>{formatCurrency(bundle.priceUSD)}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </GlowCard>
-              )}
-              <GlowCard className="p-6">
-                <Badge>Accredited</Badge>
-                <h3 className="mt-3 text-lg font-semibold">Certificate with CPD credits</h3>
-                <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
-                  Complete all 10 modules and earn the ICUNI Starterclass certificate with Continuing Professional Development points to evidence your automation leadership.
+              </div>
+            </div>
+          )}
+
+          {tab === "cpd" && (
+            <div className="mt-8">
+              <GlowCard className="p-6 space-y-4">
+                <h3 className="text-xl font-semibold">Certified progress</h3>
+                <p className="text-sm" style={{ color: palette.textSecondary }}>
+                  Complete all ten modules and you’ll receive an ICUNI certificate carrying CPD points. We track attendance, project submissions, and the final deployment to validate the award.
+                </p>
+                <div className="grid sm:grid-cols-2 gap-3 text-sm" style={{ color: palette.textSecondary }}>
+                  <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                    <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Evidence we collect</div>
+                    <ul className="mt-2 space-y-2 list-disc pl-5">
+                      <li>Session attendance and live build checkpoints</li>
+                      <li>Module deliverables stored in your portfolio</li>
+                      <li>Deployment runbook signed off in January</li>
+                    </ul>
+                  </div>
+                  <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                    <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>How it helps</div>
+                    <ul className="mt-2 space-y-2 list-disc pl-5">
+                      <li>Use the certificate for internal CPD reporting</li>
+                      <li>Showcase your agent build as part of professional appraisals</li>
+                      <li>Unlock alumni-only build clinics during the next cohort</li>
+                    </ul>
+                  </div>
+                </div>
+              </GlowCard>
+            </div>
+          )}
+
+          {tab === "instructor" && (
+            <div className="mt-8">
+              <GlowCard className="p-6 space-y-4">
+                <h3 className="text-xl font-semibold">About the Instructor</h3>
+                <p className="text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
+                  Mikael Gabriel — AI Nerd & Consultant
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
+                  I’ve been buried in artificial intelligence since 2021, long before it became everyone’s dinner topic. I started with ChatGPT back in November 2022, then went down the rabbit hole with Claude, Midjourney, Leonardo, and just about every other frontier model — including the quiet ones nobody talks about. I don’t just follow the AI wave; I live inside it.
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
+                  I’ve personally introduced over fifty people to using AI in their daily lives — friends, colleagues, and strangers who now can’t imagine working without it. Maybe I should be proud. Maybe I should be worried. Either way, I’m hooked.
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
+                  I’m currently pursuing a Global Executive MBA with AI Specialisation, certified in Microsoft Azure AI Fundamentals, and still chasing more — not out of obligation, but obsession. I build everything I can with AI: this website, the infrastructure behind it, the automations, the workflows — all without writing a single line of code. My job is to make complex systems simple and usable.
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
+                  But I’m not an AI absolutist. I believe in humanity above the hype. I use AI to make human work easier — not to replace it. I still shoot live-action films. I still collaborate with real people. And that balance is what I’ll teach you: how to work with AI, not for it.
                 </p>
               </GlowCard>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* FAQ */}
-        {tab === "faq" && (
-          <div className="mt-10 grid lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-8">
-              <GlowCard className="p-6">
-                <h3 className="text-xl font-semibold">FAQ</h3>
-                <div className="mt-4 space-y-3">
-                  {[
-                    ["Do I need to code?","Optional. You can complete the session without code using Projects, GPTs, Canvas, and N8N. If you do write scripts, we keep them readable and reusable."],
-                    ["What tools do I need?","ChatGPT Pro and a Google account for Sheets/Drive. We provide Canvas workspaces, prompt kits, and starter templates so you’re not staring at a blank page."],
-                    ["Can I watch later?","Replays are available to full‑track registrants. Live Q&A still gives you the edge for tailored fixes."],
-                    ["Is this theory?","No. We build small, real systems. You leave with a configured Project, a prompt kit, and the habit to iterate weekly."],
-                    ["What happens after the session?","You’ll get materials and a path into the advanced track (Agents, AgentKit, N8N, deployment) if you choose to continue."],
-                    ["Will my data be safe?","We use sane defaults: secrets, scopes, vendor hygiene, and how to spot risky prompts. You decide what to connect; we model best practice."],
-                    ["I’m short on time.","The format is 90 minutes, built to ship. Homework is practical and sized to fit under two hours."],
-                    ["I’m not technical.","You’ll be fine. We keep the stack thin and explain terms as we go. The focus is outcomes, not jargon."],
-                  ].map(([q,a],i)=> (
-                    <details key={i} className="group rounded-2xl border border-white/10 bg-white/5 open:bg-white/10 p-4">
-                      <summary className="cursor-pointer list-none flex items-center justify-between">
-                        <span className="font-medium">{q}</span>
-                        <span className="text-white/60 group-open:rotate-45 transition">＋</span>
-                      </summary>
-                      <p className="mt-2 text-sm text-white/80">{a}</p>
-                    </details>
-                  ))}
-                </div>
-              </GlowCard>
+          {tab === "faq" && (
+            <div className="mt-8 grid md:grid-cols-2 gap-4">
+              {FAQ_ITEMS.map((item) => (
+                <GlowCard key={item.question} className="p-6">
+                  <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>{item.question}</div>
+                  <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>{item.answer}</div>
+                </GlowCard>
+              ))}
             </div>
-            <div className="lg:col-span-4 space-y-6">
-              <GlowCard className="p-6">
-                <h3 className="text-xl font-semibold">Stay in the loop</h3>
-                <p className="text-white/80 mt-2">Book {INTRO_NAME} to receive reminders and materials.</p>
-                <GlassButton className="mt-3" onClick={openForm}>Book now</GlassButton>
-              </GlowCard>
-            </div>
-          </div>
-        )}
-      </Section>
-
-      {/* Modal: Google Form */}
-      {modalOpen && (
-        <div className="fixed inset-0 z-50 grid place-items-center p-4">
-          <div
-            className="absolute inset-0 backdrop-blur"
-            style={{ background: theme === "dark" ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }}
-            onClick={() => setModalOpen(false)}
-          />
-          <div
-            className="relative w-full max-w-4xl rounded-3xl overflow-hidden"
-            style={{ border: `1px solid ${palette.border}`, background: palette.surface }}
-          >
-            <div
-              className="px-4 md:px-6 py-4 flex items-center justify-between"
-              style={{ borderBottom: `1px solid ${palette.border}`, color: palette.textPrimary }}
-            >
-              <div className="font-semibold">Register — {INTRO_NAME}</div>
-              <button onClick={() => setModalOpen(false)} className="text-2xl leading-none" style={{ color: palette.textSecondary }}>×</button>
-            </div>
-            <div className="aspect-[16/12] md:aspect-[16/9] w-full">
-              <iframe title="Starterclass Registration" src={GOOGLE_FORM_URL_EMBED} className="h-full w-full" frameBorder="0" marginHeight={0} marginWidth={0}>Loading…</iframe>
-            </div>
-            <div className="px-4 md:px-6 py-3 text-xs" style={{ color: palette.textMuted, borderTop: `1px solid ${palette.border}` }}>
-              Replays are available to full-track registrants. Submitting this form auto-schedules the first session in your calendar and emails the prep materials.
-            </div>
-          </div>
-        </div>
-      )}
-
-      <BackToTop />
-
-      {/* Footer with populated policies */}
-      <footer className="mt-24 mb-16">
-        <Section>
-          <div className="flex flex-wrap items-center justify-between gap-3 text-sm" style={{ color: palette.textMuted }}>
-            <div>© {new Date().getFullYear()} ICUNI — Starterclass</div>
-            <div className="flex gap-4">
-              <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#terms" onClick={(e)=>{e.preventDefault(); setShowTerms(true);}}>Terms</a>
-              <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#privacy" onClick={(e)=>{e.preventDefault(); setShowPrivacy(true);}}>Privacy</a>
-              <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#contact" onClick={(e)=>{e.preventDefault(); setShowContact(true);}}>Contact</a>
-            </div>
-          </div>
+          )}
         </Section>
-      </footer>
 
-      {/* Policy modals */}
-      {showTerms && (
-        <PolicyModal title="Terms of Service" onClose={()=>setShowTerms(false)}>
-          <p className="text-sm text-white/80">These terms govern enrollment in the ICUNI Starterclass.</p>
-          <ul className="list-disc pl-5 text-sm text-white/80 space-y-2 mt-3">
-            <li><span className="text-white/60">Scope:</span> The Starterclass Session provides live instruction, templates, and materials for personal/business use. Redistribution or resale is not permitted without written consent.</li>
-            <li><span className="text-white/60">Payments:</span> All payments are processed via Stripe. Taxes and fees may apply per region.</li>
-            <li><span className="text-white/60">Refunds:</span> You may cancel up to 48 hours before the first paid session for a full refund. After that window, we provide credit toward a future cohort or Private/Masterclass.</li>
-            <li><span className="text-white/60">Conduct:</span> Be respectful in live sessions and forums. Disruptive behaviour may result in removal without refund.</li>
-            <li><span className="text-white/60">IP:</span> Your data remains yours. Course IP (slides, templates) remains ICUNI’s and is licensed for your use.</li>
-            <li><span className="text-white/60">Changes:</span> We may adjust dates/contents for quality or operational reasons; you’ll be notified by email.</li>
-            <li><span className="text-white/60">Governing law:</span> England & Wales.</li>
-          </ul>
-        </PolicyModal>
-      )}
-      {showPrivacy && (
-        <PolicyModal title="Privacy Policy" onClose={()=>setShowPrivacy(false)}>
-          <p className="text-sm text-white/80">We collect the minimum necessary data to run the cohort and support you.</p>
-          <ul className="list-disc pl-5 text-sm text-white/80 space-y-2 mt-3">
-            <li><span className="text-white/60">Data collected:</span> Name, email, form responses, attendance, and homework links.</li>
-            <li><span className="text-white/60">Use:</span> Enrollment, reminders, certification, and support. Optional marketing with explicit opt‑in.</li>
-            <li><span className="text-white/60">Processors:</span> Google (Forms/Sheets/Drive), Stripe (payments), email provider (Postmark/SendGrid). We use N8N to automate notifications.</li>
-            <li><span className="text-white/60">Security:</span> Access is limited to ICUNI admins on a need‑to‑know basis. We use least‑privilege accounts and audit access periodically.</li>
-            <li><span className="text-white/60">Retention:</span> Enrollment records are retained for up to 24 months; you may request deletion anytime.</li>
-            <li><span className="text-white/60">Your rights:</span> Access, correction, deletion. Email <a className="underline" href="mailto:starterclass@icuni.org">starterclass@icuni.org</a>.</li>
-          </ul>
-        </PolicyModal>
-      )}
-      {showContact && (
-        <PolicyModal title="Contact" onClose={()=>setShowContact(false)}>
-          <div className="text-sm space-y-2">
-            <p>We reply within 2 business days.</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li><span className="text-white/60">Enrollment & support:</span> <a className="underline" href="mailto:starterclass@icuni.org">starterclass@icuni.org</a></li>
-              <li><span className="text-white/60">Automation ops (N8N):</span> <a className="underline" href="mailto:ai@icuni.org">ai@icuni.org</a></li>
-              <li><span className="text-white/60">Receipts & reminders (no‑reply):</span> no-reply@icuni.org</li>
-            </ul>
-            <p className="text-xs text-white/60">Prefer not to email? Register via the on‑page Google Form; we’ll follow up with materials and calendar invites.</p>
+        <BackToTop />
+
+        <footer className="mt-24 mb-16">
+          <Section>
+            <div className="flex flex-wrap items-center justify-between gap-3 text-sm" style={{ color: palette.textMuted }}>
+              <div>© {new Date().getFullYear()} ICUNI — Starterclass</div>
+              <div className="flex gap-4">
+                <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#terms" onClick={(e) => { e.preventDefault(); setShowTerms(true); }}>Terms</a>
+                <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#privacy" onClick={(e) => { e.preventDefault(); setShowPrivacy(true); }}>Privacy</a>
+                <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#contact" onClick={(e) => { e.preventDefault(); setShowContact(true); }}>Contact</a>
+              </div>
+            </div>
+          </Section>
+        </footer>
+
+        {stickyVisible && (
+          <div className="fixed inset-x-0 bottom-0 z-40">
+            <div className="mx-auto max-w-5xl px-4 pb-6">
+              <GlowCard className="px-5 py-4 flex flex-wrap items-center justify-between gap-3">
+                <div className="text-sm" style={{ color: palette.textSecondary }}>
+                  Reserve your seat for Session 0 (08 Nov · 11:00 UK)
+                </div>
+                <GlassButton onClick={() => triggerIntroForm("sticky_bar")} className="px-5 py-2 text-sm">
+                  Reserve your seat
+                </GlassButton>
+              </GlowCard>
+            </div>
           </div>
-        </PolicyModal>
-      )}
-    </main>
+        )}
+
+        {modalOpen && (
+          <div className="fixed inset-0 z-50 grid place-items-center p-4">
+            <div className="absolute inset-0 backdrop-blur" style={{ background: theme === "dark" ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }} onClick={() => setModalOpen(false)} />
+            <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden" style={{ border: `1px solid ${palette.border}`, background: palette.surface, color: palette.textPrimary }}>
+              <div className="px-4 md:px-6 py-4 flex items-center justify-between" style={{ borderBottom: `1px solid ${palette.border}` }}>
+                <div className="font-semibold">Register — {INTRO_NAME}</div>
+                <button onClick={() => setModalOpen(false)} className="text-2xl leading-none" style={{ color: palette.textSecondary }}>×</button>
+              </div>
+              <div className="p-6 space-y-6">
+                <div
+                  className="rounded-2xl overflow-hidden border"
+                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                >
+                  <iframe
+                    src={GOOGLE_FORM_URL_EMBED}
+                    title="Starterclass registration form"
+                    width="100%"
+                    height="680"
+                    frameBorder="0"
+                    marginHeight="0"
+                    marginWidth="0"
+                    style={{ width: "100%" }}
+                  >
+                    Loading…
+                  </iframe>
+                </div>
+                <div className="space-y-3" style={{ color: palette.textSecondary }}>
+                  <p className="text-sm">
+                    Submit the form above to reserve your seat. When you’re done, add the session straight to your calendar.
+                  </p>
+                  <GlassButton
+                    onClick={() => {
+                      track("form_submit_success", { location: "embedded_form" });
+                      openCalendarModal("registration_modal");
+                    }}
+                    className="px-6 py-3"
+                  >
+                    I’ve submitted — open the calendar
+                  </GlassButton>
+                  <button
+                    type="button"
+                    className="text-sm underline underline-offset-4"
+                    style={{ color: palette.textSecondary }}
+                    onClick={() => setModalOpen(false)}
+                  >
+                    Close window
+                  </button>
+                  <p className="text-xs" style={{ color: palette.textMuted }}>
+                    Replays unlock for Full Track participants. You’ll receive confirmation and prep materials by email within a few minutes of submitting.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {calendarOpen && (
+          <CalendarModal
+            onClose={() => setCalendarOpen(false)}
+            onAdd={() => handleCalendarClick("registration_modal")}
+          />
+        )}
+
+        {showTerms && (
+          <PolicyModal title="Terms of Service" onClose={() => setShowTerms(false)}>
+            <p className="text-sm" style={{ color: palette.textSecondary }}>These terms govern enrollment in the ICUNI Starterclass.</p>
+            <ul className="list-disc pl-5 text-sm space-y-2 mt-3" style={{ color: palette.textSecondary }}>
+              <li><span style={{ color: palette.textMuted }}>Scope:</span> The Starterclass Session provides live instruction, templates, and materials for personal or business use. Redistribution or resale is not permitted without written consent.</li>
+              <li><span style={{ color: palette.textMuted }}>Payments:</span> All payments are processed via Stripe. Taxes and fees may apply per region.</li>
+              <li><span style={{ color: palette.textMuted }}>Refunds:</span> Cancel up to 48 hours before the first paid session for a full refund. After that, we provide credit toward a future cohort.</li>
+              <li><span style={{ color: palette.textMuted }}>Conduct:</span> Be respectful in live sessions and forums. Disruptive behaviour may result in removal without refund.</li>
+              <li><span style={{ color: palette.textMuted }}>IP:</span> Your data remains yours. Course IP remains ICUNI’s and is licensed for your use.</li>
+              <li><span style={{ color: palette.textMuted }}>Changes:</span> We may adjust dates or contents for quality or operational reasons; you’ll be notified by email.</li>
+              <li><span style={{ color: palette.textMuted }}>Governing law:</span> England & Wales.</li>
+            </ul>
+          </PolicyModal>
+        )}
+        {showPrivacy && (
+          <PolicyModal title="Privacy Policy" onClose={() => setShowPrivacy(false)}>
+            <p className="text-sm" style={{ color: palette.textSecondary }}>We collect the minimum necessary data to run the cohort and support you.</p>
+            <ul className="list-disc pl-5 text-sm space-y-2 mt-3" style={{ color: palette.textSecondary }}>
+              <li><span style={{ color: palette.textMuted }}>Data collected:</span> Name, email, form responses, attendance, and homework links.</li>
+              <li><span style={{ color: palette.textMuted }}>Use:</span> Enrollment, reminders, certification, and support. Optional marketing with explicit opt-in.</li>
+              <li><span style={{ color: palette.textMuted }}>Processors:</span> Google (Forms/Sheets/Drive), Stripe (payments), email provider (Postmark/SendGrid). We use N8N to automate notifications.</li>
+              <li><span style={{ color: palette.textMuted }}>Security:</span> Access is limited to ICUNI admins on a need-to-know basis. We use least-privilege accounts and audit access periodically.</li>
+              <li><span style={{ color: palette.textMuted }}>Retention:</span> Enrollment records are retained for up to 24 months; you may request deletion anytime.</li>
+              <li><span style={{ color: palette.textMuted }}>Your rights:</span> Access, correction, deletion. Email <a className="underline" href="mailto:starterclass@icuni.org">starterclass@icuni.org</a>.</li>
+            </ul>
+          </PolicyModal>
+        )}
+        {showContact && (
+          <PolicyModal title="Contact" onClose={() => setShowContact(false)}>
+            <div className="text-sm space-y-2" style={{ color: palette.textSecondary }}>
+              <p>We reply within 2 business days.</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li><span style={{ color: palette.textMuted }}>Enrollment & support:</span> <a className="underline" href="mailto:starterclass@icuni.org">starterclass@icuni.org</a></li>
+                <li><span style={{ color: palette.textMuted }}>Automation ops (N8N):</span> <a className="underline" href="mailto:ai@icuni.org">ai@icuni.org</a></li>
+                <li><span style={{ color: palette.textMuted }}>Receipts & reminders (no-reply):</span> no-reply@icuni.org</li>
+              </ul>
+              <p className="text-xs" style={{ color: palette.textMuted }}>Prefer not to email? Register via the on-page form; we’ll follow up with materials and calendar invites.</p>
+            </div>
+          </PolicyModal>
+        )}
+      </main>
     </ThemeProvider>
   );
 }
@@ -1602,6 +1790,91 @@ function PieBlock() {
             Focus detail: {active?.desc}
           </div>
         </div>
+        <div
+          className="rounded-2xl p-5 space-y-3"
+          style={{
+            border: `1px solid ${palette.border}`,
+            background: palette.surfaceSoft,
+            color: palette.textPrimary,
+          }}
+        >
+          <div className="text-xs uppercase tracking-[0.32em]" style={{ color: palette.textMuted }}>Outcome</div>
+          <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>{active?.outcome}</div>
+          <div className="rounded-2xl p-3" style={{ border: `1px solid ${palette.border}`, background: palette.surface }}>
+            <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Toolkit highlight</div>
+            <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>{active?.toolkit}</div>
+          </div>
+          <div className="text-xs" style={{ color: palette.textMuted }}>
+            Focus detail: {active?.desc}
+          </div>
+        </div>
+      </div>
+      <style>{`@keyframes pieRotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}`}</style>
+    </div>
+  );
+}
+
+function ModuleOutlineChart({ segments = [] }) {
+  const fallback = useMemo(
+    () => [
+      { key: "Overview", value: 1, desc: "Module outline preview.", color: "#C8A145" },
+    ],
+    []
+  );
+  const outline = segments && segments.length ? segments : fallback;
+  const [focus, setFocus] = useState(0);
+  const { palette } = useTheme();
+
+  useEffect(() => {
+    if (!outline.length) return undefined;
+    const id = setInterval(() => {
+      setFocus((prev) => (prev + 1) % outline.length);
+    }, 8000);
+    return () => clearInterval(id);
+  }, [outline.length]);
+
+  const active = outline[focus] ?? outline[0];
+  const total = outline.reduce((sum, seg) => sum + (seg.value || 0), 0) || 1;
+  const share = Math.round(((active?.value || 0) / total) * 100);
+
+  return (
+    <div className="grid md:grid-cols-2 gap-4 items-center">
+      <div className="relative w-full max-w-[240px] mx-auto">
+        <div className="relative">
+          <Pie topics={outline} activeIndex={focus} onSelect={setFocus} />
+        </div>
+        <div
+          className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center px-4"
+          style={{ color: palette.textPrimary }}
+        >
+          <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{share}%</div>
+          <div className="mt-1 text-sm font-semibold">{active?.key}</div>
+        </div>
+      </div>
+      <div className="space-y-3">
+        {outline.map((seg, idx) => (
+          <button
+            key={seg.key}
+            type="button"
+            onMouseEnter={() => setFocus(idx)}
+            onFocus={() => setFocus(idx)}
+            className="w-full rounded-2xl p-3 text-left transition"
+            style={{
+              border: `1px solid ${palette.border}`,
+              background: idx === focus ? palette.surface : palette.surfaceSoft,
+              color: palette.textPrimary,
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <span className="h-2 w-2 rounded-full" style={{ background: seg.color }} />
+              <div className="font-semibold text-sm">{seg.key}</div>
+              <div className="ml-auto text-xs" style={{ color: palette.textMuted }}>
+                {Math.round(((seg.value || 0) / total) * 100)}%
+              </div>
+            </div>
+            <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{seg.desc}</div>
+          </button>
+        ))}
       </div>
       <style>{`@keyframes pieRotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}`}</style>
     </div>
@@ -1700,6 +1973,35 @@ function PolicyModal({ title, onClose, children }) {
           <button onClick={onClose} className="text-2xl leading-none" style={{ color: palette.textSecondary }}>×</button>
         </div>
         <div className="p-6 space-y-3" style={{ color: palette.textSecondary }}>{children}</div>
+      </div>
+    </div>
+  );
+}
+
+function CalendarModal({ onClose, onAdd }) {
+  const { theme, palette } = useTheme();
+  const isDark = theme === "dark";
+  return (
+    <div className="fixed inset-0 z-50 grid place-items-center p-4">
+      <div
+        className="absolute inset-0 backdrop-blur"
+        style={{ background: isDark ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }}
+        onClick={onClose}
+      />
+      <div
+        className="relative w-full max-w-md rounded-3xl overflow-hidden"
+        style={{ border: `1px solid ${palette.border}`, background: palette.surface, color: palette.textPrimary }}
+      >
+        <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: `1px solid ${palette.border}` }}>
+          <div className="font-semibold">Add Starterclass Session</div>
+          <button onClick={onClose} className="text-2xl leading-none" style={{ color: palette.textSecondary }}>×</button>
+        </div>
+        <div className="p-6 space-y-4" style={{ color: palette.textSecondary }}>
+          <p className="text-sm">Pop open your calendar now so the session is locked in.</p>
+          <GlassButton onClick={onAdd} className="w-full justify-center px-6 py-3 text-sm">
+            Add 08 Nov · 11:00 UK to calendar
+          </GlassButton>
+        </div>
       </div>
     </div>
   );
