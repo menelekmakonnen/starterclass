@@ -177,39 +177,23 @@ const SESSIONS = [
     date: "Sat 20 Dec 2025",
     start: "2025-12-20T11:00:00Z",
     end: "2025-12-20T12:30:00Z",
-    desc: "Credit budgeting, scopes and keys, audit trails, and safe configuration.",
-    outcome: "Confidence setting budgets, scopes, keys, and safety guardrails.",
+    desc: "Credit budgeting, scopes and keys, audit trails, and a live AgentKit build under guardrails.",
+    outcome: "Ship a secured AgentKit agent while setting budgets, scopes, keys, and safety guardrails.",
     track: "paid",
     outline: [
-      { key: "Safeguard planning", value: 32, desc: "Budgets, scopes, and approvals that protect usage.", color: "#10B981" },
-      { key: "Monitoring", value: 34, desc: "Dashboards, audit trails, and accountability.", color: "#3B5CCC" },
-      { key: "Stability drills", value: 34, desc: "Incident response and rollback scenarios.", color: "#C8A145" },
+      { key: "Safeguard planning", value: 28, desc: "Budgets, scopes, and approvals that protect usage.", color: "#10B981" },
+      { key: "Live AgentKit build", value: 36, desc: "Wire tools, memory, and review loops for a first agent.", color: "#3B5CCC" },
+      { key: "Monitoring & drills", value: 36, desc: "Dashboards, audit trails, and rollback rehearsals.", color: "#C8A145" },
     ],
   },
   { k: "break", month: "dec", title: "Winter break", date: "—", start: "", end: "", desc: "—", outcome: "—", track: "break" },
   {
-    k: "s7",
-    month: "jan",
-    title: "AgentKit — Create Your First Agent",
-    date: "Sat 10 Jan 2026",
-    start: "2026-01-10T11:00:00Z",
-    end: "2026-01-10T12:30:00Z",
-    desc: "Stand up a planning and memory agent with web, docs, and sheets tools.",
-    outcome: "A live AgentKit agent solving a real micro workflow.",
-    track: "paid",
-    outline: [
-      { key: "AgentKit setup", value: 34, desc: "Tools, credentials, and environment readiness.", color: "#3B5CCC" },
-      { key: "Memory tactics", value: 33, desc: "State, history, and retrieval that stays sharp.", color: "#8B5CF6" },
-      { key: "Live scenario", value: 33, desc: "Ship a micro workflow end to end with feedback.", color: "#C8A145" },
-    ],
-  },
-  {
     k: "s8",
     month: "jan",
     title: "N8N — Create Your First Agent",
-    date: "Sat 17 Jan 2026",
-    start: "2026-01-17T11:00:00Z",
-    end: "2026-01-17T12:30:00Z",
+    date: "Sat 10 Jan 2026",
+    start: "2026-01-10T11:00:00Z",
+    end: "2026-01-10T12:30:00Z",
     desc: "Trigger, process, and notify flows via webhooks, Sheets, and Gmail.",
     outcome: "A working N8N flow with approvals and logging.",
     track: "paid",
@@ -223,9 +207,9 @@ const SESSIONS = [
     k: "s9",
     month: "jan",
     title: "N8N Deep Dive — Advanced Agent",
-    date: "Sat 24 Jan 2026",
-    start: "2026-01-24T11:00:00Z",
-    end: "2026-01-24T12:30:00Z",
+    date: "Sat 17 Jan 2026",
+    start: "2026-01-17T11:00:00Z",
+    end: "2026-01-17T12:30:00Z",
     desc: "Branching, retries, queues, observability, and error handling.",
     outcome: "Branching, retries, queues, observability, and graceful recovery.",
     track: "paid",
@@ -239,9 +223,9 @@ const SESSIONS = [
     k: "s10",
     month: "jan",
     title: "Deployment — Orchestrate the System",
-    date: "Sat 31 Jan 2026",
-    start: "2026-01-31T11:00:00Z",
-    end: "2026-01-31T12:30:00Z",
+    date: "Sat 24 Jan 2026",
+    start: "2026-01-24T11:00:00Z",
+    end: "2026-01-24T12:30:00Z",
     desc: "Agents, N8N, site, CI/CD, runbooks, and rollback planning.",
     outcome: "A deployment playbook with CI/CD, runbooks, and rollback routines.",
     track: "paid",
@@ -256,7 +240,7 @@ const SESSIONS = [
 const MONTH_BUNDLES = [
   { key: "nov", label: "November build month", priceUSD: 100, modules: ["intro", "s2", "s3"] },
   { key: "dec", label: "December systems month", priceUSD: 100, modules: ["s4", "s5", "s6"] },
-  { key: "jan", label: "January launch month", priceUSD: 100, modules: ["s7", "s8", "s9", "s10"] },
+  { key: "jan", label: "January launch month", priceUSD: 100, modules: ["s8", "s9", "s10"] },
 ];
 
 const CURRENCIES = {
@@ -267,30 +251,20 @@ const CURRENCIES = {
 
 const HERO_HIGHLIGHTS = [
   {
-    icon: "🛠️",
-    title: "Your private GPT",
-    sub: "We build a helper that knows your files, tone, and daily tasks so it feels like a teammate right away.",
-  },
-  {
-    icon: "🛰️",
-    title: "Workflow, ready to run",
-    sub: "See how a simple automation can take work off your plate—even if you’ve never touched an AI tool before.",
+    icon: "🤖",
+    title: "Private GPT built live",
+    sub: "Bring a brief or file. We configure a custom GPT that answers in your voice before the session ends.",
   },
   {
     icon: "🗂️",
-    title: "Prompt kit you can trust",
-    sub: "Leave with prompts and checklists that keep ideas sharp for business, creative, or personal projects.",
+    title: "Workspace set for action",
+    sub: "Structure a Project with guardrails so you know exactly where every task and draft lives.",
   },
-];
-
-const NAV_LINKS = [
-  { href: "#overview-tab", label: "Overview", tab: "overview" },
-  { href: "#reviews", label: "Reviews" },
-  { href: "#curriculum-anchor", label: "Curriculum", tab: "curriculum" },
-  { href: "#full-track-panel", label: "Full Track", tab: "fulltrack" },
-  { href: "#certificate", label: "Certificate", tab: "certificate" },
-  { href: "#instructor", label: "Instructor", tab: "instructor" },
-  { href: "#faq", label: "FAQ", tab: "faq" },
+  {
+    icon: "📝",
+    title: "Prompt kit to reuse",
+    sub: "Download ready-to-go prompts for business, creative, and personal wins you can try the same day.",
+  },
 ];
 
 const OVERVIEW_WINS = [
@@ -478,12 +452,12 @@ const CERTIFICATE_POINTS = [
   {
     key: "community",
     title: "Keep building",
-    detail: "Finish all ten modules to unlock alumni-only build clinics and private workflows.",
+    detail: "Finish every module to unlock alumni-only build clinics and private workflows.",
   },
 ];
 
 const CERTIFICATE_IMAGE =
-  "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22480%22%20height%3D%22320%22%20viewBox%3D%220%200%20480%20320%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23F9F5FF%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23EFE7FF%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22border%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23D8B25C%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%238B5CF6%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22480%22%20height%3D%22320%22%20rx%3D%2236%22%20fill%3D%22url(%23bg)%22/%3E%0A%20%20%3Crect%20x%3D%2228%22%20y%3D%2228%22%20width%3D%22424%22%20height%3D%22264%22%20rx%3D%2224%22%20fill%3D%22%23FFFFFF%22%20stroke%3D%22url(%23border)%22%20stroke-width%3D%223%22/%3E%0A%20%20%3Crect%20x%3D%2244%22%20y%3D%2244%22%20width%3D%22392%22%20height%3D%22232%22%20rx%3D%2220%22%20fill%3D%22rgba(255,255,255,0.82)%22%20stroke%3D%22rgba(200,161,69,0.25)%22/%3E%0A%20%20%3Ctext%20x%3D%22240%22%20y%3D%22120%22%20text-anchor%3D%22middle%22%20fill%3D%22%23281A52%22%20font-family%3D%22Playfair%20Display,%20serif%22%20font-size%3D%2228%22%3ECertificate%20of%20Completion%3C/text%3E%0A%20%20%3Ctext%20x%3D%22240%22%20y%3D%22155%22%20text-anchor%3D%22middle%22%20fill%3D%22%23514687%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2216%22%3EAwarded%20to%20participants%20who%20complete%20the%3C/text%3E%0A%20%20%3Ctext%20x%3D%22240%22%20y%3D%22178%22%20text-anchor%3D%22middle%22%20fill%3D%22%23514687%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2216%22%3EStarterclass%20Full%20Track%20by%20ICUNI%3C/text%3E%0A%20%20%3Cline%20x1%3D%22140%22%20y1%3D%22214%22%20x2%3D%22340%22%20y2%3D%22214%22%20stroke%3D%22%23C8A145%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3Ctext%20x%3D%22240%22%20y%3D%22234%22%20text-anchor%3D%22middle%22%20fill%3D%22%237A62B8%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2214%22%3EValidated%20projects%20%C2%B7%20Documented%20automations%20%C2%B7%20CPD%20evidence%20filed%3C/text%3E%0A%20%20%3Ctext%20x%3D%22120%22%20y%3D%22260%22%20fill%3D%22%23967742%22%20font-family%3D%22Great%20Vibes,%20cursive%22%20font-size%3D%2220%22%3EMikael%20Gabriel%3C/text%3E%0A%20%20%3Ctext%20x%3D%22120%22%20y%3D%22278%22%20fill%3D%22%23514687%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2210%22%3EProgramme%20Lead%3C/text%3E%0A%20%20%3Ctext%20x%3D%22360%22%20y%3D%22260%22%20fill%3D%22%23967742%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2212%22%20text-anchor%3D%22end%22%3ECertificate%20ID%3A%20SC-2025%3C/text%3E%0A%20%20%3Ctext%20x%3D%22360%22%20y%3D%22278%22%20fill%3D%22%23514687%22%20font-family%3D%22Inter,%20Arial%22%20font-size%3D%2210%22%20text-anchor%3D%22end%22%3EIssued%20digitally%20with%20verification%20link%3C/text%3E%0A%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22500%22%20height%3D%22320%22%20viewBox%3D%220%200%20500%20320%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23140C2A%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232D1745%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22border%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23F6C978%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%238B5CF6%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22shine%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23FFFFFF%22%20stop-opacity%3D%220.45%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23FFFFFF%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22500%22%20height%3D%22320%22%20rx%3D%2236%22%20fill%3D%22url%28%23bg%29%22/%3E%0A%20%20%3Crect%20x%3D%2220%22%20y%3D%2220%22%20width%3D%22460%22%20height%3D%22280%22%20rx%3D%2228%22%20fill%3D%22rgba%2820%2C12%2C42%2C0.55%29%22%20stroke%3D%22url%28%23border%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2236%22%20y%3D%2236%22%20width%3D%22428%22%20height%3D%22248%22%20rx%3D%2220%22%20fill%3D%22%23FCFBFF%22%20opacity%3D%220.92%22/%3E%0A%20%20%3Crect%20x%3D%2236%22%20y%3D%2236%22%20width%3D%22428%22%20height%3D%22248%22%20rx%3D%2220%22%20fill%3D%22url%28%23shine%29%22/%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22110%22%20text-anchor%3D%22middle%22%20fill%3D%22%232B1F4F%22%20font-family%3D%22%27Playfair%20Display%27%2C%20serif%22%20font-size%3D%2232%22%20letter-spacing%3D%221%22%3ECertificate%20of%20Mastery%3C/text%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22140%22%20text-anchor%3D%22middle%22%20fill%3D%22%235A4A80%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2215%22%3Eawarded%20for%20completing%20the%20Starterclass%20journey%3C/text%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22176%22%20text-anchor%3D%22middle%22%20fill%3D%22%232B1F4F%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2222%22%3EStarterclass%20Full%20Track%3C/text%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22210%22%20text-anchor%3D%22middle%22%20fill%3D%22%238167B5%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2213%22%3EProjects%20%E2%80%A2%20Private%20GPTs%20%E2%80%A2%20Automations%20%E2%80%A2%20Deployment%3C/text%3E%0A%20%20%3Cline%20x1%3D%22140%22%20y1%3D%22238%22%20x2%3D%22360%22%20y2%3D%22238%22%20stroke%3D%22%23D8C6FA%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3Ctext%20x%3D%22140%22%20y%3D%22262%22%20fill%3D%22%238D7AAD%22%20font-family%3D%22%27Great%20Vibes%27%2C%20cursive%22%20font-size%3D%2222%22%3EMikael%20Gabriel%3C/text%3E%0A%20%20%3Ctext%20x%3D%22140%22%20y%3D%22280%22%20fill%3D%22%235A4A80%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2211%22%3EProgramme%20Lead%3C/text%3E%0A%20%20%3Ctext%20x%3D%22360%22%20y%3D%22262%22%20text-anchor%3D%22end%22%20fill%3D%22%238D7AAD%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2212%22%3ECertificate%20ID%3A%20SC-2025%3C/text%3E%0A%20%20%3Ctext%20x%3D%22360%22%20y%3D%22280%22%20text-anchor%3D%22end%22%20fill%3D%22%235A4A80%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2210%22%3EIssued%20digitally%20with%20verification%20link%3C/text%3E%0A%20%20%3Cg%20transform%3D%22translate%28388%2078%29%22%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2242%22%20cy%3D%2242%22%20r%3D%2242%22%20fill%3D%22url%28%23border%29%22%20opacity%3D%220.25%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2242%22%20cy%3D%2242%22%20r%3D%2234%22%20fill%3D%22%23F7F3FF%22%20stroke%3D%22%23DEC48A%22%20stroke-width%3D%221.5%22/%3E%0A%20%20%20%20%3Ctext%20x%3D%2242%22%20y%3D%2250%22%20text-anchor%3D%22middle%22%20fill%3D%22%236B4FA3%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2214%22%20font-weight%3D%22600%22%3ECPD%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2242%22%20y%3D%2266%22%20text-anchor%3D%22middle%22%20fill%3D%22%23A07FD8%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%229%22%3EACCREDITED%3C/text%3E%0A%20%20%3C/g%3E%0A%20%20%3Ctext%20x%3D%2250%22%20y%3D%2280%22%20fill%3D%22%237058A3%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2212%22%20font-weight%3D%22600%22%3EStarterclass%20by%20ICUNI%3C/text%3E%0A%3C/svg%3E";
 
 const ANNOUNCEMENT_KEYS = ["live", "countdown", "earlybird"];
 
@@ -491,38 +465,38 @@ const ANNOUNCEMENT_KEYS = ["live", "countdown", "earlybird"];
 const PIE_TOPICS = [
   {
     key: "Projects",
-    value: 25,
-    desc: "Configure boundaries, attach knowledge, set safe defaults.",
-    headline: "Projects locked and ready",
-    outcome: "Leave with a fully functional project tailored to your workflow.",
-    toolkit: "Workflow blueprint, QA checklist, and launch runbook.",
+    value: 28,
+    desc: "Lay out boards, notes, and hand-offs so every request has a home.",
+    headline: "Workspace ready before you log off",
+    outcome: "A Project space with lanes, guardrails, and shared context you can use tomorrow.",
+    toolkit: "Project template, intake checklist, and follow-up prompts.",
     color: "#C8A145",
   }, // gold
   {
     key: "GPTs",
-    value: 25,
-    desc: "Build private GPTs with the right tools and context.",
-    headline: "Private GPTs wired for work",
-    outcome: "Receive a custom GPT configured for your business or creative goals.",
-    toolkit: "Private GPT with knowledge packs and access rules.",
+    value: 27,
+    desc: "Collect tone, files, and examples so replies sound like you.",
+    headline: "Your private GPT comes to life",
+    outcome: "A custom GPT that knows your resources and responds with your voice.",
+    toolkit: "Uploaded knowledge packs, starter instructions, and guardrail notes.",
     color: "#3B5CCC",
   }, // royal blue
   {
     key: "Prompts",
     value: 25,
-    desc: "Roles, constraints, examples; prompts that hold under load.",
-    headline: "Prompts that stay sharp",
-    outcome: "Create prompt sets that deliver in business and creative scenarios.",
-    toolkit: "Prompt scorecard, test scripts, and reuse-ready templates.",
+    desc: "Test-and-tweak loops for business, creative, and personal wins.",
+    headline: "Prompt kit you can trust",
+    outcome: "Reusable prompt flows for outreach, storytelling, and planning.",
+    toolkit: "Prompt cards, scorecard, and iteration checklist.",
     color: "#8B5CF6",
   }, // amethyst
   {
     key: "Guardrails",
-    value: 25,
-    desc: "Token budgets, evaluation notes, safe behavior by design.",
-    headline: "Guardrails that keep quality high",
-    outcome: "Set budgets, checks, and review loops so outputs stay on brief.",
-    toolkit: "Safety rails, evaluation rubric, escalation plan.",
+    value: 20,
+    desc: "Quick safety checks, budgets, and review rhythms.",
+    headline: "Quality checks baked in",
+    outcome: "Lightweight guardrails so outputs stay on brief and respectful.",
+    toolkit: "Escalation cues, budget tracker, and reflection prompts.",
     color: "#10B981",
   }, // emerald
 ];
@@ -1100,15 +1074,6 @@ function StarterclassLuxuryV8() {
   }, [d, expired]);
   const testimonials = TESTIMONIALS;
   const testimonial = testimonials[activeTestimonial] || testimonials[0];
-  const navTabMap = useMemo(() => {
-    const map = {};
-    NAV_LINKS.forEach((link) => {
-      if (link.tab) {
-        map[link.href] = link.tab;
-      }
-    });
-    return map;
-  }, []);
   const activeCertificate = useMemo(
     () => CERTIFICATE_POINTS.find((point) => point.key === certificateFocus) || CERTIFICATE_POINTS[0],
     [certificateFocus]
@@ -1271,7 +1236,7 @@ function StarterclassLuxuryV8() {
       try { localStorage.setItem("sc_paid_reveal", "1"); } catch {}
     }
     track("fulltrack_cta_click", { location: source, intent: "enrol", ...detail });
-    setTab("fulltrack");
+    setTab("curriculum");
     setFullTrackExpanded(true);
     setActiveModule("s2");
     requestAnimationFrame(() => {
@@ -1286,7 +1251,7 @@ function StarterclassLuxuryV8() {
   }
 
   function scrollToFullTrack() {
-    setTab("fulltrack");
+    setTab("curriculum");
     setFullTrackExpanded(true);
     requestAnimationFrame(() => {
       document.getElementById("full-track-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1358,28 +1323,8 @@ function StarterclassLuxuryV8() {
                   {activeTheme === "dark" ? "☀️" : "🌙"}
                 </button>
               </div>
-              <div className="flex items-center gap-3 ml-auto">
-                <div
-                  className="flex rounded-full border"
-                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
-                >
-                  {Object.entries(CURRENCIES).map(([code, meta]) => (
-                    <button
-                      key={code}
-                      type="button"
-                      onClick={() => handleCurrencySwitch(code)}
-                      className={`px-3 py-2 text-sm transition ${currency === code ? "font-semibold" : ""}`}
-                      style={{
-                        color: currency === code ? palette.textPrimary : palette.textSecondary,
-                        background: currency === code ? `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)` : "transparent",
-                        borderRadius: "9999px",
-                      }}
-                      aria-label={`Show pricing in ${meta.label}`}
-                    >
-                      {meta.symbol}
-                    </button>
-                  ))}
-                </div>
+              <div className="ml-auto hidden md:flex items-center text-xs font-semibold uppercase tracking-[0.24em]" style={{ color: palette.textSecondary }}>
+                Free intro · 90 minutes
               </div>
             </div>
             <div
@@ -1395,7 +1340,20 @@ function StarterclassLuxuryV8() {
           <GlowCard className="p-6 md:p-10">
             <div className="grid lg:grid-cols-2 gap-10 items-center">
               <div>
-                <Badge>Intro session · no payment required</Badge>
+                <div
+                  className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold shadow-sm"
+                  style={{
+                    background: `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)`,
+                    border: `1px solid ${palette.border}`,
+                    color: palette.textPrimary,
+                  }}
+                >
+                  <span aria-hidden="true">🎟️</span>
+                  Free 90-min AI Starterclass
+                </div>
+                <div className="mt-3">
+                  <Badge>Intro session · no payment required</Badge>
+                </div>
                 <h1
                   ref={heroHeadlineGlowRef}
                   className="mt-4 text-3xl md:text-5xl font-bold tracking-tight"
@@ -1412,7 +1370,7 @@ function StarterclassLuxuryV8() {
                   Make AI work like a teammate
                 </h1>
                 <p className="mt-4 text-lg max-w-2xl" style={{ color: palette.textSecondary }}>
-                  In 90 minutes you’ll wire up a workspace, switch on a private GPT, and leave with prompts you can put to work that same afternoon.
+                  In 90 minutes we’ll set up your workspace, bring a private GPT online, and send you prompt kits you can use the same afternoon.
                 </p>
                 <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
                   {heroAudienceLine}
@@ -1444,7 +1402,6 @@ function StarterclassLuxuryV8() {
                 </div>
                 <div className="mt-5 text-sm space-y-1" style={{ color: palette.textSecondary }}>
                   <div><span style={{ color: palette.textMuted }}>UK Time:</span> {formatUKRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
-                  <div><span style={{ color: palette.textMuted }}>Your Time:</span> {formatLocalRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
                 </div>
                 <div className="mt-8">
                   <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Next session begins in</div>
@@ -1536,9 +1493,6 @@ function StarterclassLuxuryV8() {
             {[
               { k: "overview", t: "Overview" },
               { k: "curriculum", t: "Curriculum" },
-              { k: "fulltrack", t: "Full Track" },
-              { k: "certificate", t: "Certificate" },
-              { k: "instructor", t: "Meet your instructor" },
               { k: "faq", t: "FAQ" },
             ].map(({ k, t }) => (
               <button
@@ -1546,12 +1500,6 @@ function StarterclassLuxuryV8() {
                 onClick={() => {
                   if (k === "curriculum") {
                     revealPaidAndGoCurriculum("tab_switch");
-                  } else if (k === "fulltrack") {
-                    setTab(k);
-                    setFullTrackExpanded(true);
-                    requestAnimationFrame(() => {
-                      document.getElementById("full-track-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
-                    });
                   } else {
                     setTab(k);
                   }
@@ -1569,84 +1517,153 @@ function StarterclassLuxuryV8() {
           </div>
 
           {tab === "overview" && (
-            <div className="mt-8 grid lg:grid-cols-12 gap-8">
-              <div className="lg:col-span-7 space-y-6">
-                <GlowCard className="p-6 space-y-5">
-                  <h3 className="text-xl font-semibold">What this intro unlocks</h3>
-                  <div className="grid sm:grid-cols-3 gap-3">
-                    {OVERVIEW_WINS.map((win) => {
-                      const isActive = overviewFocus === win.key;
-                      return (
-                        <button
-                          key={win.key}
-                          type="button"
-                          onClick={() => setOverviewFocus(win.key)}
-                          className="rounded-2xl p-4 text-left transition"
-                          style={{
-                            border: `1px solid ${isActive ? palette.accentPrimary : palette.border}`,
-                            background: isActive ? `linear-gradient(135deg, ${palette.accentPrimary}22, ${palette.accentSecondary}22)` : palette.surfaceSoft,
-                            color: palette.textPrimary,
-                          }}
-                        >
-                          <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{win.label}</div>
-                          <div className="mt-2 text-sm font-semibold">{win.headline}</div>
-                          <div className="mt-2 text-xs" style={{ color: palette.textSecondary }}>{win.detail}</div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                  <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                    <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Full track teaser</div>
-                    <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
-                      This Starterclass Session counts as one of ten modules. Add months when you are ready — each bundle is {formatCurrency(100)}.
+            <div className="mt-8 space-y-8">
+              <div className="grid lg:grid-cols-12 gap-8">
+                <div className="lg:col-span-7 space-y-6">
+                  <GlowCard className="p-6 space-y-5">
+                    <h3 className="text-xl font-semibold">What this intro unlocks</h3>
+                    <div className="grid sm:grid-cols-3 gap-3">
+                      {OVERVIEW_WINS.map((win) => {
+                        const isActive = overviewFocus === win.key;
+                        return (
+                          <button
+                            key={win.key}
+                            type="button"
+                            onClick={() => setOverviewFocus(win.key)}
+                            className="rounded-2xl p-4 text-left transition"
+                            style={{
+                              border: `1px solid ${isActive ? palette.accentPrimary : palette.border}`,
+                              background: isActive ? `linear-gradient(135deg, ${palette.accentPrimary}22, ${palette.accentSecondary}22)` : palette.surfaceSoft,
+                              color: palette.textPrimary,
+                            }}
+                          >
+                            <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{win.label}</div>
+                            <div className="mt-2 text-sm font-semibold">{win.headline}</div>
+                            <div className="mt-2 text-xs" style={{ color: palette.textSecondary }}>{win.detail}</div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                      <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Full track teaser</div>
+                      <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
+                        Session 0 counts toward the full track. When you’re ready, add the monthly bundles from {formatCurrency(85)} with the early-bird or {formatCurrency(100)} after.
+                      </div>
+                    </div>
+                  </GlowCard>
+                </div>
+                <div className="lg:col-span-5 space-y-6">
+                  <GlowCard className="p-6">
+                    <h3 className="text-xl font-semibold">Next live times</h3>
+                    <ul className="mt-3 space-y-3">
+                      {sessions.filter((s) => s.track !== "break").slice(0, 4).map((s) => (
+                        <li key={s.k} className="flex items-start gap-3">
+                          <span className="w-32 text-sm" style={{ color: palette.textMuted }}>{s.date}</span>
+                          <div>
+                            <div className="text-xs" style={{ color: palette.textMuted }}>UK: {formatUKRange(s.start, s.end)}</div>
+                            <div className="text-xs" style={{ color: palette.textMuted }}>Your: {formatLocalRange(s.start, s.end)}</div>
+                            <div className="mt-1 text-sm font-semibold" style={{ color: palette.textPrimary }}>{s.title}</div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-4 text-xs" style={{ color: palette.textMuted }}>
+                      Can’t make it live? We’ll help you switch cohorts — the intro stays free.
+                    </div>
+                  </GlowCard>
+                  {showPaid && (
+                    <GlowCard className="p-6" id="value-calculator">
+                      <ClientValueCalculator
+                        currency={currency}
+                        formatCurrency={formatCurrency}
+                        onIntro={() => triggerIntroForm("cvc_intro")}
+                        onFull={(detail) => triggerFullTrackForm("cvc_full", detail || {})}
+                        onExplore={() => revealPaidAndGoCurriculum("cvc_explore")}
+                      />
+                    </GlowCard>
+                  )}
+                </div>
+              </div>
+              <GlowCard className="p-6 space-y-4" id="instructor">
+                <h3 className="text-xl font-semibold">Meet your instructor</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
+                    <p>
+                      <strong style={{ color: palette.textPrimary }}>Mikael Gabriel</strong> — AI nerd & consultant guiding teams into everyday AI since 2021.
+                    </p>
+                    <p>
+                      I live in the tools we’ll use: ChatGPT Projects, Custom GPTs, Claude, Midjourney, Leonardo, and the quieter frontier models. My work spans automations, marketing ops, production pipelines, and the systems that keep them running.
+                    </p>
+                    <p>
+                      The Starterclass keeps things human. We build live, we document plainly, and we make sure you leave with assets you can actually use.
+                    </p>
+                    <div className="aspect-video overflow-hidden rounded-2xl border" style={{ borderColor: palette.border }}>
+                      <iframe
+                        title="Meet the instructor"
+                        src="https://www.youtube.com/embed/ke4bYVQjRBE"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        className="h-full w-full"
+                      />
                     </div>
                   </div>
-                </GlowCard>
-              </div>
-              <div className="lg:col-span-5 space-y-6">
-                <GlowCard className="p-6">
-                  <h3 className="text-xl font-semibold">Next live times</h3>
-                  <ul className="mt-3 space-y-3">
-                    {sessions.filter((s) => s.track !== "break").slice(0, 4).map((s) => (
-                      <li key={s.k} className="flex items-start gap-3">
-                        <span className="w-32 text-sm" style={{ color: palette.textMuted }}>{s.date}</span>
-                        <div>
-                          <div className="text-xs" style={{ color: palette.textMuted }}>UK: {formatUKRange(s.start, s.end)}</div>
-                          <div className="text-xs" style={{ color: palette.textMuted }}>Your: {formatLocalRange(s.start, s.end)}</div>
-                          <div className="font-medium" style={{ color: palette.textPrimary }}>{s.title}</div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    onClick={() => revealPaidAndGoCurriculum("overview_preview")}
-                    className="mt-4 inline-flex items-center gap-2 text-sm underline underline-offset-4"
-                    style={{ color: palette.accentSecondary }}
-                  >
-                    <span aria-hidden="true">🗓️</span>
-                    <span>View full schedule</span>
-                  </button>
-                </GlowCard>
-                <GlowCard className="p-6">
-                  <div className="flex flex-wrap gap-3">
-                    <GlassButton onClick={() => triggerIntroForm("overview_section")}>Reserve your seat</GlassButton>
-                    <GlassButton variant="secondary" onClick={() => revealPaidAndGoCurriculum("overview_section")} className="px-5 py-3">
-                      Explore curriculum
-                    </GlassButton>
+                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
+                    <div>
+                      <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Snapshot</div>
+                      <ul className="mt-2 space-y-2 list-disc pl-5">
+                        <li><strong style={{ color: palette.textPrimary }}>50+ professionals onboarded</strong> into daily AI use across strategy, media, and product teams.</li>
+                        <li><strong style={{ color: palette.textPrimary }}>Global Executive MBA (AI specialisation)</strong> in progress; certified in Microsoft Azure AI Fundamentals.</li>
+                        <li><strong style={{ color: palette.textPrimary }}>Client wins:</strong> media networks, independent studios, and consultancies delivering AI services.</li>
+                        <li><strong style={{ color: palette.textPrimary }}>No-code systems builder</strong> — this site, its automations, and support workflows are all AI-powered.</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Philosophy</div>
+                      <ol className="mt-2 space-y-2 list-decimal pl-5">
+                        <li>Keep humans in control — AI supports, it doesn’t replace.</li>
+                        <li>Build visibly so teams can trust the workflows they inherit.</li>
+                        <li>Ship outcomes: working GPTs, automations, and prompt kits you can deploy immediately.</li>
+                      </ol>
+                    </div>
                   </div>
-                </GlowCard>
-              </div>
+                </div>
+              </GlowCard>
             </div>
           )}
 
           {tab === "curriculum" && (
-            <div id="curriculum-anchor" className="mt-10 grid lg:grid-cols-12 gap-8">
-              <div className="lg:col-span-8 space-y-6">
-                {monthBundles.map((bundle) => {
-                  const filtered = sessions.filter((s) => s.month === bundle.key && s.track !== "break");
-                  const monthPrice = earlyBirdActive ? Math.round(bundle.priceUSD * 0.85) : bundle.priceUSD;
-                  const monthLabel = `${bundle.label} · ${formatCurrency(monthPrice)}`;
-                  return (
+            <div className="mt-10 space-y-8" id="curriculum-anchor">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="text-lg font-semibold">Full track by month</h3>
+                <div
+                  className="flex rounded-full border"
+                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                >
+                  {Object.entries(CURRENCIES).map(([code, meta]) => (
+                    <button
+                      key={code}
+                      type="button"
+                      onClick={() => handleCurrencySwitch(code)}
+                      className={`px-3 py-2 text-sm transition ${currency === code ? "font-semibold" : ""}`}
+                      style={{
+                        color: currency === code ? palette.textPrimary : palette.textSecondary,
+                        background: currency === code ? `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)` : "transparent",
+                        borderRadius: "9999px",
+                      }}
+                      aria-label={`Show pricing in ${meta.label}`}
+                    >
+                      {meta.symbol}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="grid lg:grid-cols-12 gap-8">
+                <div className="lg:col-span-8 space-y-6">
+                  {monthBundles.map((bundle) => {
+                    const filtered = sessions.filter((s) => s.month === bundle.key && s.track !== "break");
+                    const monthPrice = earlyBirdActive ? Math.round(bundle.priceUSD * 0.85) : bundle.priceUSD;
+                    const monthLabel = `${bundle.label} · ${formatCurrency(monthPrice)}`;
+                    return (
                     <div key={bundle.key} className="space-y-4">
                       <div className="flex items-center justify-between">
                         <h3 className="text-lg font-semibold">{monthLabel}</h3>
@@ -1693,188 +1710,134 @@ function StarterclassLuxuryV8() {
                     </div>
                   );
                 })}
-                {showPaid && (
-                  <ClientValueCalculator
-                    currency={currency}
-                    formatCurrency={formatCurrency}
-                    onIntro={() => triggerIntroForm("cvc_intro")}
-                    onFull={(detail) => triggerFullTrackForm("cvc_full", detail || {})}
-                    onExplore={() => revealPaidAndGoCurriculum("cvc_explore")}
-                  />
-                )}
-              </div>
-              <div className="lg:col-span-4 space-y-6">
-                <GlowCard className="p-6 space-y-4">
-                  <h3 className="text-lg font-semibold">Monthly investment</h3>
-                  <ul className="space-y-3 text-sm" style={{ color: palette.textSecondary }}>
-                    {monthBundles.map((bundle) => (
-                      <li key={bundle.key} className="flex items-center justify-between">
-                        <span>{bundle.label}</span>
-                        <span style={{ color: palette.textPrimary }}>
-                          {formatCurrency(earlyBirdActive ? Math.round(bundle.priceUSD * 0.85) : bundle.priceUSD)}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="text-xs" style={{ color: palette.textMuted }}>
-                    {earlyBirdActive
-                      ? "Early-bird applied · pay in your chosen currency"
-                      : "Early-bird passed · standard tuition shown in your currency"}
-                  </div>
-                </GlowCard>
-              </div>
-            </div>
-          )}
-
-          {tab === "fulltrack" && (
-            <div className="mt-8" id="full-track-panel" ref={fullTrackSectionAnchorRef}>
-              <GlowCard className="p-6 md:p-8">
-                <details
-                  open={fullTrackExpanded}
-                  onToggle={(event) => setFullTrackExpanded(event.currentTarget.open)}
-                  className="space-y-5"
-                >
-                  <summary className="flex flex-wrap items-center justify-between gap-2 cursor-pointer">
-                    <h3 className="text-2xl font-semibold">Full Track enrolment</h3>
-                    <span className="text-xs" style={{ color: palette.textMuted }}>
-                      {fullTrackExpanded ? "Hide details" : "Tap to view tuition & enrol"}
-                    </span>
-                  </summary>
-                  <div className="space-y-5 pt-2">
-                    <div className="space-y-2 text-sm" style={{ color: palette.textSecondary }}>
-                      <p>
-                        {formatCurrency(fullTrackTotalUSD)} total · pay {formatCurrency(fullTrackMonthlyUSD)} per month across November, December, and January with the early-bird applied automatically.
-                      </p>
-                      <span className="text-xs" style={{ color: palette.textMuted }}>
-                        {earlyBirdActive
-                          ? `Early-bird window closes in ${earlyBird.d}d ${String(earlyBird.h).padStart(2, "0")}h ${String(earlyBird.m).padStart(2, "0")}m`
-                          : "Early-bird window closed"}
-                      </span>
-                      <span className="block text-xs" style={{ color: palette.textMuted }}>
-                        {earlyBirdActive ? "15% early-bird active until the intro ends" : "Early-bird wrapped · standard tuition applies"}
-                      </span>
-                    </div>
-                    <ul className="grid md:grid-cols-2 gap-4">
-                      {FULL_TRACK_OUTCOMES.map((item) => (
-                        <li key={item} className="rounded-2xl border p-4 text-sm" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
-                          {item}
+                </div>
+                <div className="lg:col-span-4 space-y-6">
+                  <GlowCard className="p-6 space-y-4">
+                    <h3 className="text-lg font-semibold">Monthly investment</h3>
+                    <ul className="space-y-3 text-sm" style={{ color: palette.textSecondary }}>
+                      {monthBundles.map((bundle) => (
+                        <li key={bundle.key} className="flex items-center justify-between">
+                          <span>{bundle.label}</span>
+                          <span style={{ color: palette.textPrimary }}>
+                            {formatCurrency(earlyBirdActive ? Math.round(bundle.priceUSD * 0.85) : bundle.priceUSD)}
+                          </span>
                         </li>
                       ))}
                     </ul>
-                    <div className="flex flex-wrap gap-3">
-                      <div ref={fullTrackPrimaryCtaRef}>
-                        <GlassButton
-                          onClick={() => triggerFullTrackForm("full_track_section", { plan: "full_track" })}
-                          className="px-6 py-3"
-                        >
-                          Get the Full Track
-                        </GlassButton>
+                    <div className="text-xs" style={{ color: palette.textMuted }}>
+                      {earlyBirdActive
+                        ? "15% early-bird active until the intro ends"
+                        : "Early-bird wrapped · standard tuition applies"}
+                    </div>
+                  </GlowCard>
+                  <GlowCard className="p-6 space-y-3">
+                    <h3 className="text-lg font-semibold">Early-bird status</h3>
+                    <div className="text-sm" style={{ color: palette.textSecondary }}>
+                      {earlyBirdActive
+                        ? `Secure the discount within ${earlyBird.d}d ${String(earlyBird.h).padStart(2, "0")}h ${String(earlyBird.m).padStart(2, "0")}m.`
+                        : "The intro window closed the early-bird. Tuition reverts to $300 equivalent."}
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-xs" style={{ color: palette.textMuted }}>
+                      <span>Pay per month in your chosen currency.</span>
+                      <span>No payments collected in December.</span>
+                    </div>
+                  </GlowCard>
+                </div>
+              </div>
+              <div className="space-y-8" id="full-track-panel" ref={fullTrackSectionAnchorRef}>
+                <GlowCard className="p-6 md:p-8">
+                  <details
+                    open={fullTrackExpanded}
+                    onToggle={(event) => setFullTrackExpanded(event.currentTarget.open)}
+                    className="space-y-5"
+                  >
+                    <summary className="flex flex-wrap items-center justify-between gap-2 cursor-pointer">
+                      <h3 className="text-2xl font-semibold">Full Track enrolment</h3>
+                      <span className="text-xs" style={{ color: palette.textMuted }}>
+                        {fullTrackExpanded ? "Hide details" : "Tap to view tuition & enrol"}
+                      </span>
+                    </summary>
+                    <div className="space-y-5 pt-2">
+                      <div className="space-y-2 text-sm" style={{ color: palette.textSecondary }}>
+                        <p>
+                          {formatCurrency(fullTrackTotalUSD)} total · pay {formatCurrency(fullTrackMonthlyUSD)} per month across November, December, and January.
+                        </p>
+                        <span className="text-xs" style={{ color: palette.textMuted }}>
+                          {earlyBirdActive
+                            ? `Early-bird window closes in ${earlyBird.d}d ${String(earlyBird.h).padStart(2, "0")}h ${String(earlyBird.m).padStart(2, "0")}m`
+                            : "Early-bird window closed"}
+                        </span>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => triggerIntroForm("full_track_secondary")}
-                        className="text-sm underline underline-offset-4"
-                        style={{ color: palette.textSecondary }}
-                      >
-                        Reserve the intro seat first
-                      </button>
-                    </div>
-                  </div>
-                </details>
-              </GlowCard>
-            </div>
-          )}
-
-          {tab === "certificate" && (
-            <div className="mt-8" id="certificate">
-              <GlowCard className="p-6 md:p-8">
-                <div className="grid lg:grid-cols-[1fr_1fr] gap-6 items-start">
-                  <div className="rounded-3xl border overflow-hidden" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                    <img src={CERTIFICATE_IMAGE} alt="Starterclass certificate preview" className="w-full" loading="lazy" />
-                  </div>
-                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
-                    <p>
-                      Complete all ten modules and we issue an ICUNI certificate with CPD points. Every live build, submission, and deployment review feeds the evidence we file on your behalf.
-                    </p>
-                    <div className="grid gap-3">
-                      {CERTIFICATE_POINTS.map((point) => {
-                        const active = point.key === activeCertificate.key;
-                        return (
-                          <button
-                            key={point.key}
-                            type="button"
-                            onMouseEnter={() => setCertificateFocus(point.key)}
-                            onFocus={() => setCertificateFocus(point.key)}
-                            onClick={() => setCertificateFocus(point.key)}
-                            className="rounded-2xl border p-4 text-left transition"
-                            style={{
-                              borderColor: palette.border,
-                              background: active ? palette.surface : palette.surfaceSoft,
-                              color: palette.textPrimary,
-                            }}
-                          >
-                            <div className="font-semibold text-sm">{point.title}</div>
-                            <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>
-                              {point.detail}
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                    <div className="rounded-2xl border p-4 text-xs" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
-                      <span style={{ color: palette.textPrimary, fontWeight: 600 }}>Current focus:</span> {activeCertificate.title}
-                      <div className="mt-1">{activeCertificate.detail}</div>
-                    </div>
-                  </div>
-                </div>
-              </GlowCard>
-            </div>
-          )}
-
-          {tab === "instructor" && (
-            <div className="mt-8" id="instructor">
-              <GlowCard className="p-6 space-y-4">
-                <h3 className="text-xl font-semibold">About the Instructor</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
-                    <p><strong style={{ color: palette.textPrimary }}>Mikael Gabriel</strong> — AI nerd & consultant who has been shipping GPT workflows since 2021.</p>
-                    <p>
-                      I prototype with ChatGPT, Claude, Midjourney, Leonardo, and the quieter frontier models. The work covers internal automations, marketing ops, production pipelines, and the infrastructure that keeps them running.
-                    </p>
-                    <p>
-                      My approach is practical: take complex AI systems and make them usable for people who still have a day job. You’ll feel that balance in every module.
-                    </p>
-                    <div className="aspect-video overflow-hidden rounded-2xl border" style={{ borderColor: palette.border }}>
-                      <iframe
-                        title="Meet the instructor"
-                        src="https://www.youtube.com/embed/ke4bYVQjRBE"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        className="h-full w-full"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
-                    <div>
-                      <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Snapshot</div>
-                      <ul className="mt-2 space-y-2 list-disc pl-5">
-                        <li><strong style={{ color: palette.textPrimary }}>50+ professionals onboarded</strong> into daily AI use across strategy, media, and product teams.</li>
-                        <li><strong style={{ color: palette.textPrimary }}>Global Executive MBA (AI specialisation)</strong> in progress; certified in Microsoft Azure AI Fundamentals.</li>
-                        <li><strong style={{ color: palette.textPrimary }}>Client wins:</strong> media networks, independent studios, and consultancies delivering AI services.</li>
-                        <li><strong style={{ color: palette.textPrimary }}>No-code systems builder</strong> — everything from this landing page to the automations behind it.</li>
+                      <ul className="grid md:grid-cols-2 gap-4">
+                        {FULL_TRACK_OUTCOMES.map((item) => (
+                          <li key={item} className="rounded-2xl border p-4 text-sm" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
+                            {item}
+                          </li>
+                        ))}
                       </ul>
+                      <div className="flex flex-wrap gap-3">
+                        <div ref={fullTrackPrimaryCtaRef}>
+                          <GlassButton
+                            onClick={() => triggerFullTrackForm("full_track_section", { plan: "full_track" })}
+                            className="px-6 py-3"
+                          >
+                            Get the Full Track
+                          </GlassButton>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => triggerIntroForm("full_track_secondary")}
+                          className="text-sm underline underline-offset-4"
+                          style={{ color: palette.textSecondary }}
+                        >
+                          Reserve the intro seat first
+                        </button>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Philosophy</div>
-                      <ol className="mt-2 space-y-2 list-decimal pl-5">
-                        <li>Keep humans in control — AI supports, it doesn’t replace.</li>
-                        <li>Build visibly so teams can trust the workflows they inherit.</li>
-                        <li>Ship outcomes: working GPTs, automations, and prompt kits that deliver.</li>
-                      </ol>
+                  </details>
+                </GlowCard>
+                <GlowCard className="p-6 md:p-8" id="certificate">
+                  <div className="grid lg:grid-cols-[1fr_1fr] gap-6 items-start">
+                    <div className="rounded-3xl border overflow-hidden" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                      <img src={CERTIFICATE_IMAGE} alt="Starterclass certificate preview" className="w-full" loading="lazy" />
+                    </div>
+                    <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
+                      <p>
+                        Complete every module and we issue an ICUNI certificate with CPD points. Every live build, submission, and deployment review feeds the evidence we file on your behalf.
+                      </p>
+                      <div className="grid gap-3">
+                        {CERTIFICATE_POINTS.map((point) => {
+                          const active = point.key === activeCertificate.key;
+                          return (
+                            <button
+                              key={point.key}
+                              type="button"
+                              onMouseEnter={() => setCertificateFocus(point.key)}
+                              onFocus={() => setCertificateFocus(point.key)}
+                              onClick={() => setCertificateFocus(point.key)}
+                              className="rounded-2xl border p-4 text-left transition"
+                              style={{
+                                borderColor: palette.border,
+                                background: active ? palette.surface : palette.surfaceSoft,
+                                color: palette.textPrimary,
+                              }}
+                            >
+                              <div className="font-semibold text-sm">{point.title}</div>
+                              <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>
+                                {point.detail}
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <div className="rounded-2xl border p-4 text-xs" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
+                        <span style={{ color: palette.textPrimary, fontWeight: 600 }}>Current focus:</span> {activeCertificate.title}
+                        <div className="mt-1">{activeCertificate.detail}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </GlowCard>
+                </GlowCard>
+              </div>
             </div>
           )}
 
@@ -1999,6 +1962,16 @@ function StarterclassLuxuryV8() {
                 </GlowCard>
               ))}
             </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {upcomingModules.map((module) => (
+                <GlowCard key={module.k} className="p-4">
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Included in Full Track</div>
+                  <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>{module.title}</div>
+                  <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{module.outcome}</div>
+                  <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>{module.date} · {formatUKRange(module.start, module.end)}</div>
+                </GlowCard>
+              ))}
+            </div>
           )}
 
         {tab === "faq" && (
@@ -2031,174 +2004,177 @@ function StarterclassLuxuryV8() {
             })}
           </div>
         </Section>
+        <>
 
-        <BackToTop />
+          <BackToTop />
 
-        <footer className="mt-24 mb-16">
-          <Section>
-            <div className="flex flex-wrap items-center justify-between gap-3 text-sm" style={{ color: palette.textMuted }}>
-              <div>© {new Date().getFullYear()} ICUNI — Starterclass</div>
-              <div className="flex gap-4">
-                <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#terms" onClick={(e) => { e.preventDefault(); setShowTerms(true); }}>Terms</a>
-                <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#privacy" onClick={(e) => { e.preventDefault(); setShowPrivacy(true); }}>Privacy</a>
-                <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#contact" onClick={(e) => { e.preventDefault(); setShowContact(true); }}>Contact</a>
-              </div>
-            </div>
-          </Section>
-        </footer>
-
-        {stickyShouldRender && !stickyMinimized && (
-          <div className="fixed inset-x-0 bottom-0 z-40">
-            <div className="mx-auto max-w-5xl px-4 pb-6">
-              <GlowCard className="px-5 py-4 flex flex-wrap items-center justify-between gap-3">
-                <div className="text-sm" style={{ color: palette.textSecondary }}>
-                  Reserve your seat for Session 0 (15 Nov · 11:00 UK)
-                </div>
-                <div className="flex items-center gap-2">
-                  <GlassButton onClick={() => triggerIntroForm("sticky_bar")} className="px-5 py-2 text-sm">
-                    Reserve your seat
-                  </GlassButton>
-                  <button
-                    type="button"
-                    className="text-xs underline underline-offset-4"
-                    style={{ color: palette.textSecondary }}
-                    onClick={handleStickyMinimize}
-                  >
-                    Minimise
-                  </button>
-                  <button
-                    type="button"
-                    className="text-xs"
-                    style={{ color: palette.textMuted }}
-                    onClick={handleStickyDismiss}
-                    aria-label="Dismiss reservation reminder"
-                  >
-                    ×
-                  </button>
-                </div>
-              </GlowCard>
-            </div>
-          </div>
-        )}
-        {stickyShouldRender && stickyMinimized && (
-          <button
-            type="button"
-            className="fixed bottom-4 right-4 z-40 rounded-full px-4 py-2 text-xs font-semibold shadow-lg"
-            style={{
-              background: palette.accentSecondary,
-              color: "white",
-              boxShadow: palette.shadow,
-            }}
-            onClick={handleStickyRestore}
-          >
-            Reserve Session 0
-          </button>
-        )}
-
-        {modalOpen && (
-          <div className="fixed inset-0 z-50 grid place-items-center p-4">
-            <div className="absolute inset-0 backdrop-blur" style={{ background: activeTheme === "dark" ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }} onClick={() => setModalOpen(false)} />
-            <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden" style={{ border: `1px solid ${palette.border}`, background: palette.surface, color: palette.textPrimary }}>
-              <div className="px-4 md:px-6 py-4 flex items-center justify-between" style={{ borderBottom: `1px solid ${palette.border}` }}>
-                <div className="font-semibold">Register — {INTRO_NAME}</div>
-                <button onClick={() => setModalOpen(false)} className="text-2xl leading-none" style={{ color: palette.textSecondary }}>×</button>
-              </div>
-              <div className="p-6 space-y-6">
-                <div
-                  className="rounded-2xl overflow-hidden border"
-                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
-                >
-                  <iframe
-                    src={GOOGLE_FORM_URL_EMBED}
-                    title="Starterclass registration form"
-                    width="100%"
-                    height="680"
-                    frameBorder="0"
-                    marginHeight="0"
-                    marginWidth="0"
-                    style={{ width: "100%" }}
-                  >
-                    Loading…
-                  </iframe>
-                </div>
-                <div className="space-y-3" style={{ color: palette.textSecondary }}>
-                  <p className="text-sm">
-                    Submit the form above to reserve your seat. When you’re done, add the session straight to your calendar.
-                  </p>
-                  <GlassButton
-                    onClick={() => {
-                      track("form_submit_success", { location: "embedded_form" });
-                      openCalendarModal("registration_modal");
-                    }}
-                    className="px-6 py-3"
-                  >
-                    I’ve submitted — open the calendar
-                  </GlassButton>
-                  <button
-                    type="button"
-                    className="text-sm underline underline-offset-4"
-                    style={{ color: palette.textSecondary }}
-                    onClick={() => setModalOpen(false)}
-                  >
-                    Close window
-                  </button>
-                  <p className="text-xs" style={{ color: palette.textMuted }}>
-                    Replays unlock for Full Track participants. You’ll receive confirmation and prep materials by email within a few minutes of submitting.
-                  </p>
+          <footer className="mt-24 mb-16">
+            <Section>
+              <div className="flex flex-wrap items-center justify-between gap-3 text-sm" style={{ color: palette.textMuted }}>
+                <div>© {new Date().getFullYear()} ICUNI — Starterclass</div>
+                <div className="flex gap-4">
+                  <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#terms" onClick={(e) => { e.preventDefault(); setShowTerms(true); }}>Terms</a>
+                  <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#privacy" onClick={(e) => { e.preventDefault(); setShowPrivacy(true); }}>Privacy</a>
+                  <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#contact" onClick={(e) => { e.preventDefault(); setShowContact(true); }}>Contact</a>
                 </div>
               </div>
+            </Section>
+          </footer>
+
+          {stickyShouldRender && !stickyMinimized && (
+            <div className="fixed inset-x-0 bottom-0 z-40">
+              <div className="mx-auto max-w-5xl px-4 pb-6">
+                <GlowCard className="px-5 py-4 flex flex-wrap items-center justify-between gap-3">
+                  <div className="text-sm" style={{ color: palette.textSecondary }}>
+                    Reserve your seat for Session 0 (15 Nov · 11:00 UK)
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <GlassButton onClick={() => triggerIntroForm("sticky_bar")} className="px-5 py-2 text-sm">
+                      Reserve your seat
+                    </GlassButton>
+                    <button
+                      type="button"
+                      className="text-xs underline underline-offset-4"
+                      style={{ color: palette.textSecondary }}
+                      onClick={handleStickyMinimize}
+                    >
+                      Minimise
+                    </button>
+                    <button
+                      type="button"
+                      className="text-xs"
+                      style={{ color: palette.textMuted }}
+                      onClick={handleStickyDismiss}
+                      aria-label="Dismiss reservation reminder"
+                    >
+                      ×
+                    </button>
+                  </div>
+                </GlowCard>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+          {stickyShouldRender && stickyMinimized && (
+            <button
+              type="button"
+              className="fixed bottom-4 right-4 z-40 rounded-full px-4 py-2 text-xs font-semibold shadow-lg"
+              style={{
+                background: palette.accentSecondary,
+                color: "white",
+                boxShadow: palette.shadow,
+              }}
+              onClick={handleStickyRestore}
+            >
+              Reserve Session 0
+            </button>
+          )}
 
-        {calendarOpen && (
-          <CalendarModal
-            onClose={() => setCalendarOpen(false)}
-            onAdd={() => handleCalendarClick("registration_modal")}
-          />
-        )}
+          {modalOpen && (
+            <div className="fixed inset-0 z-50 grid place-items-center p-4">
+              <div className="absolute inset-0 backdrop-blur" style={{ background: activeTheme === "dark" ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }} onClick={() => setModalOpen(false)} />
+              <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden" style={{ border: `1px solid ${palette.border}`, background: palette.surface, color: palette.textPrimary }}>
+                <div className="px-4 md:px-6 py-4 flex items-center justify-between" style={{ borderBottom: `1px solid ${palette.border}` }}>
+                  <div className="font-semibold">Register — {INTRO_NAME}</div>
+                  <button onClick={() => setModalOpen(false)} className="text-2xl leading-none" style={{ color: palette.textSecondary }}>×</button>
+                </div>
+                <div className="p-6 space-y-6">
+                  <div
+                    className="rounded-2xl overflow-hidden border"
+                    style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                  >
+                    <iframe
+                      src={GOOGLE_FORM_URL_EMBED}
+                      title="Starterclass registration form"
+                      width="100%"
+                      height="680"
+                      frameBorder="0"
+                      marginHeight="0"
+                      marginWidth="0"
+                      style={{ width: "100%" }}
+                    >
+                      Loading…
+                    </iframe>
+                  </div>
+                  <div className="space-y-3" style={{ color: palette.textSecondary }}>
+                    <p className="text-sm">
+                      Submit the form above to reserve your seat. When you’re done, add the session straight to your calendar.
+                    </p>
+                    <GlassButton
+                      onClick={() => {
+                        track("form_submit_success", { location: "embedded_form" });
+                        openCalendarModal("registration_modal");
+                      }}
+                      className="px-6 py-3"
+                    >
+                      I’ve submitted — open the calendar
+                    </GlassButton>
+                    <button
+                      type="button"
+                      className="text-sm underline underline-offset-4"
+                      style={{ color: palette.textSecondary }}
+                      onClick={() => setModalOpen(false)}
+                    >
+                      Close window
+                    </button>
+                    <p className="text-xs" style={{ color: palette.textMuted }}>
+                      Replays unlock for Full Track participants. You’ll receive confirmation and prep materials by email within a few minutes of submitting.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
-        {showTerms && (
-          <PolicyModal title="Terms of Service" onClose={() => setShowTerms(false)}>
-            <p className="text-sm" style={{ color: palette.textSecondary }}>These terms govern enrollment in the ICUNI Starterclass.</p>
-            <ul className="list-disc pl-5 text-sm space-y-2 mt-3" style={{ color: palette.textSecondary }}>
-              <li><span style={{ color: palette.textMuted }}>Scope:</span> The Starterclass Session provides live instruction, templates, and materials for personal or business use. Redistribution or resale is not permitted without written consent.</li>
-              <li><span style={{ color: palette.textMuted }}>Payments:</span> All payments are processed via Stripe. Taxes and fees may apply per region.</li>
-              <li><span style={{ color: palette.textMuted }}>Refunds:</span> Cancel up to 48 hours before the first paid session for a full refund. After that, we provide credit toward a future cohort.</li>
-              <li><span style={{ color: palette.textMuted }}>Recordings & materials:</span> Intro replay unlocks for Full Track participants and remains accessible for 60 days after the January capstone, alongside slide decks and prompt kits.</li>
-              <li><span style={{ color: palette.textMuted }}>Conduct:</span> Be respectful in live sessions and forums. Disruptive behaviour may result in removal without refund.</li>
-              <li><span style={{ color: palette.textMuted }}>IP:</span> Your data remains yours. Course IP remains ICUNI’s and is licensed for your use.</li>
-              <li><span style={{ color: palette.textMuted }}>Changes:</span> We may adjust dates or contents for quality or operational reasons; you’ll be notified by email.</li>
-              <li><span style={{ color: palette.textMuted }}>Governing law:</span> England & Wales.</li>
-            </ul>
-          </PolicyModal>
-        )}
-        {showPrivacy && (
-          <PolicyModal title="Privacy Policy" onClose={() => setShowPrivacy(false)}>
-            <p className="text-sm" style={{ color: palette.textSecondary }}>We collect the minimum necessary data to run the cohort and support you.</p>
-            <ul className="list-disc pl-5 text-sm space-y-2 mt-3" style={{ color: palette.textSecondary }}>
-              <li><span style={{ color: palette.textMuted }}>Data collected:</span> Name, email, form responses, attendance, and homework links.</li>
-              <li><span style={{ color: palette.textMuted }}>Use:</span> Enrollment, reminders, certification, and support. Optional marketing with explicit opt-in.</li>
-              <li><span style={{ color: palette.textMuted }}>Processors:</span> Google (Forms/Sheets/Drive), Stripe (payments), email provider (Postmark/SendGrid). We use N8N to automate notifications.</li>
-              <li><span style={{ color: palette.textMuted }}>Security:</span> Access is limited to ICUNI admins on a need-to-know basis. We use least-privilege accounts and audit access periodically.</li>
-              <li><span style={{ color: palette.textMuted }}>Retention:</span> Enrollment records are retained for up to 24 months; you may request deletion anytime.</li>
-              <li><span style={{ color: palette.textMuted }}>Your rights:</span> Access, correction, deletion. Email <a className="underline" href="mailto:starterclass@icuni.org">starterclass@icuni.org</a>.</li>
-            </ul>
-          </PolicyModal>
-        )}
-        {showContact && (
-          <PolicyModal title="Contact" onClose={() => setShowContact(false)}>
-            <div className="text-sm space-y-2" style={{ color: palette.textSecondary }}>
-              <p>We reply within 2 business days.</p>
-              <ul className="list-disc pl-5 space-y-1">
-                <li><span style={{ color: palette.textMuted }}>Enrollment & support:</span> <a className="underline" href="mailto:starterclass@icuni.org">starterclass@icuni.org</a></li>
-                <li><span style={{ color: palette.textMuted }}>Automation ops (N8N):</span> <a className="underline" href="mailto:ai@icuni.org">ai@icuni.org</a></li>
-                <li><span style={{ color: palette.textMuted }}>Receipts & reminders (no-reply):</span> no-reply@icuni.org</li>
+          {calendarOpen && (
+            <CalendarModal
+              onClose={() => setCalendarOpen(false)}
+              onAdd={() => handleCalendarClick("registration_modal")}
+            />
+          )}
+
+          {showTerms && (
+            <PolicyModal title="Terms of Service" onClose={() => setShowTerms(false)}>
+              <p className="text-sm" style={{ color: palette.textSecondary }}>These terms govern enrollment in the ICUNI Starterclass.</p>
+              <ul className="list-disc pl-5 text-sm space-y-2 mt-3" style={{ color: palette.textSecondary }}>
+                <li><span style={{ color: palette.textMuted }}>Scope:</span> The Starterclass Session provides live instruction, templates, and materials for personal or business use. Redistribution or resale is not permitted without written consent.</li>
+                <li><span style={{ color: palette.textMuted }}>Payments:</span> All payments are processed via Stripe. Taxes and fees may apply per region.</li>
+                <li><span style={{ color: palette.textMuted }}>Refunds:</span> Cancel up to 48 hours before the first paid session for a full refund. After that, we provide credit toward a future cohort.</li>
+                <li><span style={{ color: palette.textMuted }}>Recordings & materials:</span> Intro replay unlocks for Full Track participants and remains accessible for 60 days after the January capstone, alongside slide decks and prompt kits.</li>
+                <li><span style={{ color: palette.textMuted }}>Conduct:</span> Be respectful in live sessions and forums. Disruptive behaviour may result in removal without refund.</li>
+                <li><span style={{ color: palette.textMuted }}>IP:</span> Your data remains yours. Course IP remains ICUNI’s and is licensed for your use.</li>
+                <li><span style={{ color: palette.textMuted }}>Changes:</span> We may adjust dates or contents for quality or operational reasons; you’ll be notified by email.</li>
+                <li><span style={{ color: palette.textMuted }}>Governing law:</span> England & Wales.</li>
               </ul>
-              <p className="text-xs" style={{ color: palette.textMuted }}>Prefer not to email? Register via the on-page form; we’ll follow up with materials and calendar invites.</p>
-            </div>
-          </PolicyModal>
-        )}
+            </PolicyModal>
+          )}
+          {showPrivacy && (
+            <PolicyModal title="Privacy Policy" onClose={() => setShowPrivacy(false)}>
+              <p className="text-sm" style={{ color: palette.textSecondary }}>We collect the minimum necessary data to run the cohort and support you.</p>
+              <ul className="list-disc pl-5 text-sm space-y-2 mt-3" style={{ color: palette.textSecondary }}>
+                <li><span style={{ color: palette.textMuted }}>Data collected:</span> Name, email, form responses, attendance, and homework links.</li>
+                <li><span style={{ color: palette.textMuted }}>Use:</span> Enrollment, reminders, certification, and support. Optional marketing with explicit opt-in.</li>
+                <li><span style={{ color: palette.textMuted }}>Processors:</span> Google (Forms/Sheets/Drive), Stripe (payments), email provider (Postmark/SendGrid). We use N8N to automate notifications.</li>
+                <li><span style={{ color: palette.textMuted }}>Security:</span> Access is limited to ICUNI admins on a need-to-know basis. We use least-privilege accounts and audit access periodically.</li>
+                <li><span style={{ color: palette.textMuted }}>Retention:</span> Enrollment records are retained for up to 24 months; you may request deletion anytime.</li>
+                <li><span style={{ color: palette.textMuted }}>Your rights:</span> Access, correction, deletion. Email <a className="underline" href="mailto:starterclass@icuni.org">starterclass@icuni.org</a>.</li>
+              </ul>
+            </PolicyModal>
+          )}
+          {showContact && (
+            <PolicyModal title="Contact" onClose={() => setShowContact(false)}>
+              <div className="text-sm space-y-2" style={{ color: palette.textSecondary }}>
+                <p>We reply within 2 business days.</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><span style={{ color: palette.textMuted }}>Enrollment & support:</span> <a className="underline" href="mailto:starterclass@icuni.org">starterclass@icuni.org</a></li>
+                  <li><span style={{ color: palette.textMuted }}>Automation ops (N8N):</span> <a className="underline" href="mailto:ai@icuni.org">ai@icuni.org</a></li>
+                  <li><span style={{ color: palette.textMuted }}>Receipts & reminders (no-reply):</span> no-reply@icuni.org</li>
+                </ul>
+                <p className="text-xs" style={{ color: palette.textMuted }}>Prefer not to email? Register via the on-page form; we’ll follow up with materials and calendar invites.</p>
+              </div>
+            </PolicyModal>
+          )}
+
+        </>
       </main>
     </ThemeProvider>
   );
@@ -2234,7 +2210,7 @@ function PieBlock() {
         style={{ background: `radial-gradient(circle at center, ${activeColor}26, transparent 65%)` }}
       />
       <div className="grid grid-cols-1 gap-4">
-        <div className="relative mx-auto w-full max-w-[480px]">
+        <div className="relative mx-auto w-full max-w-[540px]">
           <div
             className="relative"
             style={{
@@ -2247,7 +2223,7 @@ function PieBlock() {
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center px-8" style={{ color: palette.textPrimary }}>
             <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{active?.key}</div>
             <div className="mt-2 text-lg font-semibold leading-snug">{active?.headline}</div>
-            <div className="mt-2 text-xs leading-relaxed max-w-[260px]" style={{ color: palette.textSecondary }}>{active?.desc}</div>
+            <div className="mt-2 text-xs leading-relaxed max-w-[300px]" style={{ color: palette.textSecondary }}>{active?.desc}</div>
             <div className="mt-3 text-[0.65rem] uppercase tracking-[0.36em]" style={{ color: palette.textMuted }}>{Math.round(active?.value)}% of session focus</div>
           </div>
         </div>
@@ -2401,17 +2377,13 @@ function CalendarModal({ onClose, onAdd }) {
   );
 }
   const handleNavClick = useCallback(
-    (href) => {
-      track("nav_click", { href });
-      const tabTarget = navTabMap[href];
+    (href, tabTarget) => {
+      track("nav_click", { href, tabTarget: tabTarget || null });
       if (tabTarget) {
         if (tabTarget === "curriculum") {
           revealPaidAndGoCurriculum("nav_link");
         } else {
           setTab(tabTarget);
-          if (tabTarget === "fulltrack") {
-            setFullTrackExpanded(true);
-          }
         }
       }
       requestAnimationFrame(() => {
@@ -2421,7 +2393,7 @@ function CalendarModal({ onClose, onAdd }) {
         }
       });
     },
-    [navTabMap, revealPaidAndGoCurriculum]
+    [revealPaidAndGoCurriculum]
   );
 
   const heroAudienceLine = "Session 0 is free for business leaders, consultants, and curious operators—no coding needed.";
