@@ -334,101 +334,13 @@ const MICRO_GALLERY = [
   {
     title: "N8N flow",
     caption: "Visualise the automation path you deploy in January.",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%27%230F1026%27/%3E%0A%20%20%3Cpath%20d%3D%27M70%2090%20H250%27%20stroke%3D%27%238B5CF6%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Ccircle%20cx%3D%2770%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%23C8A145%27/%3E%0A%20%20%3Ccircle%20cx%3D%27160%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%233B5CCC%27/%3E%0A%20%20%3Ccircle%20cx%3D%27250%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%238B5CF6%27/%3E%0A%20%20%3Cpath%20d%3D%27M160%2090%20V132%27%20stroke%3D%27%233B5CCC%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Crect%20x%3D%27146%27%20y%3D%27132%27%20width%3D%2728%27%20height%3D%2718%27%20rx%3D%276%27%20fill%3D%27%231B1D3F%27/%3E%0A%3C/svg%3E",
+    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%270F1026%27/%3E%0A%20%20%3Cpath%20d%3D%27M70%2090%20H250%27%20stroke%3D%278B5CF6%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Ccircle%20cx%3D%2770%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%23C8A145%27/%3E%0A%20%20%3Ccircle%20cx%3D%27160%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%233B5CCC%27/%3E%0A%20%20%3Ccircle%20cx%3D%27250%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%278B5CF6%27/%3E%0A%20%20%3Cpath%20d%3D%27M160%2090%20V132%27%20stroke%3D%273B5CCC%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Crect%20x%3D%27146%27%20y%3D%27132%27%20width%3D%2728%27%20height%3D%2718%27%20rx%3D%276%27%20fill%3D%271B1D3F%27/%3E%0A%3C/svg%3E",
     alt: "Stylised N8N workflow with connected nodes.",
   },
   {
     title: "Agent response log",
     caption: "See the guardrails and outputs your agent shares back.",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%27%23101626%27/%3E%0A%20%20%3Crect%20x%3D%2730%27%20y%3D%2738%27%20width%3D%27260%27%20height%3D%2736%27%20rx%3D%2714%27%20fill%3D%27%231F2A3A%27/%3E%0A%20%20%3Crect%20x%3D%2730%27%20y%3D%2790%27%20width%3D%27260%27%20height%3D%2736%27%20rx%3D%2714%27%20fill%3D%27%231F2A3A%27/%3E%0A%20%20%3Ctext%20x%3D%2750%27%20y%3D%2763%27%20fill%3D%27%23C8A145%27%20font-size%3D%2716%27%20font-family%3D%27Helvetica%20Neue%2C%20Arial%27%3EAgent%20Reply%3C/text%3E%0A%20%20%3Ctext%20x%3D%2750%27%20y%3D%27115%27%20fill%3D%27%238B5CF6%27%20font-size%3D%2714%27%20font-family%3D%27Helvetica%20Neue%2C%20Arial%27%3E%22Workflow%20executed.%20Report%20ready.%22%3C/text%3E%0A%3C/svg%3E",
-    alt: "Stylised agent chat log confirming workflow completion.",
-  },
-];
-
-
-
-const CURRENCIES = {
-  USD: { symbol: "$", rate: 1, label: "USD" },
-  GBP: { symbol: "£", rate: 0.82, label: "GBP" },
-  GHS: { symbol: "₵", rate: 13.1, label: "GHS" },
-};
-
-const HERO_HIGHLIGHTS = [
-  { icon: "🛠️", title: "Custom GPT built live", sub: "Watch your private assistant configured on the spot." },
-  { icon: "🛰️", title: "Automation ready to ship", sub: "Map a workflow that moves from idea to launch." },
-  { icon: "🗂️", title: "Prompt kits that deliver", sub: "Pack creative and business prompts with proofed outputs." },
-];
-
-const OVERVIEW_WINS = [
-  {
-    key: "workspace",
-    label: "Workspace wired",
-    headline: "Project dashboard ready before you log off.",
-    detail: "We guide you through structuring a ChatGPT Project with guardrails and hand-off notes.",
-  },
-  {
-    key: "gpt",
-    label: "Private GPT configured",
-    headline: "Your assistant remembers context and files.",
-    detail: "Collect knowledge packs, set tone-of-voice, and add the right tools during the live build.",
-  },
-  {
-    key: "prompts",
-    label: "Prompt kit shipped",
-    headline: "Reusable prompt flows tuned for business and creative briefs.",
-    detail: "Every attendee leaves with test scripts, scorecards, and a prompt kit that keeps delivering.",
-  },
-];
-
-const FULL_TRACK_OUTCOMES = [
-  "Turn November momentum into agent-powered delivery.",
-  "Design systems that stay secure and measurable.",
-  "Launch production-ready automations by the end of January.",
-  "Collect CPD points with a certificate for all ten modules.",
-];
-
-const FAQ_ITEMS = [
-  {
-    question: "Do I need the Full Track to start?",
-    answer: "No. The Starterclass Session stands alone. The Full Track simply keeps the build sprint going through January.",
-  },
-  {
-    question: "Will there be a replay?",
-    answer: "Only Full Track participants receive the intro replay plus the annotated resources.",
-  },
-  {
-    question: "Is the intro really free?",
-    answer: "Yes. Reserve your seat with the badge in the hero — tuition begins only if you add the paid months.",
-  },
-  {
-    question: "Do I need to code?",
-    answer: "No. We work visually in Projects, GPT builders, AgentKit, and N8N. Optional code snippets are explained step by step.",
-  },
-];
-
-const TESTIMONIAL = {
-  quote: "I arrived with scattered prompts and left with a calm system that my team now trusts. The intro alone paid for the upgrade.",
-  name: "Elise A.",
-  role: "Innovation Lead, boutique consultancy",
-};
-
-const MICRO_GALLERY = [
-  {
-    title: "Canvas workspace",
-    caption: "Structure briefs, outputs, and review loops in one place.",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%27%23F3EEFF%27/%3E%0A%20%20%3Crect%20x%3D%2724%27%20y%3D%2732%27%20width%3D%27272%27%20height%3D%2732%27%20rx%3D%2712%27%20fill%3D%27%23D9C7FF%27/%3E%0A%20%20%3Crect%20x%3D%2724%27%20y%3D%2776%27%20width%3D%27168%27%20height%3D%2724%27%20rx%3D%2710%27%20fill%3D%27%23B99FF8%27/%3E%0A%20%20%3Crect%20x%3D%27200%27%20y%3D%2776%27%20width%3D%2796%27%20height%3D%2724%27%20rx%3D%2710%27%20fill%3D%27%23E7DFFF%27/%3E%0A%20%20%3Crect%20x%3D%2724%27%20y%3D%27112%27%20width%3D%27120%27%20height%3D%2720%27%20rx%3D%278%27%20fill%3D%27%23C8A145%27/%3E%0A%20%20%3Crect%20x%3D%27152%27%20y%3D%27112%27%20width%3D%27144%27%20height%3D%2720%27%20rx%3D%278%27%20fill%3D%27%23F0E6FF%27/%3E%0A%3C/svg%3E",
-    alt: "Stylised Canvas workspace with neatly arranged sections.",
-  },
-  {
-    title: "N8N flow",
-    caption: "Visualise the automation path you deploy in January.",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%27%230F1026%27/%3E%0A%20%20%3Cpath%20d%3D%27M70%2090%20H250%27%20stroke%3D%27%238B5CF6%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Ccircle%20cx%3D%2770%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%23C8A145%27/%3E%0A%20%20%3Ccircle%20cx%3D%27160%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%233B5CCC%27/%3E%0A%20%20%3Ccircle%20cx%3D%27250%27%20cy%3D%2790%27%20r%3D%2714%27%20fill%3D%27%238B5CF6%27/%3E%0A%20%20%3Cpath%20d%3D%27M160%2090%20V132%27%20stroke%3D%27%233B5CCC%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Crect%20x%3D%27146%27%20y%3D%27132%27%20width%3D%2728%27%20height%3D%2718%27%20rx%3D%276%27%20fill%3D%27%231B1D3F%27/%3E%0A%3C/svg%3E",
-    alt: "Stylised N8N workflow with connected nodes.",
-  },
-  {
-    title: "Agent response log",
-    caption: "See the guardrails and outputs your agent shares back.",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%27%23101626%27/%3E%0A%20%20%3Crect%20x%3D%2730%27%20y%3D%2738%27%20width%3D%27260%27%20height%3D%2736%27%20rx%3D%2714%27%20fill%3D%27%231F2A3A%27/%3E%0A%20%20%3Crect%20x%3D%2730%27%20y%3D%2790%27%20width%3D%27260%27%20height%3D%2736%27%20rx%3D%2714%27%20fill%3D%27%231F2A3A%27/%3E%0A%20%20%3Ctext%20x%3D%2750%27%20y%3D%2763%27%20fill%3D%27%23C8A145%27%20font-size%3D%2716%27%20font-family%3D%27Helvetica%20Neue%2C%20Arial%27%3EAgent%20Reply%3C/text%3E%0A%20%20%3Ctext%20x%3D%2750%27%20y%3D%27115%27%20fill%3D%27%238B5CF6%27%20font-size%3D%2714%27%20font-family%3D%27Helvetica%20Neue%2C%20Arial%27%3E%22Workflow%20executed.%20Report%20ready.%22%3C/text%3E%0A%3C/svg%3E",
+    src: "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27180%27%20viewBox%3D%270%200%20320%20180%27%20fill%3D%27none%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27180%27%20rx%3D%2724%27%20fill%3D%27101626%27/%3E%0A%20%20%3Crect%20x%3D%2730%27%20y%3D%2738%27%20width%3D%27260%27%20height%3D%2736%27%20rx%3D%2714%27%20fill%3D%271F2A3A%27/%3E%0A%20%20%3Crect%20x%3D%2730%27%20y%3D%2790%27%20width%3D%27260%27%20height%3D%2736%27%20rx%3D%2714%27%20fill%3D%271F2A3A%27/%3E%0A%20%20%3Ctext%20x%3D%2750%27%20y%3D%2763%27%20fill%3D%27%23C8A145%27%20font-size%3D%2716%27%20font-family%3D%27Helvetica%20Neue%2C%20Arial%27%3EAgent%20Reply%3C/text%3E%0A%20%20%3Ctext%20x%3D%2750%27%20y%3D%27115%27%20fill%3D%278B5CF6%27%20font-size%3D%2714%27%20font-family%3D%27Helvetica%20Neue%2C%20Arial%27%3E%22Workflow%20executed.%20Report%20ready.%22%3C/text%3E%0A%3C/svg%3E",
     alt: "Stylised agent chat log confirming workflow completion.",
   },
 ];
@@ -673,76 +585,86 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
 // Client Value Calculator focused on a single participant
 function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
   const { palette } = useTheme();
-  const [hours, setHours] = useState(3);
-  const [focus, setFocus] = useState("ship");
+  const [hours, setHours] = useState(2);
+  const [focus, setFocus] = useState("foundation");
 
   const focusOptions = [
-    { key: "explore", label: "Exploring AI", icon: "🧭" },
-    { key: "ship", label: "Shipping wins", icon: "🚀" },
-    { key: "transform", label: "Transforming work", icon: "🧠" },
+    { key: "foundation", label: "Foundation", icon: "🧱" },
+    { key: "build", label: "Build workflows", icon: "🛠️" },
+    { key: "scale", label: "Scale delivery", icon: "📈" },
   ];
 
-  const scenarios = useMemo(() => {
+  const results = useMemo(() => {
     const price = (months) => formatCurrency(100 * months, currency);
     return {
-      intro_only: {
-        badge: "Light lift",
-        title: "Start with the Starterclass Session",
-        summary: "Dial in your workspace and prompts with zero tuition due.",
-        detail: "You’ll wire a Project, configure a private GPT, and leave with prompt kits ready to run.",
+      intro_solo: {
+        badge: "Start here",
+        title: "Reserve the Starterclass Session",
+        summary: "Lock in the 90-minute build sprint and collect the Project, private GPT, and prompt kit.",
+        detail: "Ideal when you’re testing the waters or can’t commit beyond November just yet.",
         cta: "Reserve your seat",
         action: () => onIntro?.(),
-        ctaType: "intro",
+        secondary: { label: `See the Full Track (${price(3)})`, action: () => onFull?.({ months: 3 }) },
       },
-      intro_plus: {
-        badge: "First month",
-        title: "Add November for {price(1)}",
-        summary: "Stack Canvas, Projects, and agents in four fast weekends.",
-        detail: "Keep momentum by joining the November build month — everything stays paced for one person.",
-        cta: "Reserve & explore November",
+      intro_plus_nov: {
+        badge: "November focus",
+        title: `Intro + November for ${price(1)}`,
+        summary: "Keep momentum after the intro with Canvas, Projects, and GPT labs paced for one person.",
+        detail: "You’ll spread tuition across November with zero payments due until then.",
+        cta: "Hold my November seat",
         action: () => onFull?.({ months: 1 }),
-        ctaType: "full",
+        secondary: { label: "Reserve the free intro first", action: () => onIntro?.() },
       },
-      systems_path: {
-        badge: "Two-month sprint",
-        title: "November and December for {price(2)}",
-        summary: "Systems thinking, safety drills, and case-study automation.",
-        detail: "Stay on for December to lock in systems and safety so January launches feel easy.",
-        cta: "Hold your full-track spot",
+      two_month_arc: {
+        badge: "Systems ready",
+        title: `November + December for ${price(2)}`,
+        summary: "Add safety, orchestration, and platform depth before the January launch push.",
+        detail: "Payments split across November and January — December is tuition-free.",
+        cta: "Join the two-month arc",
         action: () => onFull?.({ months: 2 }),
-        ctaType: "full",
+        secondary: { label: "Reserve intro access", action: () => onIntro?.() },
       },
-      full_track: {
+      full_track_focus: {
         badge: "Full Track",
-        title: "Complete track for {price(3)}",
-        summary: "January adds live AgentKit and N8N builds and deployment support.",
-        detail: "All ten modules, accountability, and the certificate with CPD points once you finish the January launch month.",
+        title: `Full Track for ${price(3)}`,
+        summary: "January adds live AgentKit and N8N builds so you deploy a working automation.",
+        detail: `Pay ${price(1)} in November, pause in December, and settle the final ${price(1)} in January.`,
         cta: "Get the Full Track",
         action: () => onFull?.({ months: 3 }),
-        ctaType: "full",
+        secondary: { label: "Book the intro seat", action: () => onIntro?.() },
       },
-      full_track_intense: {
+      full_track_builder: {
         badge: "Builder pace",
-        title: "Go all-in on the Full Track",
-        summary: "Keep those {price(3)} ready — you’re set to build and deploy end-to-end.",
-        detail: "Maximise the cohort by joining live labs, sharing builds, and booking office hours for deeper feedback.",
+        title: `Full Track + accountability (${price(3)})`,
+        summary: "Use office hours, labs, and peer critique to ship an end-to-end agent system.",
+        detail: "You’ll stay accountable through January and graduate with the CPD certificate.",
         cta: "Commit to the Full Track",
         action: () => onFull?.({ months: 3, intensive: true }),
-        ctaType: "full",
+        secondary: { label: "Reserve the intro", action: () => onIntro?.() },
       },
     };
   }, [currency, formatCurrency, onFull, onIntro]);
 
-  const scenarioKey = useMemo(() => {
-    if (hours <= 2) return "intro_only";
-    if (focus === "explore") return "intro_plus";
-    if (focus === "ship" && hours <= 3) return "intro_plus";
-    if (focus === "ship" && hours > 3) return "systems_path";
-    if (focus === "transform" && hours < 5) return "full_track";
-    return "full_track_intense";
+  const resultKey = useMemo(() => {
+    if (hours <= 1) {
+      return focus === "foundation" ? "intro_solo" : "intro_plus_nov";
+    }
+    if (hours <= 2) {
+      return focus === "foundation" ? "intro_plus_nov" : "two_month_arc";
+    }
+    if (hours <= 3) {
+      return focus === "scale" ? "full_track_focus" : "two_month_arc";
+    }
+    if (hours <= 4) {
+      return focus === "scale" ? "full_track_focus" : "two_month_arc";
+    }
+    if (hours <= 5) {
+      return focus === "scale" ? "full_track_focus" : "full_track_builder";
+    }
+    return "full_track_builder";
   }, [hours, focus]);
 
-  const result = scenarios[scenarioKey];
+  const result = results[resultKey];
 
   return (
     <GlowCard className="p-6 space-y-6">
@@ -750,7 +672,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
         <div>
           <h3 className="text-xl font-semibold">Client Value Calculator</h3>
           <p className="mt-1 text-sm" style={{ color: palette.textSecondary }}>
-            Drag the focus slider and tap where you’re aiming this cohort. One recommendation appears based on your pace.
+            Set the weekly time you can invest and choose your focus. One recommendation appears so you know where to start.
           </p>
         </div>
         <Badge>Solo participant</Badge>
@@ -802,16 +724,13 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
         </div>
       </div>
 
-      <div
-        className="rounded-2xl p-5 space-y-3"
-        style={{ border: `1px solid ${palette.border}`, background: palette.surface }}
-      >
+      <div className="rounded-2xl p-5 space-y-3" style={{ border: `1px solid ${palette.border}`, background: palette.surface }}>
         <div className="flex items-center gap-2 text-xs uppercase tracking-[0.22em]" style={{ color: palette.textMuted }}>
           <span className="inline-flex h-2 w-2 rounded-full" style={{ background: palette.accentPrimary }} />
           {result.badge}
         </div>
         <div className="text-lg font-semibold" style={{ color: palette.textPrimary }}>
-          {result.title.replace('{price(1)}', formatCurrency(100, currency)).replace('{price(2)}', formatCurrency(200, currency)).replace('{price(3)}', formatCurrency(300, currency))}
+          {result.title}
         </div>
         <p className="text-sm" style={{ color: palette.textSecondary }}>{result.summary}</p>
         <p className="text-xs" style={{ color: palette.textMuted }}>{result.detail}</p>
@@ -819,14 +738,14 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull }) {
           <GlassButton onClick={result.action} className="px-5 py-3 text-sm">
             {result.cta}
           </GlassButton>
-          {result.ctaType === "full" && (
+          {result.secondary && (
             <button
               type="button"
-              onClick={() => onIntro?.()}
+              onClick={result.secondary.action}
               className="text-xs underline underline-offset-4"
               style={{ color: palette.textSecondary }}
             >
-              Still start with the intro session
+              {result.secondary.label}
             </button>
           )}
         </div>
@@ -936,10 +855,7 @@ function StarterclassLuxuryV8() {
   });
   const [announcementIndex, setAnnouncementIndex] = useState(0);
   const [stickyVisible, setStickyVisible] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", focus: "" });
-  const [formError, setFormError] = useState("");
-  const [formProcessing, setFormProcessing] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [overviewFocus, setOverviewFocus] = useState("workspace");
   const [showTerms, setShowTerms] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showContact, setShowContact] = useState(false);
@@ -1084,9 +1000,6 @@ function StarterclassLuxuryV8() {
   function triggerIntroForm(source) {
     track("intro_cta_click", { location: source });
     setModalOpen(true);
-    setFormSubmitted(false);
-    setFormProcessing(false);
-    setFormError("");
   }
 
   function revealPaidAndGoCurriculum(source = "hero_secondary") {
@@ -1102,6 +1015,11 @@ function StarterclassLuxuryV8() {
     });
   }
 
+  function openCalendarModal(location) {
+    track("calendar_modal_open", { location });
+    setCalendarOpen(true);
+  }
+
   function scrollToFullTrack() {
     document.getElementById("full-track")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -1113,28 +1031,6 @@ function StarterclassLuxuryV8() {
       "_blank",
       "noopener"
     );
-  }
-
-  function handleFormChange(field) {
-    return (event) => {
-      setFormData((prev) => ({ ...prev, [field]: event.target.value }));
-    };
-  }
-
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    if (!formData.name.trim() || !formData.email.trim()) {
-      setFormError("Add your name and email so we can send the calendar invite.");
-      return;
-    }
-    setFormProcessing(true);
-    setTimeout(() => {
-      setFormProcessing(false);
-      setFormSubmitted(true);
-      setFormError("");
-      setCalendarOpen(true);
-      track("form_submit_success", { name: formData.name.trim(), email: formData.email.trim() });
-    }, 400);
   }
 
   return (
@@ -1319,13 +1215,13 @@ function StarterclassLuxuryV8() {
                     type="button"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-semibold"
                     style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft, color: palette.textPrimary }}
-                    onClick={() => handleCalendarClick("hero_button")}
+                    onClick={() => openCalendarModal("hero_button")}
                   >
                     Add to calendar
                   </button>
                   <span style={{ color: palette.textMuted }}>Replays unlock for Full Track participants.</span>
                   <span className="basis-full" style={{ color: palette.textMuted }}>
-                    Completing the registration form automatically schedules this first session in your calendar.
+                    Submit the registration form so we can email the invite and reminder.
                   </span>
                 </div>
               </div>
@@ -1443,7 +1339,13 @@ function StarterclassLuxuryV8() {
             ].map(({ k, t }) => (
               <button
                 key={k}
-                onClick={() => setTab(k)}
+                onClick={() => {
+                  if (k === "curriculum") {
+                    revealPaidAndGoCurriculum("tab_switch");
+                  } else {
+                    setTab(k);
+                  }
+                }}
                 className="px-4 py-2 rounded-xl text-sm font-semibold transition"
                 style={{
                   background: tab === k ? `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)` : "transparent",
@@ -1463,13 +1365,12 @@ function StarterclassLuxuryV8() {
                   <h3 className="text-xl font-semibold">What this intro unlocks</h3>
                   <div className="grid sm:grid-cols-3 gap-3">
                     {OVERVIEW_WINS.map((win) => {
-                      const active = formData.focus || "workspace";
-                      const isActive = active === win.key;
+                      const isActive = overviewFocus === win.key;
                       return (
                         <button
                           key={win.key}
                           type="button"
-                          onClick={() => setFormData((prev) => ({ ...prev, focus: win.key }))}
+                          onClick={() => setOverviewFocus(win.key)}
                           className="rounded-2xl p-4 text-left transition"
                           style={{
                             border: `1px solid ${isActive ? palette.accentPrimary : palette.border}`,
@@ -1508,7 +1409,7 @@ function StarterclassLuxuryV8() {
                     ))}
                   </ul>
                   <button
-                    onClick={() => setTab("curriculum")}
+                    onClick={() => revealPaidAndGoCurriculum("overview_preview")}
                     className="mt-4 inline-flex items-center gap-2 text-sm underline underline-offset-4"
                     style={{ color: palette.accentSecondary }}
                   >
@@ -1602,16 +1503,6 @@ function StarterclassLuxuryV8() {
                     ))}
                   </ul>
                 </GlowCard>
-                {!showPaid && (
-                  <GlowCard className="p-6">
-                    <div className="text-sm" style={{ color: palette.textSecondary }}>
-                      Want the value calculator? Explore the full track to reveal it here.
-                    </div>
-                    <GlassButton variant="secondary" onClick={() => revealPaidAndGoCurriculum("cvc_reveal")} className="mt-4 px-5 py-3">
-                      Show Client Value Calculator
-                    </GlassButton>
-                  </GlowCard>
-                )}
               </div>
             </div>
           )}
@@ -1718,51 +1609,36 @@ function StarterclassLuxuryV8() {
                 <div className="font-semibold">Register — {INTRO_NAME}</div>
                 <button onClick={() => setModalOpen(false)} className="text-2xl leading-none" style={{ color: palette.textSecondary }}>×</button>
               </div>
-              <form className="p-6 space-y-4" onSubmit={handleFormSubmit}>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <label className="text-sm space-y-2" style={{ color: palette.textSecondary }}>
-                    <span className="block text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Name</span>
-                    <input
-                      type="text"
-                      value={formData.name}
-                      onChange={handleFormChange("name")}
-                      className="w-full rounded-2xl px-4 py-3 text-sm"
-                      style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft, color: palette.textPrimary }}
-                      required
-                    />
-                  </label>
-                  <label className="text-sm space-y-2" style={{ color: palette.textSecondary }}>
-                    <span className="block text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Email</span>
-                    <input
-                      type="email"
-                      value={formData.email}
-                      onChange={handleFormChange("email")}
-                      className="w-full rounded-2xl px-4 py-3 text-sm"
-                      style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft, color: palette.textPrimary }}
-                      required
-                    />
-                  </label>
+              <div className="p-6 space-y-6">
+                <div
+                  className="rounded-2xl overflow-hidden border"
+                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                >
+                  <iframe
+                    src={GOOGLE_FORM_URL_EMBED}
+                    title="Starterclass registration form"
+                    width="100%"
+                    height="680"
+                    frameBorder="0"
+                    marginHeight="0"
+                    marginWidth="0"
+                    style={{ width: "100%" }}
+                  >
+                    Loading…
+                  </iframe>
                 </div>
-                <label className="text-sm space-y-2" style={{ color: palette.textSecondary }}>
-                  <span className="block text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>What you want to unlock</span>
-                  <input
-                    type="text"
-                    value={formData.focus}
-                    onChange={handleFormChange("focus")}
-                    className="w-full rounded-2xl px-4 py-3 text-sm"
-                    style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft, color: palette.textPrimary }}
-                    placeholder="e.g. Marketing automation, creative workflow, client delivery"
-                  />
-                </label>
-                {formError && <div className="text-xs" style={{ color: palette.accentSecondary }}>{formError}</div>}
-                {formSubmitted && (
-                  <div className="text-sm" style={{ color: palette.textSecondary }}>
-                    You’re locked in. We just opened the calendar modal so you can add the session now.
-                  </div>
-                )}
-                <div className="flex flex-wrap gap-3">
-                  <GlassButton type="submit" className="px-6 py-3" onClick={() => {}}>
-                    {formProcessing ? "Reserving…" : "Submit and add to calendar"}
+                <div className="space-y-3" style={{ color: palette.textSecondary }}>
+                  <p className="text-sm">
+                    Submit the form above to reserve your seat. When you’re done, add the session straight to your calendar.
+                  </p>
+                  <GlassButton
+                    onClick={() => {
+                      track("form_submit_success", { location: "embedded_form" });
+                      openCalendarModal("registration_modal");
+                    }}
+                    className="px-6 py-3"
+                  >
+                    I’ve submitted — open the calendar
                   </GlassButton>
                   <button
                     type="button"
@@ -1770,12 +1646,12 @@ function StarterclassLuxuryV8() {
                     style={{ color: palette.textSecondary }}
                     onClick={() => setModalOpen(false)}
                   >
-                    Cancel
+                    Close window
                   </button>
+                  <p className="text-xs" style={{ color: palette.textMuted }}>
+                    Replays unlock for Full Track participants. You’ll receive confirmation and prep materials by email within a few minutes of submitting.
+                  </p>
                 </div>
-              </form>
-              <div className="px-4 md:px-6 py-3 text-xs" style={{ color: palette.textMuted, borderTop: `1px solid ${palette.border}` }}>
-                Replays are available to Full Track registrants. Submitting this form auto-schedules the first session in your calendar and emails the prep materials.
               </div>
             </div>
           </div>
