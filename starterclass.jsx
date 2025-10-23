@@ -482,11 +482,11 @@ const CERTIFICATE_SVG = `
     for completing the Starterclass Full Track and demonstrating mastery across:
   </text>
   <text x="150" y="322" fill="#5E4FA2" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="13">
-    • Projects & personality tuning • Vibe coding builds • Prompt leadership
+    • AI Projects & Personality tuning • AI coding builds • Prompt Engineering
   </text>
   <line x1="150" y1="340" x2="330" y2="340" stroke="#D6CFF3" stroke-width="2" stroke-linecap="round"/>
   <line x1="390" y1="340" x2="540" y2="340" stroke="#D6CFF3" stroke-width="2" stroke-linecap="round"/>
-  <text x="150" y="372" fill="#7F70F4" font-family="'Playfair Display', Georgia, serif" font-size="18">Mikael Gabriel</text>
+  <text x="150" y="372" fill="#7F70F4" font-family="'Playfair Display', Georgia, serif" font-size="18">Your Name</text>
   <text x="150" y="394" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11">Programme Lead · ICUNI</text>
   <text x="540" y="372" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11" text-anchor="end">Documented hours: 90</text>
   <text x="540" y="394" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11" text-anchor="end">CPD credits: 12</text>
