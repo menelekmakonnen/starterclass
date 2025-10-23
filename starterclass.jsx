@@ -96,8 +96,8 @@ const SESSIONS = [
     date: "Sat 15 Nov 2025",
     start: "2025-11-15T11:00:00Z",
     end: "2025-11-15T12:30:00Z",
-    desc: "Customisation deep dives across Projects, GPTs, and prompts that deliver.",
-    outcome: "Leave with one custom GPT, a fully functional project, and prompt flows tuned for business and creative briefs.",
+    desc: "Projects and personality wiring, vibe-coded builds, and prompt labs that deliver under pressure.",
+    outcome: "Leave with Projects that sound like you, a vibe-coded mini build, and prompts ready for business and creative wins.",
     track: "intro",
     outline: [
       { key: "Custom GPT build", value: 32, desc: "Collect assets, set roles, and define safe defaults.", color: "#3B5CCC" },
@@ -252,39 +252,39 @@ const CURRENCIES = {
 const HERO_HIGHLIGHTS = [
   {
     icon: "🗂️",
-    title: "Projects with your voice",
-    sub: "Say what you need once. We shape a Project so every request routes itself with your tone and priorities.",
+    title: "Projects & personality dialled in",
+    sub: "Drop one instruction and watch Projects respond in your tone with the right guardrails.",
   },
   {
-    icon: "🛠️",
-    title: "Mini-build ready to share",
-    sub: "Describe the vibe. Leave with a working microsite or automation you can hand to clients or teammates.",
+    icon: "🪄",
+    title: "Vibe-coded mini build",
+    sub: "Speak your idea out loud and co-create a microsite or automation that is ready to show off.",
   },
   {
-    icon: "🔑",
-    title: "Prompt kit that unlocks answers",
-    sub: "Learn the exact phrasing that gets business, creative, and personal wins without guesswork.",
+    icon: "🧭",
+    title: "Prompt like a pro",
+    sub: "Leave knowing how to steer any chat, with scripts for business, creative, and personal wins.",
   },
 ];
 
 const OVERVIEW_WINS = [
   {
-    key: "workspace",
-    label: "Workspace wired",
-    headline: "Project dashboard ready before you log off.",
-    detail: "We guide you through structuring a ChatGPT Project with guardrails and hand-off notes.",
+    key: "projects",
+    label: "Projects & personality",
+    headline: "Say a single phrase, get the outcome you wanted.",
+    detail: "We wire ChatGPT Projects to carry your tone, approvals, and recurring tasks so you never rewrite briefs.",
   },
   {
-    key: "gpt",
-    label: "Private GPT configured",
-    headline: "Your assistant remembers context and files.",
-    detail: "Collect knowledge packs, set tone-of-voice, and add the right tools during the live build.",
+    key: "vibecoding",
+    label: "Vibe coding basics",
+    headline: "Talk through an idea, leave with it built.",
+    detail: "You narrate the flow; we translate it into a working mini-app or site you can send to clients the same day.",
   },
   {
-    key: "prompts",
-    label: "Prompt kit shipped",
-    headline: "Reusable prompt flows tuned for business and creative briefs.",
-    detail: "Every attendee leaves with test scripts, scorecards, and a prompt kit that keeps delivering.",
+    key: "prompting",
+    label: "Prompt like a pro",
+    headline: "Know exactly what to say to any model.",
+    detail: "We hand you the prompt kit and scorecards that turn vague asks into reliable business, creative, or life wins.",
   },
 ];
 
@@ -456,8 +456,46 @@ const CERTIFICATE_POINTS = [
   },
 ];
 
-const CERTIFICATE_IMAGE =
-  "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22500%22%20height%3D%22320%22%20viewBox%3D%220%200%20500%20320%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23140C2A%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232D1745%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22border%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23F6C978%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%238B5CF6%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22shine%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23FFFFFF%22%20stop-opacity%3D%220.45%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23FFFFFF%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22500%22%20height%3D%22320%22%20rx%3D%2236%22%20fill%3D%22url%28%23bg%29%22/%3E%0A%20%20%3Crect%20x%3D%2220%22%20y%3D%2220%22%20width%3D%22460%22%20height%3D%22280%22%20rx%3D%2228%22%20fill%3D%22rgba%2820%2C12%2C42%2C0.55%29%22%20stroke%3D%22url%28%23border%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2236%22%20y%3D%2236%22%20width%3D%22428%22%20height%3D%22248%22%20rx%3D%2220%22%20fill%3D%22%23FCFBFF%22%20opacity%3D%220.92%22/%3E%0A%20%20%3Crect%20x%3D%2236%22%20y%3D%2236%22%20width%3D%22428%22%20height%3D%22248%22%20rx%3D%2220%22%20fill%3D%22url%28%23shine%29%22/%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22110%22%20text-anchor%3D%22middle%22%20fill%3D%22%232B1F4F%22%20font-family%3D%22%27Playfair%20Display%27%2C%20serif%22%20font-size%3D%2232%22%20letter-spacing%3D%221%22%3ECertificate%20of%20Mastery%3C/text%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22140%22%20text-anchor%3D%22middle%22%20fill%3D%22%235A4A80%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2215%22%3Eawarded%20for%20completing%20the%20Starterclass%20journey%3C/text%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22176%22%20text-anchor%3D%22middle%22%20fill%3D%22%232B1F4F%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2222%22%3EStarterclass%20Full%20Track%3C/text%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22210%22%20text-anchor%3D%22middle%22%20fill%3D%22%238167B5%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2213%22%3EProjects%20%E2%80%A2%20Private%20GPTs%20%E2%80%A2%20Automations%20%E2%80%A2%20Deployment%3C/text%3E%0A%20%20%3Cline%20x1%3D%22140%22%20y1%3D%22238%22%20x2%3D%22360%22%20y2%3D%22238%22%20stroke%3D%22%23D8C6FA%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3Ctext%20x%3D%22140%22%20y%3D%22262%22%20fill%3D%22%238D7AAD%22%20font-family%3D%22%27Great%20Vibes%27%2C%20cursive%22%20font-size%3D%2222%22%3EMikael%20Gabriel%3C/text%3E%0A%20%20%3Ctext%20x%3D%22140%22%20y%3D%22280%22%20fill%3D%22%235A4A80%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2211%22%3EProgramme%20Lead%3C/text%3E%0A%20%20%3Ctext%20x%3D%22360%22%20y%3D%22262%22%20text-anchor%3D%22end%22%20fill%3D%22%238D7AAD%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2212%22%3ECertificate%20ID%3A%20SC-2025%3C/text%3E%0A%20%20%3Ctext%20x%3D%22360%22%20y%3D%22280%22%20text-anchor%3D%22end%22%20fill%3D%22%235A4A80%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2210%22%3EIssued%20digitally%20with%20verification%20link%3C/text%3E%0A%20%20%3Cg%20transform%3D%22translate%28388%2078%29%22%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2242%22%20cy%3D%2242%22%20r%3D%2242%22%20fill%3D%22url%28%23border%29%22%20opacity%3D%220.25%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2242%22%20cy%3D%2242%22%20r%3D%2234%22%20fill%3D%22%23F7F3FF%22%20stroke%3D%22%23DEC48A%22%20stroke-width%3D%221.5%22/%3E%0A%20%20%20%20%3Ctext%20x%3D%2242%22%20y%3D%2250%22%20text-anchor%3D%22middle%22%20fill%3D%22%236B4FA3%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2214%22%20font-weight%3D%22600%22%3ECPD%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2242%22%20y%3D%2266%22%20text-anchor%3D%22middle%22%20fill%3D%22%23A07FD8%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%229%22%3EACCREDITED%3C/text%3E%0A%20%20%3C/g%3E%0A%20%20%3Ctext%20x%3D%2250%22%20y%3D%2280%22%20fill%3D%22%237058A3%22%20font-family%3D%22%27Inter%27%2C%20Arial%22%20font-size%3D%2212%22%20font-weight%3D%22600%22%3EStarterclass%20by%20ICUNI%3C/text%3E%0A%3C/svg%3E";
+const CERTIFICATE_SVG = `
+<svg width="720" height="480" viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="outer" x1="40" y1="32" x2="680" y2="448" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F9F6FF"/>
+      <stop offset="1" stop-color="#E8E3FF"/>
+    </linearGradient>
+    <linearGradient id="border" x1="120" y1="96" x2="600" y2="384" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4B3B91" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#8C7CF5" stop-opacity="0.85"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="200" y1="180" x2="520" y2="332" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="#F4F1FF" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+  <rect x="24" y="24" width="672" height="432" rx="36" fill="url(#outer)"/>
+  <rect x="72" y="72" width="576" height="336" rx="28" fill="#FFFFFF" fill-opacity="0.88" stroke="url(#border)" stroke-width="2"/>
+  <rect x="120" y="132" width="480" height="224" rx="24" fill="url(#accent)" stroke="#DED7F6" stroke-width="1.5"/>
+  <text x="150" y="190" fill="#4B3B91" font-family="'Playfair Display', Georgia, serif" font-size="34" font-weight="600">STARTERCLASS</text>
+  <text x="150" y="222" fill="#32255E" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="16" letter-spacing="0.16em">CERTIFICATE OF COMPLETION</text>
+  <text x="150" y="264" fill="#3B2F6D" font-family="'Playfair Display', Georgia, serif" font-size="24">Awarded to <tspan font-style="italic">Your Name</tspan></text>
+  <text x="150" y="296" fill="#4B3B91" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="14">
+    for completing the Starterclass Full Track and demonstrating mastery across:
+  </text>
+  <text x="150" y="322" fill="#5E4FA2" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="13">
+    • AI Projects & Personality tuning • AI coding builds • Prompt Engineering
+  </text>
+  <line x1="150" y1="340" x2="330" y2="340" stroke="#D6CFF3" stroke-width="2" stroke-linecap="round"/>
+  <line x1="390" y1="340" x2="540" y2="340" stroke="#D6CFF3" stroke-width="2" stroke-linecap="round"/>
+  <text x="150" y="372" fill="#7F70F4" font-family="'Playfair Display', Georgia, serif" font-size="18">Your Name</text>
+  <text x="150" y="394" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11">Programme Lead · ICUNI</text>
+  <text x="540" y="372" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11" text-anchor="end">Documented hours: 90</text>
+  <text x="540" y="394" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11" text-anchor="end">CPD credits: 12</text>
+  <circle cx="570" cy="184" r="28" fill="none" stroke="#B8ADF2" stroke-width="2"/>
+  <text x="570" y="191" fill="#4B3B91" font-family="'Playfair Display', Georgia, serif" font-size="16" text-anchor="middle">ICUNI</text>
+</svg>
+`;
+
+const CERTIFICATE_IMAGE = `data:image/svg+xml,${encodeURIComponent(CERTIFICATE_SVG)}`;
 
 const ANNOUNCEMENT_KEYS = ["live", "countdown", "earlybird"];
 
@@ -727,14 +765,14 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onEx
       intro_solo: {
         badge: "Start here",
         title: "Reserve the Starterclass",
-        summary: "Lock in the 90-minute build sprint and collect the Project, private GPT, and prompt kit.",
-        detail: "Ideal when you’re testing the waters or can’t commit beyond November just yet. Complete the form above to lock your spot and receive the calendar invite.",
+        summary: "Lock in the 90-minute build sprint and leave with tuned Projects, a vibe-coded build, and pro-level prompts.",
+        detail: "Ideal when you’re testing the waters or can’t commit beyond November just yet. Complete the form above to save your seat and receive the calendar invite.",
         cta: "Reserve your seat",
         action: () => onIntro?.(),
         secondary: { label: `See the Full Track (${price(3)})`, action: () => onExplore?.({ months: 3 }) },
         focusNotes: {
-          foundation: "Start with the Starterclass to get your workspace wired without extra commitments.",
-          build: "Book the Starterclass, then decide if you want November once you feel the build rhythm.",
+          foundation: "Start with the Starterclass to have Projects and prompts speaking in your voice without extra commitments.",
+          build: "Book the Starterclass, then decide if you want November once you’ve tested the vibe-coded build.",
           scale: "Use the Starterclass to scope value; upgrade later if you need deeper delivery support.",
         },
       },
@@ -1032,7 +1070,7 @@ function StarterclassLuxuryV8() {
   });
   const [announcementIndex, setAnnouncementIndex] = useState(0);
   const [stickyVisible, setStickyVisible] = useState(false);
-  const [overviewFocus, setOverviewFocus] = useState("workspace");
+  const [overviewFocus, setOverviewFocus] = useState(() => OVERVIEW_WINS[0]?.key || "projects");
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [stickyDismissed, setStickyDismissed] = useState(false);
   const [stickyMinimized, setStickyMinimized] = useState(false);
@@ -1366,7 +1404,7 @@ function StarterclassLuxuryV8() {
                   Make AI work like a teammate
                 </h1>
                 <p className="mt-4 text-lg max-w-2xl" style={{ color: palette.textSecondary }}>
-                  In 90 minutes we’ll set up your workspace, bring a private GPT online, and send you prompt kits you can use the same afternoon.
+                  In 90 minutes you’ll tune Projects to speak with your personality, co-build a vibe-coded mini build, and master prompt flows you can run the same afternoon.
                 </p>
                 <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
                   {heroAudienceLine}
