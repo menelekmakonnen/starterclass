@@ -82,165 +82,115 @@ function useTheme() {
 const GOOGLE_FORM_URL_EMBED =
   "https://docs.google.com/forms/d/e/1FAIpQLScmdBVzUHMAhe2hX7bW3ns6EeOw4D7RTyMDBT_C8XGemzjs-w/viewform?embedded=true";
 
-const INTRO_NAME = "Starterclass Session – Customisation";
+const INTRO_NAME = "Free Starterclass — Customisation, Projects & Applications";
 const INTRO_START_ISO = "2025-11-15T11:00:00Z"; // Sat 15 Nov 2025 11:00 UK (UTC)
 const INTRO_END_ISO = "2025-11-15T12:30:00Z";
 const EARLY_BIRD_DEADLINE_ISO = "2025-11-15T12:30:00Z";
 
-// Sessions (UK times in UTC). Titles updated per request.
+// Sessions (UK times in UTC) for the six-session track.
 const SESSIONS = [
   {
-    k: "intro",
+    k: "starterclass",
     month: "nov",
     title: INTRO_NAME,
     date: "Sat 15 Nov 2025",
     start: "2025-11-15T11:00:00Z",
     end: "2025-11-15T12:30:00Z",
-    desc: "Projects and personality wiring, vibe-coded builds, and prompt labs that deliver under pressure.",
-    outcome: "Leave with Projects that sound like you, a vibe-coded mini build, and prompts ready for business and creative wins.",
-    track: "intro",
+    desc: "Customise ChatGPT to your tone, build a vibe-coded mini project, and assemble knowledge packs with prompt flows.",
+    outcome: "Leave with a persona-tuned workspace, a vibe-coded mini build, and prompt systems ready to run that afternoon.",
+    track: "starterclass",
     outline: [
-      { key: "Custom GPT build", value: 32, desc: "Collect assets, set roles, and define safe defaults.", color: "#3B5CCC" },
-      { key: "Project walkthrough", value: 28, desc: "Map steps, guardrails, and quality checks.", color: "#C8A145" },
-      { key: "Prompt lab", value: 24, desc: "Shape prompts for business and creative briefs.", color: "#8B5CF6" },
-      { key: "Safeguards", value: 16, desc: "Plan review rhythms and fallback paths.", color: "#10B981" },
+      { key: "Persona tuning", value: 34, desc: "Shape Projects so one phrase triggers the right voice and guardrails.", color: "#C8A145" },
+      { key: "Vibe-coded sprint", value: 33, desc: "Co-build a mini app or workflow that reflects your tone and intent.", color: "#3B5CCC" },
+      { key: "Prompt systems", value: 33, desc: "Practise reusable prompt flows for business, creative, and personal wins.", color: "#8B5CF6" },
     ],
   },
   {
-    k: "s2",
+    k: "canvas",
     month: "nov",
-    title: "Canvas Deep Dive · Codex Foundations",
-    date: "Sat 22 Nov 2025",
-    start: "2025-11-22T11:00:00Z",
-    end: "2025-11-22T12:30:00Z",
-    desc: "Canvas as the build surface, Codex for repos, and dependable outputs.",
-    outcome: "Confident Canvas workflows and Codex patterns you can rely on.",
-    track: "paid",
-    outline: [
-      { key: "Canvas orientation", value: 30, desc: "Structure spaces, panels, and shared assets.", color: "#3B5CCC" },
-      { key: "Codex workflows", value: 36, desc: "Generate updates, commits, and pull requests safely.", color: "#C8A145" },
-      { key: "Quality loops", value: 34, desc: "Testing, diffs, and review rituals.", color: "#8B5CF6" },
-    ],
-  },
-  {
-    k: "s3",
-    month: "nov",
-    title: "Projects & GPTs Immersion",
+    title: "Canvas Deep Dive & Vibe Coding",
     date: "Sat 29 Nov 2025",
     start: "2025-11-29T11:00:00Z",
     end: "2025-11-29T12:30:00Z",
-    desc: "Design clean Projects, build private GPTs with tools and knowledge packs.",
-    outcome: "A production-ready Project and a private GPT wired to it with care.",
+    desc: "Build and deploy AI websites or apps with vibe-coded components and live deployment confidence.",
+    outcome: "Ship a vibe-coded site or mini app with instrumentation so you can iterate instantly.",
     track: "paid",
     outline: [
-      { key: "Project patterns", value: 34, desc: "Design multi-step flows with clarity.", color: "#C8A145" },
-      { key: "Private GPT assembly", value: 34, desc: "Wire tools, knowledge, and policies.", color: "#3B5CCC" },
-      { key: "Deployment rehearsal", value: 32, desc: "Pilot with real tasks and refine guardrails.", color: "#10B981" },
+      { key: "Vibe-coding basics", value: 34, desc: "Translate tone boards into layout, prompts, and guardrails.", color: "#C8A145" },
+      { key: "Components & state", value: 33, desc: "Manage sections, memory, and context like a creative system.", color: "#3B5CCC" },
+      { key: "Deployment & logging", value: 33, desc: "Push live with audits, changelogs, and rollback comfort.", color: "#8B5CF6" },
     ],
   },
   {
-    k: "s4",
+    k: "agents1",
     month: "dec",
-    title: "ChatGPT Agents 1 — Prompts, Processes, Internal Tools",
-    date: "Sat 06 Dec 2025",
-    start: "2025-12-06T11:00:00Z",
-    end: "2025-12-06T12:30:00Z",
-    desc: "Agent roles, retries, logs, idempotency, and prompt architecture that holds under load.",
-    outcome: "Agent template with roles, retries, logs, and idempotency baked in.",
-    track: "paid",
-    outline: [
-      { key: "Prompt systems", value: 30, desc: "Roles, memory, cadence, and briefing.", color: "#8B5CF6" },
-      { key: "Agent internals", value: 35, desc: "Retries, logging, observability, and alerts.", color: "#3B5CCC" },
-      { key: "Ops routines", value: 35, desc: "Escalations, QA, and idempotent recovery.", color: "#C8A145" },
-    ],
-  },
-  {
-    k: "s5",
-    month: "dec",
-    title: "ChatGPT Agents 2 — Systems",
+    title: "ChatGPT Agents 1 — Prompts, Processes & Systems",
     date: "Sat 13 Dec 2025",
     start: "2025-12-13T11:00:00Z",
     end: "2025-12-13T12:30:00Z",
-    desc: "Add agents to existing systems through a storytelling automation case study.",
-    outcome: "Brief to beats to script pipeline and image generation workflow.",
+    desc: "Integrate agents into workflows with LinkedIn, site deployment, and film production examples.",
+    outcome: "An agent template that reads from data, calls tools, and hands off to you when needed.",
     track: "paid",
     outline: [
-      { key: "Systems design", value: 33, desc: "Map dependencies and orchestrate data flows.", color: "#C8A145" },
-      { key: "Story pipeline", value: 34, desc: "Turn briefs into beats, scripts, and creative assets.", color: "#8B5CF6" },
-      { key: "Image workflow", value: 33, desc: "Prompt, select, and polish visuals with guardrails.", color: "#3B5CCC" },
+      { key: "Prompt systems", value: 34, desc: "Structure instructions, memory, and tone for reliable hand-offs.", color: "#8B5CF6" },
+      { key: "Tool orchestration", value: 33, desc: "Link Sheets, Notion, and APIs into the agent safely.", color: "#3B5CCC" },
+      { key: "Process design", value: 33, desc: "Design escalations, logs, and human approvals that keep quality high.", color: "#C8A145" },
     ],
   },
   {
-    k: "s6",
+    k: "agents2",
     month: "dec",
-    title: "Introduction to Agent Builders — Security and Safety",
-    date: "Sat 20 Dec 2025",
-    start: "2025-12-20T11:00:00Z",
-    end: "2025-12-20T12:30:00Z",
-    desc: "Credit budgeting, scopes and keys, audit trails, and a live AgentKit build under guardrails.",
-    outcome: "Ship a secured AgentKit agent while setting budgets, scopes, keys, and safety guardrails.",
+    title: "ChatGPT Agents 2 — AI Short-Film Production",
+    date: "Sat 27 Dec 2025",
+    start: "2025-12-27T11:00:00Z",
+    end: "2025-12-27T12:30:00Z",
+    desc: "Master image, image-to-video, and text-to-video tools to produce a 2–4 minute AI short film.",
+    outcome: "A teaser sequence for your AI short film and a repeatable creative pipeline.",
     track: "paid",
     outline: [
-      { key: "Safeguard planning", value: 28, desc: "Budgets, scopes, and approvals that protect usage.", color: "#10B981" },
-      { key: "Live AgentKit build", value: 36, desc: "Wire tools, memory, and review loops for a first agent.", color: "#3B5CCC" },
-      { key: "Monitoring & drills", value: 36, desc: "Dashboards, audit trails, and rollback rehearsals.", color: "#C8A145" },
+      { key: "Storyboard & shotlist", value: 34, desc: "Break narratives into beats, scenes, and production-ready prompts.", color: "#C8A145" },
+      { key: "Asset generation", value: 33, desc: "Create images and clips that stay on-tone across the story arc.", color: "#3B5CCC" },
+      { key: "Assembly & review", value: 33, desc: "Sequence, narrate, and critique the edit so it feels human.", color: "#8B5CF6" },
     ],
   },
-  { k: "break", month: "dec", title: "Winter break", date: "—", start: "", end: "", desc: "—", outcome: "—", track: "break" },
   {
-    k: "s8",
+    k: "n8n_deep_dive",
     month: "jan",
-    title: "N8N — Create Your First Agent",
+    title: "N8N Deep Dive — Create Your First AI Assistant",
     date: "Sat 10 Jan 2026",
     start: "2026-01-10T11:00:00Z",
     end: "2026-01-10T12:30:00Z",
-    desc: "Trigger, process, and notify flows via webhooks, Sheets, and Gmail.",
-    outcome: "A working N8N flow with approvals and logging.",
+    desc: "Build an autonomous assistant with branching, retries, queues, observability, and error handling.",
+    outcome: "A working n8n workflow triggered from a form or webhook with retries and logging built in.",
     track: "paid",
     outline: [
-      { key: "Workflow mapping", value: 32, desc: "From trigger to action with clarity.", color: "#C8A145" },
-      { key: "N8N build", value: 36, desc: "Nodes, error traps, and approvals.", color: "#3B5CCC" },
-      { key: "Launch prep", value: 32, desc: "Notifications, documentation, and go-live.", color: "#8B5CF6" },
+      { key: "Workflow mapping", value: 34, desc: "Plot triggers, decisions, and payloads before you build.", color: "#C8A145" },
+      { key: "Assistant build", value: 33, desc: "Wire branches, retries, and queues that keep responses reliable.", color: "#3B5CCC" },
+      { key: "Observability", value: 33, desc: "Instrument logs, metrics, and alerts so issues surface fast.", color: "#8B5CF6" },
     ],
   },
   {
-    k: "s9",
+    k: "n8n_mastery",
     month: "jan",
-    title: "N8N Deep Dive — Advanced Agent",
-    date: "Sat 17 Jan 2026",
-    start: "2026-01-17T11:00:00Z",
-    end: "2026-01-17T12:30:00Z",
-    desc: "Branching, retries, queues, observability, and error handling.",
-    outcome: "Branching, retries, queues, observability, and graceful recovery.",
-    track: "paid",
-    outline: [
-      { key: "Advanced routing", value: 34, desc: "Branching, conditional logic, and dynamic paths.", color: "#8B5CF6" },
-      { key: "Resilience", value: 33, desc: "Retries, queues, and observability dashboards.", color: "#3B5CCC" },
-      { key: "Operations kit", value: 33, desc: "Alerts, documentation, and support rhythms.", color: "#C8A145" },
-    ],
-  },
-  {
-    k: "s10",
-    month: "jan",
-    title: "Deployment — Orchestrate the System",
+    title: "N8N Mastery — Orchestrate the System",
     date: "Sat 24 Jan 2026",
     start: "2026-01-24T11:00:00Z",
     end: "2026-01-24T12:30:00Z",
-    desc: "Agents, N8N, site, CI/CD, runbooks, and rollback planning.",
-    outcome: "A deployment playbook with CI/CD, runbooks, and rollback routines.",
+    desc: "Scale your assistant into a multi-workflow system with webhooks, triggers, security, and access gates.",
+    outcome: "A production-ready system with multiple n8n workflows, secure tokens, approvals, and a published output.",
     track: "paid",
     outline: [
-      { key: "Deployment runway", value: 33, desc: "CI/CD, environments, and readiness gates.", color: "#3B5CCC" },
-      { key: "Runbooks", value: 34, desc: "Support plans, incident playbooks, and checklists.", color: "#C8A145" },
-      { key: "Review loops", value: 33, desc: "CPD evidence, reporting, and handover.", color: "#10B981" },
+      { key: "System topology", value: 34, desc: "Map multi-workflow architecture and secrets management.", color: "#C8A145" },
+      { key: "Auth & approvals", value: 33, desc: "Layer security, access gates, and human check-ins.", color: "#3B5CCC" },
+      { key: "Capstone integration", value: 33, desc: "Launch the final tool or film with documentation and support rituals.", color: "#8B5CF6" },
     ],
   },
 ];
 
 const MONTH_BUNDLES = [
-  { key: "nov", label: "November build month", priceUSD: 100, modules: ["intro", "s2", "s3"] },
-  { key: "dec", label: "December systems month", priceUSD: 100, modules: ["s4", "s5", "s6"] },
-  { key: "jan", label: "January launch month", priceUSD: 100, modules: ["s8", "s9", "s10"] },
+  { key: "nov", label: "November momentum", priceUSD: 100, modules: ["starterclass", "canvas"] },
+  { key: "dec", label: "December agent systems", priceUSD: 100, modules: ["agents1", "agents2"] },
+  { key: "jan", label: "January automation labs", priceUSD: 100, modules: ["n8n_deep_dive", "n8n_mastery"] },
 ];
 
 const CURRENCIES = {
@@ -251,19 +201,19 @@ const CURRENCIES = {
 
 const HERO_HIGHLIGHTS = [
   {
-    icon: "🗂️",
-    title: "Projects & personality dialled in",
-    sub: "Drop one instruction and watch Projects respond in your tone with the right guardrails.",
+    icon: "🛠️",
+    title: "Customise ChatGPT",
+    sub: "Build your own persona and guardrails so ChatGPT replies in your voice every time.",
   },
   {
-    icon: "🪄",
+    icon: "🧪",
     title: "Vibe-coded mini build",
-    sub: "Speak your idea out loud and co-create a microsite or automation that is ready to show off.",
+    sub: "Co-design and deploy a tiny AI application using the vibe-coding framework we use with clients.",
   },
   {
     icon: "🧭",
-    title: "Prompt like a pro",
-    sub: "Leave knowing how to steer any chat, with scripts for business, creative, and personal wins.",
+    title: "Prompt flows",
+    sub: "Practise prompt structures for business, creative, and personal use cases so you can run them live.",
   },
 ];
 
@@ -289,10 +239,10 @@ const OVERVIEW_WINS = [
 ];
 
 const FULL_TRACK_OUTCOMES = [
-  "Build private GPT assistants that plug into your live processes.",
-  "Package automations with error handling, approvals, and reporting.",
-  "Ship a cross-tool AI system by the end of January with team-ready docs.",
-  "Collect CPD points and a completion certificate once all 10 modules are done.",
+  "Personalised AI — calibrate ChatGPT to your brand with knowledge packs and prompt kits.",
+  "Vibe-coded web & app builds — design and deploy AI sites and mini-apps in your tone.",
+  "Agents for real use cases — integrate assistants into LinkedIn, sites, film, and more.",
+  "Orchestrated systems — launch an autonomous n8n pipeline with security and approvals.",
 ];
 
 const FAQ_ITEMS = [
@@ -344,7 +294,7 @@ const FAQ_ITEMS = [
   {
     question: "Can I expense this through my company?",
     answer:
-      "Yes. We issue invoices and receipts with CPD details so you can expense or reclaim professional development budgets.",
+      "Yes. We issue invoices and receipts with course details so you can expense or reclaim professional development budgets.",
   },
 ];
 
@@ -393,10 +343,10 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "I brought the Starterclass back to my creative writing group. We now use the prompt kit to unblock drafts without losing our voices.",
+      "Our indie film crew used the agent pipeline from December to storyboard and assemble a teaser in a single weekend.",
     name: "Jess T.",
-    role: "Screenwriter",
-    win: "Weekly drafts ready with less stress and more joy",
+    role: "Screenwriter & director",
+    win: "Produced a vibe-coded short film sequence without renting a studio",
   },
   {
     quote:
@@ -414,45 +364,26 @@ const TESTIMONIALS = [
   },
 ];
 
-const SOCIAL_PROOF_LOGOS = [
-  {
-    name: "Allied Media",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D'http://www.w3.org/2000/svg'%20width%3D'160'%20height%3D'48'%20viewBox%3D'0%200%20160%2048'%3E%3Crect%20width%3D'160'%20height%3D'48'%20rx%3D'16'%20fill%3D'%23E9E3FF'/%3E%3Ctext%20x%3D'80'%20y%3D'30'%20text-anchor%3D'middle'%20fill%3D'%233B2E66'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3EAllied%3C/text%3E%3C/svg%3E",
-  },
-  {
-    name: "Studio North",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D'http://www.w3.org/2000/svg'%20width%3D'160'%20height%3D'48'%20viewBox%3D'0%200%20160%2048'%3E%3Crect%20width%3D'160'%20height%3D'48'%20rx%3D'16'%20fill%3D'%23FCEFD6'/%3E%3Ctext%20x%3D'80'%20y%3D'30'%20text-anchor%3D'middle'%20fill%3D'%23452D18'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3ENorth%3C/text%3E%3C/svg%3E",
-  },
-  {
-    name: "Brightline Ops",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D'http://www.w3.org/2000/svg'%20width%3D'160'%20height%3D'48'%20viewBox%3D'0%200%20160%2048'%3E%3Crect%20width%3D'160'%20height%3D'48'%20rx%3D'16'%20fill%3D'%23E2F7FF'/%3E%3Ctext%20x%3D'80'%20y%3D'30'%20text-anchor%3D'middle'%20fill%3D'%23224455'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3EOPS%3C/text%3E%3C/svg%3E",
-  },
-  {
-    name: "Orbital Films",
-    src: "data:image/svg+xml,%3Csvg%20xmlns%3D'http://www.w3.org/2000/svg'%20width%3D'160'%20height%3D'48'%20viewBox%3D'0%200%20160%2048'%3E%3Crect%20width%3D'160'%20height%3D'48'%20rx%3D'16'%20fill%3D'%23EDE9FF'/%3E%3Ctext%20x%3D'80'%20y%3D'30'%20text-anchor%3D'middle'%20fill%3D'%23331F66'%20font-family%3D'Inter,%20Arial'%20font-size%3D'16'%3EOrbital%3C/text%3E%3C/svg%3E",
-  },
-];
-
 const TRUST_BADGES = [
-  { label: "CPD-accredited pathway", icon: "🎓" },
+  { label: "Six-session cohort · Nov to Jan", icon: "📆" },
   { label: "Trusted by 50+ professionals", icon: "🤝" },
 ];
 
 const CERTIFICATE_POINTS = [
   {
-    key: "evidence",
-    title: "We track the work",
-    detail: "Attendance, live builds, and deployment reviews feed the CPD audit trail.",
+    key: "completion",
+    title: "Complete all six sessions",
+    detail: "We log attendance and deliverables so your certificate reflects the full Starterclass journey.",
   },
   {
     key: "recognition",
-    title: "Recognised credits",
-    detail: "Use the certificate for professional reviews, appraisals, or continuing education reports.",
+    title: "Show your capability",
+    detail: "Share the certificate with clients or employers to prove you ship vibe-coded builds and real automations.",
   },
   {
-    key: "community",
-    title: "Keep building",
-    detail: "Finish every module to unlock alumni-only build clinics and private workflows.",
+    key: "portfolio",
+    title: "Bring proof to reviews",
+    detail: "Your mini-app, agent system, and n8n workflows double as evidence for appraisals and performance conversations.",
   },
 ];
 
@@ -479,17 +410,17 @@ const CERTIFICATE_SVG = `
   <text x="150" y="222" fill="#32255E" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="16" letter-spacing="0.16em">CERTIFICATE OF COMPLETION</text>
   <text x="150" y="264" fill="#3B2F6D" font-family="'Playfair Display', Georgia, serif" font-size="24">Awarded to <tspan font-style="italic">Your Name</tspan></text>
   <text x="150" y="296" fill="#4B3B91" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="14">
-    for completing the Starterclass Full Track and demonstrating mastery across:
+    for completing the six-session Starterclass course and demonstrating applied mastery across:
   </text>
   <text x="150" y="322" fill="#5E4FA2" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="13">
-    • AI Projects & Personality tuning • AI coding builds • Prompt Engineering
+    • Persona-tuned builds • AI short-film pipeline • Autonomous n8n system
   </text>
   <line x1="150" y1="340" x2="330" y2="340" stroke="#D6CFF3" stroke-width="2" stroke-linecap="round"/>
   <line x1="390" y1="340" x2="540" y2="340" stroke="#D6CFF3" stroke-width="2" stroke-linecap="round"/>
-  <text x="150" y="372" fill="#7F70F4" font-family="'Playfair Display', Georgia, serif" font-size="18">Your Name</text>
+  <text x="150" y="372" fill="#7F70F4" font-family="'Playfair Display', Georgia, serif" font-size="18">Mikael Gabriel</text>
   <text x="150" y="394" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11">Programme Lead · ICUNI</text>
-  <text x="540" y="372" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11" text-anchor="end">Documented hours: 90</text>
-  <text x="540" y="394" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11" text-anchor="end">CPD credits: 12</text>
+  <text x="540" y="372" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11" text-anchor="end">Completed: 24 Jan 2026</text>
+  <text x="540" y="394" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11" text-anchor="end">Total sessions: 6</text>
   <circle cx="570" cy="184" r="28" fill="none" stroke="#B8ADF2" stroke-width="2"/>
   <text x="570" y="191" fill="#4B3B91" font-family="'Playfair Display', Georgia, serif" font-size="16" text-anchor="middle">ICUNI</text>
 </svg>
@@ -748,7 +679,7 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
 }
 
 // Client Value Calculator focused on a single participant
-function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onExplore }) {
+function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onExplore, earlyBirdActive }) {
   const { palette } = useTheme();
   const [hours, setHours] = useState(2);
   const [focus, setFocus] = useState("foundation");
@@ -760,80 +691,83 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onEx
   ];
 
   const results = useMemo(() => {
-    const price = (months) => formatCurrency(100 * months, currency);
+    const monthlyUSD = earlyBirdActive ? 90 : 100;
+    const price = (months) => formatCurrency(monthlyUSD * months, currency);
+    const monthlyLabel = formatCurrency(monthlyUSD, currency);
+    const standardMonthly = formatCurrency(100, currency);
     return {
       intro_solo: {
         badge: "Start here",
-        title: "Reserve the Starterclass",
-        summary: "Lock in the 90-minute build sprint and leave with tuned Projects, a vibe-coded build, and pro-level prompts.",
-        detail: "Ideal when you’re testing the waters or can’t commit beyond November just yet. Complete the form above to save your seat and receive the calendar invite.",
-        cta: "Reserve your seat",
+        title: "Register for the free Starterclass",
+        summary: "Secure your seat for the 90-minute build sprint and walk away with tuned Projects, a vibe-coded mini build, and prompt flows.",
+        detail: "Perfect if you’re validating the fit or easing in before making a tuition decision. Submit the form to lock the time and receive calendar access.",
+        cta: "Register free",
         action: () => onIntro?.(),
-        secondary: { label: `See the Full Track (${price(3)})`, action: () => onExplore?.({ months: 3 }) },
+        secondary: { label: `See the full 6-session course (${price(3)})`, action: () => onExplore?.({ months: 3 }) },
         focusNotes: {
-          foundation: "Start with the Starterclass to have Projects and prompts speaking in your voice without extra commitments.",
-          build: "Book the Starterclass, then decide if you want November once you’ve tested the vibe-coded build.",
-          scale: "Use the Starterclass to scope value; upgrade later if you need deeper delivery support.",
+          foundation: "Invest 90 minutes to calibrate ChatGPT to your voice and prove the value before paying anything.",
+          build: "Experience the vibe-coding framework first; you can add November right after the live session.",
+          scale: "Use the Starterclass to benchmark impact, then upgrade when you need automation depth.",
         },
       },
       intro_plus_nov: {
-        badge: "November focus",
-        title: `Starterclass + November for ${price(1)}`,
-        summary: "Keep momentum after the Starterclass with Canvas, Projects, and GPT labs paced for one person.",
-        detail: "You’ll spread tuition across November with zero payments due until then. Submit the Starterclass form now and we’ll follow up with the November enrollment steps.",
-        cta: "Hold my November seat",
+        badge: "November build",
+        title: `Starterclass + Canvas month (${price(1)})`,
+        summary: "Add the Canvas Deep Dive to keep shipping once the Starterclass ends. Two Saturdays, one payment of ${monthlyLabel} (standard ${standardMonthly}).",
+        detail: "We’ll guide you from the Starterclass directly into the vibe-coded deployment lab so your mini-app keeps evolving.",
+        cta: "Save my November spot",
         action: () => onFull?.({ months: 1, plan: "november" }),
-        secondary: { label: "Reserve the free Starterclass first", action: () => onIntro?.() },
+        secondary: { label: "Register free first", action: () => onIntro?.() },
         focusNotes: {
-          foundation: "Adds the November labs to cement the fundamentals you learn in the Starterclass.",
-          build: "Gives you four straight Saturdays to get workflows production-ready.",
-          scale: "Start with November before adding the heavier automation blocks.",
+          foundation: "Bolster your Starterclass wins with two extra builds focused on Canvas and deployment.",
+          build: "Use November to iterate on the vibe-coded mini app until it’s client-ready.",
+          scale: "Lay the groundwork before you introduce agents and automation in December and January.",
         },
       },
       two_month_arc: {
-        badge: "Systems ready",
+        badge: "Agent systems",
         title: `November + December for ${price(2)}`,
-        summary: "Add safety, orchestration, and platform depth before the January launch push.",
-        detail: "Payments split across November and January — December is tuition-free. Complete the registration form to reserve this two-month arc.",
-        cta: "Join the two-month arc",
+        summary: "Stack Canvas with the two agent modules to build workflows, pipelines, and a short film prototype.",
+        detail: "Two monthly payments keep you moving from vibe-coded builds into real agent deployments without losing momentum.",
+        cta: "Join the November–December arc",
         action: () => onFull?.({ months: 2, plan: "november_december" }),
-        secondary: { label: "Reserve Starterclass access", action: () => onIntro?.() },
+        secondary: { label: "Register free first", action: () => onIntro?.() },
         focusNotes: {
-          foundation: "Graduate from fundamentals into agent safety and orchestration.",
-          build: "Balance hands-on builds with system architecture before January.",
-          scale: "Use December’s systems focus to prep for team rollout.",
+          foundation: "Bridge straight from fundamentals into agent orchestration while lessons are fresh.",
+          build: "Produce a short-film pipeline and agent hand-offs before the new year.",
+          scale: "Ideal if you want working assistants in-market by January.",
         },
       },
       full_track_focus: {
-        badge: "Full Track",
-        title: `Full Track for ${price(3)}`,
-        summary: "January adds live AgentKit and N8N builds so you deploy a working automation.",
-        detail: `Pay ${price(1)} in November, pause in December, and settle the final ${price(1)} in January. Submit the form and we’ll send the full-track agreement within 24 hours.`,
-        cta: "Get the Full Track",
+        badge: "Full course",
+        title: `Full six-session course (${price(3)})`,
+        summary: "See the Starterclass through to a production-ready n8n system with security, approvals, and deployment support.",
+        detail: `Three monthly payments of ${monthlyLabel} (standard ${standardMonthly}). Submit the form and we’ll confirm enrolment and onboarding within one business day.`,
+        cta: "Join the full course",
         action: () => onFull?.({ months: 3, plan: "full_track" }),
-        secondary: { label: "Book the Starterclass seat", action: () => onIntro?.() },
+        secondary: { label: "Register the free Starterclass", action: () => onIntro?.() },
         focusNotes: {
-          foundation: "Ready for the full build marathon with guided support through January.",
-          build: "Best when you want the automation shipped before February.",
-          scale: "Keeps you accountable through to deployment and reporting.",
+          foundation: "Stay accountable from Starterclass through automation launch with guided feedback the whole way.",
+          build: "Best if you want a complete automation or productised offer before February.",
+          scale: "Ensures you cover agents, short-film production, and n8n orchestration with support.",
         },
       },
       full_track_builder: {
         badge: "Builder pace",
-        title: `Full Track + accountability (${price(3)})`,
-        summary: "Use office hours, labs, and peer critique to ship an end-to-end agent system.",
-        detail: "You’ll stay accountable through January and graduate with the CPD certificate. Completing the form lets us schedule a quick intake to tune the track for you.",
-        cta: "Commit to the Full Track",
+        title: `Full course + guided support (${price(3)})`,
+        summary: "Pair the six sessions with extra check-ins, labs, and peer critique so your capstone ships smoothly.",
+        detail: "We’ll schedule a quick intake call after you register so we can tailor support and reminders to your goals.",
+        cta: "Commit with guided support",
         action: () => onFull?.({ months: 3, plan: "full_track_accountability", intensive: true }),
-        secondary: { label: "Reserve the Starterclass", action: () => onIntro?.() },
+        secondary: { label: "Register free first", action: () => onIntro?.() },
         focusNotes: {
-          foundation: "Adds accountability so you never lose momentum after the Starterclass.",
-          build: "Pairs every module with labs to stress-test your automations.",
-          scale: "Designed if you’re monetising or rolling AI into a team offer quickly.",
+          foundation: "Weekly nudges keep you implementing between sessions so nothing stalls.",
+          build: "Use the extra labs to pressure-test your builds before presenting them.",
+          scale: "Ideal when clients or stakeholders expect polished outputs at each milestone.",
         },
       },
     };
-  }, [currency, formatCurrency, onFull, onIntro, onExplore]);
+  }, [currency, earlyBirdActive, formatCurrency, onFull, onIntro, onExplore]);
 
   const resultKey = useMemo(() => {
     if (hours <= 1) {
@@ -1047,7 +981,7 @@ function StarterclassLuxuryV8() {
       return false;
     }
   });
-  const [activeModule, setActiveModule] = useState("intro");
+  const [activeModule, setActiveModule] = useState("canvas");
   const [heroGlowPoint, setHeroGlowPoint] = useState({ x: 0.5, y: 0.5 });
   const [isHeroGlowActive, setIsHeroGlowActive] = useState(false);
   const [siteGlowPoint, setSiteGlowPoint] = useState({ x: 0.5, y: 0.5 });
@@ -1098,7 +1032,7 @@ function StarterclassLuxuryV8() {
     return [
       "Live on 15 Nov · 11:00 UK",
       timeMessage,
-      "Early-bird 15% ends when the Starterclass ends",
+      "Early-bird 10% ends when the Starterclass ends",
     ];
   }, [d, expired]);
   const testimonials = TESTIMONIALS;
@@ -1108,8 +1042,8 @@ function StarterclassLuxuryV8() {
     [certificateFocus]
   );
   const earlyBirdActive = !earlyBird.expired;
-  const fullTrackTotalUSD = earlyBirdActive ? 255 : 300;
-  const fullTrackMonthlyUSD = earlyBirdActive ? 85 : 100;
+  const fullTrackTotalUSD = earlyBirdActive ? 270 : 300;
+  const fullTrackMonthlyUSD = earlyBirdActive ? 90 : 100;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -1258,7 +1192,7 @@ function StarterclassLuxuryV8() {
     }
     track("fulltrack_cta_click", { location: source, intent: "explore" });
     setTab("curriculum");
-    setActiveModule("s2");
+    setActiveModule("canvas");
     requestAnimationFrame(() => {
       document.getElementById("curriculum-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
@@ -1272,7 +1206,7 @@ function StarterclassLuxuryV8() {
     track("fulltrack_cta_click", { location: source, intent: "enrol", ...detail });
     setTab("curriculum");
     setFullTrackExpanded(true);
-    setActiveModule("s2");
+    setActiveModule("canvas");
     requestAnimationFrame(() => {
       document.getElementById("full-track-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
@@ -1383,7 +1317,7 @@ function StarterclassLuxuryV8() {
                   }}
                 >
                   <span aria-hidden="true">🎟️</span>
-                  Free 90-min AI Starterclass
+                  Free 90-minute AI Starterclass · 15 Nov · 11:00 UK
                 </div>
                 <div className="mt-3">
                   <Badge>Starterclass · no payment required</Badge>
@@ -1404,7 +1338,7 @@ function StarterclassLuxuryV8() {
                   Make AI work like a teammate
                 </h1>
                 <p className="mt-4 text-lg max-w-2xl" style={{ color: palette.textSecondary }}>
-                  In 90 minutes you’ll tune Projects to speak with your personality, co-build a vibe-coded mini build, and master prompt flows you can run the same afternoon.
+                  In one powerful session you’ll calibrate ChatGPT to match your tone, co-build a vibe-coded mini-app, and learn prompt systems you can run the same afternoon. Leave empowered to ship your own AI workflows immediately.
                 </p>
                 <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
                   {heroAudienceLine}
@@ -1437,6 +1371,9 @@ function StarterclassLuxuryV8() {
                 <div className="mt-5 text-sm space-y-1" style={{ color: palette.textSecondary }}>
                   <div><span style={{ color: palette.textMuted }}>UK Time:</span> {formatUKRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
                 </div>
+                <p className="mt-3 text-sm" style={{ color: palette.textSecondary }}>
+                  10% early-bird discount if you enrol in the full course before the Starterclass ends.
+                </p>
                 <div className="mt-8">
                   <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Next session begins in</div>
                   <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
@@ -1472,9 +1409,9 @@ function StarterclassLuxuryV8() {
                   )}
                 </div>
                 <div className="mt-4 flex flex-wrap gap-3">
-                  <GlassButton onClick={() => triggerIntroForm("hero_primary")}>Reserve your seat</GlassButton>
+                  <GlassButton onClick={() => triggerIntroForm("hero_primary")}>Register free</GlassButton>
                   <GlassButton variant="secondary" onClick={() => revealPaidAndGoCurriculum("hero_secondary")} className="px-5 py-3">
-                    Explore the full track
+                    View the full course (6 sessions)
                   </GlassButton>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-3 text-xs items-center">
@@ -1581,7 +1518,7 @@ function StarterclassLuxuryV8() {
                     <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
                       <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Thinking ahead</div>
                       <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
-                        The Starterclass counts toward the full track. When you’re ready, add the monthly bundles from {formatCurrency(85)} with the early-bird or {formatCurrency(100)} after.
+                        The Starterclass counts toward the full course. When you’re ready, add the monthly bundles from {formatCurrency(90)} with the early-bird or {formatCurrency(100)} after.
                       </div>
                     </div>
                   </GlowCard>
@@ -1591,8 +1528,8 @@ function StarterclassLuxuryV8() {
                     <h3 className="text-xl font-semibold">Next live times</h3>
                     <div className="mt-3 space-y-3">
                       {upcomingSchedule.map((s) => {
-                        const isStarterclassSlot = s.track === "intro";
-                        const badgeLabel = isStarterclassSlot ? "Free Starterclass" : "Full Track";
+                        const isStarterclassSlot = s.track === "starterclass";
+                        const badgeLabel = isStarterclassSlot ? "Free Starterclass" : "Full course";
                         const handleSlotClick = () => {
                           if (isStarterclassSlot) {
                             triggerIntroForm("next_live_schedule");
@@ -1639,7 +1576,7 @@ function StarterclassLuxuryV8() {
                       })}
                     </div>
                     <div className="mt-4 text-xs" style={{ color: palette.textMuted }}>
-                      Ready for more after the Starterclass? Explore the curriculum tab to see how the Full Track expands these builds.
+                      Ready for more after the Starterclass? Explore the curriculum tab to see how the full course expands these builds.
                     </div>
                   </GlowCard>
                   {showPaid && (
@@ -1647,6 +1584,7 @@ function StarterclassLuxuryV8() {
                       <ClientValueCalculator
                         currency={currency}
                         formatCurrency={formatCurrency}
+                        earlyBirdActive={earlyBirdActive}
                         onIntro={() => triggerIntroForm("cvc_intro")}
                         onFull={(detail) => triggerFullTrackForm("cvc_full", detail || {})}
                         onExplore={() => revealPaidAndGoCurriculum("cvc_explore")}
@@ -1705,7 +1643,7 @@ function StarterclassLuxuryV8() {
           {tab === "curriculum" && (
             <div className="mt-10 space-y-8" id="curriculum-anchor">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <h3 className="text-lg font-semibold">Full track by month</h3>
+                <h3 className="text-lg font-semibold">Full course by month</h3>
                 <div
                   className="flex rounded-full border"
                   style={{ borderColor: palette.border, background: palette.surfaceSoft }}
@@ -1732,7 +1670,7 @@ function StarterclassLuxuryV8() {
                 <div className="lg:col-span-8 space-y-6">
                   {monthBundles.map((bundle) => {
                     const filtered = sessions.filter((s) => s.month === bundle.key && s.track !== "break");
-                    const monthPrice = earlyBirdActive ? Math.round(bundle.priceUSD * 0.85) : bundle.priceUSD;
+                    const monthPrice = earlyBirdActive ? Math.round(bundle.priceUSD * 0.9) : bundle.priceUSD;
                     const monthLabel = `${bundle.label} · ${formatCurrency(monthPrice)}`;
                     return (
                     <div key={bundle.key} className="space-y-4">
@@ -1774,7 +1712,7 @@ function StarterclassLuxuryV8() {
                         })}
                         {bundle.key === "dec" && (
                           <div className="rounded-3xl border p-5 text-sm" style={{ borderColor: palette.border, color: palette.textSecondary, background: palette.surfaceSoft }}>
-                            Winter break: pause to refine builds before January resumes.
+                            Holiday pause between 27 Dec and 10 Jan: refine assets, rest, and come back ready to automate.
                           </div>
                         )}
                       </div>
@@ -1790,15 +1728,18 @@ function StarterclassLuxuryV8() {
                         <li key={bundle.key} className="flex items-center justify-between">
                           <span>{bundle.label}</span>
                           <span style={{ color: palette.textPrimary }}>
-                            {formatCurrency(earlyBirdActive ? Math.round(bundle.priceUSD * 0.85) : bundle.priceUSD)}
+                            {formatCurrency(earlyBirdActive ? Math.round(bundle.priceUSD * 0.9) : bundle.priceUSD)}
                           </span>
                         </li>
                       ))}
                     </ul>
                     <div className="text-xs" style={{ color: palette.textMuted }}>
                       {earlyBirdActive
-                        ? "15% early-bird active until the Starterclass ends"
+                        ? "10% early-bird active until the Starterclass ends"
                         : "Early-bird wrapped · standard tuition applies"}
+                    </div>
+                    <div className="text-xs" style={{ color: palette.textMuted }}>
+                      Taxes may apply based on your billing location.
                     </div>
                   </GlowCard>
                   <GlowCard className="p-6 space-y-3">
@@ -1809,8 +1750,12 @@ function StarterclassLuxuryV8() {
                         : "The Starterclass window closed the early-bird. Tuition reverts to $300 equivalent."}
                     </div>
                     <div className="flex flex-wrap gap-2 text-xs" style={{ color: palette.textMuted }}>
-                      <span>Pay per month in your chosen currency.</span>
-                      <span>No payments collected in December.</span>
+                      <span>Pay $100 per month (or local equivalent).</span>
+                      {earlyBirdActive ? (
+                        <span>Early-bird drops each payment to {formatCurrency(90)}.</span>
+                      ) : (
+                        <span>Missed the early-bird? Tuition stays at {formatCurrency(100)} per month.</span>
+                      )}
                     </div>
                   </GlowCard>
                 </div>
@@ -1823,7 +1768,7 @@ function StarterclassLuxuryV8() {
                     className="space-y-5"
                   >
                     <summary className="flex flex-wrap items-center justify-between gap-2 cursor-pointer">
-                      <h3 className="text-2xl font-semibold">Full Track enrolment</h3>
+                      <h3 className="text-2xl font-semibold">Full course enrolment</h3>
                       <span className="text-xs" style={{ color: palette.textMuted }}>
                         {fullTrackExpanded ? "Hide details" : "Tap to view tuition & enrol"}
                       </span>
@@ -1831,11 +1776,11 @@ function StarterclassLuxuryV8() {
                     <div className="space-y-5 pt-2">
                       <div className="space-y-2 text-sm" style={{ color: palette.textSecondary }}>
                         <p>
-                          {formatCurrency(fullTrackTotalUSD)} total · pay {formatCurrency(fullTrackMonthlyUSD)} per month across November, December, and January.
+                          Six sessions · {formatCurrency(fullTrackTotalUSD)} total · pay {formatCurrency(fullTrackMonthlyUSD)} each month across November, December, and January.
                         </p>
                         <span className="text-xs" style={{ color: palette.textMuted }}>
                           {earlyBirdActive
-                            ? `Early-bird window closes in ${earlyBird.d}d ${String(earlyBird.h).padStart(2, "0")}h ${String(earlyBird.m).padStart(2, "0")}m`
+                            ? `10% early-bird ends 15 Nov 2025 at 12:30 UK (${earlyBird.d}d ${String(earlyBird.h).padStart(2, "0")}h ${String(earlyBird.m).padStart(2, "0")}m remaining)`
                             : "Early-bird window closed"}
                         </span>
                       </div>
@@ -1846,13 +1791,16 @@ function StarterclassLuxuryV8() {
                           </li>
                         ))}
                       </ul>
+                      <div className="text-xs" style={{ color: palette.textMuted }}>
+                        10% early-bird discount available until the Starterclass ends on 15 Nov 2025.
+                      </div>
                       <div className="flex flex-wrap gap-3">
                         <div ref={fullTrackPrimaryCtaRef}>
                           <GlassButton
                             onClick={() => triggerFullTrackForm("full_track_section", { plan: "full_track" })}
                             className="px-6 py-3"
                           >
-                            Get the Full Track
+                            Join the Full 6-Session Course
                           </GlassButton>
                         </div>
                         <button
@@ -1861,7 +1809,7 @@ function StarterclassLuxuryV8() {
                           className="text-sm underline underline-offset-4"
                           style={{ color: palette.textSecondary }}
                         >
-                          Reserve the Starterclass seat first
+                          Start free – reserve your Starterclass seat
                         </button>
                       </div>
                     </div>
@@ -1874,7 +1822,7 @@ function StarterclassLuxuryV8() {
                     </div>
                     <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
                       <p>
-                        Complete every module and we issue an ICUNI certificate with CPD points. Every live build, submission, and deployment review feeds the evidence we file on your behalf.
+                        Complete all six sessions and we issue an ICUNI certificate that documents the builds you shipped across the programme. Every live sprint, submission, and review contributes to the evidence file you keep.
                       </p>
                       <div className="grid gap-3">
                         {CERTIFICATE_POINTS.map((point) => {
@@ -1981,25 +1929,19 @@ function StarterclassLuxuryV8() {
               </div>
               <div className="space-y-4">
                 <div className="rounded-2xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Trusted by teams at</div>
-                  <div className="grid grid-cols-2 gap-3">
-                    {SOCIAL_PROOF_LOGOS.map((logo) => (
-                      <span
-                        key={logo.name}
-                        className="flex h-14 items-center justify-center rounded-xl border"
-                        style={{ borderColor: palette.border, background: palette.surface }}
-                      >
-                        <img src={logo.src} alt={`${logo.name} logo`} className="max-h-8 w-auto" loading="lazy" />
-                      </span>
-                    ))}
-                  </div>
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Why people trust this</div>
+                  <ul className="space-y-2 text-xs" style={{ color: palette.textSecondary }}>
+                    <li>Built for business leaders, consultants, and operators — no coding required.</li>
+                    <li>One Starterclass win plus a clear path through the six-session course.</li>
+                    <li>10% early-bird discount when you enrol before the Starterclass ends.</li>
+                  </ul>
                   <button
                     type="button"
                     onClick={() => triggerIntroForm("reviews_cta")}
                     className="text-xs underline underline-offset-4"
                     style={{ color: palette.accentSecondary }}
                   >
-                    Reserve your Starterclass seat
+                    Register free
                   </button>
                 </div>
               </div>
@@ -2020,13 +1962,13 @@ function StarterclassLuxuryV8() {
                 className="text-sm underline underline-offset-4"
                 style={{ color: palette.accentSecondary }}
               >
-                Explore the full track
+                See the entire curriculum
               </button>
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               {upcomingModules.map((module) => (
                 <GlowCard key={module.k} className="p-4">
-                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Included in Full Track</div>
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Included in full course</div>
                   <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>{module.title}</div>
                   <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{module.outcome}</div>
                   <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>{module.date} · {formatUKRange(module.start, module.end)}</div>
@@ -2057,11 +1999,11 @@ function StarterclassLuxuryV8() {
               <div className="mx-auto max-w-5xl px-4 pb-6">
                 <GlowCard className="px-5 py-4 flex flex-wrap items-center justify-between gap-3">
                   <div className="text-sm" style={{ color: palette.textSecondary }}>
-                    Reserve your seat for the Starterclass (15 Nov · 11:00 UK)
+                    Register free for the Starterclass (15 Nov · 11:00 UK)
                   </div>
                   <div className="flex items-center gap-2">
                     <GlassButton onClick={() => triggerIntroForm("sticky_bar")} className="px-5 py-2 text-sm">
-                      Reserve your seat
+                      Register free
                     </GlassButton>
                     <button
                       type="button"
@@ -2096,7 +2038,7 @@ function StarterclassLuxuryV8() {
               }}
               onClick={handleStickyRestore}
             >
-              Reserve the Starterclass
+              Register for the Starterclass
             </button>
           )}
 
@@ -2427,7 +2369,7 @@ function CalendarModal({ onClose, onAdd }) {
     [revealPaidAndGoCurriculum]
   );
 
-const heroAudienceLine = "This Starterclass is free for business leaders, consultants, and curious operators—no coding required.";
+const heroAudienceLine = "Free Starterclass for business leaders, consultants, and curious operators — no coding required.";
   const stickyShouldRender = stickyVisible && !stickyDismissed;
   const handleStickyDismiss = useCallback(() => {
     setStickyDismissed(true);
