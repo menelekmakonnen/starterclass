@@ -535,6 +535,228 @@ function Badge({ children }) {
   );
 }
 
+function VeronicaChatbot() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState([
+    { role: 'assistant', content: 'Hello! I\'m Veronica, your luxury AI assistant. How may I help you today?' }
+  ]);
+  const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [sessionId, setSessionId] = useState(() => {
+    if (typeof window === "undefined") return '';
+    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  });
+  const messagesEndRef = useRef(null);
+  const { theme, palette } = useTheme();
+  const isDark = theme === "dark";
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      scrollToBottom();
+    }
+  }, [messages, isOpen]);
+
+  const sendMessage = async () => {
+    if (!inputValue.trim() || isLoading) return;
+
+    const userMessage = { role: 'user', content: inputValue };
+    setMessages(prev => [...prev, userMessage]);
+    setInputValue('');
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('https://ainerd.app.n8n.cloud/webhook/a7d037fb-6494-4881-8642-e7f1521445ca/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chatInput: inputValue,
+          sessionId: sessionId,
+        }),
+      });
+
+      const data = await response.json();
+      const assistantMessage = {
+        role: 'assistant',
+        content: data.output || data.response || data.message || 'I apologize, I encountered an issue. Please try again.',
+      };
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      const errorMessage = {
+        role: 'assistant',
+        content: 'I apologize, I\'m having trouble connecting right now. Please try again in a moment.',
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
+  if (!isOpen) {
+    return (
+      <button
+        onClick={() => setIsOpen(true)}
+        className="fixed bottom-24 right-4 z-30 rounded-full p-4 transition-all hover:scale-105"
+        style={{
+          background: `linear-gradient(135deg, ${palette.accentPrimary}, ${palette.accentSecondary})`,
+          boxShadow: `0 8px 32px ${isDark ? 'rgba(139,92,246,0.4)' : 'rgba(194,132,36,0.3)'}`,
+          border: `2px solid ${isDark ? 'rgba(200,161,69,0.3)' : 'rgba(194,132,36,0.2)'}`,
+        }}
+        aria-label="Open Veronica chatbot"
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="white" opacity="0.9"/>
+          <circle cx="8" cy="9" r="1.5" fill={palette.accentSecondary}/>
+          <circle cx="12" cy="9" r="1.5" fill={palette.accentSecondary}/>
+          <circle cx="16" cy="9" r="1.5" fill={palette.accentSecondary}/>
+          <path d="M8 12C8 12 9 14 12 14C15 14 16 12 16 12" stroke={palette.accentSecondary} strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>
+      </button>
+    );
+  }
+
+  return (
+    <div
+      className="fixed bottom-4 right-4 z-30 w-[380px] rounded-2xl overflow-hidden shadow-2xl"
+      style={{
+        background: isDark ? 'rgba(11,11,26,0.95)' : 'rgba(255,255,255,0.95)',
+        border: `2px solid ${isDark ? 'rgba(200,161,69,0.4)' : 'rgba(194,132,36,0.3)'}`,
+        backdropFilter: 'blur(20px)',
+        boxShadow: `0 20px 60px ${isDark ? 'rgba(139,92,246,0.3)' : 'rgba(194,132,36,0.2)'}`,
+        maxHeight: '600px',
+      }}
+    >
+      {/* Header - Clickable to close */}
+      <div
+        onClick={() => setIsOpen(false)}
+        className="cursor-pointer p-4 border-b transition-all hover:opacity-90"
+        style={{
+          background: `linear-gradient(135deg, ${palette.accentPrimary}, ${palette.accentSecondary})`,
+          borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+        }}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div
+              className="w-10 h-10 rounded-full flex items-center justify-center"
+              style={{
+                background: 'rgba(255,255,255,0.2)',
+                border: '2px solid rgba(255,255,255,0.3)',
+              }}
+            >
+              <span className="text-xl">💎</span>
+            </div>
+            <div>
+              <div className="font-bold text-white text-lg tracking-wide">Veronica</div>
+              <div className="text-xs text-white opacity-80">Your Luxury AI Assistant</div>
+            </div>
+          </div>
+          <div className="text-white text-2xl opacity-80 hover:opacity-100 transition">×</div>
+        </div>
+      </div>
+
+      {/* Messages */}
+      <div
+        className="overflow-y-auto p-4 space-y-4"
+        style={{
+          height: '420px',
+          background: isDark ? 'rgba(11,11,26,0.6)' : 'rgba(255,255,255,0.8)',
+        }}
+      >
+        {messages.map((msg, idx) => (
+          <div
+            key={idx}
+            className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+          >
+            <div
+              className={`max-w-[75%] rounded-2xl px-4 py-3 ${msg.role === 'user' ? 'rounded-br-sm' : 'rounded-bl-sm'}`}
+              style={{
+                background: msg.role === 'user'
+                  ? `linear-gradient(135deg, ${palette.accentSecondary}, ${palette.accentTertiary})`
+                  : isDark ? 'rgba(17,17,34,0.9)' : 'rgba(246,244,255,0.9)',
+                color: msg.role === 'user' ? 'white' : palette.textPrimary,
+                border: `1px solid ${msg.role === 'user' ? 'rgba(255,255,255,0.2)' : palette.border}`,
+                boxShadow: msg.role === 'user' ? '0 4px 12px rgba(139,92,246,0.2)' : '0 2px 8px rgba(0,0,0,0.05)',
+              }}
+            >
+              <div className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</div>
+            </div>
+          </div>
+        ))}
+        {isLoading && (
+          <div className="flex justify-start">
+            <div
+              className="rounded-2xl px-4 py-3"
+              style={{
+                background: isDark ? 'rgba(17,17,34,0.9)' : 'rgba(246,244,255,0.9)',
+                border: `1px solid ${palette.border}`,
+              }}
+            >
+              <div className="flex gap-1">
+                <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: palette.accentSecondary, animationDelay: '0ms' }}></span>
+                <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: palette.accentSecondary, animationDelay: '150ms' }}></span>
+                <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: palette.accentSecondary, animationDelay: '300ms' }}></span>
+              </div>
+            </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input */}
+      <div
+        className="p-4 border-t"
+        style={{
+          background: isDark ? 'rgba(17,17,34,0.95)' : 'rgba(255,255,255,0.95)',
+          borderColor: palette.border,
+        }}
+      >
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Type your message..."
+            disabled={isLoading}
+            className="flex-1 px-4 py-3 rounded-xl outline-none transition-all focus:ring-2"
+            style={{
+              background: isDark ? 'rgba(11,11,26,0.8)' : 'rgba(246,244,255,0.6)',
+              border: `1px solid ${palette.border}`,
+              color: palette.textPrimary,
+              focusRing: palette.accentSecondary,
+            }}
+          />
+          <button
+            onClick={sendMessage}
+            disabled={isLoading || !inputValue.trim()}
+            className="px-5 py-3 rounded-xl font-semibold transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              background: `linear-gradient(135deg, ${palette.accentPrimary}, ${palette.accentSecondary})`,
+              color: 'white',
+              boxShadow: palette.buttonShadow,
+            }}
+          >
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function BackToTop() {
   const [show, setShow] = useState(false);
   useEffect(() => {
@@ -1958,6 +2180,7 @@ function StarterclassLuxuryV8() {
         <>
 
           <BackToTop />
+          <VeronicaChatbot />
 
           <footer className="mt-24 mb-16">
             <Section>
