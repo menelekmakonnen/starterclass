@@ -375,46 +375,7 @@ const CERTIFICATE_POINTS = [
   },
 ];
 
-const CERTIFICATE_SVG = `
-<svg width="720" height="480" viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="outer" x1="40" y1="32" x2="680" y2="448" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F9F6FF"/>
-      <stop offset="1" stop-color="#E8E3FF"/>
-    </linearGradient>
-    <linearGradient id="border" x1="120" y1="96" x2="600" y2="384" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#4B3B91" stop-opacity="0.85"/>
-      <stop offset="1" stop-color="#8C7CF5" stop-opacity="0.85"/>
-    </linearGradient>
-    <linearGradient id="accent" x1="200" y1="180" x2="520" y2="332" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFFFFF" stop-opacity="0.96"/>
-      <stop offset="1" stop-color="#F4F1FF" stop-opacity="0.9"/>
-    </linearGradient>
-  </defs>
-  <rect x="24" y="24" width="672" height="432" rx="36" fill="url(#outer)"/>
-  <rect x="72" y="72" width="576" height="336" rx="28" fill="#FFFFFF" fill-opacity="0.88" stroke="url(#border)" stroke-width="2"/>
-  <rect x="120" y="132" width="480" height="224" rx="24" fill="url(#accent)" stroke="#DED7F6" stroke-width="1.5"/>
-  <text x="150" y="190" fill="#4B3B91" font-family="'Playfair Display', Georgia, serif" font-size="34" font-weight="600">STARTERCLASS</text>
-  <text x="150" y="222" fill="#32255E" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="16" letter-spacing="0.16em">CERTIFICATE OF COMPLETION</text>
-  <text x="150" y="264" fill="#3B2F6D" font-family="'Playfair Display', Georgia, serif" font-size="24">Awarded to <tspan font-style="italic">Your Name</tspan></text>
-  <text x="150" y="296" fill="#4B3B91" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="14">
-    for completing the six-session Starterclass course and demonstrating applied mastery across:
-  </text>
-  <text x="150" y="322" fill="#5E4FA2" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="13">
-    • Persona-tuned builds • AI short-film pipeline • Autonomous n8n system
-  </text>
-  <line x1="150" y1="340" x2="330" y2="340" stroke="#D6CFF3" stroke-width="2" stroke-linecap="round"/>
-  <line x1="390" y1="340" x2="540" y2="340" stroke="#D6CFF3" stroke-width="2" stroke-linecap="round"/>
-  <text x="150" y="372" fill="#7F70F4" font-family="'Playfair Display', Georgia, serif" font-size="18">Mikael Gabriel</text>
-  <text x="150" y="394" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11">Programme Lead · ICUNI</text>
-  <text x="540" y="372" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11" text-anchor="end">Completed: 24 Jan 2026</text>
-  <text x="540" y="394" fill="#5B4A9F" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="11" text-anchor="end">Total sessions: 6</text>
-  <circle cx="570" cy="184" r="28" fill="none" stroke="#B8ADF2" stroke-width="2"/>
-  <text x="570" y="191" fill="#4B3B91" font-family="'Playfair Display', Georgia, serif" font-size="16" text-anchor="middle">ICUNI</text>
-</svg>
-`;
-
-const CERTIFICATE_IMAGE = `data:image/svg+xml,${encodeURIComponent(CERTIFICATE_SVG)}`;
+const ALTERNATIVE_FORM_ENDPOINT = "https://ainerd.app.n8n.cloud/webhook/starterclass-registration";
 
 const ANNOUNCEMENT_KEYS = ["live", "countdown", "earlybird"];
 
@@ -1132,7 +1093,9 @@ function Sparkles() {
 function StarterclassLuxuryV8() {
   const [tab, setTab] = useState("overview");
   const [modalOpen, setModalOpen] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [altFormOpen, setAltFormOpen] = useState(false);
   const [showPaid, setShowPaid] = useState(() => {
     if (typeof window === "undefined") return false;
     try {
@@ -1344,6 +1307,7 @@ function StarterclassLuxuryV8() {
 
   function triggerIntroForm(source) {
     track("intro_cta_click", { location: source });
+    setFormLoading(true);
     setModalOpen(true);
   }
 
@@ -1372,7 +1336,18 @@ function StarterclassLuxuryV8() {
     requestAnimationFrame(() => {
       document.getElementById("full-track-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+    setFormLoading(true);
     setModalOpen(true);
+  }
+
+  function closeModal() {
+    setModalOpen(false);
+    setFormLoading(false);
+  }
+
+  function openAlternativeForm(location) {
+    track("alt_form_open", { location });
+    setAltFormOpen(true);
   }
 
   function openCalendarModal(location) {
@@ -1584,9 +1559,9 @@ function StarterclassLuxuryV8() {
                     type="button"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-semibold"
                     style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft, color: palette.textPrimary }}
-                    onClick={() => openCalendarModal("hero_button")}
+                    onClick={() => openAlternativeForm("hero_button")}
                   >
-                    Add to calendar
+                    Alternative registration form
                   </button>
                   <span style={{ color: palette.textMuted }}>Replays unlock for Full Track participants.</span>
                   <span className="basis-full" style={{ color: palette.textMuted }}>
@@ -2017,8 +1992,77 @@ function StarterclassLuxuryV8() {
                 </GlowCard>
                 <GlowCard className="p-6 md:p-8" id="certificate">
                   <div className="grid lg:grid-cols-[1fr_1fr] gap-6 items-start">
-                    <div className="rounded-3xl border overflow-hidden" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                      <img src={CERTIFICATE_IMAGE} alt="Starterclass certificate preview" className="w-full" loading="lazy" />
+                    <div
+                      className="rounded-3xl border overflow-hidden"
+                      style={{
+                        borderColor: palette.border,
+                        background:
+                          activeTheme === "dark"
+                            ? "linear-gradient(160deg, rgba(18,18,38,0.92), rgba(30,24,60,0.88))"
+                            : "linear-gradient(160deg, rgba(255,255,255,0.95), rgba(245,240,255,0.92))",
+                      }}
+                    >
+                      <div className="flex h-full flex-col gap-5 p-6 md:p-8">
+                        <div>
+                          <span
+                            className="text-xs uppercase tracking-[0.32em]"
+                            style={{ color: palette.textMuted }}
+                          >
+                            ICUNI credential
+                          </span>
+                          <div
+                            className="mt-3 text-2xl font-semibold leading-snug"
+                            style={{ color: palette.textPrimary }}
+                          >
+                            Your completion dossier
+                          </div>
+                          <p className="mt-3 text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
+                            Instead of a static certificate image, you receive a polished dossier capturing the work you ship
+                            across the Starterclass. It is built to share with stakeholders who need proof you can deliver.
+                          </p>
+                        </div>
+                        <div className="grid gap-3">
+                          {[
+                            {
+                              icon: "🪶",
+                              label: "Signed welcome note",
+                              text: "Personal message from the programme lead summarising the focus areas you mastered.",
+                            },
+                            {
+                              icon: "🧾",
+                              label: "Evidence timeline",
+                              text: "Chronological log of projects, submissions, and reviews that backed your final credential.",
+                            },
+                            {
+                              icon: "🔗",
+                              label: "Verification link",
+                              text: "Private, shareable link so teams can instantly verify attendance and deliverables.",
+                            },
+                          ].map(({ icon, label, text }) => (
+                            <div
+                              key={label}
+                              className="flex items-start gap-3 rounded-2xl border px-4 py-3"
+                              style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}
+                            >
+                              <span className="text-xl" aria-hidden="true">
+                                {icon}
+                              </span>
+                              <div>
+                                <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>
+                                  {label}
+                                </div>
+                                <div className="mt-1 text-xs">{text}</div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <div
+                          className="mt-auto rounded-2xl border px-4 py-3 text-xs leading-relaxed"
+                          style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}
+                        >
+                          Delivered within 72 hours of the final January session as both a PDF dossier and a live verification page.
+                        </div>
+                      </div>
                     </div>
                     <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
                       <p>
@@ -2245,17 +2289,35 @@ function StarterclassLuxuryV8() {
 
           {modalOpen && (
             <div className="fixed inset-0 z-50 grid place-items-center p-4">
-              <div className="absolute inset-0 backdrop-blur" style={{ background: activeTheme === "dark" ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }} onClick={() => setModalOpen(false)} />
+              <div className="absolute inset-0 backdrop-blur" style={{ background: activeTheme === "dark" ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }} onClick={closeModal} />
               <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden" style={{ border: `1px solid ${palette.border}`, background: palette.surface, color: palette.textPrimary }}>
                 <div className="px-4 md:px-6 py-4 flex items-center justify-between" style={{ borderBottom: `1px solid ${palette.border}` }}>
                   <div className="font-semibold">Register — {INTRO_NAME}</div>
-                  <button onClick={() => setModalOpen(false)} className="text-2xl leading-none" style={{ color: palette.textSecondary }}>×</button>
+                  <button onClick={closeModal} className="text-2xl leading-none" style={{ color: palette.textSecondary }}>×</button>
                 </div>
                 <div className="p-6 space-y-6">
                   <div
-                    className="rounded-2xl overflow-hidden border"
+                    className="relative rounded-2xl overflow-hidden border"
                     style={{ borderColor: palette.border, background: palette.surfaceSoft }}
                   >
+                    {formLoading && (
+                      <div
+                        className="absolute inset-0 flex flex-col items-center justify-center gap-3"
+                        style={{
+                          background: activeTheme === "dark" ? "rgba(11,11,26,0.88)" : "rgba(255,255,255,0.92)",
+                          color: palette.textPrimary,
+                        }}
+                      >
+                        <div
+                          className="h-12 w-12 rounded-full border-2 border-current border-t-transparent animate-spin"
+                          aria-hidden="true"
+                        />
+                        <div className="text-sm font-semibold">Preparing the registration form…</div>
+                        <div className="text-xs" style={{ color: palette.textSecondary }}>
+                          Sit tight — the Google Form loads in a moment.
+                        </div>
+                      </div>
+                    )}
                     <iframe
                       src={GOOGLE_FORM_URL_EMBED}
                       title="Starterclass registration form"
@@ -2264,7 +2326,9 @@ function StarterclassLuxuryV8() {
                       frameBorder="0"
                       marginHeight="0"
                       marginWidth="0"
-                      style={{ width: "100%" }}
+                      onLoad={() => setFormLoading(false)}
+                      style={{ width: "100%", opacity: formLoading ? 0 : 1, transition: "opacity 240ms ease" }}
+                      aria-busy={formLoading ? "true" : "false"}
                     >
                       Loading…
                     </iframe>
@@ -2286,7 +2350,7 @@ function StarterclassLuxuryV8() {
                       type="button"
                       className="text-sm underline underline-offset-4"
                       style={{ color: palette.textSecondary }}
-                      onClick={() => setModalOpen(false)}
+                      onClick={closeModal}
                     >
                       Close window
                     </button>
@@ -2297,6 +2361,13 @@ function StarterclassLuxuryV8() {
                 </div>
               </div>
             </div>
+          )}
+
+          {altFormOpen && (
+            <AlternativeRegistrationModal
+              onClose={() => setAltFormOpen(false)}
+              onCalendar={() => openCalendarModal("alternative_form")}
+            />
           )}
 
           {calendarOpen && (
@@ -2486,6 +2557,788 @@ function ModuleOutlineChart({ segments = [] }) {
             <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{seg.desc}</div>
           </button>
         ))}
+      </div>
+    </div>
+  );
+}
+
+function AlternativeRegistrationModal({ onClose, onCalendar }) {
+  const { palette, theme } = useTheme();
+  const isDark = theme === "dark";
+  const [step, setStep] = useState(1);
+  const [form, setForm] = useState({
+    firstName: "",
+    email: "",
+    role: "",
+    industry: "",
+    ageRange: "",
+    aiExperience: "",
+    goals: [],
+    followUps: [],
+    interests: ["starterclass"],
+    fullCourseIntent: "",
+    agreeFullCourse: false,
+    submitConsent: false,
+  });
+  const [stepError, setStepError] = useState("");
+  const [submitError, setSubmitError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const roleOptions = useMemo(
+    () => [
+      { value: "creative", label: "Creative" },
+      { value: "entrepreneur", label: "Entrepreneur / Founder" },
+      { value: "lead", label: "Head of Department / Team Lead" },
+      { value: "employee", label: "Employee / Individual Contributor" },
+      { value: "tech", label: "Tech Professional" },
+      { value: "other", label: "Other" },
+    ],
+    []
+  );
+
+  const industryOptions = useMemo(
+    () => [
+      { value: "creative", label: "Creative (film/photo/design/music)" },
+      { value: "finance", label: "Finance / FinTech" },
+      { value: "education", label: "Education" },
+      { value: "tech", label: "Tech / IT / Software" },
+      { value: "marketing", label: "Marketing / Media / Agency" },
+      { value: "health", label: "Healthcare / Life Sciences" },
+      { value: "retail", label: "Retail / eCommerce" },
+      { value: "services", label: "Professional Services (Legal/Accounting/Consulting)" },
+      { value: "nonprofit", label: "Nonprofit / Public Sector" },
+      { value: "hospitality", label: "Hospitality / Travel" },
+      { value: "energy", label: "Oil & Gas" },
+      { value: "other", label: "Other" },
+    ],
+    []
+  );
+
+  const ageRangeOptions = useMemo(
+    () => [
+      { value: "18-24", label: "18–24" },
+      { value: "25-34", label: "25–34" },
+      { value: "35-44", label: "35–44" },
+      { value: "45-54", label: "45–54" },
+      { value: "55+", label: "55+" },
+    ],
+    []
+  );
+
+  const aiExperienceOptions = useMemo(
+    () => [
+      { value: "beginner", label: "Beginner — never used it / barely tried" },
+      { value: "casual", label: "Casual — I dabble, want to level up" },
+      { value: "regular", label: "Regular — I use it weekly" },
+      { value: "power", label: "Power user — I use it daily and build workflows" },
+    ],
+    []
+  );
+
+  const goalOptions = useMemo(
+    () => [
+      { value: "getting_started", label: "How do I get started with AI?" },
+      { value: "automation", label: "Automation (how do I automate everything?)" },
+      { value: "research", label: "Deep Research (pulling sources, briefs)" },
+      { value: "projects", label: "Projects (multi-doc planning, long tasks)" },
+      { value: "canvas", label: "Canvas (docs, slides, wireframes)" },
+      { value: "custom_gpts", label: "Custom GPTs (private tools)" },
+      { value: "coding", label: "Coding (light scripts, automations)" },
+      { value: "prompt", label: "Prompt Engineering (frameworks that work)" },
+      { value: "jobs", label: "Will AI take my job? (what to do now)" },
+    ],
+    []
+  );
+
+  const followUpOptions = useMemo(
+    () => [
+      { value: "review", label: "Give review after Starterclass", hint: "Send a short testimonial link" },
+      { value: "newsletter", label: "Subscribe to AI newsletter", hint: "Prompts, updates, upcoming events" },
+      { value: "community", label: "Join AI group chat", hint: "Invitation arrives once it's live" },
+    ],
+    []
+  );
+
+  const interestOptions = useMemo(
+    () => [
+      { value: "starterclass", label: "FREE 90 minute AI Starterclass session" },
+      { value: "full_course", label: "Full 9 sessions Starterclass" },
+    ],
+    []
+  );
+
+  const wantsFullCourse = form.interests.includes("full_course");
+
+  const updateField = useCallback((key, value) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  }, []);
+
+  const toggleField = useCallback((key, value) => {
+    setForm((prev) => {
+      const list = Array.isArray(prev[key]) ? prev[key] : [];
+      const exists = list.includes(value);
+      const next = exists ? list.filter((item) => item !== value) : [...list, value];
+      return { ...prev, [key]: next };
+    });
+  }, []);
+
+  const selectFullCourseIntent = useCallback((value) => {
+    setForm((prev) => ({
+      ...prev,
+      fullCourseIntent: value,
+      agreeFullCourse: value === "yes" ? prev.agreeFullCourse : false,
+    }));
+    setStepError("");
+  }, []);
+
+  function findLabel(options, value) {
+    return options.find((option) => option.value === value)?.label || value;
+  }
+
+  const summary = useMemo(
+    () => ({
+      role: findLabel(roleOptions, form.role),
+      industry: findLabel(industryOptions, form.industry),
+      ageRange: findLabel(ageRangeOptions, form.ageRange),
+      aiExperience: findLabel(aiExperienceOptions, form.aiExperience),
+      goals: form.goals.map((value) => findLabel(goalOptions, value)),
+      followUps: form.followUps.map((value) => findLabel(followUpOptions, value)),
+      interests: form.interests.map((value) => findLabel(interestOptions, value)),
+    }),
+    [
+      form,
+      roleOptions,
+      industryOptions,
+      ageRangeOptions,
+      aiExperienceOptions,
+      goalOptions,
+      followUpOptions,
+      interestOptions,
+    ]
+  );
+
+  const sectionLabel = `Section ${Math.min(step, 3)} of 3`;
+
+  function handleBack() {
+    setStepError("");
+    setSubmitError("");
+    if (step === 1) {
+      onClose();
+      return;
+    }
+    if (step === 2) {
+      setStep(1);
+      track("alt_form_progress", { from: 2, to: 1, action: "back" });
+      return;
+    }
+    if (step === 3 && !submitted) {
+      const destination = wantsFullCourse ? 2 : 1;
+      setStep(destination);
+      track("alt_form_progress", { from: 3, to: destination, action: "back" });
+    }
+  }
+
+  function handleSectionOneNext() {
+    const trimmedName = form.firstName.trim();
+    const trimmedEmail = form.email.trim();
+    if (!trimmedName) {
+      setStepError("Add your first name so we can personalise the invite.");
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(trimmedEmail)) {
+      setStepError("Enter a valid email address so we can send the Google Meet link.");
+      return;
+    }
+    if (!form.role) {
+      setStepError("Choose the role that best fits you.");
+      return;
+    }
+    if (!form.industry) {
+      setStepError("Select the industry you operate in.");
+      return;
+    }
+    if (!form.ageRange) {
+      setStepError("Let us know your age range.");
+      return;
+    }
+    if (!form.aiExperience) {
+      setStepError("Share your current AI experience level.");
+      return;
+    }
+    if (!form.goals.length) {
+      setStepError("Pick at least one outcome you want from the class.");
+      return;
+    }
+    if (!form.interests.length) {
+      setStepError("Select what you're registering for so we know how to follow up.");
+      return;
+    }
+    setForm((prev) => ({ ...prev, firstName: trimmedName, email: trimmedEmail }));
+    setStepError("");
+    const nextStep = wantsFullCourse ? 2 : 3;
+    setStep(nextStep);
+    track("alt_form_progress", { from: 1, to: nextStep, wantsFullCourse });
+  }
+
+  function handleSectionTwoNext() {
+    if (!form.fullCourseIntent) {
+      setStepError("Let us know if you'd like the full course follow-up.");
+      return;
+    }
+    if (form.fullCourseIntent === "yes" && !form.agreeFullCourse) {
+      setStepError("Confirm the terms so we can send the enrolment details.");
+      return;
+    }
+    setStepError("");
+    setStep(3);
+    track("alt_form_progress", { from: 2, to: 3, fullCourseIntent: form.fullCourseIntent });
+  }
+
+  async function handleSubmit() {
+    if (submitting || submitted) return;
+    if (!form.submitConsent) {
+      setSubmitError("Please confirm you're ready to submit.");
+      return;
+    }
+    setSubmitError("");
+    setSubmitting(true);
+    const wantsFullCourseRoute = wantsFullCourse ? form.fullCourseIntent || "interest_only" : "starterclass_only";
+    const payload = {
+      source: "alternative_form_modal",
+      submittedAt: new Date().toISOString(),
+      firstName: form.firstName.trim(),
+      email: form.email.trim(),
+      role: summary.role,
+      roleValue: form.role,
+      industry: summary.industry,
+      industryValue: form.industry,
+      ageRange: summary.ageRange,
+      aiExperience: summary.aiExperience,
+      goals: summary.goals,
+      goalValues: form.goals,
+      followUps: summary.followUps,
+      followUpValues: form.followUps,
+      interests: summary.interests,
+      interestValues: form.interests,
+      wantsFullCourse,
+      fullCourseIntent: form.fullCourseIntent || (wantsFullCourse ? "undecided" : "not_requested"),
+      agreeFullCourse: form.agreeFullCourse,
+      newsletterOptIn: form.followUps.includes("newsletter"),
+      reviewOptIn: form.followUps.includes("review"),
+      communityOptIn: form.followUps.includes("community"),
+      route: wantsFullCourseRoute,
+    };
+    try {
+      track("alt_form_submit_attempt", { wantsFullCourse, fullCourseIntent: form.fullCourseIntent || null });
+      const response = await fetch(ALTERNATIVE_FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+      setSubmitted(true);
+      track("alt_form_submit_success", { route: wantsFullCourseRoute, wantsFullCourse });
+    } catch (error) {
+      console.error(error);
+      setSubmitError("We hit a snag sending your details. Please try again in a moment.");
+      track("alt_form_submit_error", { message: error?.message || String(error) });
+    } finally {
+      setSubmitting(false);
+    }
+  }
+  return (
+    <div className="fixed inset-0 z-50 grid place-items-center p-4">
+      <div
+        className="absolute inset-0 backdrop-blur"
+        style={{ background: isDark ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }}
+        onClick={onClose}
+      />
+      <div
+        className="relative w-full max-w-3xl rounded-3xl overflow-hidden"
+        style={{ border: `1px solid ${palette.border}`, background: palette.surface, color: palette.textPrimary }}
+      >
+        <div className="px-4 md:px-6 py-4 flex items-center justify-between" style={{ borderBottom: `1px solid ${palette.border}` }}>
+          <div>
+            <div className="text-xs uppercase tracking-[0.32em]" style={{ color: palette.textMuted }}>{sectionLabel}</div>
+            <div className="font-semibold text-base md:text-lg">AI Starterclass Session Registration</div>
+          </div>
+          <button onClick={onClose} className="text-2xl leading-none" style={{ color: palette.textSecondary }}>×</button>
+        </div>
+        <div className="max-h-[85vh] overflow-y-auto p-6 space-y-6" style={{ color: palette.textSecondary }}>
+          {stepError && (
+            <div
+              className="rounded-2xl border px-4 py-3 text-sm"
+              style={{
+                borderColor: palette.accentPrimary,
+                background: isDark ? "rgba(200,161,69,0.08)" : "rgba(200,161,69,0.12)",
+                color: palette.textPrimary,
+              }}
+            >
+              {stepError}
+            </div>
+          )}
+
+          {step === 1 && !submitted && (
+            <div className="space-y-6 text-sm">
+              <div className="space-y-3">
+                <p>
+                  Welcome! We're excited you're joining us for the FREE AI Starterclass on Saturday, 15 November 2025 at 11AM on Google Meet.
+                </p>
+                <p>
+                  Read more on our website{' '}
+                  <a
+                    href="https://starterclass.icuni.org"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline underline-offset-4"
+                    style={{ color: palette.accentSecondary }}
+                  >
+                    starterclass.icuni.org
+                  </a>
+                  .
+                </p>
+                <div
+                  className="rounded-2xl border px-4 py-3 space-y-2 text-xs md:text-sm"
+                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                >
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
+                    What to expect
+                  </div>
+                  <ul className="list-disc pl-4 space-y-1">
+                    <li>90 minutes of practical, hands-on learning</li>
+                    <li>Create your first custom AI project with knowledge packs</li>
+                    <li>Build a working application using vibe coding basics</li>
+                    <li>Leave with skills you can apply immediately</li>
+                  </ul>
+                  <div className="text-xs" style={{ color: palette.textMuted }}>
+                    You'll need a ChatGPT account (Plus recommended), a willingness to experiment, and curiosity. No coding experience required.
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-4">
+                <div className="grid md:grid-cols-2 gap-3">
+                  <div>
+                    <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                      First Name (only)
+                    </div>
+                    <input
+                      type="text"
+                      value={form.firstName}
+                      onChange={(event) => updateField('firstName', event.target.value)}
+                      placeholder="Veronica"
+                      className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm focus:outline-none"
+                      style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+                      autoComplete="given-name"
+                    />
+                  </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                      Email
+                    </div>
+                    <input
+                      type="email"
+                      value={form.email}
+                      onChange={(event) => updateField('email', event.target.value)}
+                      placeholder="you@example.com"
+                      className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm focus:outline-none"
+                      style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+                      autoComplete="email"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                    Role
+                  </div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {roleOptions.map((option) => {
+                      const active = form.role === option.value;
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => updateField('role', option.value)}
+                          aria-pressed={active}
+                          className="rounded-2xl px-4 py-2 text-sm font-medium transition"
+                          style={{
+                            border: `1px solid ${active ? palette.accentPrimary : palette.border}`,
+                            background: active ? palette.surface : palette.surfaceSoft,
+                            color: palette.textPrimary,
+                          }}
+                        >
+                          {option.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-3">
+                  <div>
+                    <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                      Industry
+                    </div>
+                    <select
+                      value={form.industry}
+                      onChange={(event) => updateField('industry', event.target.value)}
+                      className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm focus:outline-none"
+                      style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+                    >
+                      <option value="">Select your industry</option>
+                      {industryOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                      Age range
+                    </div>
+                    <select
+                      value={form.ageRange}
+                      onChange={(event) => updateField('ageRange', event.target.value)}
+                      className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm focus:outline-none"
+                      style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+                    >
+                      <option value="">Select your age range</option>
+                      {ageRangeOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                    Your AI experience
+                  </div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {aiExperienceOptions.map((option) => {
+                      const active = form.aiExperience === option.value;
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => updateField('aiExperience', option.value)}
+                          aria-pressed={active}
+                          className="rounded-2xl px-4 py-2 text-sm font-medium transition text-left"
+                          style={{
+                            border: `1px solid ${active ? palette.accentPrimary : palette.border}`,
+                            background: active ? palette.surface : palette.surfaceSoft,
+                            color: palette.textPrimary,
+                          }}
+                        >
+                          {option.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                    What you want from the class
+                  </div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {goalOptions.map((option) => {
+                      const active = form.goals.includes(option.value);
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => toggleField('goals', option.value)}
+                          aria-pressed={active}
+                          className="rounded-2xl px-4 py-2 text-sm font-medium transition text-left"
+                          style={{
+                            border: `1px solid ${active ? palette.accentSecondary : palette.border}`,
+                            background: active ? palette.surface : palette.surfaceSoft,
+                            color: palette.textPrimary,
+                          }}
+                        >
+                          {option.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                    Do you want to…
+                  </div>
+                  <div className="mt-2 grid gap-2 md:grid-cols-3">
+                    {followUpOptions.map((option) => {
+                      const active = form.followUps.includes(option.value);
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => toggleField('followUps', option.value)}
+                          aria-pressed={active}
+                          className="rounded-2xl border px-4 py-3 text-left text-sm transition"
+                          style={{
+                            border: `1px solid ${active ? palette.accentSecondary : palette.border}`,
+                            background: active ? palette.surface : palette.surfaceSoft,
+                            color: palette.textPrimary,
+                          }}
+                        >
+                          <div className="font-semibold">{option.label}</div>
+                          {option.hint && (
+                            <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>
+                              {option.hint}
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                    Interests
+                  </div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {interestOptions.map((option) => {
+                      const active = form.interests.includes(option.value);
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => toggleField('interests', option.value)}
+                          aria-pressed={active}
+                          className="rounded-2xl border px-5 py-3 text-sm font-semibold transition"
+                          style={{
+                            border: `1px solid ${active ? palette.accentPrimary : palette.border}`,
+                            background: active ? palette.surface : palette.surfaceSoft,
+                            color: palette.textPrimary,
+                          }}
+                        >
+                          {option.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <GlassButton onClick={handleSectionOneNext} className="px-6 py-3">
+                  Continue
+                </GlassButton>
+                <button
+                  type="button"
+                  className="text-sm underline underline-offset-4"
+                  style={{ color: palette.textSecondary }}
+                  onClick={onClose}
+                >
+                  I'll finish this later
+                </button>
+              </div>
+            </div>
+          )}
+
+          {step === 2 && !submitted && (
+            <div className="space-y-6 text-sm">
+              <div className="space-y-3">
+                <div className="rounded-2xl border px-4 py-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
+                    Full Starterclass course
+                  </div>
+                  <p className="mt-2">
+                    The Starterclass is Session 1 of our nine-session programme running through January 2026. Every session is live, project-based, and paired with office hours.
+                  </p>
+                  <ul className="mt-3 list-disc space-y-1 pl-4 text-xs">
+                    <li>Deploy AI-powered websites and vibe-coded applications</li>
+                    <li>Build autonomous agents and AI short-film pipelines</li>
+                    <li>Master n8n for assistants, orchestration, and observability</li>
+                  </ul>
+                  <p className="mt-3 text-xs" style={{ color: palette.textMuted }}>
+                    Special pricing for Starterclass attendees — $300 total or $100/month across Nov, Dec, and Jan. Save 10% if you enrol before 15 November.
+                  </p>
+                </div>
+                <div className="grid gap-2 text-xs" style={{ color: palette.textMuted }}>
+                  <div>Sat 29 Nov 2025 — Canvas Deep Dive & Vibe Coding</div>
+                  <div>Sat 13 Dec 2025 — ChatGPT Agents 1: Prompts, Processes & Systems</div>
+                  <div>Sat 27 Dec 2025 — ChatGPT Agents 2: AI Short-Film Production</div>
+                  <div>Sat 10 Jan 2026 — N8N Deep Dive: Create Your First AI Assistant</div>
+                  <div>Sat 24 Jan 2026 — N8N Mastery: Orchestrate the System</div>
+                </div>
+              </div>
+
+              <div>
+                <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                  Would you like to enrol for the full course?
+                </div>
+                <div className="mt-2 grid gap-2 md:grid-cols-3">
+                  {[
+                    { value: 'yes', label: 'Yes — reserve my seat' },
+                    { value: 'maybe', label: 'Maybe — send details' },
+                    { value: 'no', label: 'Not this time' },
+                  ].map((option) => {
+                    const active = form.fullCourseIntent === option.value;
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        onClick={() => selectFullCourseIntent(option.value)}
+                        aria-pressed={active}
+                        className="rounded-2xl border px-4 py-3 text-sm font-semibold transition"
+                        style={{
+                          border: `1px solid ${active ? palette.accentPrimary : palette.border}`,
+                          background: active ? palette.surface : palette.surfaceSoft,
+                          color: palette.textPrimary,
+                        }}
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <label
+                className="flex items-start gap-3 rounded-2xl border px-4 py-3 text-sm"
+                style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}
+              >
+                <input
+                  type="checkbox"
+                  checked={form.agreeFullCourse}
+                  onChange={(event) => updateField('agreeFullCourse', event.target.checked)}
+                  disabled={form.fullCourseIntent !== 'yes'}
+                  className="mt-1 h-4 w-4 rounded"
+                  style={{ accentColor: palette.accentSecondary }}
+                />
+                <span>
+                  I agree to the Terms & Privacy and understand the refund policy (cancel up to 48 hours before the first paid session for a full refund).
+                </span>
+              </label>
+
+              <div className="flex flex-wrap gap-3">
+                <GlassButton onClick={handleSectionTwoNext} className="px-6 py-3">
+                  Continue
+                </GlassButton>
+                <GlassButton variant="secondary" onClick={handleBack} className="px-6 py-3">
+                  Back
+                </GlassButton>
+              </div>
+            </div>
+          )}
+
+          {step === 3 && !submitted && (
+            <div className="space-y-6 text-sm">
+              <div
+                className="rounded-2xl border px-4 py-3 space-y-2"
+                style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              >
+                <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
+                  Review & privacy
+                </div>
+                <p>We collect the minimum necessary data to run the cohort and support you.</p>
+                <p>Data collected: Name, email, form responses, attendance, and homework links.</p>
+                <p>Security: Access is limited to ICUNI admins on a need-to-know basis. We use least-privilege accounts and audit access periodically.</p>
+                <p>Retention: Enrollment records are retained for up to 24 months; you may request deletion anytime.</p>
+                <p>Your rights: Access, correction, deletion. Email: <a href="mailto:starterclass@icuni.org" className="underline" style={{ color: palette.accentSecondary }}>starterclass@icuni.org</a>.</p>
+              </div>
+
+              <div
+                className="rounded-2xl border px-4 py-3 text-xs space-y-2"
+                style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}
+              >
+                <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
+                  Snapshot
+                </div>
+                <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>
+                  {(form.firstName || 'First name')} · {(form.email || 'email pending')}
+                </div>
+                <div>Role: {summary.role || '—'}</div>
+                <div>Industry: {summary.industry || '—'}</div>
+                <div>AI experience: {summary.aiExperience || '—'}</div>
+                <div>Goals: {summary.goals.length ? summary.goals.join(', ') : '—'}</div>
+                <div>Interests: {summary.interests.length ? summary.interests.join(', ') : '—'}</div>
+              </div>
+
+              <label
+                className="flex items-start gap-3 rounded-2xl border px-4 py-3 text-sm"
+                style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}
+              >
+                <input
+                  type="checkbox"
+                  checked={form.submitConsent}
+                  onChange={(event) => updateField('submitConsent', event.target.checked)}
+                  className="mt-1 h-4 w-4 rounded"
+                  style={{ accentColor: palette.accentSecondary }}
+                />
+                <span>Yes — submit my registration.</span>
+              </label>
+
+              {submitError && (
+                <div
+                  className="rounded-2xl border px-4 py-3 text-sm"
+                  style={{
+                    borderColor: palette.accentSecondary,
+                    background: isDark ? "rgba(123,61,240,0.12)" : "rgba(123,61,240,0.14)",
+                    color: palette.textPrimary,
+                  }}
+                >
+                  {submitError}
+                </div>
+              )}
+
+              <div className="flex flex-wrap gap-3">
+                <GlassButton onClick={handleSubmit} className="px-6 py-3" disabled={submitting}>
+                  {submitting ? 'Sending…' : 'Submit registration'}
+                </GlassButton>
+                <GlassButton variant="secondary" onClick={handleBack} className="px-6 py-3" disabled={submitting}>
+                  Back
+                </GlassButton>
+              </div>
+            </div>
+          )}
+
+          {submitted && (
+            <div className="space-y-5 text-sm">
+              <div>
+                <div className="text-2xl font-semibold" style={{ color: palette.textPrimary }}>
+                  You're confirmed!
+                </div>
+                <p className="mt-3">
+                  Thanks {form.firstName || 'there'} — your details are on the way to our N8N workflow. Expect the Google Meet invite and prep pack in your inbox shortly.
+                </p>
+              </div>
+              <div
+                className="rounded-2xl border px-4 py-3 text-xs"
+                style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}
+              >
+                We’ll keep you posted with reminder emails 24 hours before the session and any full-course follow-up you requested.
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <GlassButton
+                  onClick={() => {
+                    track('alt_form_calendar', { source: 'success' });
+                    onClose();
+                    if (onCalendar) onCalendar();
+                  }}
+                  className="px-6 py-3"
+                >
+                  Add to calendar
+                </GlassButton>
+                <GlassButton variant="secondary" onClick={onClose} className="px-6 py-3">
+                  Close
+                </GlassButton>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
