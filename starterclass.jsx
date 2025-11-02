@@ -1707,7 +1707,7 @@ function StarterclassLuxuryV8() {
             style={{
               border: `2px solid ${palette.accentPrimary}`,
               background: `linear-gradient(135deg, ${palette.surfaceSoft}, ${palette.surface})`,
-              boxShadow: `0 8px 24px ${isDark ? 'rgba(139,92,246,0.3)' : 'rgba(194,132,36,0.2)'}`
+              boxShadow: `0 8px 24px ${activeTheme === 'dark' ? 'rgba(139,92,246,0.3)' : 'rgba(194,132,36,0.2)'}`
             }}
           >
             {[
