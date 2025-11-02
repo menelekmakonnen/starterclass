@@ -497,14 +497,24 @@ function Badge({ children }) {
 }
 
 function VeronicaChatbot() {
+  // Welcome message options - pick one randomly
+  const welcomeMessages = useMemo(() => [
+    'Hi, I\'m Veronica. Look, it\'s simple: click the "Register Free" button to sign up for the Starterclass. Or, if you actually need help with something 🙄, go ahead and message me.',
+    'Veronica here. So... you gonna register for the Starterclass or just stand there? Hit "Register Free" already. Or ask me a question if you must 🙄.',
+    'Hey, it\'s Veronica. The "Register Free" button is right there—not exactly rocket science. Need help with something else? Fine, message me 💅.',
+    'I\'m Veronica, and honestly? Just click "Register Free" to join the Starterclass. But if you insist on bothering me with questions... go ahead 🙄.',
+    'Veronica at your service—sort of. Register Free button → that way. Questions? I guess I can help... if I feel like it 😏.',
+  ], []);
+
   const [isOpen, setIsOpen] = useState(false);
   const [hasShownWelcome, setHasShownWelcome] = useState(false);
-  const [messages, setMessages] = useState([
-    { role: 'assistant', content: 'Hi, I\'m Veronica. Look, it\'s simple: click the "Register Free" button to sign up for the Starterclass. Or, if you actually need help with something 🙄, go ahead and message me.' }
-  ]);
+  const [messages, setMessages] = useState(() => [{
+    role: 'assistant',
+    content: welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)]
+  }]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: window.innerWidth - 450, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [sessionId, setSessionId] = useState(() => {
@@ -537,24 +547,43 @@ function VeronicaChatbot() {
     }
   }, [messages, isOpen]);
 
-  // Drag handlers
+  // Constrain position to viewport bounds
+  const constrainPosition = useCallback((x, y, elementWidth = 380) => {
+    const margin = 16; // Keep some margin from edges
+    const bubbleWidth = 80; // Approximate width of closed bubble
+    const width = isOpen ? elementWidth : bubbleWidth;
+
+    const maxX = window.innerWidth - width - margin;
+    const minX = margin;
+
+    return {
+      x: Math.max(minX, Math.min(maxX, x)),
+      y: 0 // Always keep at bottom
+    };
+  }, [isOpen]);
+
+  // Drag handlers for both bubble and chatbox
   const handleMouseDown = (e) => {
-    if (e.target.closest('.chatbot-header')) {
-      setIsDragging(true);
-      setDragStart({
-        x: e.clientX - position.x,
-        y: e.clientY - position.y
-      });
+    // Prevent dragging when clicking on interactive elements
+    if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+      return;
     }
+
+    setIsDragging(true);
+    setDragStart({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y
+    });
+    e.preventDefault(); // Prevent text selection while dragging
   };
 
   const handleMouseMove = useCallback((e) => {
     if (isDragging) {
       const newX = e.clientX - dragStart.x;
-      // Constrain to bottom of page only (y = 0)
-      setPosition({ x: newX, y: 0 });
+      const constrained = constrainPosition(newX, 0);
+      setPosition(constrained);
     }
-  }, [isDragging, dragStart]);
+  }, [isDragging, dragStart, constrainPosition]);
 
   const handleMouseUp = () => {
     setIsDragging(false);
@@ -570,6 +599,15 @@ function VeronicaChatbot() {
       };
     }
   }, [isDragging, handleMouseMove]);
+
+  // Handle window resize to keep chatbot in bounds
+  useEffect(() => {
+    const handleResize = () => {
+      setPosition(prev => constrainPosition(prev.x, prev.y));
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [constrainPosition]);
 
   const sendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -618,14 +656,23 @@ function VeronicaChatbot() {
   if (!isOpen) {
     return (
       <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-24 right-4 z-30 rounded-full p-4 transition-all hover:scale-105"
+        onMouseDown={handleMouseDown}
+        onClick={(e) => {
+          if (!isDragging) {
+            setIsOpen(true);
+          }
+          e.stopPropagation();
+        }}
+        className="fixed z-30 rounded-full p-4 transition-all hover:scale-105"
         style={{
           background: isDark
             ? 'linear-gradient(135deg, #8B5CF6, #3B5CCC)'
             : 'linear-gradient(135deg, #C28424, #7A3DF0)',
           boxShadow: `0 8px 32px ${isDark ? 'rgba(139,92,246,0.5)' : 'rgba(194,132,36,0.4)'}`,
           border: `2px solid ${isDark ? 'rgba(139,92,246,0.4)' : 'rgba(194,132,36,0.3)'}`,
+          bottom: '6rem',
+          left: `${position.x}px`,
+          cursor: isDragging ? 'grabbing' : 'grab',
         }}
         aria-label="Open Veronica chatbot"
       >
@@ -637,7 +684,6 @@ function VeronicaChatbot() {
   return (
     <div
       ref={chatbotRef}
-      onMouseDown={handleMouseDown}
       className="fixed z-30 w-[380px] rounded-2xl overflow-hidden shadow-2xl"
       style={{
         background: isDark ? 'rgba(11,11,26,0.97)' : 'rgba(255,255,255,0.97)',
@@ -646,14 +692,20 @@ function VeronicaChatbot() {
         boxShadow: `0 20px 60px ${isDark ? 'rgba(139,92,246,0.4)' : 'rgba(194,132,36,0.3)'}`,
         maxHeight: '600px',
         bottom: '1rem',
-        right: position.x === 0 ? '1rem' : 'auto',
-        left: position.x !== 0 ? `${position.x}px` : 'auto',
+        left: `${position.x}px`,
         cursor: isDragging ? 'grabbing' : 'default',
       }}
     >
       {/* Header - Draggable to move, clickable to close */}
       <div
-        className="chatbot-header cursor-move p-4 border-b transition-all hover:opacity-95"
+        onMouseDown={handleMouseDown}
+        onClick={(e) => {
+          // Close when clicking on header (but not on buttons/interactive elements)
+          if (!isDragging && e.target.closest('.chatbot-header') && !e.target.closest('button')) {
+            setIsOpen(false);
+          }
+        }}
+        className="chatbot-header cursor-grab active:cursor-grabbing p-4 border-b transition-all hover:opacity-95"
         style={{
           background: isDark
             ? 'linear-gradient(135deg, #8B5CF6, #3B5CCC)'
@@ -677,7 +729,10 @@ function VeronicaChatbot() {
             </div>
           </div>
           <button
-            onClick={() => setIsOpen(false)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(false);
+            }}
             className="text-white text-2xl opacity-80 hover:opacity-100 transition cursor-pointer"
             aria-label="Close chatbot"
           >
