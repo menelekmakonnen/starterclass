@@ -498,16 +498,21 @@ function Badge({ children }) {
 
 function VeronicaChatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasShownWelcome, setHasShownWelcome] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: 'Hello! I\'m Veronica, your luxury AI assistant. How may I help you today?' }
+    { role: 'assistant', content: 'Hi, I\'m Veronica. Look, it\'s simple: click the "Register Free" button to sign up for the Starterclass. Or, if you actually need help with something 🙄, go ahead and message me.' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [sessionId, setSessionId] = useState(() => {
     if (typeof window === "undefined") return '';
     return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   });
   const messagesEndRef = useRef(null);
+  const chatbotRef = useRef(null);
   const { theme, palette } = useTheme();
   const isDark = theme === "dark";
 
@@ -515,11 +520,56 @@ function VeronicaChatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Show welcome popup after 2 seconds
+  useEffect(() => {
+    if (!hasShownWelcome) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        setHasShownWelcome(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [hasShownWelcome]);
+
   useEffect(() => {
     if (isOpen) {
       scrollToBottom();
     }
   }, [messages, isOpen]);
+
+  // Drag handlers
+  const handleMouseDown = (e) => {
+    if (e.target.closest('.chatbot-header')) {
+      setIsDragging(true);
+      setDragStart({
+        x: e.clientX - position.x,
+        y: e.clientY - position.y
+      });
+    }
+  };
+
+  const handleMouseMove = useCallback((e) => {
+    if (isDragging) {
+      const newX = e.clientX - dragStart.x;
+      // Constrain to bottom of page only (y = 0)
+      setPosition({ x: newX, y: 0 });
+    }
+  }, [isDragging, dragStart]);
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove]);
 
   const sendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -571,60 +621,68 @@ function VeronicaChatbot() {
         onClick={() => setIsOpen(true)}
         className="fixed bottom-24 right-4 z-30 rounded-full p-4 transition-all hover:scale-105"
         style={{
-          background: `linear-gradient(135deg, ${palette.accentPrimary}, ${palette.accentSecondary})`,
-          boxShadow: `0 8px 32px ${isDark ? 'rgba(139,92,246,0.4)' : 'rgba(194,132,36,0.3)'}`,
-          border: `2px solid ${isDark ? 'rgba(200,161,69,0.3)' : 'rgba(194,132,36,0.2)'}`,
+          background: isDark
+            ? 'linear-gradient(135deg, #8B5CF6, #3B5CCC)'
+            : 'linear-gradient(135deg, #C28424, #7A3DF0)',
+          boxShadow: `0 8px 32px ${isDark ? 'rgba(139,92,246,0.5)' : 'rgba(194,132,36,0.4)'}`,
+          border: `2px solid ${isDark ? 'rgba(139,92,246,0.4)' : 'rgba(194,132,36,0.3)'}`,
         }}
         aria-label="Open Veronica chatbot"
       >
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="white" opacity="0.9"/>
-          <circle cx="8" cy="9" r="1.5" fill={palette.accentSecondary}/>
-          <circle cx="12" cy="9" r="1.5" fill={palette.accentSecondary}/>
-          <circle cx="16" cy="9" r="1.5" fill={palette.accentSecondary}/>
-          <path d="M8 12C8 12 9 14 12 14C15 14 16 12 16 12" stroke={palette.accentSecondary} strokeWidth="1.5" strokeLinecap="round"/>
-        </svg>
+        <span className="text-3xl">💬</span>
       </button>
     );
   }
 
   return (
     <div
-      className="fixed bottom-4 right-4 z-30 w-[380px] rounded-2xl overflow-hidden shadow-2xl"
+      ref={chatbotRef}
+      onMouseDown={handleMouseDown}
+      className="fixed z-30 w-[380px] rounded-2xl overflow-hidden shadow-2xl"
       style={{
-        background: isDark ? 'rgba(11,11,26,0.95)' : 'rgba(255,255,255,0.95)',
-        border: `2px solid ${isDark ? 'rgba(200,161,69,0.4)' : 'rgba(194,132,36,0.3)'}`,
+        background: isDark ? 'rgba(11,11,26,0.97)' : 'rgba(255,255,255,0.97)',
+        border: `2px solid ${isDark ? 'rgba(139,92,246,0.5)' : 'rgba(194,132,36,0.4)'}`,
         backdropFilter: 'blur(20px)',
-        boxShadow: `0 20px 60px ${isDark ? 'rgba(139,92,246,0.3)' : 'rgba(194,132,36,0.2)'}`,
+        boxShadow: `0 20px 60px ${isDark ? 'rgba(139,92,246,0.4)' : 'rgba(194,132,36,0.3)'}`,
         maxHeight: '600px',
+        bottom: '1rem',
+        right: position.x === 0 ? '1rem' : 'auto',
+        left: position.x !== 0 ? `${position.x}px` : 'auto',
+        cursor: isDragging ? 'grabbing' : 'default',
       }}
     >
-      {/* Header - Clickable to close */}
+      {/* Header - Draggable to move, clickable to close */}
       <div
-        onClick={() => setIsOpen(false)}
-        className="cursor-pointer p-4 border-b transition-all hover:opacity-90"
+        className="chatbot-header cursor-move p-4 border-b transition-all hover:opacity-95"
         style={{
-          background: `linear-gradient(135deg, ${palette.accentPrimary}, ${palette.accentSecondary})`,
+          background: isDark
+            ? 'linear-gradient(135deg, #8B5CF6, #3B5CCC)'
+            : 'linear-gradient(135deg, #C28424, #7A3DF0)',
           borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
         }}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div
-              className="w-10 h-10 rounded-full flex items-center justify-center"
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-all"
               style={{
                 background: 'rgba(255,255,255,0.2)',
                 border: '2px solid rgba(255,255,255,0.3)',
               }}
             >
-              <span className="text-xl">💎</span>
+              <span className="text-2xl">{isLoading ? '🤔' : '🙄'}</span>
             </div>
             <div>
               <div className="font-bold text-white text-lg tracking-wide">Veronica</div>
-              <div className="text-xs text-white opacity-80">Your Luxury AI Assistant</div>
             </div>
           </div>
-          <div className="text-white text-2xl opacity-80 hover:opacity-100 transition">×</div>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-white text-2xl opacity-80 hover:opacity-100 transition cursor-pointer"
+            aria-label="Close chatbot"
+          >
+            ×
+          </button>
         </div>
       </div>
 
@@ -1292,7 +1350,7 @@ function StarterclassLuxuryV8() {
   }, [isSiteGlowActive, siteGlowPoint, palette]);
 
   const upcomingModules = useMemo(
-    () => sessions.filter((s) => s.track === "paid").slice(0, 3),
+    () => sessions.filter((s) => s.track === "paid"),
     [sessions]
   );
 
@@ -1554,6 +1612,45 @@ function StarterclassLuxuryV8() {
                     View the full course (6 sessions)
                   </GlassButton>
                 </div>
+                <div className="mt-4 flex flex-wrap gap-3 items-center">
+                  <span className="text-sm font-semibold" style={{ color: palette.textPrimary }}>Share this event:</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const text = encodeURIComponent("🎓 Join me at the FREE AI Starterclass by ICUNI! Learn to customize ChatGPT, build projects, and master AI tools. Register now!");
+                      const url = encodeURIComponent(window.location.href);
+                      window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+                    }}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:scale-105"
+                    style={{
+                      background: '#25D366',
+                      color: 'white',
+                      border: 'none',
+                      boxShadow: '0 4px 12px rgba(37, 211, 102, 0.3)'
+                    }}
+                  >
+                    <span>📱</span>
+                    <span>WhatsApp</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const subject = encodeURIComponent("Join the FREE AI Starterclass");
+                      const body = encodeURIComponent("I wanted to share this amazing opportunity with you!\n\nThe FREE AI Starterclass by ICUNI teaches you how to customize ChatGPT, build projects, and master AI tools.\n\nRegister here: " + window.location.href);
+                      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+                    }}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:scale-105"
+                    style={{
+                      background: `linear-gradient(135deg, ${palette.accentPrimary}, ${palette.accentSecondary})`,
+                      color: 'white',
+                      border: 'none',
+                      boxShadow: palette.buttonShadow
+                    }}
+                  >
+                    <span>✉️</span>
+                    <span>Email</span>
+                  </button>
+                </div>
                 <div className="mt-4 flex flex-wrap gap-3 text-xs items-center">
                   <button
                     type="button"
@@ -1597,15 +1694,27 @@ function StarterclassLuxuryV8() {
         </Section>
 
         <Section className="pb-20" id="overview-tab">
+          <div className="mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: palette.textPrimary }}>
+              Explore the Starterclass
+            </h2>
+            <p className="text-sm" style={{ color: palette.textSecondary }}>
+              Click below to learn more about what you'll discover
+            </p>
+          </div>
           <div
-            className="flex items-center gap-2 p-1 rounded-2xl w-fit"
-            style={{ border: `1px solid ${palette.border}`, background: palette.surfaceSoft }}
+            className="flex items-center gap-3 p-2 rounded-2xl w-fit mx-auto md:mx-0 shadow-lg"
+            style={{
+              border: `2px solid ${palette.accentPrimary}`,
+              background: `linear-gradient(135deg, ${palette.surfaceSoft}, ${palette.surface})`,
+              boxShadow: `0 8px 24px ${isDark ? 'rgba(139,92,246,0.3)' : 'rgba(194,132,36,0.2)'}`
+            }}
           >
             {[
-              { k: "overview", t: "Overview" },
-              { k: "curriculum", t: "Curriculum" },
-              { k: "faq", t: "FAQ" },
-            ].map(({ k, t }) => (
+              { k: "overview", t: "Overview", icon: "📋" },
+              { k: "curriculum", t: "Curriculum", icon: "📚" },
+              { k: "faq", t: "FAQ", icon: "❓" },
+            ].map(({ k, t, icon }) => (
               <button
                 key={k}
                 onClick={() => {
@@ -1615,14 +1724,19 @@ function StarterclassLuxuryV8() {
                     setTab(k);
                   }
                 }}
-                className="px-4 py-2 rounded-xl text-sm font-semibold transition"
+                className="px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2"
                 style={{
-                  background: tab === k ? `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)` : "transparent",
-                  color: tab === k ? palette.textPrimary : palette.textSecondary,
-                  border: tab === k ? `1px solid ${palette.border}` : "1px solid transparent",
+                  background: tab === k
+                    ? `linear-gradient(135deg, ${palette.accentPrimary}, ${palette.accentSecondary})`
+                    : "transparent",
+                  color: tab === k ? "white" : palette.textPrimary,
+                  border: tab === k ? "none" : `1px solid ${palette.border}`,
+                  boxShadow: tab === k ? palette.buttonShadow : "none",
+                  fontSize: "1rem",
                 }}
               >
-                {t}
+                <span>{icon}</span>
+                <span>{t}</span>
               </button>
             ))}
           </div>
@@ -1936,60 +2050,6 @@ function StarterclassLuxuryV8() {
                 </div>
               </div>
               <div className="space-y-8" id="full-track-panel" ref={fullTrackSectionAnchorRef}>
-                <GlowCard className="p-6 md:p-8">
-                  <details
-                    open={fullTrackExpanded}
-                    onToggle={(event) => setFullTrackExpanded(event.currentTarget.open)}
-                    className="space-y-5"
-                  >
-                    <summary className="flex flex-wrap items-center justify-between gap-2 cursor-pointer">
-                      <h3 className="text-2xl font-semibold">Full course enrolment</h3>
-                      <span className="text-xs" style={{ color: palette.textMuted }}>
-                        {fullTrackExpanded ? "Hide details" : "Tap to view tuition & enrol"}
-                      </span>
-                    </summary>
-                    <div className="space-y-5 pt-2">
-                      <div className="space-y-2 text-sm" style={{ color: palette.textSecondary }}>
-                        <p>
-                          Six sessions · {formatCurrency(fullTrackTotalUSD)} total · pay {formatCurrency(fullTrackMonthlyUSD)} each month across November, December, and January.
-                        </p>
-                        <span className="text-xs" style={{ color: palette.textMuted }}>
-                          {earlyBirdActive
-                            ? `10% early-bird ends 15 Nov 2025 at 12:30 UK (${earlyBird.d}d ${String(earlyBird.h).padStart(2, "0")}h ${String(earlyBird.m).padStart(2, "0")}m remaining)`
-                            : "Early-bird window closed"}
-                        </span>
-                      </div>
-                      <ul className="grid md:grid-cols-2 gap-4">
-                        {FULL_TRACK_OUTCOMES.map((item) => (
-                          <li key={item} className="rounded-2xl border p-4 text-sm" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="text-xs" style={{ color: palette.textMuted }}>
-                        10% early-bird discount available until the Starterclass ends on 15 Nov 2025.
-                      </div>
-                      <div className="flex flex-wrap gap-3">
-                        <div ref={fullTrackPrimaryCtaRef}>
-                          <GlassButton
-                            onClick={() => triggerFullTrackForm("full_track_section", { plan: "full_track" })}
-                            className="px-6 py-3"
-                          >
-                            Join the Full 6-Session Course
-                          </GlassButton>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => triggerIntroForm("full_track_secondary")}
-                          className="text-sm underline underline-offset-4"
-                          style={{ color: palette.textSecondary }}
-                        >
-                          Start free – reserve your Starterclass seat
-                        </button>
-                      </div>
-                    </div>
-                  </details>
-                </GlowCard>
                 <GlowCard className="p-6 md:p-8" id="certificate">
                   <div className="grid lg:grid-cols-[1fr_1fr] gap-6 items-start">
                     <div
@@ -2663,7 +2723,7 @@ function AlternativeRegistrationModal({ onClose, onCalendar }) {
   const interestOptions = useMemo(
     () => [
       { value: "starterclass", label: "FREE 90 minute AI Starterclass session" },
-      { value: "full_course", label: "Full 9 sessions Starterclass" },
+      { value: "full_course", label: "Full 6 sessions Starterclass" },
     ],
     []
   );
