@@ -1549,6 +1549,44 @@ function StarterclassLuxuryV8() {
     );
   }
 
+  const heroAudienceLine = "Free Starterclass for business leaders, consultants, and curious operators — no coding required.";
+  const stickyShouldRender = stickyVisible && !stickyDismissed;
+
+  const handleStickyDismiss = useCallback(() => {
+    setStickyDismissed(true);
+    track("sticky_cta_dismiss", {});
+  }, []);
+
+  const handleStickyMinimize = useCallback(() => {
+    setStickyMinimized(true);
+    track("sticky_cta_minimize", {});
+  }, []);
+
+  const handleStickyRestore = useCallback(() => {
+    setStickyMinimized(false);
+    track("sticky_cta_restore", {});
+  }, []);
+
+  const handleNavClick = useCallback(
+    (href, tabTarget) => {
+      track("nav_click", { href, tabTarget: tabTarget || null });
+      if (tabTarget) {
+        if (tabTarget === "curriculum") {
+          revealPaidAndGoCurriculum("nav_link");
+        } else {
+          setTab(tabTarget);
+        }
+      }
+      requestAnimationFrame(() => {
+        const el = document.querySelector(href);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    },
+    [revealPaidAndGoCurriculum]
+  );
+
   return (
     <ThemeProvider theme={activeTheme} palette={palette}>
       <main
@@ -3582,37 +3620,3 @@ function CalendarModal({ onClose, onAdd }) {
     </div>
   );
 }
-  const handleNavClick = useCallback(
-    (href, tabTarget) => {
-      track("nav_click", { href, tabTarget: tabTarget || null });
-      if (tabTarget) {
-        if (tabTarget === "curriculum") {
-          revealPaidAndGoCurriculum("nav_link");
-        } else {
-          setTab(tabTarget);
-        }
-      }
-      requestAnimationFrame(() => {
-        const el = document.querySelector(href);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      });
-    },
-    [revealPaidAndGoCurriculum]
-  );
-
-const heroAudienceLine = "Free Starterclass for business leaders, consultants, and curious operators — no coding required.";
-  const stickyShouldRender = stickyVisible && !stickyDismissed;
-  const handleStickyDismiss = useCallback(() => {
-    setStickyDismissed(true);
-    track("sticky_cta_dismiss", {});
-  }, []);
-  const handleStickyMinimize = useCallback(() => {
-    setStickyMinimized(true);
-    track("sticky_cta_minimize", {});
-  }, []);
-  const handleStickyRestore = useCallback(() => {
-    setStickyMinimized(false);
-    track("sticky_cta_restore", {});
-  }, []);
