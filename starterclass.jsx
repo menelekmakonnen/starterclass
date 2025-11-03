@@ -504,17 +504,30 @@ function VeronicaChatbot() {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [dock, setDock] = useState('right');
   const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [dragLeft, setDragLeft] = useState(null);
+  const [viewportWidth, setViewportWidth] = useState(() =>
+    typeof window === 'undefined' ? 1024 : window.innerWidth
+  );
   const [sessionId, setSessionId] = useState(() => {
     if (typeof window === "undefined") return '';
     return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   });
   const messagesEndRef = useRef(null);
   const chatbotRef = useRef(null);
+  const bubbleRef = useRef(null);
+  const dragMetaRef = useRef({ pointerOffset: 0, width: 0, lastLeft: 0 });
+  const dragIntentRef = useRef({ active: false, moved: false, source: null });
   const { theme, palette } = useTheme();
   const isDark = theme === "dark";
+  const isMobileLayout = viewportWidth < 640;
+  const edgeOffset = isMobileLayout ? 12 : 16;
+  const moodEmoji = useMemo(() => {
+    if (isLoading) return '🤔';
+    if (!isOpen && hasShownWelcome) return '🥱';
+    return '🙄';
+  }, [isLoading, isOpen, hasShownWelcome]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -538,38 +551,132 @@ function VeronicaChatbot() {
   }, [messages, isOpen]);
 
   // Drag handlers
-  const handleMouseDown = (e) => {
-    if (e.target.closest('.chatbot-header')) {
-      setIsDragging(true);
-      setDragStart({
-        x: e.clientX - position.x,
-        y: e.clientY - position.y
-      });
-    }
-  };
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const handleResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-  const handleMouseMove = useCallback((e) => {
-    if (isDragging) {
-      const newX = e.clientX - dragStart.x;
-      // Constrain to bottom of page only (y = 0)
-      setPosition({ x: newX, y: 0 });
-    }
-  }, [isDragging, dragStart]);
+  const startDrag = useCallback((clientX, element, source) => {
+    if (!element) return;
+    const width = element.offsetWidth || 0;
+    const minLeft = edgeOffset;
+    const maxLeft = Math.max(minLeft, viewportWidth - width - edgeOffset);
+    const initialLeft = dock === 'left' ? minLeft : maxLeft;
+    dragMetaRef.current = {
+      pointerOffset: clientX - initialLeft,
+      width,
+      lastLeft: initialLeft,
+    };
+    dragIntentRef.current = { active: true, moved: false, source };
+    setDragLeft(initialLeft);
+    setIsDragging(true);
+  }, [dock, edgeOffset, viewportWidth]);
 
-  const handleMouseUp = () => {
+  const updateDrag = useCallback((clientX) => {
+    if (!isDragging) return;
+    const { pointerOffset, width } = dragMetaRef.current;
+    const minLeft = edgeOffset;
+    const maxLeft = Math.max(minLeft, viewportWidth - width - edgeOffset);
+    const nextLeft = Math.min(Math.max(minLeft, clientX - pointerOffset), maxLeft);
+    if (
+      dragIntentRef.current.source === 'bubble' &&
+      Math.abs(nextLeft - dragMetaRef.current.lastLeft) > 1
+    ) {
+      dragIntentRef.current.moved = true;
+    }
+    dragMetaRef.current.lastLeft = nextLeft;
+    setDragLeft(nextLeft);
+  }, [edgeOffset, isDragging, viewportWidth]);
+
+  const finishDrag = useCallback(() => {
+    if (!isDragging) return;
+    const { width, lastLeft } = dragMetaRef.current;
+    const center = lastLeft + width / 2;
+    setDock(center < viewportWidth / 2 ? 'left' : 'right');
     setIsDragging(false);
-  };
+    setDragLeft(null);
+    const intent = dragIntentRef.current;
+    dragIntentRef.current = intent.source === 'bubble'
+      ? { active: false, moved: intent.moved, source: 'bubble' }
+      : { active: false, moved: false, source: null };
+  }, [isDragging, viewportWidth]);
 
   useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      return () => {
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-      };
+    if (!isDragging) return undefined;
+    const handleMouseMove = (event) => updateDrag(event.clientX);
+    const handleTouchMove = (event) => {
+      if (event.touches[0]) {
+        updateDrag(event.touches[0].clientX);
+        event.preventDefault();
+      }
+    };
+    const handlePointerUp = () => finishDrag();
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('mouseup', handlePointerUp);
+    window.addEventListener('touchend', handlePointerUp);
+    window.addEventListener('touchcancel', handlePointerUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('mouseup', handlePointerUp);
+      window.removeEventListener('touchend', handlePointerUp);
+      window.removeEventListener('touchcancel', handlePointerUp);
+    };
+  }, [finishDrag, isDragging, updateDrag]);
+
+  const handleHeaderMouseDown = (event) => {
+    if (event.target.closest('[data-chatbot-close]')) return;
+    if (event.target.closest('.chatbot-header')) {
+      event.preventDefault();
+      startDrag(event.clientX, chatbotRef.current, 'chat');
     }
-  }, [isDragging, handleMouseMove]);
+  };
+
+  const handleHeaderTouchStart = (event) => {
+    if (event.target.closest('[data-chatbot-close]')) return;
+    if (event.target.closest('.chatbot-header')) {
+      const touch = event.touches[0];
+      if (touch) {
+        startDrag(touch.clientX, chatbotRef.current, 'chat');
+      }
+      event.preventDefault();
+    }
+  };
+
+  const handleBubbleMouseDown = (event) => {
+    if (event.button !== undefined && event.button !== 0) return;
+    event.preventDefault();
+    startDrag(event.clientX, bubbleRef.current, 'bubble');
+  };
+
+  const handleBubbleTouchStart = (event) => {
+    const touch = event.touches[0];
+    if (touch) {
+      startDrag(touch.clientX, bubbleRef.current, 'bubble');
+    }
+  };
+
+  const handleBubbleClick = () => {
+    if (dragIntentRef.current.source === 'bubble' && dragIntentRef.current.moved) {
+      dragIntentRef.current = { active: false, moved: false, source: null };
+      return;
+    }
+    dragIntentRef.current = { active: false, moved: false, source: null };
+    setIsOpen(true);
+  };
+
+  const horizontalStyles = isDragging && dragLeft !== null
+    ? { left: `${dragLeft}px`, right: 'auto' }
+    : dock === 'left'
+      ? { left: `${edgeOffset}px`, right: 'auto' }
+      : { right: `${edgeOffset}px`, left: 'auto' };
+
+  const bottomOffset = `calc(env(safe-area-inset-bottom, 0px) + ${edgeOffset}px)`;
+  const bubbleSize = isMobileLayout ? 60 : 72;
+  const messagesHeight = isMobileLayout ? 'min(55vh, 420px)' : '420px';
 
   const sendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -618,18 +725,25 @@ function VeronicaChatbot() {
   if (!isOpen) {
     return (
       <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-24 right-4 z-30 rounded-full p-4 transition-all hover:scale-105"
+        ref={bubbleRef}
+        onClick={handleBubbleClick}
+        onMouseDown={handleBubbleMouseDown}
+        onTouchStart={handleBubbleTouchStart}
+        className="fixed z-30 flex items-center justify-center rounded-full transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C28424] dark:focus:ring-[#8B5CF6]"
         style={{
           background: isDark
             ? 'linear-gradient(135deg, #8B5CF6, #3B5CCC)'
             : 'linear-gradient(135deg, #C28424, #7A3DF0)',
           boxShadow: `0 8px 32px ${isDark ? 'rgba(139,92,246,0.5)' : 'rgba(194,132,36,0.4)'}`,
           border: `2px solid ${isDark ? 'rgba(139,92,246,0.4)' : 'rgba(194,132,36,0.3)'}`,
+          width: `${bubbleSize}px`,
+          height: `${bubbleSize}px`,
+          bottom: bottomOffset,
+          ...horizontalStyles,
         }}
         aria-label="Open Veronica chatbot"
       >
-        <span className="text-3xl">💬</span>
+        <span className="text-3xl">{moodEmoji}</span>
       </button>
     );
   }
@@ -637,23 +751,24 @@ function VeronicaChatbot() {
   return (
     <div
       ref={chatbotRef}
-      onMouseDown={handleMouseDown}
-      className="fixed z-30 w-[380px] rounded-2xl overflow-hidden shadow-2xl"
+      onMouseDown={handleHeaderMouseDown}
+      onTouchStart={handleHeaderTouchStart}
+      className="fixed z-30 rounded-2xl overflow-hidden shadow-2xl"
       style={{
         background: isDark ? 'rgba(11,11,26,0.97)' : 'rgba(255,255,255,0.97)',
         border: `2px solid ${isDark ? 'rgba(139,92,246,0.5)' : 'rgba(194,132,36,0.4)'}`,
         backdropFilter: 'blur(20px)',
         boxShadow: `0 20px 60px ${isDark ? 'rgba(139,92,246,0.4)' : 'rgba(194,132,36,0.3)'}`,
-        maxHeight: '600px',
-        bottom: '1rem',
-        right: position.x === 0 ? '1rem' : 'auto',
-        left: position.x !== 0 ? `${position.x}px` : 'auto',
+        maxHeight: 'min(600px, calc(100vh - 120px))',
+        width: `min(380px, calc(100vw - ${edgeOffset * 2}px))`,
+        bottom: bottomOffset,
+        ...horizontalStyles,
         cursor: isDragging ? 'grabbing' : 'default',
       }}
     >
       {/* Header - Draggable to move, clickable to close */}
       <div
-        className="chatbot-header cursor-move p-4 border-b transition-all hover:opacity-95"
+        className="chatbot-header cursor-move border-b transition-all hover:opacity-95 p-3 sm:p-4"
         style={{
           background: isDark
             ? 'linear-gradient(135deg, #8B5CF6, #3B5CCC)'
@@ -670,15 +785,19 @@ function VeronicaChatbot() {
                 border: '2px solid rgba(255,255,255,0.3)',
               }}
             >
-              <span className="text-2xl">{isLoading ? '🤔' : '🙄'}</span>
+              <span className="text-2xl">{moodEmoji}</span>
             </div>
             <div>
               <div className="font-bold text-white text-lg tracking-wide">Veronica</div>
             </div>
           </div>
           <button
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              dragIntentRef.current = { active: false, moved: false, source: null };
+              setIsOpen(false);
+            }}
             className="text-white text-2xl opacity-80 hover:opacity-100 transition cursor-pointer"
+            data-chatbot-close
             aria-label="Close chatbot"
           >
             ×
@@ -688,9 +807,9 @@ function VeronicaChatbot() {
 
       {/* Messages */}
       <div
-        className="overflow-y-auto p-4 space-y-4"
+        className="overflow-y-auto p-3 sm:p-4 space-y-4"
         style={{
-          height: '420px',
+          height: messagesHeight,
           background: isDark ? 'rgba(11,11,26,0.6)' : 'rgba(255,255,255,0.8)',
         }}
       >
@@ -736,7 +855,7 @@ function VeronicaChatbot() {
 
       {/* Input */}
       <div
-        className="p-4 border-t"
+        className="border-t p-3 sm:p-4"
         style={{
           background: isDark ? 'rgba(17,17,34,0.95)' : 'rgba(255,255,255,0.95)',
           borderColor: palette.border,
@@ -1208,6 +1327,7 @@ function StarterclassLuxuryV8() {
   const { d, h, m, s, expired } = useCountdown(INTRO_START_ISO);
   const earlyBird = useCountdown(EARLY_BIRD_DEADLINE_ISO);
   const palette = useMemo(() => getPalette(activeTheme), [activeTheme]);
+  const isDark = activeTheme === "dark";
   const formatCurrency = useCallback((amountUSD, forced) => formatCurrencyValue(amountUSD, forced || currency), [currency]);
   const heroHighlights = HERO_HIGHLIGHTS;
   const announcementMessages = useMemo(() => {
@@ -1429,6 +1549,44 @@ function StarterclassLuxuryV8() {
       "noopener"
     );
   }
+
+  const heroAudienceLine = "Free Starterclass for business leaders, consultants, and curious operators — no coding required.";
+  const stickyShouldRender = stickyVisible && !stickyDismissed;
+
+  const handleStickyDismiss = useCallback(() => {
+    setStickyDismissed(true);
+    track("sticky_cta_dismiss", {});
+  }, []);
+
+  const handleStickyMinimize = useCallback(() => {
+    setStickyMinimized(true);
+    track("sticky_cta_minimize", {});
+  }, []);
+
+  const handleStickyRestore = useCallback(() => {
+    setStickyMinimized(false);
+    track("sticky_cta_restore", {});
+  }, []);
+
+  const handleNavClick = useCallback(
+    (href, tabTarget) => {
+      track("nav_click", { href, tabTarget: tabTarget || null });
+      if (tabTarget) {
+        if (tabTarget === "curriculum") {
+          revealPaidAndGoCurriculum("nav_link");
+        } else {
+          setTab(tabTarget);
+        }
+      }
+      requestAnimationFrame(() => {
+        const el = document.querySelector(href);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    },
+    [revealPaidAndGoCurriculum]
+  );
 
   return (
     <ThemeProvider theme={activeTheme} palette={palette}>
@@ -3463,37 +3621,3 @@ function CalendarModal({ onClose, onAdd }) {
     </div>
   );
 }
-  const handleNavClick = useCallback(
-    (href, tabTarget) => {
-      track("nav_click", { href, tabTarget: tabTarget || null });
-      if (tabTarget) {
-        if (tabTarget === "curriculum") {
-          revealPaidAndGoCurriculum("nav_link");
-        } else {
-          setTab(tabTarget);
-        }
-      }
-      requestAnimationFrame(() => {
-        const el = document.querySelector(href);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      });
-    },
-    [revealPaidAndGoCurriculum]
-  );
-
-const heroAudienceLine = "Free Starterclass for business leaders, consultants, and curious operators — no coding required.";
-  const stickyShouldRender = stickyVisible && !stickyDismissed;
-  const handleStickyDismiss = useCallback(() => {
-    setStickyDismissed(true);
-    track("sticky_cta_dismiss", {});
-  }, []);
-  const handleStickyMinimize = useCallback(() => {
-    setStickyMinimized(true);
-    track("sticky_cta_minimize", {});
-  }, []);
-  const handleStickyRestore = useCallback(() => {
-    setStickyMinimized(false);
-    track("sticky_cta_restore", {});
-  }, []);
