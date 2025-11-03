@@ -1327,6 +1327,7 @@ function StarterclassLuxuryV8() {
   const { d, h, m, s, expired } = useCountdown(INTRO_START_ISO);
   const earlyBird = useCountdown(EARLY_BIRD_DEADLINE_ISO);
   const palette = useMemo(() => getPalette(activeTheme), [activeTheme]);
+  const isDark = activeTheme === "dark";
   const formatCurrency = useCallback((amountUSD, forced) => formatCurrencyValue(amountUSD, forced || currency), [currency]);
   const heroHighlights = HERO_HIGHLIGHTS;
   const announcementMessages = useMemo(() => {
