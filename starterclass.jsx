@@ -286,6 +286,8 @@ const FAQ_ITEMS = [
   },
 ];
 
+const VERONICA_IDLE_EMOJIS = ["🙄", "😏", "🥱", "😌", "😴"];
+
 const TESTIMONIALS = [
   {
     quote:
@@ -499,21 +501,89 @@ function Badge({ children }) {
 function VeronicaChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasShownWelcome, setHasShownWelcome] = useState(false);
-  const [messages, setMessages] = useState([
-    { role: 'assistant', content: 'Hi, I\'m Veronica. Look, it\'s simple: click the "Register Free" button to sign up for the Starterclass. Or, if you actually need help with something 🙄, go ahead and message me.' }
+  const handleRegisterLink = useCallback((event) => {
+    event.preventDefault();
+    if (typeof document !== "undefined") {
+      const target = document.getElementById("register-free-cta");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+        if (typeof target.focus === "function") {
+          try {
+            target.focus({ preventScroll: true });
+          } catch {
+            target.focus();
+          }
+        }
+        target.click();
+        return;
+      }
+    }
+    if (typeof window !== "undefined") {
+      window.location.hash = "register-free-cta";
+    }
+  }, []);
+  const welcomeMessages = useMemo(
+    () => [
+      (
+        <span>
+          Hi, I&apos;m Veronica. The fastest route? Tap{" "}
+          <a
+            href="#register-free-cta"
+            onClick={handleRegisterLink}
+            className="font-semibold underline"
+          >
+            Register free
+          </a>{" "}
+          and claim your seat.
+        </span>
+      ),
+      (
+        <span>
+          Still scrolling? It&apos;s a 90-minute live build where we tune your Projects and vibe-code
+          together.{" "}
+          <a
+            href="#register-free-cta"
+            onClick={handleRegisterLink}
+            className="font-semibold underline"
+          >
+            Register free
+          </a>{" "}
+          before someone else steals your slot.
+        </span>
+      ),
+      (
+        <span>
+          Prefer a DM? Nope. Smash{" "}
+          <a
+            href="#register-free-cta"
+            onClick={handleRegisterLink}
+            className="font-semibold underline"
+          >
+            Register free
+          </a>{" "}
+          and bring a friend. I&apos;ll save you a front-row pixel.
+        </span>
+      ),
+    ],
+    [handleRegisterLink]
+  );
+  const [messages, setMessages] = useState(() => [
+    { role: "assistant", content: welcomeMessages[0] },
   ]);
-  const [inputValue, setInputValue] = useState('');
+  const [nextWelcomeIndex, setNextWelcomeIndex] = useState(1);
+  const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [dock, setDock] = useState('right');
+  const [dock, setDock] = useState("right");
   const [isDragging, setIsDragging] = useState(false);
   const [dragLeft, setDragLeft] = useState(null);
   const [viewportWidth, setViewportWidth] = useState(() =>
-    typeof window === 'undefined' ? 1024 : window.innerWidth
+    typeof window === "undefined" ? 1024 : window.innerWidth
   );
   const [sessionId, setSessionId] = useState(() => {
-    if (typeof window === "undefined") return '';
+    if (typeof window === "undefined") return "";
     return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   });
+  const [idleEmojiIndex, setIdleEmojiIndex] = useState(0);
   const messagesEndRef = useRef(null);
   const chatbotRef = useRef(null);
   const bubbleRef = useRef(null);
@@ -524,10 +594,9 @@ function VeronicaChatbot() {
   const isMobileLayout = viewportWidth < 640;
   const edgeOffset = isMobileLayout ? 12 : 16;
   const moodEmoji = useMemo(() => {
-    if (isLoading) return '🤔';
-    if (!isOpen && hasShownWelcome) return '🥱';
-    return '🙄';
-  }, [isLoading, isOpen, hasShownWelcome]);
+    if (isLoading) return "🤔";
+    return VERONICA_IDLE_EMOJIS[idleEmojiIndex] || VERONICA_IDLE_EMOJIS[0];
+  }, [idleEmojiIndex, isLoading]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -543,6 +612,34 @@ function VeronicaChatbot() {
       return () => clearTimeout(timer);
     }
   }, [hasShownWelcome]);
+
+  useEffect(() => {
+    if (!hasShownWelcome || !isOpen) return undefined;
+    if (nextWelcomeIndex >= welcomeMessages.length) return undefined;
+    const timer = setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: welcomeMessages[nextWelcomeIndex] },
+      ]);
+      setNextWelcomeIndex((idx) => idx + 1);
+    }, 2600);
+    return () => clearTimeout(timer);
+  }, [hasShownWelcome, isOpen, nextWelcomeIndex, welcomeMessages]);
+
+  useEffect(() => {
+    if (isOpen || isLoading) return undefined;
+    const id = setInterval(() => {
+      setIdleEmojiIndex((prev) => {
+        if (VERONICA_IDLE_EMOJIS.length <= 1) return prev;
+        const available = VERONICA_IDLE_EMOJIS.map((_, idx) => idx).filter(
+          (idx) => idx !== prev
+        );
+        const next = available[Math.floor(Math.random() * available.length)];
+        return next;
+      });
+    }, 4800);
+    return () => clearInterval(id);
+  }, [isOpen, isLoading]);
 
   useEffect(() => {
     if (isOpen) {
@@ -580,10 +677,7 @@ function VeronicaChatbot() {
     const minLeft = edgeOffset;
     const maxLeft = Math.max(minLeft, viewportWidth - width - edgeOffset);
     const nextLeft = Math.min(Math.max(minLeft, clientX - pointerOffset), maxLeft);
-    if (
-      dragIntentRef.current.source === 'bubble' &&
-      Math.abs(nextLeft - dragMetaRef.current.lastLeft) > 1
-    ) {
+    if (Math.abs(nextLeft - dragMetaRef.current.lastLeft) > 1) {
       dragIntentRef.current.moved = true;
     }
     dragMetaRef.current.lastLeft = nextLeft;
@@ -598,9 +692,11 @@ function VeronicaChatbot() {
     setIsDragging(false);
     setDragLeft(null);
     const intent = dragIntentRef.current;
-    dragIntentRef.current = intent.source === 'bubble'
-      ? { active: false, moved: intent.moved, source: 'bubble' }
-      : { active: false, moved: false, source: null };
+    dragIntentRef.current = {
+      active: false,
+      moved: intent.moved,
+      source: intent.source || null,
+    };
   }, [isDragging, viewportWidth]);
 
   useEffect(() => {
@@ -665,7 +761,21 @@ function VeronicaChatbot() {
       return;
     }
     dragIntentRef.current = { active: false, moved: false, source: null };
+    if (!hasShownWelcome) {
+      setHasShownWelcome(true);
+    }
     setIsOpen(true);
+  };
+
+  const handleHeaderClick = (event) => {
+    if (event.target.closest('[data-chatbot-close]')) return;
+    const { source, moved } = dragIntentRef.current;
+    if (source === 'chat' && moved) {
+      dragIntentRef.current = { active: false, moved: false, source: null };
+      return;
+    }
+    dragIntentRef.current = { active: false, moved: false, source: null };
+    setIsOpen(false);
   };
 
   const horizontalStyles = isDragging && dragLeft !== null
@@ -674,7 +784,9 @@ function VeronicaChatbot() {
       ? { left: `${edgeOffset}px`, right: 'auto' }
       : { right: `${edgeOffset}px`, left: 'auto' };
 
-  const bottomOffset = `calc(env(safe-area-inset-bottom, 0px) + ${edgeOffset}px)`;
+  const baseBottomOffset = `calc(env(safe-area-inset-bottom, 0px) + ${edgeOffset}px)`;
+  const bubbleBottomOffset = `calc(env(safe-area-inset-bottom, 0px) + ${edgeOffset + (isMobileLayout ? 56 : 72)}px)`;
+  const panelBottomOffset = baseBottomOffset;
   const bubbleSize = isMobileLayout ? 60 : 72;
   const messagesHeight = isMobileLayout ? 'min(55vh, 420px)' : '420px';
 
@@ -738,7 +850,7 @@ function VeronicaChatbot() {
           border: `2px solid ${isDark ? 'rgba(139,92,246,0.4)' : 'rgba(194,132,36,0.3)'}`,
           width: `${bubbleSize}px`,
           height: `${bubbleSize}px`,
-          bottom: bottomOffset,
+          bottom: bubbleBottomOffset,
           ...horizontalStyles,
         }}
         aria-label="Open Veronica chatbot"
@@ -761,7 +873,7 @@ function VeronicaChatbot() {
         boxShadow: `0 20px 60px ${isDark ? 'rgba(139,92,246,0.4)' : 'rgba(194,132,36,0.3)'}`,
         maxHeight: 'min(600px, calc(100vh - 120px))',
         width: `min(380px, calc(100vw - ${edgeOffset * 2}px))`,
-        bottom: bottomOffset,
+        bottom: panelBottomOffset,
         ...horizontalStyles,
         cursor: isDragging ? 'grabbing' : 'default',
       }}
@@ -769,6 +881,7 @@ function VeronicaChatbot() {
       {/* Header - Draggable to move, clickable to close */}
       <div
         className="chatbot-header cursor-move border-b transition-all hover:opacity-95 p-3 sm:p-4"
+        onClick={handleHeaderClick}
         style={{
           background: isDark
             ? 'linear-gradient(135deg, #8B5CF6, #3B5CCC)'
@@ -1303,11 +1416,8 @@ function StarterclassLuxuryV8() {
     }
   });
   const [announcementIndex, setAnnouncementIndex] = useState(0);
-  const [stickyVisible, setStickyVisible] = useState(false);
   const [overviewFocus, setOverviewFocus] = useState(() => OVERVIEW_WINS[0]?.key || "projects");
   const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const [stickyDismissed, setStickyDismissed] = useState(false);
-  const [stickyMinimized, setStickyMinimized] = useState(false);
   const [openFaq, setOpenFaq] = useState(FAQ_ITEMS[0]?.question || "");
   const [showTerms, setShowTerms] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
@@ -1376,23 +1486,6 @@ function StarterclassLuxuryV8() {
     }, 20000);
     return () => clearInterval(rotation);
   }, [testimonials.length]);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const doc = document.documentElement;
-      const threshold = doc.scrollHeight * 0.25;
-      setStickyVisible(window.scrollY > threshold);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    if (!stickyVisible) {
-      setStickyMinimized(false);
-    }
-  }, [stickyVisible]);
 
   useEffect(() => {
     const node = fullTrackPrimaryCtaRef.current;
@@ -1479,6 +1572,89 @@ function StarterclassLuxuryV8() {
     [sessions]
   );
 
+  const structuredData = useMemo(() => {
+    const organizer = {
+      "@type": "Organization",
+      "name": "ICUNI",
+      "url": "https://starterclass.icuni.org/",
+    };
+
+    const event = {
+      "@type": "Event",
+      "@id": "https://starterclass.icuni.org/#starterclass-event",
+      "name": "Free 90-minute AI Starterclass — Customise ChatGPT Projects & Build Your First Agent",
+      "description":
+        "Live online Starterclass on 15 November 2025 covering ChatGPT Projects, vibe-coded builds, and reusable prompt systems.",
+      "startDate": INTRO_START_ISO,
+      "endDate": INTRO_END_ISO,
+      "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "isAccessibleForFree": true,
+      "location": {
+        "@type": "VirtualLocation",
+        "url": "https://starterclass.icuni.org/",
+      },
+      "organizer": organizer,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://starterclass.icuni.org/#register-free-cta",
+      },
+      "url": "https://starterclass.icuni.org/",
+    };
+
+    const courseInstances = MONTH_BUNDLES.map((bundle) => {
+      const bundleSessions = SESSIONS.filter((session) => bundle.modules.includes(session.k));
+      if (!bundleSessions.length) return null;
+      const startDate = bundleSessions.reduce(
+        (earliest, session) => (earliest && earliest < session.start ? earliest : session.start),
+        bundleSessions[0]?.start
+      );
+      const endDate = bundleSessions.reduce(
+        (latest, session) => (latest && latest > session.end ? latest : session.end),
+        bundleSessions[0]?.end
+      );
+      const moduleTitles = bundleSessions.map((session) => session.title).join("; ");
+      return {
+        "@type": "CourseInstance",
+        "name": `${bundle.label} — ICUNI Full Track`,
+        "startDate": startDate,
+        "endDate": endDate,
+        "courseMode": "https://schema.org/OnlineCourse",
+        "location": {
+          "@type": "VirtualLocation",
+          "url": "https://starterclass.icuni.org/",
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": String(bundle.priceUSD),
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://starterclass.icuni.org/#full-track-panel",
+        },
+        "description": moduleTitles,
+      };
+    }).filter(Boolean);
+
+    const course = {
+      "@type": "Course",
+      "@id": "https://starterclass.icuni.org/#starterclass-course",
+      "name": "ICUNI Six-session Cohort: AI Project Customisation, Agent Systems, and N8N Automation",
+      "description":
+        "Build an autonomous assistant, ship a vibe-coded site, and master prompt systems with a verifiable completion dossier.",
+      "provider": organizer,
+      "url": "https://starterclass.icuni.org/",
+      ...(courseInstances.length ? { hasCourseInstance: courseInstances } : {}),
+    };
+
+    return {
+      "@context": "https://schema.org",
+      "@graph": [event, course],
+    };
+  }, []);
+
   const handleCurrencySwitch = useCallback((code) => {
     setCurrency(code);
   }, []);
@@ -1551,23 +1727,6 @@ function StarterclassLuxuryV8() {
   }
 
   const heroAudienceLine = "Free Starterclass for business leaders, consultants, and curious operators — no coding required.";
-  const stickyShouldRender = stickyVisible && !stickyDismissed;
-
-  const handleStickyDismiss = useCallback(() => {
-    setStickyDismissed(true);
-    track("sticky_cta_dismiss", {});
-  }, []);
-
-  const handleStickyMinimize = useCallback(() => {
-    setStickyMinimized(true);
-    track("sticky_cta_minimize", {});
-  }, []);
-
-  const handleStickyRestore = useCallback(() => {
-    setStickyMinimized(false);
-    track("sticky_cta_restore", {});
-  }, []);
-
   const handleNavClick = useCallback(
     (href, tabTarget) => {
       track("nav_click", { href, tabTarget: tabTarget || null });
@@ -1590,14 +1749,19 @@ function StarterclassLuxuryV8() {
 
   return (
     <ThemeProvider theme={activeTheme} palette={palette}>
-      <main
-        className={`min-h-screen ${themeClass}`}
-        style={{
-          background: palette.background,
-          color: palette.textPrimary,
-          transition: "background 300ms ease, color 300ms ease",
-        }}
-      >
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        <main
+          className={`min-h-screen ${themeClass}`}
+          style={{
+            background: palette.background,
+            color: palette.textPrimary,
+            transition: "background 300ms ease, color 300ms ease",
+          }}
+        >
         {themeOverrides && <style>{themeOverrides}</style>}
 
         <div className="pointer-events-none fixed inset-0 -z-10">
@@ -1765,7 +1929,7 @@ function StarterclassLuxuryV8() {
                   )}
                 </div>
                 <div className="mt-4 flex flex-wrap gap-3">
-                  <GlassButton onClick={() => triggerIntroForm("hero_primary")}>Register free</GlassButton>
+                  <GlassButton id="register-free-cta" onClick={() => triggerIntroForm("hero_primary")}>Register free</GlassButton>
                   <GlassButton variant="secondary" onClick={() => revealPaidAndGoCurriculum("hero_secondary")} className="px-5 py-3">
                     View the full course (6 sessions)
                   </GlassButton>
@@ -2457,54 +2621,6 @@ function StarterclassLuxuryV8() {
             </Section>
           </footer>
 
-          {stickyShouldRender && !stickyMinimized && (
-            <div className="fixed inset-x-0 bottom-0 z-40">
-              <div className="mx-auto max-w-5xl px-4 pb-6">
-                <GlowCard className="px-5 py-4 flex flex-wrap items-center justify-between gap-3">
-                  <div className="text-sm" style={{ color: palette.textSecondary }}>
-                    Register free for the Starterclass (15 Nov · 11:00 AM)
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <GlassButton onClick={() => triggerIntroForm("sticky_bar")} className="px-5 py-2 text-sm">
-                      Register free
-                    </GlassButton>
-                    <button
-                      type="button"
-                      className="text-xs underline underline-offset-4"
-                      style={{ color: palette.textSecondary }}
-                      onClick={handleStickyMinimize}
-                    >
-                      Minimise
-                    </button>
-                    <button
-                      type="button"
-                      className="text-xs"
-                      style={{ color: palette.textMuted }}
-                      onClick={handleStickyDismiss}
-                      aria-label="Dismiss reservation reminder"
-                    >
-                      ×
-                    </button>
-                  </div>
-                </GlowCard>
-              </div>
-            </div>
-          )}
-          {stickyShouldRender && stickyMinimized && (
-            <button
-              type="button"
-              className="fixed bottom-4 right-4 z-40 rounded-full px-4 py-2 text-xs font-semibold shadow-lg"
-              style={{
-                background: palette.accentSecondary,
-                color: "white",
-                boxShadow: palette.shadow,
-              }}
-              onClick={handleStickyRestore}
-            >
-              Register for the Starterclass
-            </button>
-          )}
-
           {modalOpen && (
             <div className="fixed inset-0 z-50 grid place-items-center p-4">
               <div className="absolute inset-0 backdrop-blur" style={{ background: activeTheme === "dark" ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }} onClick={closeModal} />
@@ -2639,6 +2755,7 @@ function StarterclassLuxuryV8() {
 
         </>
       </main>
+      </>
     </ThemeProvider>
   );
 }
