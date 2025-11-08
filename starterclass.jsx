@@ -522,55 +522,25 @@ function VeronicaChatbot() {
       window.location.hash = "register-free-cta";
     }
   }, []);
-  const welcomeMessages = useMemo(
-    () => [
-      (
-        <span>
-          Hi, I&apos;m Veronica. The fastest route? Tap{" "}
-          <a
-            href="#register-free-cta"
-            onClick={handleRegisterLink}
-            className="font-semibold underline"
-          >
-            Register free
-          </a>{" "}
-          and claim your seat.
-        </span>
-      ),
-      (
-        <span>
-          Still scrolling? It&apos;s a 90-minute live build where we tune your Projects and vibe-code
-          together.{" "}
-          <a
-            href="#register-free-cta"
-            onClick={handleRegisterLink}
-            className="font-semibold underline"
-          >
-            Register free
-          </a>{" "}
-          before someone else steals your slot.
-        </span>
-      ),
-      (
-        <span>
-          Prefer a DM? Nope. Smash{" "}
-          <a
-            href="#register-free-cta"
-            onClick={handleRegisterLink}
-            className="font-semibold underline"
-          >
-            Register free
-          </a>{" "}
-          and bring a friend. I&apos;ll save you a front-row pixel.
-        </span>
-      ),
-    ],
+  const welcomeMessage = useMemo(
+    () => (
+      <span>
+        Hi, I&apos;m Veronica. Want the shortcut? Tap{" "}
+        <a
+          href="#register-free-cta"
+          onClick={handleRegisterLink}
+          className="font-semibold underline"
+        >
+          Register free
+        </a>{" "}
+        to lock your seat.
+      </span>
+    ),
     [handleRegisterLink]
   );
   const [messages, setMessages] = useState(() => [
-    { role: "assistant", content: welcomeMessages[0] },
+    { role: "assistant", content: welcomeMessage },
   ]);
-  const [nextWelcomeIndex, setNextWelcomeIndex] = useState(1);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [dock, setDock] = useState("right");
@@ -598,9 +568,17 @@ function VeronicaChatbot() {
     return VERONICA_IDLE_EMOJIS[idleEmojiIndex] || VERONICA_IDLE_EMOJIS[0];
   }, [idleEmojiIndex, isLoading]);
 
-  const scrollToBottom = () => {
+  const computedPanelWidth = viewportWidth - edgeOffset * 2;
+  const panelWidth = Math.min(
+    380,
+    computedPanelWidth > 0
+      ? computedPanelWidth
+      : Math.max(viewportWidth - edgeOffset, viewportWidth * 0.9, 0)
+  );
+
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
 
   // Show welcome popup after 2 seconds
   useEffect(() => {
@@ -615,16 +593,11 @@ function VeronicaChatbot() {
 
   useEffect(() => {
     if (!hasShownWelcome || !isOpen) return undefined;
-    if (nextWelcomeIndex >= welcomeMessages.length) return undefined;
     const timer = setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: welcomeMessages[nextWelcomeIndex] },
-      ]);
-      setNextWelcomeIndex((idx) => idx + 1);
-    }, 2600);
+      scrollToBottom();
+    }, 400);
     return () => clearTimeout(timer);
-  }, [hasShownWelcome, isOpen, nextWelcomeIndex, welcomeMessages]);
+  }, [hasShownWelcome, isOpen, scrollToBottom]);
 
   useEffect(() => {
     if (isOpen || isLoading) return undefined;
@@ -645,7 +618,7 @@ function VeronicaChatbot() {
     if (isOpen) {
       scrollToBottom();
     }
-  }, [messages, isOpen]);
+  }, [messages, isOpen, scrollToBottom]);
 
   // Drag handlers
   useEffect(() => {
@@ -872,7 +845,7 @@ function VeronicaChatbot() {
         backdropFilter: 'blur(20px)',
         boxShadow: `0 20px 60px ${isDark ? 'rgba(139,92,246,0.4)' : 'rgba(194,132,36,0.3)'}`,
         maxHeight: 'min(600px, calc(100vh - 120px))',
-        width: `min(380px, calc(100vw - ${edgeOffset * 2}px))`,
+        width: `${panelWidth}px`,
         bottom: panelBottomOffset,
         ...horizontalStyles,
         cursor: isDragging ? 'grabbing' : 'default',
