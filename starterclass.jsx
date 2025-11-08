@@ -100,10 +100,56 @@ const SESSIONS = [
     outcome: "Leave with a persona-tuned workspace, a vibe-coded mini build, and prompt systems ready to run that afternoon.",
     track: "starterclass",
     outline: [
-      { key: "Persona tuning", value: 34, desc: "Shape Projects so one phrase triggers the right voice and guardrails.", color: "#C8A145" },
-      { key: "Vibe-coded sprint", value: 33, desc: "Co-build a mini app or workflow that reflects your tone and intent.", color: "#3B5CCC" },
-      { key: "Prompt systems", value: 33, desc: "Practise reusable prompt flows for business, creative, and personal wins.", color: "#8B5CF6" },
+      {
+        key: "Persona tuning",
+        value: 34,
+        desc: "Shape Projects so one phrase triggers the right voice and guardrails.",
+        color: "#C8A145",
+        headline: "Say the brief once, your workspace remembers",
+        outcome: "Projects that reply in your tone with the right guardrails already in place.",
+        toolkit: "Tone calibration checklist and project prompt pack.",
+      },
+      {
+        key: "Vibe-coded sprint",
+        value: 33,
+        desc: "Co-build a mini app or workflow that reflects your tone and intent.",
+        color: "#3B5CCC",
+        headline: "Narrate the vibe, leave with a working build",
+        outcome: "A vibe-coded mini app you can share with your team or clients.",
+        toolkit: "Component snippets and deployment walk-through.",
+      },
+      {
+        key: "Prompt systems",
+        value: 33,
+        desc: "Practise reusable prompt flows for business, creative, and personal wins.",
+        color: "#8B5CF6",
+        headline: "Know exactly how to ask for what you need",
+        outcome: "Prompt sequences for content, decisions, and client updates.",
+        toolkit: "Prompt kit, escalation cues, and QA checklist.",
+      },
     ],
+    hero: {
+      label: "Free 90-minute AI Starterclass",
+      badge: "Starterclass · no payment required",
+      audience: "Free Starterclass for business leaders, consultants, and curious operators — no coding required.",
+      highlights: [
+        {
+          icon: "🗂️",
+          title: "Projects tuned to you",
+          sub: "Design a Project workspace that remembers your tone, priorities, and approvals automatically.",
+        },
+        {
+          icon: "⚡",
+          title: "Vibe-coded mini build",
+          sub: "Co-create a tiny AI site or tool live so you leave with a working prototype you can share.",
+        },
+        {
+          icon: "🧠",
+          title: "Prompt systems mastered",
+          sub: "Practise conversational flows for business, creative, and personal wins you can run this week.",
+        },
+      ],
+    },
   },
   {
     k: "canvas",
@@ -116,10 +162,56 @@ const SESSIONS = [
     outcome: "Ship a vibe-coded site or mini app with instrumentation so you can iterate instantly.",
     track: "paid",
     outline: [
-      { key: "Vibe-coding basics", value: 34, desc: "Translate tone boards into layout, prompts, and guardrails.", color: "#C8A145" },
-      { key: "Components & state", value: 33, desc: "Manage sections, memory, and context like a creative system.", color: "#3B5CCC" },
-      { key: "Deployment & logging", value: 33, desc: "Push live with audits, changelogs, and rollback comfort.", color: "#8B5CF6" },
+      {
+        key: "Vibe-coding basics",
+        value: 34,
+        desc: "Translate tone boards into layout, prompts, and guardrails.",
+        color: "#C8A145",
+        headline: "Convert moodboards into working canvases",
+        outcome: "A layout that matches your visual identity and narrative cues.",
+        toolkit: "Design handoff worksheet and brand voice prompt starters.",
+      },
+      {
+        key: "Components & state",
+        value: 33,
+        desc: "Manage sections, memory, and context like a creative system.",
+        color: "#3B5CCC",
+        headline: "Structure interactive sections without code",
+        outcome: "Reusable component stacks with state you can tweak live.",
+        toolkit: "Component inventory template and state mapping checklist.",
+      },
+      {
+        key: "Deployment & logging",
+        value: 33,
+        desc: "Push live with audits, changelogs, and rollback comfort.",
+        color: "#8B5CF6",
+        headline: "Launch with observability baked in",
+        outcome: "Logging and changelog rituals so updates stay safe.",
+        toolkit: "Deployment playbook and issue triage prompts.",
+      },
     ],
+    hero: {
+      label: "Full-course lab — Canvas & vibe coding",
+      badge: "Full course · tuition applies",
+      audience: "For designers, founders, and operators ready to ship branded AI experiences fast.",
+      highlights: [
+        {
+          icon: "🎨",
+          title: "Vibe-coded layout systems",
+          sub: "Narrate your tone and translate it into components that actually deploy.",
+        },
+        {
+          icon: "🧱",
+          title: "Reusable component kit",
+          sub: "Assemble content blocks, memory, and guardrails you can remix after class.",
+        },
+        {
+          icon: "🚀",
+          title: "Confident launch workflow",
+          sub: "Deploy live with logging, audits, and rollback comfort built-in.",
+        },
+      ],
+    },
   },
   {
     k: "agents1",
@@ -132,10 +224,56 @@ const SESSIONS = [
     outcome: "An agent template that reads from data, calls tools, and hands off to you when needed.",
     track: "paid",
     outline: [
-      { key: "Prompt systems", value: 34, desc: "Structure instructions, memory, and tone for reliable hand-offs.", color: "#8B5CF6" },
-      { key: "Tool orchestration", value: 33, desc: "Link Sheets, Notion, and APIs into the agent safely.", color: "#3B5CCC" },
-      { key: "Process design", value: 33, desc: "Design escalations, logs, and human approvals that keep quality high.", color: "#C8A145" },
+      {
+        key: "Prompt systems",
+        value: 34,
+        desc: "Structure instructions, memory, and tone for reliable hand-offs.",
+        color: "#8B5CF6",
+        headline: "Blueprint prompts that never lose context",
+        outcome: "A reusable prompt and memory stack tuned for your org.",
+        toolkit: "Agent briefing template and prompt escalation ladder.",
+      },
+      {
+        key: "Tool orchestration",
+        value: 33,
+        desc: "Link Sheets, Notion, and APIs into the agent safely.",
+        color: "#3B5CCC",
+        headline: "Connect data sources without breaking trust",
+        outcome: "Tool call flows that log every action and fallback.",
+        toolkit: "Integration matrix and safety checklist.",
+      },
+      {
+        key: "Process design",
+        value: 33,
+        desc: "Design escalations, logs, and human approvals that keep quality high.",
+        color: "#C8A145",
+        headline: "Decide when the agent hands back control",
+        outcome: "Escalation paths and review rituals to keep humans in the loop.",
+        toolkit: "Runbook template and approval scripts.",
+      },
     ],
+    hero: {
+      label: "Agent systems sprint — Prompts & processes",
+      badge: "Full course · tuition applies",
+      audience: "For operators formalising ChatGPT agents with governance, logs, and safe hand-offs.",
+      highlights: [
+        {
+          icon: "🧩",
+          title: "Memory + tooling glue",
+          sub: "Map prompts, data, and API calls so your agent keeps context flawlessly.",
+        },
+        {
+          icon: "🛡️",
+          title: "Guardrails that scale",
+          sub: "Design escalation and approval flows stakeholders will sign off.",
+        },
+        {
+          icon: "📈",
+          title: "Live operations ritual",
+          sub: "Leave with a monitoring loop and human-in-the-loop rhythm.",
+        },
+      ],
+    },
   },
   {
     k: "agents2",
@@ -148,10 +286,56 @@ const SESSIONS = [
     outcome: "A teaser sequence for your AI short film and a repeatable creative pipeline.",
     track: "paid",
     outline: [
-      { key: "Storyboard & shotlist", value: 34, desc: "Break narratives into beats, scenes, and production-ready prompts.", color: "#C8A145" },
-      { key: "Asset generation", value: 33, desc: "Create images and clips that stay on-tone across the story arc.", color: "#3B5CCC" },
-      { key: "Assembly & review", value: 33, desc: "Sequence, narrate, and critique the edit so it feels human.", color: "#8B5CF6" },
+      {
+        key: "Storyboard & shotlist",
+        value: 34,
+        desc: "Break narratives into beats, scenes, and production-ready prompts.",
+        color: "#C8A145",
+        headline: "Plot the film before you touch a tool",
+        outcome: "Scene outlines and shot prompts aligned to your story arc.",
+        toolkit: "Narrative beat sheet and storyboard prompt frames.",
+      },
+      {
+        key: "Asset generation",
+        value: 33,
+        desc: "Create images and clips that stay on-tone across the story arc.",
+        color: "#3B5CCC",
+        headline: "Generate assets that stay on-tone",
+        outcome: "Consistent character, lighting, and pacing across frames.",
+        toolkit: "Model settings bank and look continuity checklist.",
+      },
+      {
+        key: "Assembly & review",
+        value: 33,
+        desc: "Sequence, narrate, and critique the edit so it feels human.",
+        color: "#8B5CF6",
+        headline: "Cut, narrate, and polish like a studio",
+        outcome: "A teaser sequence with audio beds, captions, and review notes.",
+        toolkit: "Editorial workflow board and critique rubric.",
+      },
     ],
+    hero: {
+      label: "Creative lab — AI short-film production",
+      badge: "Full course · tuition applies",
+      audience: "For storytellers and content teams crafting cinematic AI sequences end-to-end.",
+      highlights: [
+        {
+          icon: "🎬",
+          title: "Narratives that hold",
+          sub: "Build story beats that translate into consistent prompts across scenes.",
+        },
+        {
+          icon: "🖼️",
+          title: "Visual continuity",
+          sub: "Keep your characters, lighting, and motion aligned across every generation.",
+        },
+        {
+          icon: "🎧",
+          title: "Editorial polish",
+          sub: "Assemble audio, captions, and reviews so the final cut feels human.",
+        },
+      ],
+    },
   },
   {
     k: "n8n_deep_dive",
@@ -164,10 +348,56 @@ const SESSIONS = [
     outcome: "A working n8n workflow triggered from a form or webhook with retries and logging built in.",
     track: "paid",
     outline: [
-      { key: "Workflow mapping", value: 34, desc: "Plot triggers, decisions, and payloads before you build.", color: "#C8A145" },
-      { key: "Assistant build", value: 33, desc: "Wire branches, retries, and queues that keep responses reliable.", color: "#3B5CCC" },
-      { key: "Observability", value: 33, desc: "Instrument logs, metrics, and alerts so issues surface fast.", color: "#8B5CF6" },
+      {
+        key: "Workflow mapping",
+        value: 34,
+        desc: "Plot triggers, decisions, and payloads before you build.",
+        color: "#C8A145",
+        headline: "Design the assistant before it runs",
+        outcome: "A visual workflow plan stakeholders can approve.",
+        toolkit: "Trigger inventory and payload worksheet.",
+      },
+      {
+        key: "Assistant build",
+        value: 33,
+        desc: "Wire branches, retries, and queues that keep responses reliable.",
+        color: "#3B5CCC",
+        headline: "Ship reliable branches and retries",
+        outcome: "A resilient n8n flow with safeguards for every failure mode.",
+        toolkit: "Retry pattern library and queue template.",
+      },
+      {
+        key: "Observability",
+        value: 33,
+        desc: "Instrument logs, metrics, and alerts so issues surface fast.",
+        color: "#8B5CF6",
+        headline: "See issues before users do",
+        outcome: "Dashboards and alerts that surface failures instantly.",
+        toolkit: "Logging schema and alert routing map.",
+      },
     ],
+    hero: {
+      label: "Automation lab — Build your first AI assistant",
+      badge: "Full course · tuition applies",
+      audience: "For ops teams and builders turning prompt ideas into dependable automations.",
+      highlights: [
+        {
+          icon: "🗺️",
+          title: "Workflow blueprints",
+          sub: "Map every trigger, payload, and decision before you build.",
+        },
+        {
+          icon: "🔁",
+          title: "Reliable execution",
+          sub: "Implement retries, queues, and safeguards so automations never ghost.",
+        },
+        {
+          icon: "📊",
+          title: "Observability baked in",
+          sub: "Instrument logs and alerts that keep stakeholders calm.",
+        },
+      ],
+    },
   },
   {
     k: "n8n_mastery",
@@ -180,10 +410,56 @@ const SESSIONS = [
     outcome: "A production-ready system with multiple n8n workflows, secure tokens, approvals, and a published output.",
     track: "paid",
     outline: [
-      { key: "System topology", value: 34, desc: "Map multi-workflow architecture and secrets management.", color: "#C8A145" },
-      { key: "Auth & approvals", value: 33, desc: "Layer security, access gates, and human check-ins.", color: "#3B5CCC" },
-      { key: "Capstone integration", value: 33, desc: "Launch the final tool or film with documentation and support rituals.", color: "#8B5CF6" },
+      {
+        key: "System topology",
+        value: 34,
+        desc: "Map multi-workflow architecture and secrets management.",
+        color: "#C8A145",
+        headline: "Architect the full automation stack",
+        outcome: "A topology diagram covering every workflow and credential.",
+        toolkit: "Topology canvas and secret rotation checklist.",
+      },
+      {
+        key: "Auth & approvals",
+        value: 33,
+        desc: "Layer security, access gates, and human check-ins.",
+        color: "#3B5CCC",
+        headline: "Keep humans in charge",
+        outcome: "Approval flows, audit logs, and escalation scripts.",
+        toolkit: "Access policy templates and reviewer prompts.",
+      },
+      {
+        key: "Capstone integration",
+        value: 33,
+        desc: "Launch the final tool or film with documentation and support rituals.",
+        color: "#8B5CF6",
+        headline: "Launch with confidence",
+        outcome: "A capstone deployment backed by documentation and support loops.",
+        toolkit: "Handoff checklist and go-live comms kit.",
+      },
     ],
+    hero: {
+      label: "Automation mastery — Orchestrate the system",
+      badge: "Full course · tuition applies",
+      audience: "For teams scaling assistants into secure, multi-workflow operations.",
+      highlights: [
+        {
+          icon: "🌐",
+          title: "Multi-workflow architecture",
+          sub: "Connect every workflow, secret, and approval in one map.",
+        },
+        {
+          icon: "🔐",
+          title: "Security rituals",
+          sub: "Layer authentication, reviews, and audit logs without slowing delivery.",
+        },
+        {
+          icon: "🏁",
+          title: "Capstone launch",
+          sub: "Publish your final build with documentation stakeholders trust.",
+        },
+      ],
+    },
   },
 ];
 
@@ -416,7 +692,7 @@ const PIE_TOPICS = [
 // Utilities & Small UI
 // ─────────────────────────────────────────────────────────────────────────────
 function Section({ children, className = "" }) {
-  return <section className={`mx-auto max-w-6xl px-4 ${className}`}>{children}</section>;
+  return <section className={`mx-auto w-full max-w-6xl px-4 ${className}`}>{children}</section>;
 }
 
 function GlowCard({ children, className = "" }) {
@@ -501,12 +777,16 @@ function Badge({ children }) {
 function VeronicaChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasShownWelcome, setHasShownWelcome] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
   const handleRegisterLink = useCallback((event) => {
     event.preventDefault();
     if (typeof document !== "undefined") {
       const target = document.getElementById("register-free-cta");
       if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "center" });
+        target.scrollIntoView({
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+          block: "center",
+        });
         if (typeof target.focus === "function") {
           try {
             target.focus({ preventScroll: true });
@@ -521,7 +801,7 @@ function VeronicaChatbot() {
     if (typeof window !== "undefined") {
       window.location.hash = "register-free-cta";
     }
-  }, []);
+  }, [prefersReducedMotion]);
   const welcomeMessage = useMemo(
     () => (
       <span>
@@ -579,30 +859,39 @@ function VeronicaChatbot() {
   }
 
   const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+    messagesEndRef.current?.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+  }, [prefersReducedMotion]);
 
   // Show welcome popup after 2 seconds
   useEffect(() => {
-    if (!hasShownWelcome) {
+    if (!hasShownWelcome && !prefersReducedMotion) {
       const timer = setTimeout(() => {
         setIsOpen(true);
         setHasShownWelcome(true);
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [hasShownWelcome]);
+    if (!hasShownWelcome && prefersReducedMotion) {
+      setHasShownWelcome(true);
+    }
+  }, [hasShownWelcome, prefersReducedMotion]);
 
   useEffect(() => {
     if (!hasShownWelcome || !isOpen) return undefined;
+    if (prefersReducedMotion) {
+      scrollToBottom();
+      return undefined;
+    }
     const timer = setTimeout(() => {
       scrollToBottom();
     }, 400);
     return () => clearTimeout(timer);
-  }, [hasShownWelcome, isOpen, scrollToBottom]);
+  }, [hasShownWelcome, isOpen, scrollToBottom, prefersReducedMotion]);
 
   useEffect(() => {
-    if (isOpen || isLoading) return undefined;
+    if (prefersReducedMotion || isOpen || isLoading) return undefined;
     const id = setInterval(() => {
       setIdleEmojiIndex((prev) => {
         if (VERONICA_IDLE_EMOJIS.length <= 1) return prev;
@@ -614,7 +903,7 @@ function VeronicaChatbot() {
       });
     }, 4800);
     return () => clearInterval(id);
-  }, [isOpen, isLoading]);
+  }, [isOpen, isLoading, prefersReducedMotion]);
 
   useEffect(() => {
     if (isOpen) {
@@ -1037,13 +1326,145 @@ function track(eventName, detail = {}) {
   }
 }
 
-function useCountdown(targetISO) {
+function usePrefersReducedMotion() {
+  const [prefers, setPrefers] = useState(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return false;
+    try {
+      return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return undefined;
+    let mediaQuery;
+    try {
+      mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    } catch {
+      return undefined;
+    }
+    const handleChange = (event) => setPrefers(event.matches);
+    handleChange(mediaQuery);
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  }, []);
+
+  return prefers;
+}
+
+function useNow(tick = 1000, prefersReducedMotionArg) {
+  const prefersReducedMotion = prefersReducedMotionArg ?? usePrefersReducedMotion();
   const [now, setNow] = useState(() => Date.now());
-  useEffect(() => { const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id); }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+    let intervalId = null;
+    const effectiveTick = prefersReducedMotion ? Math.max(tick, 1000) : tick;
+    const restart = () => {
+      if (intervalId) clearInterval(intervalId);
+      intervalId = setInterval(() => setNow(Date.now()), effectiveTick);
+    };
+    restart();
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (intervalId) clearInterval(intervalId);
+      } else {
+        setNow(Date.now());
+        restart();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
+  }, [prefersReducedMotion, tick]);
+
+  return now;
+}
+
+function getCountdownParts(targetISO, nowMs) {
+  if (!targetISO) {
+    return { d: 0, h: 0, m: 0, s: 0, expired: true, totalMs: 0 };
+  }
   const target = new Date(targetISO).getTime();
-  const delta = Math.max(0, target - now);
-  const s = Math.floor(delta / 1000);
-  return { d: Math.floor(s/86400), h: Math.floor((s%86400)/3600), m: Math.floor((s%3600)/60), s: s%60, expired: delta===0 };
+  if (!Number.isFinite(target)) {
+    return { d: 0, h: 0, m: 0, s: 0, expired: true, totalMs: 0 };
+  }
+  const diff = target - nowMs;
+  const expired = diff <= 0;
+  const clamped = expired ? 0 : diff;
+  const totalSeconds = Math.floor(clamped / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  return { d: days, h: hours, m: minutes, s: seconds, expired, totalMs: diff };
+}
+
+function buildSessionTimeline(sessions, nowMs) {
+  const enriched = sessions.map((session, index) => {
+    const startMs = new Date(session.start).getTime();
+    const endMs = new Date(session.end).getTime();
+    const status = nowMs < startMs ? "upcoming" : nowMs >= endMs ? "completed" : "live";
+    return { ...session, index, startMs, endMs, status };
+  });
+  const upcoming = enriched.filter((session) => nowMs < session.endMs);
+  const hero = upcoming[0] || enriched[enriched.length - 1] || null;
+  const next = upcoming.length > 1 ? upcoming[1] : null;
+  const statusMap = enriched.reduce((acc, session) => {
+    acc[session.k] = session.status;
+    return acc;
+  }, {});
+  return {
+    all: enriched,
+    hero,
+    next,
+    upcoming,
+    completed: enriched.filter((session) => session.status === "completed"),
+    statusMap,
+    scheduleCompleted: upcoming.length === 0,
+  };
+}
+
+function formatSessionDateLabel(session) {
+  if (!session) return "";
+  const start = new Date(session.start);
+  const date = start.toLocaleDateString("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+  });
+  const time = new Date(session.start).toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Europe/London",
+  });
+  return `${date} · ${time}`;
+}
+
+function formatCountdownHeadline(parts) {
+  if (!parts) return "";
+  if (parts.expired) return "0d 00h 00m";
+  const pad = (value) => String(value).padStart(2, "0");
+  return `${parts.d}d ${pad(parts.h)}h ${pad(parts.m)}m`;
+}
+
+function sessionStatusLabel(status) {
+  switch (status) {
+    case "live":
+      return "Live now";
+    case "completed":
+      return "Archived";
+    default:
+      return "Upcoming";
+  }
 }
 
 // PIE helpers
@@ -1181,8 +1602,7 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onEx
     <div className="mt-4 space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h3 className="text-xl font-semibold">Client Value Calculator</h3>
-          <p className="mt-1 text-sm" style={{ color: palette.textSecondary }}>
+          <p className="text-sm" style={{ color: palette.textSecondary }}>
             Set the weekly time you can invest and choose your focus. One recommendation appears so you know where to start.
           </p>
           <p className="mt-1 text-xs" style={{ color: palette.textMuted }} id="cvc-helper">
@@ -1401,6 +1821,12 @@ function StarterclassLuxuryV8() {
   const [certificateFocus, setCertificateFocus] = useState(CERTIFICATE_POINTS[0]?.key || "evidence");
   const [nextLiveOpen, setNextLiveOpen] = useState(false);
   const [valueCalcOpen, setValueCalcOpen] = useState(false);
+  const [activeRegistrationSession, setActiveRegistrationSession] = useState(() => SESSIONS[0] || null);
+  const [instructorOpen, setInstructorOpen] = useState(true);
+  const [reviewsOpen, setReviewsOpen] = useState(true);
+
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const now = useNow(1000, prefersReducedMotion);
 
   const heroHeadlineGlowRef = useRef(null);
   const siteLabelGlowRef = useRef(null);
@@ -1409,27 +1835,99 @@ function StarterclassLuxuryV8() {
 
   const sessions = useMemo(() => SESSIONS, []);
   const monthBundles = useMemo(() => MONTH_BUNDLES, []);
-  const { d, h, m, s, expired } = useCountdown(INTRO_START_ISO);
-  const earlyBird = useCountdown(EARLY_BIRD_DEADLINE_ISO);
+  const sessionTimeline = useMemo(() => buildSessionTimeline(sessions, now), [sessions, now]);
+  const heroSession = sessionTimeline.hero;
+  const heroStatus = heroSession?.status;
+  const scheduleCompleted = sessionTimeline.scheduleCompleted;
+  const countdownTarget = scheduleCompleted
+    ? null
+    : heroStatus === "live"
+    ? heroSession?.end
+    : heroSession?.start;
+  const countdown = useMemo(() => getCountdownParts(countdownTarget, now), [countdownTarget, now]);
+  const { d, h, m, s, expired } = countdown;
+  const earlyBirdCountdown = useMemo(() => getCountdownParts(EARLY_BIRD_DEADLINE_ISO, now), [now]);
   const palette = useMemo(() => getPalette(activeTheme), [activeTheme]);
   const isDark = activeTheme === "dark";
   const formatCurrency = useCallback((amountUSD, forced) => formatCurrencyValue(amountUSD, forced || currency), [currency]);
-  const heroHighlights = HERO_HIGHLIGHTS;
+  const earlyBirdActive = !earlyBirdCountdown.expired;
+  const heroHighlights = heroSession?.hero?.highlights || HERO_HIGHLIGHTS;
   const announcementMessages = useMemo(() => {
-    const timeMessage = d > 0 ? `Next session in ${d} day${d === 1 ? "" : "s"}` : expired ? "Doors opening now" : "Next session today";
+    if (scheduleCompleted) {
+      return [
+        "All sessions completed",
+        "Replays and dossiers are being delivered",
+        "Join the waitlist for the next cohort",
+      ];
+    }
+    if (!heroSession) {
+      return ["Cohort timeline updating", "", ""];
+    }
+    const countdownHeadline = formatCountdownHeadline(countdown);
+    const statusLine =
+      heroStatus === "live"
+        ? "Session live now — check your inbox for the Meet link"
+        : countdown.expired
+        ? "Session starting now"
+        : `Next session in ${countdownHeadline}`;
+    const starterclassStatus = sessionTimeline.statusMap?.starterclass;
+    const earlyBirdLine = earlyBirdActive
+      ? "10% early-bird active until the Starterclass wraps"
+      : starterclassStatus === "completed"
+      ? "Starterclass archived — standard tuition applies"
+      : "Secure your seat before the Starterclass finishes";
     return [
-      "Live on 15 Nov · 11:00 AM",
-      timeMessage,
-      "Early-bird 10% ends when the Starterclass ends",
+      `${heroSession.title} · ${formatSessionDateLabel(heroSession)}`,
+      statusLine,
+      earlyBirdLine,
     ];
-  }, [d, expired]);
+  }, [countdown, earlyBirdActive, heroSession, heroStatus, scheduleCompleted, sessionTimeline.statusMap]);
   const testimonials = TESTIMONIALS;
   const testimonial = testimonials[activeTestimonial] || testimonials[0];
+  const heroAudienceLine = heroSession?.hero?.audience ||
+    "Free Starterclass for business leaders, consultants, and curious operators — no coding required.";
+  const heroBadge = heroSession?.hero?.badge || "Starterclass · no payment required";
+  const heroChipLabel = heroSession?.hero?.label || heroSession?.title || "All sessions completed";
+  const heroTitle = heroSession?.title || INTRO_NAME;
+  const heroTimeDetail = heroSession ? formatSessionDateLabel(heroSession) : "Sessions completed";
+  const heroUkRange = heroSession ? formatUKRange(heroSession.start, heroSession.end) : formatUKRange(INTRO_START_ISO, INTRO_END_ISO);
+  const heroLocalRange = heroSession
+    ? formatLocalRange(heroSession.start, heroSession.end)
+    : formatLocalRange(INTRO_START_ISO, INTRO_END_ISO);
+  const shareWhatsAppText = heroSession?.track === "starterclass"
+    ? `🎓 Join me at the FREE ${heroTitle} by ICUNI!`
+    : `🎓 Join me at ${heroTitle} by ICUNI!`;
+  const shareEmailSubject = heroSession?.track === "starterclass"
+    ? "Join the FREE AI Starterclass"
+    : `Join me for ${heroTitle}`;
+  const shareEmailBody = heroSession?.track === "starterclass"
+    ? `I wanted to share this free Starterclass with you!\n\n${heroTitle}`
+    : `I wanted to share this AI session with you!\n\n${heroTitle}`;
+  const heroCountdownLabel = scheduleCompleted
+    ? "Cohort completed"
+    : heroStatus === "live"
+    ? "Session wraps in"
+    : "Next session begins in";
+  const upcomingHeading = scheduleCompleted
+    ? "Cohort recap"
+    : heroSession?.track === "starterclass"
+    ? "What comes after the Starterclass"
+    : "Upcoming cohort sessions";
+  const heroTopics = useMemo(() => {
+    if (heroSession?.outline?.length) {
+      return heroSession.outline.map((topic) => ({
+        ...topic,
+        headline: topic.headline || topic.key,
+        outcome: topic.outcome || heroSession.outcome,
+        toolkit: topic.toolkit || heroSession.outcome,
+      }));
+    }
+    return PIE_TOPICS;
+  }, [heroSession]);
   const activeCertificate = useMemo(
     () => CERTIFICATE_POINTS.find((point) => point.key === certificateFocus) || CERTIFICATE_POINTS[0],
     [certificateFocus]
   );
-  const earlyBirdActive = !earlyBird.expired;
   const fullTrackTotalUSD = earlyBirdActive ? 270 : 300;
   const fullTrackMonthlyUSD = earlyBirdActive ? 90 : 100;
 
@@ -1447,20 +1945,32 @@ function StarterclassLuxuryV8() {
   }, [activeTheme, palette, currency]);
 
   useEffect(() => {
-    if (!announcementMessages.length) return undefined;
+    if (typeof document === "undefined") return undefined;
+    const previousHtmlOverflow = document.documentElement.style.overflowX;
+    const previousBodyOverflow = document.body.style.overflowX;
+    document.documentElement.style.overflowX = "hidden";
+    document.body.style.overflowX = "hidden";
+    return () => {
+      document.documentElement.style.overflowX = previousHtmlOverflow;
+      document.body.style.overflowX = previousBodyOverflow;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!announcementMessages.length || prefersReducedMotion) return undefined;
     const id = setInterval(() => {
       setAnnouncementIndex((idx) => (idx + 1) % announcementMessages.length);
     }, 6000);
     return () => clearInterval(id);
-  }, [announcementMessages.length]);
+  }, [announcementMessages.length, prefersReducedMotion]);
 
   useEffect(() => {
-    if (!testimonials.length) return undefined;
+    if (!testimonials.length || prefersReducedMotion) return undefined;
     const rotation = setInterval(() => {
       setActiveTestimonial((idx) => (idx + 1) % testimonials.length);
     }, 20000);
     return () => clearInterval(rotation);
-  }, [testimonials.length]);
+  }, [prefersReducedMotion, testimonials.length]);
 
   useEffect(() => {
     const node = fullTrackPrimaryCtaRef.current;
@@ -1538,13 +2048,15 @@ function StarterclassLuxuryV8() {
   }, [isSiteGlowActive, siteGlowPoint, palette]);
 
   const upcomingModules = useMemo(
-    () => sessions.filter((s) => s.track === "paid"),
-    [sessions]
+    () =>
+      sessionTimeline.all
+        .filter((session) => session.track === "paid" && (scheduleCompleted ? true : session.status !== "completed")),
+    [scheduleCompleted, sessionTimeline]
   );
 
   const upcomingSchedule = useMemo(
-    () => sessions.filter((s) => s.track !== "break").slice(0, 3),
-    [sessions]
+    () => (scheduleCompleted ? [] : sessionTimeline.upcoming.slice(0, 3)),
+    [scheduleCompleted, sessionTimeline]
   );
 
   const structuredData = useMemo(() => {
@@ -1554,16 +2066,24 @@ function StarterclassLuxuryV8() {
       "url": "https://starterclass.icuni.org/",
     };
 
+    const introSession = sessions.find((session) => session.k === "starterclass") || sessions[0];
+    const introStatus = sessionTimeline.statusMap?.starterclass || "upcoming";
+    const eventStatusMap = {
+      upcoming: "https://schema.org/EventScheduled",
+      live: "https://schema.org/EventInProgress",
+      completed: "https://schema.org/EventCompleted",
+    };
+
     const event = {
       "@type": "Event",
       "@id": "https://starterclass.icuni.org/#starterclass-event",
-      "name": "Free 90-minute AI Starterclass — Customise ChatGPT Projects & Build Your First Agent",
+      "name": introSession?.title || INTRO_NAME,
       "description":
-        "Live online Starterclass on 15 November 2025 covering ChatGPT Projects, vibe-coded builds, and reusable prompt systems.",
-      "startDate": INTRO_START_ISO,
-      "endDate": INTRO_END_ISO,
+        "Live online Starterclass covering ChatGPT Projects, vibe-coded builds, and reusable prompt systems.",
+      "startDate": introSession?.start || INTRO_START_ISO,
+      "endDate": introSession?.end || INTRO_END_ISO,
       "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
+      "eventStatus": eventStatusMap[introStatus] || "https://schema.org/EventScheduled",
       "isAccessibleForFree": true,
       "location": {
         "@type": "VirtualLocation",
@@ -1574,44 +2094,46 @@ function StarterclassLuxuryV8() {
         "@type": "Offer",
         "price": "0",
         "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
+        "availability": introStatus === "completed" ? "https://schema.org/Discontinued" : "https://schema.org/InStock",
         "url": "https://starterclass.icuni.org/#register-free-cta",
       },
       "url": "https://starterclass.icuni.org/",
     };
 
-    const courseInstances = MONTH_BUNDLES.map((bundle) => {
-      const bundleSessions = SESSIONS.filter((session) => bundle.modules.includes(session.k));
-      if (!bundleSessions.length) return null;
-      const startDate = bundleSessions.reduce(
-        (earliest, session) => (earliest && earliest < session.start ? earliest : session.start),
-        bundleSessions[0]?.start
-      );
-      const endDate = bundleSessions.reduce(
-        (latest, session) => (latest && latest > session.end ? latest : session.end),
-        bundleSessions[0]?.end
-      );
-      const moduleTitles = bundleSessions.map((session) => session.title).join("; ");
-      return {
-        "@type": "CourseInstance",
-        "name": `${bundle.label} — ICUNI Full Track`,
-        "startDate": startDate,
-        "endDate": endDate,
-        "courseMode": "https://schema.org/OnlineCourse",
-        "location": {
-          "@type": "VirtualLocation",
-          "url": "https://starterclass.icuni.org/",
-        },
-        "offers": {
-          "@type": "Offer",
-          "price": String(bundle.priceUSD),
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock",
-          "url": "https://starterclass.icuni.org/#full-track-panel",
-        },
-        "description": moduleTitles,
-      };
-    }).filter(Boolean);
+    const courseInstances = monthBundles
+      .map((bundle) => {
+        const bundleSessions = sessions.filter((session) => bundle.modules.includes(session.k));
+        if (!bundleSessions.length) return null;
+        const startDate = bundleSessions.reduce(
+          (earliest, session) => (earliest && earliest < session.start ? earliest : session.start),
+          bundleSessions[0]?.start
+        );
+        const endDate = bundleSessions.reduce(
+          (latest, session) => (latest && latest > session.end ? latest : session.end),
+          bundleSessions[0]?.end
+        );
+        const moduleTitles = bundleSessions.map((session) => session.title).join("; ");
+        return {
+          "@type": "CourseInstance",
+          "name": `${bundle.label} — ICUNI Full Track`,
+          "startDate": startDate,
+          "endDate": endDate,
+          "courseMode": "https://schema.org/OnlineCourse",
+          "location": {
+            "@type": "VirtualLocation",
+            "url": "https://starterclass.icuni.org/",
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": String(bundle.priceUSD),
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://starterclass.icuni.org/#full-track-panel",
+          },
+          "description": moduleTitles,
+        };
+      })
+      .filter(Boolean);
 
     const course = {
       "@type": "Course",
@@ -1628,7 +2150,7 @@ function StarterclassLuxuryV8() {
       "@context": "https://schema.org",
       "@graph": [event, course],
     };
-  }, []);
+  }, [monthBundles, sessionTimeline.statusMap, sessions]);
 
   const handleCurrencySwitch = useCallback((code) => {
     setCurrency(code);
@@ -1636,6 +2158,8 @@ function StarterclassLuxuryV8() {
 
   function triggerIntroForm(source) {
     track("intro_cta_click", { location: source });
+    const intro = sessions.find((session) => session.k === "starterclass") || heroSession || sessions[0] || null;
+    setActiveRegistrationSession(intro);
     setFormLoading(true);
     setModalOpen(true);
   }
@@ -1665,6 +2189,9 @@ function StarterclassLuxuryV8() {
     requestAnimationFrame(() => {
       document.getElementById("full-track-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+    const targetKey = detail.session || heroSession?.k;
+    const targetSession = (targetKey && sessions.find((session) => session.k === targetKey)) || heroSession || sessions.find((session) => session.track === "paid") || sessions[0] || null;
+    setActiveRegistrationSession(targetSession);
     setFormLoading(true);
     setModalOpen(true);
   }
@@ -1676,6 +2203,7 @@ function StarterclassLuxuryV8() {
 
   function openAlternativeForm(location) {
     track("alt_form_open", { location });
+    setActiveRegistrationSession(heroSession || sessions[0] || null);
     setAltFormOpen(true);
   }
 
@@ -1694,14 +2222,15 @@ function StarterclassLuxuryV8() {
 
   function handleCalendarClick(location) {
     track("calendar_add", { location });
+    const targetSession = activeRegistrationSession || heroSession || sessions[0];
+    if (!targetSession) return;
     window.open(
-      googleCalUrl({ title: INTRO_NAME, startISO: INTRO_START_ISO, endISO: INTRO_END_ISO, details: `${INTRO_NAME} — ICUNI Starterclass`, location: "Online (Google Meet)" }),
+      googleCalUrl({ title: targetSession.title, startISO: targetSession.start, endISO: targetSession.end, details: `${targetSession.title} — ICUNI Starterclass`, location: "Online (Google Meet)" }),
       "_blank",
       "noopener"
     );
   }
 
-  const heroAudienceLine = "Free Starterclass for business leaders, consultants, and curious operators — no coding required.";
   const handleNavClick = useCallback(
     (href, tabTarget) => {
       track("nav_click", { href, tabTarget: tabTarget || null });
@@ -1734,6 +2263,8 @@ function StarterclassLuxuryV8() {
           style={{
             background: palette.background,
             color: palette.textPrimary,
+            width: "100%",
+            overflowX: "clip",
             transition: "background 300ms ease, color 300ms ease",
           }}
         >
@@ -1784,7 +2315,7 @@ function StarterclassLuxuryV8() {
                 </button>
               </div>
               <div className="ml-auto hidden md:flex items-center text-xs font-semibold uppercase tracking-[0.24em]" style={{ color: palette.textSecondary }}>
-                Free Starterclass · 90 minutes
+                {scheduleCompleted ? "Cohort completed" : heroTimeDetail}
               </div>
             </div>
             <div
@@ -1809,10 +2340,13 @@ function StarterclassLuxuryV8() {
                   }}
                 >
                   <span aria-hidden="true">🎟️</span>
-                  Free 90-minute AI Starterclass · 15 Nov · 11:00 AM
+                  {heroChipLabel}
+                </div>
+                <div className="mt-2 text-xs font-medium tracking-wide" style={{ color: palette.textSecondary }}>
+                  {heroTimeDetail}
                 </div>
                 <div className="mt-3">
-                  <Badge>Starterclass · no payment required</Badge>
+                  <Badge>{heroBadge}</Badge>
                 </div>
                 <h1
                   ref={heroHeadlineGlowRef}
@@ -1864,49 +2398,89 @@ function StarterclassLuxuryV8() {
                   ))}
                 </div>
                 <div className="mt-5 text-sm space-y-1" style={{ color: palette.textSecondary }}>
-                  <div><span style={{ color: palette.textMuted }}>UK Time:</span> {formatUKRange(INTRO_START_ISO, INTRO_END_ISO)}</div>
+                  <div><span style={{ color: palette.textMuted }}>UK Time:</span> {heroUkRange}</div>
+                  <div><span style={{ color: palette.textMuted }}>Your Time:</span> {heroLocalRange}</div>
                 </div>
-                <p className="mt-3 text-sm" style={{ color: palette.textSecondary }}>
-                  10% early-bird discount if you enrol in the full course before the Starterclass ends.
-                </p>
+                {earlyBirdActive ? (
+                  <p className="mt-3 text-sm" style={{ color: palette.textSecondary }}>
+                    10% early-bird discount if you enrol in the full course before the Starterclass ends.
+                  </p>
+                ) : scheduleCompleted ? (
+                  <p className="mt-3 text-sm" style={{ color: palette.textSecondary }}>
+                    This cohort has wrapped. Explore the completed sessions and join the waitlist for future dates.
+                  </p>
+                ) : (
+                  <p className="mt-3 text-sm" style={{ color: palette.textSecondary }}>
+                    Tuition is now at the standard rate — seats remain for upcoming sessions.
+                  </p>
+                )}
                 <div className="mt-8">
-                  <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Next session begins in</div>
-                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
-                    {[
-                      ["Days", d],
-                      ["Hours", h],
-                      ["Minutes", m],
-                      ["Seconds", s],
-                    ].map(([label, val]) => (
-                      <div
-                        key={label}
-                        className="relative overflow-hidden rounded-[1.75rem] px-5 py-6 text-center"
-                        style={{
-                          border: `1px solid ${palette.border}`,
-                          background:
-                            activeTheme === "dark"
-                              ? "linear-gradient(160deg, rgba(20,20,40,0.92), rgba(11,11,26,0.9))"
-                              : `linear-gradient(160deg, ${palette.surfaceSoft}, rgba(255,255,255,0.92))`,
-                          boxShadow: activeTheme === "dark" ? "0 24px 48px rgba(5,0,45,0.45)" : palette.shadow,
-                        }}
-                      >
-                        <div className="font-mono font-bold" style={{ fontSize: "2.4rem", color: palette.textPrimary }}>
-                          {String(val).padStart(2, "0")}
-                        </div>
-                        <div className="mt-3 text-xs uppercase tracking-[0.32em]" style={{ color: palette.textMuted }}>{label}</div>
-                      </div>
-                    ))}
-                  </div>
-                  {!expired && (
-                    <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>
-                      Reminder emails arrive 24 hours before we open the Google Meet room.
+                  <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>{heroCountdownLabel}</div>
+                  {scheduleCompleted ? (
+                    <div className="mt-4 text-sm" style={{ color: palette.textSecondary }}>
+                      All sessions are complete. We’ll email you when new cohort dates open.
                     </div>
+                  ) : (
+                    <>
+                      <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
+                        {[
+                          ["Days", d],
+                          ["Hours", h],
+                          ["Minutes", m],
+                          ["Seconds", s],
+                        ].map(([label, val]) => (
+                          <div
+                            key={label}
+                            className="relative overflow-hidden rounded-[1.75rem] px-5 py-6 text-center"
+                            style={{
+                              border: `1px solid ${palette.border}`,
+                              background:
+                                activeTheme === "dark"
+                                  ? "linear-gradient(160deg, rgba(20,20,40,0.92), rgba(11,11,26,0.9))"
+                                  : `linear-gradient(160deg, ${palette.surfaceSoft}, rgba(255,255,255,0.92))`,
+                              boxShadow: activeTheme === "dark" ? "0 24px 48px rgba(5,0,45,0.45)" : palette.shadow,
+                            }}
+                          >
+                            <div className="font-mono font-bold" style={{ fontSize: "2.4rem", color: palette.textPrimary }}>
+                              {String(val).padStart(2, "0")}
+                            </div>
+                            <div className="mt-3 text-xs uppercase tracking-[0.32em]" style={{ color: palette.textMuted }}>{label}</div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>
+                        {heroStatus === "live"
+                          ? "We’re live right now — open the Meet link from your inbox to join us."
+                          : "Reminder emails arrive 24 hours before we open the Google Meet room."}
+                      </div>
+                    </>
                   )}
                 </div>
                 <div className="mt-4 flex flex-wrap gap-3">
-                  <GlassButton id="register-free-cta" onClick={() => triggerIntroForm("hero_primary")}>Register free</GlassButton>
-                  <GlassButton variant="secondary" onClick={() => revealPaidAndGoCurriculum("hero_secondary")} className="px-5 py-3">
-                    View the full course (6 sessions)
+                  <GlassButton
+                    id="register-free-cta"
+                    onClick={() => {
+                      if (scheduleCompleted) {
+                        triggerFullTrackForm("hero_waitlist", { intent: "waitlist" });
+                      } else if (heroSession?.track === "starterclass" && heroStatus !== "completed") {
+                        triggerIntroForm("hero_primary");
+                      } else {
+                        triggerFullTrackForm("hero_primary", { session: heroSession?.k });
+                      }
+                    }}
+                  >
+                    {scheduleCompleted
+                      ? "Join the waitlist"
+                      : heroSession?.track === "starterclass" && heroStatus !== "completed"
+                      ? "Register free"
+                      : "Join this session"}
+                  </GlassButton>
+                  <GlassButton
+                    variant="secondary"
+                    onClick={() => revealPaidAndGoCurriculum("hero_secondary")}
+                    className="px-5 py-3"
+                  >
+                    {heroSession?.track === "starterclass" ? "View the full course (6 sessions)" : "See the full curriculum"}
                   </GlassButton>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-3 items-center">
@@ -1914,7 +2488,7 @@ function StarterclassLuxuryV8() {
                   <button
                     type="button"
                     onClick={() => {
-                      const text = encodeURIComponent("🎓 Join me at the FREE AI Starterclass by ICUNI! Learn to customize ChatGPT, build projects, and master AI tools. Register now!");
+                      const text = encodeURIComponent(shareWhatsAppText);
                       const url = encodeURIComponent(window.location.href);
                       window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
                     }}
@@ -1932,8 +2506,8 @@ function StarterclassLuxuryV8() {
                   <button
                     type="button"
                     onClick={() => {
-                      const subject = encodeURIComponent("Join the FREE AI Starterclass");
-                      const body = encodeURIComponent("I wanted to share this amazing opportunity with you!\n\nThe FREE AI Starterclass by ICUNI teaches you how to customize ChatGPT, build projects, and master AI tools.\n\nRegister here: " + window.location.href);
+                      const subject = encodeURIComponent(shareEmailSubject);
+                      const body = encodeURIComponent(`${shareEmailBody}\n\nRegister here: ${window.location.href}`);
                       window.location.href = `mailto:?subject=${subject}&body=${body}`;
                     }}
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:scale-105"
@@ -1984,7 +2558,7 @@ function StarterclassLuxuryV8() {
                 </button>
               </div>
               <div>
-                <PieBlock />
+                <PieBlock topics={heroTopics} prefersReducedMotion={prefersReducedMotion} />
               </div>
             </div>
           </GlowCard>
@@ -2069,7 +2643,7 @@ function StarterclassLuxuryV8() {
                     <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
                       <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Thinking ahead</div>
                       <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
-                        The Starterclass counts toward the full course. When you’re ready, add the monthly bundles from {formatCurrency(90)} with the early-bird or {formatCurrency(100)} after.
+                        The Starterclass counts toward the full course. When you’re ready, add the monthly bundles from {formatCurrency(fullTrackMonthlyUSD)} {earlyBirdActive ? "while the early-bird lasts." : "at the standard rate."}
                       </div>
                     </div>
                   </GlowCard>
@@ -2088,60 +2662,87 @@ function StarterclassLuxuryV8() {
                       </span>
                     </button>
                     {nextLiveOpen ? (
-                      <>
-                        <div className="mt-3 space-y-3">
-                          {upcomingSchedule.map((s) => {
-                            const isStarterclassSlot = s.track === "starterclass";
-                            const badgeLabel = isStarterclassSlot ? "Free Starterclass" : "Full course";
-                            const handleSlotClick = () => {
-                              if (isStarterclassSlot) {
-                                triggerIntroForm("next_live_schedule");
-                              } else {
-                                revealPaidAndGoCurriculum("next_live_schedule");
-                              }
-                            };
-                            return (
-                              <button
-                                key={s.k}
-                                type="button"
-                                onClick={handleSlotClick}
-                                className="w-full rounded-2xl border p-4 text-left transition hover:-translate-y-0.5 focus:-translate-y-0.5"
-                                style={{
-                                  borderColor: palette.border,
-                                  background: palette.surfaceSoft,
-                                  color: palette.textPrimary,
-                                }}
-                              >
-                                <div className="flex flex-wrap items-center justify-between gap-2 text-xs" style={{ color: palette.textMuted }}>
-                                  <span className="font-semibold text-sm" style={{ color: palette.textPrimary }}>
-                                    {s.date}
-                                  </span>
-                                  <span
-                                    className="inline-flex items-center gap-1 rounded-full px-2 py-0.5"
-                                    style={{
-                                      border: `1px solid ${palette.border}`,
-                                      background: palette.surface,
-                                      color: isStarterclassSlot ? palette.accentPrimary : palette.accentSecondary,
-                                    }}
-                                  >
-                                    {badgeLabel}
-                                  </span>
-                                </div>
-                                <div className="mt-2 flex flex-wrap gap-4 text-xs" style={{ color: palette.textMuted }}>
-                                  <span>UK: {formatUKRange(s.start, s.end)}</span>
-                                  <span>Your: {formatLocalRange(s.start, s.end)}</span>
-                                </div>
-                                <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>
-                                  {s.title}
-                                </div>
-                              </button>
-                            );
-                          })}
-                        </div>
-                        <div className="mt-4 text-xs" style={{ color: palette.textMuted }}>
-                          Ready for more after the Starterclass? Explore the curriculum tab to see how the full course expands these builds.
-                        </div>
-                      </>
+                      upcomingSchedule.length ? (
+                        <>
+                          <div className="mt-3 space-y-3">
+                            {upcomingSchedule.map((s) => {
+                              const isStarterclassSlot = s.track === "starterclass";
+                              const badgeLabel = isStarterclassSlot ? "Free Starterclass" : "Full course";
+                              const statusLabel = sessionStatusLabel(s.status);
+                              const statusColor = s.status === "live"
+                                ? palette.accentSecondary
+                                : s.status === "completed"
+                                ? palette.textMuted
+                                : palette.accentPrimary;
+                              const background = s.status === "completed" ? palette.surface : palette.surfaceSoft;
+                              const handleSlotClick = () => {
+                                if (s.status === "completed") return;
+                                if (isStarterclassSlot) {
+                                  triggerIntroForm("next_live_schedule");
+                                } else {
+                                  revealPaidAndGoCurriculum("next_live_schedule");
+                                }
+                              };
+                              return (
+                                <button
+                                  key={s.k}
+                                  type="button"
+                                  onClick={handleSlotClick}
+                                  className="w-full rounded-2xl border p-4 text-left transition hover:-translate-y-0.5 focus:-translate-y-0.5 disabled:opacity-60"
+                                  style={{
+                                    borderColor: palette.border,
+                                    background,
+                                    color: palette.textPrimary,
+                                  }}
+                                  disabled={s.status === "completed"}
+                                >
+                                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs" style={{ color: palette.textMuted }}>
+                                    <span className="font-semibold text-sm" style={{ color: palette.textPrimary }}>
+                                      {s.date}
+                                    </span>
+                                    <div className="flex items-center gap-1">
+                                      <span
+                                        className="inline-flex items-center gap-1 rounded-full px-2 py-0.5"
+                                        style={{
+                                          border: `1px solid ${palette.border}`,
+                                          background: palette.surface,
+                                          color: isStarterclassSlot ? palette.accentPrimary : palette.accentSecondary,
+                                        }}
+                                      >
+                                        {badgeLabel}
+                                      </span>
+                                      <span
+                                        className="inline-flex items-center gap-1 rounded-full px-2 py-0.5"
+                                        style={{
+                                          border: `1px solid ${palette.border}`,
+                                          background: palette.surface,
+                                          color: statusColor,
+                                        }}
+                                      >
+                                        {statusLabel}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div className="mt-2 flex flex-wrap gap-4 text-xs" style={{ color: palette.textMuted }}>
+                                    <span>UK: {formatUKRange(s.start, s.end)}</span>
+                                    <span>Your: {formatLocalRange(s.start, s.end)}</span>
+                                  </div>
+                                  <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>
+                                    {s.title}
+                                  </div>
+                                </button>
+                              );
+                            })}
+                          </div>
+                          <div className="mt-4 text-xs" style={{ color: palette.textMuted }}>
+                            Ready for more after the Starterclass? Explore the curriculum tab to see how the full course expands these builds.
+                          </div>
+                        </>
+                      ) : (
+                        <p className="mt-3 text-xs" style={{ color: palette.textSecondary }}>
+                          All sessions are archived. Join the waitlist from the hero to hear about future dates.
+                        </p>
+                      )
                     ) : (
                       <p className="mt-3 text-xs" style={{ color: palette.textSecondary }}>
                         Tap to view the Starterclass time, local conversions, and the next full-course labs.
@@ -2179,49 +2780,61 @@ function StarterclassLuxuryV8() {
                   )}
                 </div>
               </div>
-              <GlowCard className="p-6 space-y-4" id="instructor">
-                <h3 className="text-xl font-semibold">Meet your instructor</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
-                    <p>
-                      <strong style={{ color: palette.textPrimary }}>Mikael Gabriel</strong> — AI nerd & consultant guiding teams into everyday AI since 2021.
-                    </p>
-                    <p>
-                      I live in the tools we’ll use: ChatGPT Projects, Custom GPTs, Claude, Midjourney, Leonardo, and the quieter frontier models. My work spans automations, marketing ops, production pipelines, and the systems that keep them running.
-                    </p>
-                    <p>
-                      The Starterclass keeps things human. We build live, we document plainly, and we make sure you leave with assets you can actually use.
-                    </p>
-                    <div className="aspect-video overflow-hidden rounded-2xl border" style={{ borderColor: palette.border }}>
-                      <iframe
-                        title="Meet the instructor"
-                        src="https://www.youtube.com/embed/ke4bYVQjRBE"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        className="h-full w-full"
-                      />
+              <GlowCard className="p-6" id="instructor">
+                <button
+                  type="button"
+                  onClick={() => setInstructorOpen((prev) => !prev)}
+                  className="flex w-full items-center justify-between gap-3 text-left"
+                  aria-expanded={instructorOpen}
+                >
+                  <span className="text-xl font-semibold">Meet your instructor</span>
+                  <span className="text-xl" aria-hidden="true" style={{ color: palette.textSecondary }}>
+                    {instructorOpen ? "–" : "+"}
+                  </span>
+                </button>
+                {instructorOpen && (
+                  <div className="mt-4 grid md:grid-cols-2 gap-6">
+                    <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
+                      <p>
+                        <strong style={{ color: palette.textPrimary }}>Mikael Gabriel</strong> — AI nerd & consultant guiding teams into everyday AI since 2021.
+                      </p>
+                      <p>
+                        I live in the tools we’ll use: ChatGPT Projects, Custom GPTs, Claude, Midjourney, Leonardo, and the quieter frontier models. My work spans automations, marketing ops, production pipelines, and the systems that keep them running.
+                      </p>
+                      <p>
+                        The Starterclass keeps things human. We build live, we document plainly, and we make sure you leave with assets you can actually use.
+                      </p>
+                      <div className="aspect-video overflow-hidden rounded-2xl border" style={{ borderColor: palette.border }}>
+                        <iframe
+                          title="Meet the instructor"
+                          src="https://www.youtube.com/embed/ke4bYVQjRBE"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                          className="h-full w-full"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
+                      <div>
+                        <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Snapshot</div>
+                        <ul className="mt-2 space-y-2 list-disc pl-5">
+                          <li><strong style={{ color: palette.textPrimary }}>50+ professionals onboarded</strong> into daily AI use across strategy, media, and product teams.</li>
+                          <li><strong style={{ color: palette.textPrimary }}>Global Executive MBA (AI specialisation)</strong> in progress; certified in Microsoft Azure AI Fundamentals.</li>
+                          <li><strong style={{ color: palette.textPrimary }}>Client wins:</strong> media networks, independent studios, and consultancies delivering AI services.</li>
+                          <li><strong style={{ color: palette.textPrimary }}>No-code systems builder</strong> — this site, its automations, and support workflows are all AI-powered.</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Philosophy</div>
+                        <ol className="mt-2 space-y-2 list-decimal pl-5">
+                          <li>Keep humans in control — AI supports, it doesn’t replace.</li>
+                          <li>Build visibly so teams can trust the workflows they inherit.</li>
+                          <li>Ship outcomes: working GPTs, automations, and prompt kits you can deploy immediately.</li>
+                        </ol>
+                      </div>
                     </div>
                   </div>
-                  <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
-                    <div>
-                      <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Snapshot</div>
-                      <ul className="mt-2 space-y-2 list-disc pl-5">
-                        <li><strong style={{ color: palette.textPrimary }}>50+ professionals onboarded</strong> into daily AI use across strategy, media, and product teams.</li>
-                        <li><strong style={{ color: palette.textPrimary }}>Global Executive MBA (AI specialisation)</strong> in progress; certified in Microsoft Azure AI Fundamentals.</li>
-                        <li><strong style={{ color: palette.textPrimary }}>Client wins:</strong> media networks, independent studios, and consultancies delivering AI services.</li>
-                        <li><strong style={{ color: palette.textPrimary }}>No-code systems builder</strong> — this site, its automations, and support workflows are all AI-powered.</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Philosophy</div>
-                      <ol className="mt-2 space-y-2 list-decimal pl-5">
-                        <li>Keep humans in control — AI supports, it doesn’t replace.</li>
-                        <li>Build visibly so teams can trust the workflows they inherit.</li>
-                        <li>Ship outcomes: working GPTs, automations, and prompt kits you can deploy immediately.</li>
-                      </ol>
-                    </div>
-                  </div>
-                </div>
+                )}
               </GlowCard>
             </div>
           )}
@@ -2255,7 +2868,7 @@ function StarterclassLuxuryV8() {
               <div className="grid lg:grid-cols-12 gap-8">
                 <div className="lg:col-span-8 space-y-6">
                   {monthBundles.map((bundle) => {
-                    const filtered = sessions.filter((s) => s.month === bundle.key && s.track !== "break");
+                    const filtered = sessionTimeline.all.filter((s) => s.month === bundle.key && s.track !== "break");
                     const monthPrice = earlyBirdActive ? Math.round(bundle.priceUSD * 0.9) : bundle.priceUSD;
                     const monthLabel = `${bundle.label} · ${formatCurrency(monthPrice)}`;
                     return (
@@ -2267,6 +2880,8 @@ function StarterclassLuxuryV8() {
                       <div className="space-y-4">
                         {filtered.map((module) => {
                           const open = activeModule === module.k;
+                          const statusText = sessionStatusLabel(module.status);
+                          const statusColor = module.status === "completed" ? palette.textMuted : module.status === "live" ? palette.accentSecondary : palette.accentPrimary;
                           return (
                             <div key={module.k} className="rounded-3xl border" style={{ borderColor: palette.border, background: palette.surface }}>
                               <button
@@ -2275,18 +2890,24 @@ function StarterclassLuxuryV8() {
                                 onClick={() => setActiveModule((prev) => (prev === module.k ? "" : module.k))}
                               >
                                 <div className="flex-1">
-                                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>{module.date}</div>
+                                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
+                                    <span>{module.date}</span>
+                                    <span style={{ color: statusColor }}>{statusText}</span>
+                                  </div>
                                   <div className="mt-1 font-semibold" style={{ color: palette.textPrimary }}>{module.title}</div>
                                   <div className="mt-1 text-sm" style={{ color: palette.textSecondary }}>{module.desc}</div>
+                                  <div className="mt-2 flex flex-wrap gap-3 text-xs" style={{ color: palette.textMuted }}>
+                                    <span>UK: {formatUKRange(module.start, module.end)}</span>
+                                    <span>Your: {formatLocalRange(module.start, module.end)}</span>
+                                  </div>
                                 </div>
-                                <div className="text-xs" style={{ color: palette.textMuted }}>{formatUKRange(module.start, module.end)}</div>
                                 <div className="ml-auto text-xl" aria-hidden="true" style={{ color: palette.textSecondary }}>
                                   {open ? "–" : "+"}
                                 </div>
                               </button>
                               {open && (
                                 <div className="px-5 pb-5">
-                                  <ModuleOutlineChart segments={module.outline} />
+                                  <ModuleOutlineChart segments={module.outline} prefersReducedMotion={prefersReducedMotion} />
                                   <div className="mt-4 rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
                                     <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>What you accomplish</div>
                                     <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>{module.outcome}</div>
@@ -2332,7 +2953,7 @@ function StarterclassLuxuryV8() {
                     <h3 className="text-lg font-semibold">Early-bird status</h3>
                     <div className="text-sm" style={{ color: palette.textSecondary }}>
                       {earlyBirdActive
-                        ? `Secure the discount within ${earlyBird.d}d ${String(earlyBird.h).padStart(2, "0")}h ${String(earlyBird.m).padStart(2, "0")}m.`
+                        ? `Secure the discount within ${earlyBirdCountdown.d}d ${String(earlyBirdCountdown.h).padStart(2, "0")}h ${String(earlyBirdCountdown.m).padStart(2, "0")}m.`
                         : "The Starterclass window closed the early-bird. Tuition reverts to $300 equivalent."}
                     </div>
                     <div className="flex flex-wrap gap-2 text-xs" style={{ color: palette.textMuted }}>
@@ -2495,65 +3116,83 @@ function StarterclassLuxuryV8() {
 
         <Section className="pb-16" id="reviews">
           <GlowCard className="p-6 md:p-10">
-            <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-start">
-              <div className="space-y-5">
-                <div className="text-sm uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Reviews</div>
-                <blockquote
-                  className="text-xl leading-relaxed"
-                  style={{ color: palette.textPrimary }}
-                  aria-live="polite"
-                >
-                  “{testimonial.quote}”
-                </blockquote>
-                <div className="text-sm" style={{ color: palette.textSecondary }}>
-                  {testimonial.name} · {testimonial.role}
-                </div>
-                <div className="text-xs uppercase tracking-[0.26em]" style={{ color: palette.textMuted }}>
-                  {testimonial.win}
-                </div>
-                <div className="flex items-center gap-2" role="tablist" aria-label="Testimonials">
-                  {testimonials.map((item, index) => (
-                    <button
-                      key={item.name}
-                      type="button"
-                      onClick={() => setActiveTestimonial(index)}
-                      className="h-2.5 w-2.5 rounded-full"
-                      style={{
-                        background: index === activeTestimonial ? palette.accentPrimary : palette.border,
-                        border: `1px solid ${palette.border}`,
-                      }}
-                      aria-label={`Show testimonial from ${item.name}`}
-                      aria-pressed={index === activeTestimonial}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="space-y-4">
-                <div className="rounded-2xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Why people trust this</div>
-                  <ul className="space-y-2 text-xs" style={{ color: palette.textSecondary }}>
-                    <li>Built for business leaders, consultants, and operators — no coding required.</li>
-                    <li>One Starterclass win plus a clear path through the six-session course.</li>
-                    <li>10% early-bird discount when you enrol before the Starterclass ends.</li>
-                  </ul>
-                  <button
-                    type="button"
-                    onClick={() => triggerIntroForm("reviews_cta")}
-                    className="text-xs underline underline-offset-4"
-                    style={{ color: palette.accentSecondary }}
+            <button
+              type="button"
+              onClick={() => setReviewsOpen((prev) => !prev)}
+              className="flex w-full items-center justify-between gap-3 text-left"
+              aria-expanded={reviewsOpen}
+            >
+              <span className="text-sm uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Reviews</span>
+              <span className="text-xl" aria-hidden="true" style={{ color: palette.textSecondary }}>
+                {reviewsOpen ? "–" : "+"}
+              </span>
+            </button>
+            {reviewsOpen && (
+              <div className="mt-6 grid lg:grid-cols-[2fr_1fr] gap-8 items-start">
+                <div className="space-y-5">
+                  <blockquote
+                    className="text-xl leading-relaxed"
+                    style={{ color: palette.textPrimary }}
+                    aria-live="polite"
                   >
-                    Register free
-                  </button>
+                    “{testimonial.quote}”
+                  </blockquote>
+                  <div className="text-sm" style={{ color: palette.textSecondary }}>
+                    {testimonial.name} · {testimonial.role}
+                  </div>
+                  <div className="text-xs uppercase tracking-[0.26em]" style={{ color: palette.textMuted }}>
+                    {testimonial.win}
+                  </div>
+                  <div className="flex items-center gap-2" role="tablist" aria-label="Testimonials">
+                    {testimonials.map((item, index) => (
+                      <button
+                        key={item.name}
+                        type="button"
+                        onClick={() => setActiveTestimonial(index)}
+                        className="h-2.5 w-2.5 rounded-full"
+                        style={{
+                          background: index === activeTestimonial ? palette.accentPrimary : palette.border,
+                          border: `1px solid ${palette.border}`,
+                        }}
+                        aria-label={`Show testimonial from ${item.name}`}
+                        aria-pressed={index === activeTestimonial}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="rounded-2xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                    <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Why people trust this</div>
+                    <ul className="space-y-2 text-xs" style={{ color: palette.textSecondary }}>
+                      <li>Built for business leaders, consultants, and operators — no coding required.</li>
+                      <li>One Starterclass win plus a clear path through the six-session course.</li>
+                      <li>{earlyBirdActive ? "10% early-bird discount when you enrol before the Starterclass ends." : "Standard tuition with archived Starterclass resources."}</li>
+                    </ul>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (scheduleCompleted) {
+                          triggerFullTrackForm("reviews_cta", { intent: "waitlist" });
+                        } else {
+                          triggerIntroForm("reviews_cta");
+                        }
+                      }}
+                      className="text-xs underline underline-offset-4"
+                      style={{ color: palette.accentSecondary }}
+                    >
+                      {scheduleCompleted ? "Join the waitlist" : "Register free"}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </GlowCard>
         </Section>
 
         <Section className="pb-14">
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between flex-wrap gap-3">
-              <h2 className="text-xl font-semibold">What comes after the Starterclass</h2>
+              <h2 className="text-xl font-semibold">{upcomingHeading}</h2>
               <button
                 type="button"
                 onClick={() => {
@@ -2569,10 +3208,17 @@ function StarterclassLuxuryV8() {
             <div className="grid md:grid-cols-3 gap-4">
               {upcomingModules.map((module) => (
                 <GlowCard key={module.k} className="p-4">
-                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Included in full course</div>
+                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
+                    <span>Included in full course</span>
+                    <span style={{ color: module.status === "completed" ? palette.textMuted : module.status === "live" ? palette.accentSecondary : palette.accentPrimary }}>
+                      {sessionStatusLabel(module.status)}
+                    </span>
+                  </div>
                   <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>{module.title}</div>
                   <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{module.outcome}</div>
-                  <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>{module.date} · {formatUKRange(module.start, module.end)}</div>
+                  <div className="mt-3 text-xs" style={{ color: palette.textMuted }}>
+                    {module.date} · {formatUKRange(module.start, module.end)}
+                  </div>
                 </GlowCard>
               ))}
             </div>
@@ -2601,7 +3247,7 @@ function StarterclassLuxuryV8() {
               <div className="absolute inset-0 backdrop-blur" style={{ background: activeTheme === "dark" ? "rgba(0,0,0,0.7)" : "rgba(20,16,40,0.25)" }} onClick={closeModal} />
               <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden" style={{ border: `1px solid ${palette.border}`, background: palette.surface, color: palette.textPrimary }}>
                 <div className="px-4 md:px-6 py-4 flex items-center justify-between" style={{ borderBottom: `1px solid ${palette.border}` }}>
-                  <div className="font-semibold">Register — {INTRO_NAME}</div>
+                  <div className="font-semibold">Register — {activeRegistrationSession?.title || heroTitle}</div>
                   <button onClick={closeModal} className="text-2xl leading-none" style={{ color: palette.textSecondary }}>×</button>
                 </div>
                 <div className="p-6 space-y-6">
@@ -2737,28 +3383,27 @@ function StarterclassLuxuryV8() {
 
 window.StarterclassLuxuryV8 = StarterclassLuxuryV8;
 
-function PieBlock() {
-  const topics = PIE_TOPICS;
+function PieBlock({ topics = PIE_TOPICS, prefersReducedMotion }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const active = topics[activeIndex] ?? topics[0];
   const { palette } = useTheme();
 
   useEffect(() => {
-    if (paused) return;
+    if (paused || prefersReducedMotion) return undefined;
     const id = setInterval(() => {
       setActiveIndex((idx) => (idx + 1) % topics.length);
     }, 10000);
     return () => clearInterval(id);
-  }, [paused]);
+  }, [paused, prefersReducedMotion, topics.length]);
 
   const activeColor = active?.color ?? "#C8A145";
 
   return (
     <div
       className="relative"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      onMouseEnter={() => !prefersReducedMotion && setPaused(true)}
+      onMouseLeave={() => !prefersReducedMotion && setPaused(false)}
     >
       <div
         className="absolute -inset-6 -z-10 rounded-[2rem] blur-2xl"
@@ -2770,7 +3415,7 @@ function PieBlock() {
             className="relative"
             style={{
               animation: "pieRotate 120s linear infinite",
-              animationPlayState: paused ? "paused" : "running",
+              animationPlayState: paused || prefersReducedMotion ? "paused" : "running",
             }}
           >
             <Pie topics={topics} activeIndex={activeIndex} onSelect={setActiveIndex} />
@@ -2806,7 +3451,7 @@ function PieBlock() {
   );
 }
 
-function ModuleOutlineChart({ segments = [] }) {
+function ModuleOutlineChart({ segments = [], prefersReducedMotion }) {
   const fallback = useMemo(
     () => [
       { key: "Overview", value: 1, desc: "Module outline preview.", color: "#C8A145" },
@@ -2818,12 +3463,12 @@ function ModuleOutlineChart({ segments = [] }) {
   const { palette } = useTheme();
 
   useEffect(() => {
-    if (!outline.length) return undefined;
+    if (!outline.length || prefersReducedMotion) return undefined;
     const id = setInterval(() => {
       setFocus((prev) => (prev + 1) % outline.length);
     }, 8000);
     return () => clearInterval(id);
-  }, [outline.length]);
+  }, [outline.length, prefersReducedMotion]);
 
   const active = outline[focus] ?? outline[0];
   const total = outline.reduce((sum, seg) => sum + (seg.value || 0), 0) || 1;
