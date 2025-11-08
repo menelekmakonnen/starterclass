@@ -562,19 +562,21 @@ function VeronicaChatbot() {
   const { theme, palette } = useTheme();
   const isDark = theme === "dark";
   const isMobileLayout = viewportWidth < 640;
-  const edgeOffset = isMobileLayout ? 12 : 16;
+  const horizontalOffset = isMobileLayout ? 4 : 16;
+  const verticalOffset = isMobileLayout ? 12 : 16;
   const moodEmoji = useMemo(() => {
     if (isLoading) return "🤔";
     return VERONICA_IDLE_EMOJIS[idleEmojiIndex] || VERONICA_IDLE_EMOJIS[0];
   }, [idleEmojiIndex, isLoading]);
 
-  const computedPanelWidth = viewportWidth - edgeOffset * 2;
-  const panelWidth = Math.min(
-    380,
+  const computedPanelWidth = viewportWidth - horizontalOffset * 2;
+  let panelWidth =
     computedPanelWidth > 0
       ? computedPanelWidth
-      : Math.max(viewportWidth - edgeOffset, viewportWidth * 0.9, 0)
-  );
+      : Math.max(viewportWidth - horizontalOffset * 2, viewportWidth * 0.9, 0);
+  if (!isMobileLayout) {
+    panelWidth = Math.min(380, panelWidth);
+  }
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -631,8 +633,8 @@ function VeronicaChatbot() {
   const startDrag = useCallback((clientX, element, source) => {
     if (!element) return;
     const width = element.offsetWidth || 0;
-    const minLeft = edgeOffset;
-    const maxLeft = Math.max(minLeft, viewportWidth - width - edgeOffset);
+    const minLeft = horizontalOffset;
+    const maxLeft = Math.max(minLeft, viewportWidth - width - horizontalOffset);
     const initialLeft = dock === 'left' ? minLeft : maxLeft;
     dragMetaRef.current = {
       pointerOffset: clientX - initialLeft,
@@ -642,20 +644,20 @@ function VeronicaChatbot() {
     dragIntentRef.current = { active: true, moved: false, source };
     setDragLeft(initialLeft);
     setIsDragging(true);
-  }, [dock, edgeOffset, viewportWidth]);
+  }, [dock, horizontalOffset, viewportWidth]);
 
   const updateDrag = useCallback((clientX) => {
     if (!isDragging) return;
     const { pointerOffset, width } = dragMetaRef.current;
-    const minLeft = edgeOffset;
-    const maxLeft = Math.max(minLeft, viewportWidth - width - edgeOffset);
+    const minLeft = horizontalOffset;
+    const maxLeft = Math.max(minLeft, viewportWidth - width - horizontalOffset);
     const nextLeft = Math.min(Math.max(minLeft, clientX - pointerOffset), maxLeft);
     if (Math.abs(nextLeft - dragMetaRef.current.lastLeft) > 1) {
       dragIntentRef.current.moved = true;
     }
     dragMetaRef.current.lastLeft = nextLeft;
     setDragLeft(nextLeft);
-  }, [edgeOffset, isDragging, viewportWidth]);
+  }, [horizontalOffset, isDragging, viewportWidth]);
 
   const finishDrag = useCallback(() => {
     if (!isDragging) return;
@@ -754,11 +756,11 @@ function VeronicaChatbot() {
   const horizontalStyles = isDragging && dragLeft !== null
     ? { left: `${dragLeft}px`, right: 'auto' }
     : dock === 'left'
-      ? { left: `${edgeOffset}px`, right: 'auto' }
-      : { right: `${edgeOffset}px`, left: 'auto' };
+      ? { left: `${horizontalOffset}px`, right: 'auto' }
+      : { right: `${horizontalOffset}px`, left: 'auto' };
 
-  const baseBottomOffset = `calc(env(safe-area-inset-bottom, 0px) + ${edgeOffset}px)`;
-  const bubbleBottomOffset = `calc(env(safe-area-inset-bottom, 0px) + ${edgeOffset + (isMobileLayout ? 56 : 72)}px)`;
+  const baseBottomOffset = `calc(env(safe-area-inset-bottom, 0px) + ${verticalOffset}px)`;
+  const bubbleBottomOffset = `calc(env(safe-area-inset-bottom, 0px) + ${verticalOffset + (isMobileLayout ? 56 : 72)}px)`;
   const panelBottomOffset = baseBottomOffset;
   const bubbleSize = isMobileLayout ? 60 : 72;
   const messagesHeight = isMobileLayout ? 'min(55vh, 420px)' : '420px';
