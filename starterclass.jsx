@@ -2482,6 +2482,18 @@ function StarterclassLuxuryV8() {
                   >
                     {heroSession?.track === "starterclass" ? "View the full course (6 sessions)" : "See the full curriculum"}
                   </GlassButton>
+                  <GlassButton
+                    variant="secondary"
+                    className="px-5 py-3"
+                    onClick={() => {
+                      track("hero_lab_page", { source: "hero" });
+                      if (typeof window !== "undefined") {
+                        window.location.href = "/ai-starterclass-lab.html";
+                      }
+                    }}
+                  >
+                    Study the AI Starterclass lab
+                  </GlassButton>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-3 items-center">
                   <span className="text-sm font-semibold" style={{ color: palette.textPrimary }}>Share this event:</span>
@@ -4358,3 +4370,1311 @@ function CalendarModal({ onClose, onAdd }) {
     </div>
   );
 }
+const LAB_PERSONA_OPTIONS = [
+  {
+    value: "creative",
+    label: "Creative / Marketing",
+    heading: "Client Project Copilot – Creative",
+    body:
+      "You translate messy creative briefs into clear deliverables, campaign plans, and client-ready updates. Ask 3–5 clarifying questions, separate facts vs assumptions, and flag risks before presenting ideas.",
+  },
+  {
+    value: "consulting",
+    label: "Consulting / Professional Services",
+    heading: "Client Project Copilot – Consulting",
+    body:
+      "You specialise in structuring projects, defining scope, and aligning stakeholders. Surface unknowns early, propose phased approaches, and highlight legal or compliance considerations.",
+  },
+  {
+    value: "finance",
+    label: "Finance / FinTech",
+    heading: "Client Project Copilot – Finance",
+    body:
+      "You turn client requests into structured analyses, lightweight models, and investor-ready summaries. Always note assumptions, confidence levels, and regulatory implications.",
+  },
+  {
+    value: "healthcare",
+    label: "Healthcare / Psych / Life Sciences",
+    heading: "Client Project Copilot – Healthcare",
+    body:
+      "You emphasise ethics, privacy, and clear disclaimers. Capture context carefully, suggest verification steps, and keep recommendations grounded in evidence-based practice.",
+  },
+  {
+    value: "nonprofit",
+    label: "Nonprofit / Public Sector",
+    heading: "Client Project Copilot – Public Impact",
+    body:
+      "You turn policy goals into action plans, stakeholder updates, and grant-friendly reporting. Clarify impact metrics, constraints, and accountability requirements.",
+  },
+  {
+    value: "tech",
+    label: "Tech / IT / Software",
+    heading: "Client Project Copilot – Technology",
+    body:
+      "You break feature requests into user stories, technical tasks, risks, and comms packs. Highlight dependencies, integrations, and test plans before implementation.",
+  },
+  {
+    value: "other",
+    label: "Other",
+    heading: "Client Project Copilot – Universal",
+    body:
+      "You adapt to whatever project lands on your desk. Start by restating the goal, list key assumptions, then recommend the smartest starting command.",
+  },
+];
+
+const LAB_COMMANDS = [
+  { command: "/scope", summary: "Scope the project", detail: "Summarise context, list unknowns, and present a phases table." },
+  { command: "/brief", summary: "Draft a project brief", detail: "Turn raw inputs into a polished, client-facing overview." },
+  { command: "/plan", summary: "Implementation plan", detail: "Lay out milestones, owners, and checklists." },
+  { command: "/email", summary: "Client email", detail: "Draft ready-to-send updates or approvals." },
+  { command: "/retro", summary: "Project retrospective", detail: "Capture lessons, wins, and fixes in a tight doc." },
+];
+
+const LAB_INPUT_OPTIONS = [
+  "Industry / field",
+  "Client type",
+  "Project description",
+  "Urgency",
+  "Estimated effort",
+  "Strategic value",
+  "Your base day rate / internal cost",
+  "Risks/constraints already known",
+];
+
+const LAB_OUTPUT_TEMPLATES = [
+  {
+    value: "minimal",
+    title: "Minimalist",
+    bullets: ["Summary", "Price band", "3–5 tasks"],
+    tip: "Choose Minimalist when speed matters and you just need a direction.",
+  },
+  {
+    value: "standard",
+    title: "Standard",
+    bullets: ["Summary", "Price band with explanation", "Phases & tasks", "Risks & questions", "Email skeleton"],
+    tip: "Use Standard for most client-facing scoping conversations.",
+  },
+  {
+    value: "detailed",
+    title: "Detailed",
+    bullets: ["Everything in Standard", "Timeline", "Suggested deliverable formats"],
+    tip: "Detailed is for high-stakes work when you need zero ambiguity.",
+  },
+];
+
+const LAB_RISKS = [
+  {
+    title: "Legal / Compliance",
+    bullets: ["Don't treat outputs as legal advice.", "Flag when regulations may apply.", "Note when clients need professional review."],
+  },
+  {
+    title: "Healthcare / Mental Health",
+    bullets: ["Never offer diagnoses.", "Keep PHI out of prompts.", "Suggest human review before acting."],
+  },
+  {
+    title: "Financial Advice",
+    bullets: ["Provide ranges, not guarantees.", "Disclose assumptions.", "Remind clients to verify numbers."],
+  },
+  {
+    title: "Confidential Data",
+    bullets: ["Strip identifiers before sharing.", "Store sensitive notes outside chat.", "Mark unknowns vs facts."],
+  },
+];
+
+const LAB_BADGES = [
+  { min: 90, label: "AI Operator", description: "You run AI like infrastructure. Build full workflows next." },
+  { min: 70, label: "Workflow Builder", description: "You're building systems. Upgrade tiny tools into team utilities." },
+  { min: 40, label: "Prompt Explorer", description: "You know the tools exist. Commit one real workflow this week." },
+  { min: 0, label: "Prompt Tourist", description: "You're still visiting. Re-run the lab with a live project." },
+];
+
+const PROMPT_BLUEPRINT_TEXT = `Prompt Blueprint
+
+Role: "You are my [X] assistant…"
+Context: "Here is the situation…"
+Goal: "Your job is to help me…"
+Constraints: "Keep it under 200 words / use bullets…"
+Output format: "Use headings: A, B, C…"
+Example (optional): "Here’s what a good answer looks like…"`;
+
+const CUSTOM_INSTRUCTIONS_TEMPLATE = `Treat me as a busy knowledge worker.
+
+Respond like this by default:
+- Start with 1–2 bullet points of what you understood.
+- If my request is vague, ask up to 3 clarifying questions before answering.
+- Prefer headings, bullet points, and short paragraphs.
+- When there are multiple options, compare them in a small table then recommend one.
+- If you’re uncertain or info might be outdated, say so directly and suggest how I can verify it.
+- For practical tasks (emails, briefs, plans), create outputs I can copy-paste with minimal edits.
+Tone: clear, confident, no fake enthusiasm.`;
+
+const CUSTOM_INSTRUCTIONS_STYLE = `TONE: Professional but conversational. Like a smart colleague who gets things done.
+
+STRUCTURE:
+- Lead with the answer or key insight
+- Then provide context if needed
+- End with next steps or implications when relevant
+
+FORMAT PREFERENCES:
+- Use headings and bold sparingly - only when it genuinely helps clarity
+- Write in paragraphs for explanations, analysis, and strategy
+- Use lists only when I ask for them, or when comparing distinct options
+- For deliverables (emails, scripts, copy), give me the final version first, then notes
+
+WHEN I ASK YOU TO CREATE SOMETHING:
+Give me the polished version immediately. Don’t ask for clarification unless absolutely critical. Make smart assumptions based on context, then note what you assumed so I can correct if needed.
+
+WHEN I’M EXPLORING IDEAS:
+Push back when something could be stronger. Suggest alternatives. Help me think, don’t just transcribe my thoughts.
+
+SPECIAL INSTRUCTIONS:
+- If I upload a document, treat it as source material unless I specify otherwise
+- When I say "build this", create something I can actually use or deploy
+- Remember context within our conversation - don’t make me repeat myself
+- If you notice I’m approaching something inefficiently, flag it`;
+
+const PROJECT_PROMPT_TEMPLATE = `[RESEARCH] - Deep dive investigation
+→ Find credible sources, pull key insights, identify trends, note contradictions
+→ Output: Synthesized brief with source links
+
+[DRAFT] - Create usable content
+→ Write emails, documents, scripts, copy, proposals ready to send/use
+→ Output: Polished draft with one alternative approach
+
+[STRATEGY] - Think through approach
+→ Analyze situations, map options, identify risks, recommend paths
+→ Output: Recommendation with reasoning and trade-offs
+
+[BUILD] - Create a tool or system
+→ Design workflows, templates, calculators, trackers
+→ Output: Functional tool I can copy and use immediately
+
+[ANALYZE] - Break down what I give you
+→ Review documents, data, feedback, trends
+→ Output: Key findings, patterns, gaps, implications
+
+[REFINE] - Improve existing work
+→ Edit, restructure, strengthen arguments, improve clarity
+→ Output: Enhanced version with change notes
+
+[IDEATE] - Generate possibilities
+→ Brainstorm options, explore angles, find creative solutions
+→ Output: Diverse options with quick pros/cons
+
+When no code is present, default to [STRATEGY] mode and help me think through the goal.`;
+
+const CLIENT_TOOL_PROMPT = `You are my “Client Project Planner & Value Calculator”.
+
+Use the following inputs to scope and price a project:
+[Industry / Field]:
+[Client type]:
+[Project description]:
+[Urgency (Low/Medium/High)]:
+[Estimated effort (hours or S/M/L)]:
+[Strategic value to client (1–5)]:
+[My base day rate or internal cost]:
+[Known risks/constraints]:
+
+Your job:
+1) Write a 2–3 line project summary.
+2) Recommend a price range or effort band and explain your reasoning.
+3) Break the work into phases and tasks.
+4) List 3–5 key risks and questions I should discuss with the client.
+5) Draft a short client email or proposal outline I can copy-paste.
+
+Format your answer with clear headings and bullet points.
+If information is missing, clearly state your assumptions before giving recommendations.`;
+
+const INTERACTIVE_TOOL_PROMPT = `Build an interactive Client Brief Generator in Canvas.
+
+Sections to include:
+1. Client & Project Overview (company name, project name, contact person, date)
+2. Project Goals (success definition, objectives, metrics)
+3. Scope & Deliverables (what’s in / out, delivery format)
+4. Timeline & Milestones (start, key deadlines, final delivery)
+5. Budget & Resources (budget range, payment terms, resource needs)
+6. Stakeholders & Approvals (decision makers, approval process, comms preferences)
+7. Constraints & Considerations (technical limits, brand rules, known challenges)
+
+Requirements:
+- Clean layout with prompts per field
+- Copy-all and Download-as-PDF buttons
+- Works on desktop + mobile
+- Auto-save to browser storage
+- Validate required fields before download
+- Output formatted for easy copy/paste.`;
+
+const ANALYZER_PROMPT = `Build a Content Quality Analyzer in Canvas.
+
+Features:
+1. Paste text on the left, analysis on the right
+2. Analyse clarity, structure, tone, strength, length, and gaps
+3. Output format:
+   - Quick Score (0–10 + one-line assessment)
+   - What’s Working (2–3 strengths)
+   - What Needs Work (2–3 issues)
+   - Suggested Edits (concrete changes)
+   - Rewritten Version (show improvements)
+4. Include “Analyze” and “Copy Improved Version” buttons
+5. Use green for strengths, amber for improvements
+6. Keep the interface clean and focus-friendly.`;
+
+const QUICK_START_CHECKLIST = `AI STARTERCLASS - ACTION CHECKLIST
+
+□ SET UP CUSTOM INSTRUCTIONS
+  Settings → Personalization → Custom Instructions
+  Paste the template, customise, save, and test
+
+□ CREATE YOUR FIRST CUSTOM GPT
+  ChatGPT → Explore GPTs → Create
+  Name it, add instructions, test with real work, save
+
+□ BUILD ONE CANVAS TOOL
+  Start a chat → Request a build
+  Use the provided prompt or tweak
+  Test with real content and save the chat
+
+□ SET UP A PROJECT
+  ChatGPT → Projects → New Project
+  Name it, add the Project Prompt, run your first [TASK CODE]
+
+AFTER TODAY:
+□ Build another Custom GPT this week
+□ Create one Canvas tool you’ll reuse
+□ Share a win in the group chat (when live)
+□ Leave a review if valuable
+□ Sign up for the newsletter
+
+HAVING TROUBLE?
+- Not seeing Canvas? Ask “Create this in Canvas”
+- GPT acting up? Tighten your instructions
+- Tool broken? Say “Debug this and fix errors”`;
+
+const CLIENT_BRIEF_INSTRUCTIONS = `You are the Client Brief Architect.
+
+Purpose: Turn messy inputs into structured briefs that prevent scope creep.
+
+How you work:
+1. Information gathering — ask about problems, success, deliverables, timeline, scope, stakeholders, budget, constraints.
+2. Brief creation — always include: Executive Summary, Project Overview, Scope & Deliverables, Timeline & Milestones, Budget & Resources, Success Metrics, Stakeholders & Governance, Assumptions & Constraints, Risks & Mitigation, Next Steps.
+3. Style — ask targeted questions, fill reasonable assumptions, flag gaps, suggest improvements, format for sharing.
+4. Special features — extract info from messy notes, analyse existing briefs, adapt tone per industry, offer detailed + executive versions.
+5. Outputs — complete brief, key unanswered questions, one alternative framing.
+
+Kick off with: “What project are we briefing today?”`;
+
+const FOLLOW_UP_EMAIL_TEMPLATE = `Subject: Your AI Starterclass Resources + Next Steps
+
+Thanks for joining today’s AI Starterclass! Here’s everything you need to keep building:
+
+WHAT YOU BUILT TODAY:
+✓ Custom Instructions for personalisation
+✓ Your first Custom GPT
+✓ An interactive Canvas tool
+✓ A Project workspace
+
+ACCESS YOUR WORK:
+- Custom GPTs: ChatGPT → Explore GPTs → Your GPTs
+- Canvas Tools: Saved in your chat history
+- Projects: ChatGPT → Projects
+
+YOUR HOMEWORK (THIS WEEK):
+1. Build one more Custom GPT for real work
+2. Create one Canvas tool you’ll reuse
+3. Set up a Project and run 3 tasks with task codes
+
+FREE RESOURCES:
+→ Prompt Library: [LINK]
+→ Custom GPT Templates: [LINK]
+→ Tool Building Examples: [LINK]
+→ AI Group Chat (coming soon): [LINK]
+
+WHAT’S NEXT:
+Session 2: Deep Research
+Session 3-4: Automation with N8N
+Session 5-9: Full AI systems
+
+Full 9-Session Course: [LIMITED SPOTS - LINK]
+
+HELP US IMPROVE:
+If today was valuable, leave a quick review: [LINK]
+Reply with any questions.
+
+See you in the next session,
+[Your Name]
+ICUNI AI Training
+
+P.S. The best way to learn AI is to use it. Build something this week.`;
+function StarterclassLabPage() {
+  const [activeTheme, setActiveTheme] = useState(() => {
+    if (typeof window === "undefined") return "light";
+    try {
+      return localStorage.getItem("sc_theme_pref") || "light";
+    } catch {
+      return "light";
+    }
+  });
+  const palette = useMemo(() => getPalette(activeTheme), [activeTheme]);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [levelScores, setLevelScores] = useState({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 });
+  const [levelCompletion, setLevelCompletion] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
+  const [copiedKey, setCopiedKey] = useState("");
+  const copyTimeoutRef = useRef(null);
+
+  const [level1Card, setLevel1Card] = useState(null);
+  const [level1Q1, setLevel1Q1] = useState("");
+  const [level1Q2, setLevel1Q2] = useState("");
+  const [level1Rewrite, setLevel1Rewrite] = useState("");
+  const [level1SelfScore, setLevel1SelfScore] = useState(0);
+
+  const [toggles, setToggles] = useState({ clarify: true, structure: true, concise: false });
+  const [level2SelfScore, setLevel2SelfScore] = useState(0);
+  const [level2Q4, setLevel2Q4] = useState("");
+  const [level2Q5, setLevel2Q5] = useState("");
+
+  const [personaChoice, setPersonaChoice] = useState(LAB_PERSONA_OPTIONS[0].value);
+  const [level3Command, setLevel3Command] = useState("");
+  const [level3ScenarioChoice, setLevel3ScenarioChoice] = useState(null);
+  const [level3ScenarioText, setLevel3ScenarioText] = useState("");
+
+  const [selectedInputs, setSelectedInputs] = useState([]);
+  const [outputTemplate, setOutputTemplate] = useState("standard");
+  const [level4SelfScore, setLevel4SelfScore] = useState(0);
+
+  const [activeRisk, setActiveRisk] = useState(LAB_RISKS[0].title);
+  const [level5Q7, setLevel5Q7] = useState("");
+  const [level5Q8, setLevel5Q8] = useState("");
+  const [reflection, setReflection] = useState("");
+  const [level5SelfScore, setLevel5SelfScore] = useState(0);
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
+
+  const handleCopy = useCallback((key, text) => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        clearTimeout(copyTimeoutRef.current);
+        setCopiedKey(key);
+        copyTimeoutRef.current = setTimeout(() => setCopiedKey(""), 2000);
+      });
+    }
+  }, []);
+
+  const handleToggleTheme = useCallback(() => {
+    setActiveTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      try {
+        localStorage.setItem("sc_theme_pref", next);
+      } catch {}
+      return next;
+    });
+  }, []);
+
+  const handleLevelComplete = useCallback((level, points) => {
+    setLevelScores((prev) => ({ ...prev, [level]: points }));
+    setLevelCompletion((prev) => ({ ...prev, [level]: true }));
+  }, []);
+
+  const completedLevels = useMemo(() => Object.values(levelCompletion).filter(Boolean).length, [levelCompletion]);
+  const totalPoints = useMemo(() => Object.values(levelScores).reduce((sum, pts) => sum + pts, 0), [levelScores]);
+  const cappedPoints = Math.min(totalPoints, 120);
+  const scorePercent = Math.round((cappedPoints / 120) * 100);
+  const progressPercent = Math.round((completedLevels / 5) * 100);
+  const badge = useMemo(() => {
+    return LAB_BADGES.find((entry) => scorePercent >= entry.min) || LAB_BADGES[LAB_BADGES.length - 1];
+  }, [scorePercent]);
+  const showGlow = scorePercent >= 70;
+
+  const level1Points = useMemo(() => {
+    let pts = 0;
+    if (level1Q1 === "B") pts += 10;
+    if (level1Q2 === "C") pts += 10;
+    pts += level1SelfScore;
+    return pts;
+  }, [level1Q1, level1Q2, level1SelfScore]);
+
+  const level2Points = useMemo(() => {
+    let pts = 0;
+    pts += level2SelfScore;
+    if (level2Q4 === "B") pts += 10;
+    if (level2Q5 === "C") pts += 10;
+    return pts;
+  }, [level2SelfScore, level2Q4, level2Q5]);
+
+  const level3Points = useMemo(() => {
+    let pts = 0;
+    if (level3Command === "B") pts += 10;
+    if (level3ScenarioChoice?.points) pts += level3ScenarioChoice.points;
+    return pts;
+  }, [level3Command, level3ScenarioChoice]);
+
+  const level4Points = useMemo(() => {
+    let pts = 0;
+    if (selectedInputs.length >= 5) pts += 5;
+    if (outputTemplate) pts += 5;
+    pts += level4SelfScore;
+    return pts;
+  }, [selectedInputs.length, outputTemplate, level4SelfScore]);
+
+  const level5Points = useMemo(() => {
+    let pts = 0;
+    if (level5Q7 === "C") pts += 10;
+    if (level5Q8 === "C") pts += 10;
+    pts += level5SelfScore;
+    return pts;
+  }, [level5Q7, level5Q8, level5SelfScore]);
+
+  const persona = LAB_PERSONA_OPTIONS.find((option) => option.value === personaChoice) || LAB_PERSONA_OPTIONS[0];
+
+  const toggleBehavior = (key) => {
+    setToggles((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const sampleResponse = useMemo(() => {
+    const parts = [];
+    if (toggles.clarify) {
+      parts.push("First, here’s what I heard and 2 quick clarifying questions before I draft anything.");
+    } else {
+      parts.push("Jumping straight into the draft with the info provided.");
+    }
+    if (toggles.structure) {
+      parts.push("## Plan\n- Scope summary\n- Timeline\n- Risks & follow-ups");
+    } else {
+      parts.push("Here’s a stream-of-consciousness reply with ideas you can shape.");
+    }
+    if (toggles.concise) {
+      parts.push("Keeping it brutal and concise — no filler, just the essentials.");
+    } else {
+      parts.push("Adding nuance so you can see the trade-offs before deciding.");
+    }
+    return parts.join("\n\n");
+  }, [toggles]);
+
+  const handleInputToggle = (label) => {
+    setSelectedInputs((prev) => {
+      if (prev.includes(label)) {
+        return prev.filter((item) => item !== label);
+      }
+      return [...prev, label];
+    });
+  };
+
+  const handleScenarioChoice = (choice) => {
+    let points = 0;
+    let message = "";
+    if (choice === "scope") {
+      points = 10;
+      message = "Nice. You scope before you write.";
+    } else if (choice === "brief") {
+      points = 5;
+      message = "You can do this, but you might bake assumptions into the brief.";
+    } else {
+      points = 0;
+      message = "Planning before understanding is how projects go sideways.";
+    }
+    setLevel3ScenarioChoice({ choice, points, message });
+  };
+
+  const scrollToLevelOne = useCallback(() => {
+    const target = document.getElementById("level-1");
+    if (!target) return;
+    target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+  }, [prefersReducedMotion]);
+
+  const themeClass = activeTheme === "dark" ? "theme-dark" : "theme-light";
+
+  return (
+    <ThemeProvider theme={activeTheme} palette={palette}>
+      <div className={`${themeClass} min-h-screen`} style={{ background: palette.background, color: palette.textPrimary }}>
+        <div className="relative overflow-hidden">
+          <Sparkles />
+          <div className="max-w-6xl mx-auto px-4 py-10 space-y-16 lg:space-y-20">
+            <section className="relative rounded-3xl border p-6 md:p-10" style={{ borderColor: palette.border, background: palette.surface }}>
+              <div className="flex flex-col lg:flex-row gap-8">
+                <div className="flex-1 space-y-6">
+                  <Badge>Estimated time: 45–60 mins</Badge>
+                  <h1 className="text-3xl lg:text-4xl font-semibold">
+                    AI Starterclass Lab – Learn by Clicking, Not Just Reading
+                  </h1>
+                  <p className="text-lg" style={{ color: palette.textSecondary }}>
+                    Turn random prompts into a reusable AI assistant for your work. Click through the modules, answer the questions, build your own system, and score yourself as you go.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <GlassButton onClick={scrollToLevelOne} className="px-6 py-3">
+                      Start Level 1
+                    </GlassButton>
+                    <GlassButton variant="secondary" onClick={handleToggleTheme} className="px-6 py-3">
+                      Switch to {activeTheme === "dark" ? "light" : "dark"} mode
+                    </GlassButton>
+                  </div>
+                </div>
+                <div className="w-full max-w-sm rounded-3xl border p-5 space-y-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Progress</div>
+                      <div className="text-2xl font-semibold">{progressPercent}%</div>
+                    </div>
+                    <div className="text-sm" style={{ color: palette.textSecondary }}>{completedLevels}/5 levels</div>
+                  </div>
+                  <div className="h-3 w-full rounded-full" style={{ background: palette.surface }}>
+                    <div className="h-full rounded-full transition-all" style={{ width: `${progressPercent}%`, backgroundImage: `linear-gradient(90deg, ${palette.accentPrimary}, ${palette.accentSecondary})` }} />
+                  </div>
+                  <div className="text-sm" style={{ color: palette.textSecondary }}>
+                    Score so far: <span className="font-semibold" style={{ color: palette.textPrimary }}>{scorePercent}/100</span>
+                  </div>
+                  <div className="text-xs" style={{ color: palette.textMuted }}>
+                    Points lock when you mark each level complete.
+                  </div>
+                </div>
+              </div>
+            </section>
+            <LevelSection
+              id="level-1"
+              title="Level 1 – Talk to AI Like a Pro, Not a Tourist"
+              subtitle="Learn how to structure prompts so ChatGPT stops giving mid answers. Spot bad prompts, fix them, and get scored for it."
+              points="Max 25 pts"
+            >
+              <div className="grid md:grid-cols-2 gap-4">
+                {["A", "B"].map((card) => (
+                  <button
+                    key={card}
+                    type="button"
+                    onClick={() => setLevel1Card(card)}
+                    className="relative rounded-2xl border p-4 text-left"
+                    style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                  >
+                    <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                      Prompt {card}
+                    </div>
+                    <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
+                      {card === "A"
+                        ? "Write an email to a client about a project."
+                        : "You are my project assistant. Write a concise email confirming scope, timeline, and next steps."
+                      }
+                    </p>
+                    {level1Card === card && (
+                      <div className="mt-4 rounded-2xl border px-3 py-2 text-xs" style={{ borderColor: palette.accentPrimary, background: palette.surface }}>
+                        <div className="font-semibold" style={{ color: palette.textPrimary }}>AI’s answer</div>
+                        <p className="mt-1" style={{ color: palette.textSecondary }}>
+                          {card === "A"
+                            ? "Hey! Kicking off soon. Let me know what you think."
+                            : "Hi Sam — here’s the scoped outline, bulletproofed timeline, and CTA with a date."
+                          }
+                        </p>
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-6 space-y-2">
+                <p className="font-semibold">Question 1</p>
+                <p className="text-sm" style={{ color: palette.textSecondary }}>
+                  Which prompt is better, and what is the main reason?
+                </p>
+                <div className="grid gap-2">
+                  {["A", "B", "C", "D"].map((option) => (
+                    <QuizOption
+                      key={option}
+                      label={option}
+                      text={{
+                        A: "A is better – it gives AI freedom",
+                        B: "B is better – it gives role, context, tone, and structure",
+                        C: "They’re basically the same",
+                        D: "B is better – just because it’s longer",
+                      }[option]}
+                      selected={level1Q1 === option}
+                      onSelect={() => setLevel1Q1(option)}
+                    />
+                  ))}
+                </div>
+                {level1Q1 && (
+                  <FeedbackBlock success={level1Q1 === "B"}>
+                    {level1Q1 === "B"
+                      ? "Nice. Length doesn’t matter. Structure does: role + context + goal + format + tone."
+                      : "Not quite. The win isn’t more words — it’s role + context + goal + format + tone packed into one prompt."}
+                  </FeedbackBlock>
+                )}
+              </div>
+
+              <div className="mt-6">
+                <div className="rounded-3xl border p-4 md:p-6" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                  <div className="flex flex-wrap items-center gap-3 justify-between">
+                    <div>
+                      <div className="text-sm font-semibold">Prompt Blueprint</div>
+                      <p className="text-xs" style={{ color: palette.textSecondary }}>Use it to rewrite any prompt instantly.</p>
+                    </div>
+                    <GlassButton variant="secondary" onClick={() => handleCopy("blueprint", PROMPT_BLUEPRINT_TEXT)}>
+                      {copiedKey === "blueprint" ? "Copied" : "Copy blueprint"}
+                    </GlassButton>
+                  </div>
+                  <pre className="mt-4 text-sm whitespace-pre-wrap" style={{ color: palette.textSecondary }}>{PROMPT_BLUEPRINT_TEXT}</pre>
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-2">
+                <p className="font-semibold">Question 2</p>
+                <p className="text-sm" style={{ color: palette.textSecondary }}>
+                  You want a research summary you can use in a pitch deck. Which part is missing in this prompt?
+                </p>
+                <div className="grid gap-2">
+                  {["A", "B", "C", "D"].map((option) => (
+                    <QuizOption
+                      key={option}
+                      label={option}
+                      text={{ A: "Role", B: "Context", C: "Output format", D: "Tone" }[option]}
+                      selected={level1Q2 === option}
+                      onSelect={() => setLevel1Q2(option)}
+                    />
+                  ))}
+                </div>
+                {level1Q2 && (
+                  <FeedbackBlock success={level1Q2 === "C"}>
+                    {level1Q2 === "C"
+                      ? "Right. Bullet points are not a real format. Create sections like Market size / Feature trends / Risks."
+                      : "Close. You still need a clear format for the deck — think sections, not just bullet points."}
+                  </FeedbackBlock>
+                )}
+              </div>
+
+              <div className="mt-6 space-y-3">
+                <p className="font-semibold">Question 3</p>
+                <p className="text-sm" style={{ color: palette.textSecondary }}>
+                  Rewrite the prompt using the blueprint. Then score yourself.
+                </p>
+                <textarea
+                  value={level1Rewrite}
+                  onChange={(event) => setLevel1Rewrite(event.target.value)}
+                  className="w-full rounded-2xl border p-3 text-sm"
+                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                  rows={4}
+                />
+                <SelfScoreButtons value={level1SelfScore} onChange={setLevel1SelfScore} max={5} />
+              </div>
+
+              <LevelCompleteRow
+                completed={levelCompletion[1]}
+                lockedPoints={levelScores[1]}
+                onClick={() => handleLevelComplete(1, level1Points)}
+                label="Mark Level 1 Complete"
+                note="25 pts max"
+              />
+            </LevelSection>
+            <LevelSection
+              id="level-2"
+              title="Level 2 – Make ChatGPT Feel Like It’s Hired By You"
+              subtitle="Design how ChatGPT behaves by default: tone, structure, and how it handles confusion."
+              points="Max 30 pts"
+            >
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="rounded-3xl border p-4 space-y-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                  <p className="text-sm font-semibold">Slide the toggles to see behaviour change.</p>
+                  {[{ key: "clarify", label: "Ask clarifying questions first" }, { key: "structure", label: "Use headings & bullets" }, { key: "concise", label: "Be brutally concise" }].map((toggle) => (
+                    <ToggleSwitch key={toggle.key} label={toggle.label} value={toggles[toggle.key]} onChange={() => toggleBehavior(toggle.key)} />
+                  ))}
+                </div>
+                <div className="rounded-3xl border p-4" style={{ borderColor: palette.border, background: palette.surface }}>
+                  <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Sample response</div>
+                  <pre className="mt-3 text-sm whitespace-pre-wrap" style={{ color: palette.textSecondary }}>{sampleResponse}</pre>
+                </div>
+              </div>
+
+              <div className="mt-6 rounded-3xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                <div className="flex flex-wrap items-center gap-3 justify-between">
+                  <div>
+                    <p className="font-semibold">Custom Instructions template</p>
+                    <p className="text-xs" style={{ color: palette.textSecondary }}>Paste into ChatGPT, then personalise.</p>
+                  </div>
+                  <GlassButton variant="secondary" onClick={() => handleCopy("custom_instructions", `${CUSTOM_INSTRUCTIONS_TEMPLATE}\n\n${CUSTOM_INSTRUCTIONS_STYLE}`)}>
+                    {copiedKey === "custom_instructions" ? "Copied" : "Copy template"}
+                  </GlassButton>
+                </div>
+                <pre className="text-sm whitespace-pre-wrap" style={{ color: palette.textSecondary }}>{CUSTOM_INSTRUCTIONS_TEMPLATE}
+
+{CUSTOM_INSTRUCTIONS_STYLE}</pre>
+                <SelfScoreButtons value={level2SelfScore} onChange={setLevel2SelfScore} max={10} />
+              </div>
+
+              <div className="mt-6 space-y-4">
+                <div>
+                  <p className="font-semibold">Question 4</p>
+                  <p className="text-sm" style={{ color: palette.textSecondary }}>Which setting affects every chat?</p>
+                  <div className="grid gap-2 mt-2">
+                    {["A", "B", "C", "D"].map((option) => (
+                      <QuizOption
+                        key={option}
+                        label={option}
+                        text={{ A: "Tone picker", B: "Custom Instructions", C: "Your last message", D: "Theme" }[option]}
+                        selected={level2Q4 === option}
+                        onSelect={() => setLevel2Q4(option)}
+                      />
+                    ))}
+                  </div>
+                  {level2Q4 && (
+                    <FeedbackBlock success={level2Q4 === "B"}>
+                      {level2Q4 === "B"
+                        ? "Exactly. Custom Instructions = global brain."
+                        : "Prompts change per chat. Custom Instructions control the default brain."}
+                    </FeedbackBlock>
+                  )}
+                </div>
+                <div>
+                  <p className="font-semibold">Question 5</p>
+                  <p className="text-sm" style={{ color: palette.textSecondary }}>Why turn Memory off in sensitive fields?</p>
+                  <div className="grid gap-2 mt-2">
+                    {["A", "B", "C", "D"].map((option) => (
+                      <QuizOption
+                        key={option}
+                        label={option}
+                        text={{ A: "You dislike AI", B: "Reduce hallucinations", C: "Avoid persistent storage", D: "Faster responses" }[option]}
+                        selected={level2Q5 === option}
+                        onSelect={() => setLevel2Q5(option)}
+                      />
+                    ))}
+                  </div>
+                  {level2Q5 && (
+                    <FeedbackBlock success={level2Q5 === "C"}>
+                      {level2Q5 === "C"
+                        ? "Yup. Kill Memory when you can’t store sensitive info long-term."
+                        : "Memory is about persistence, not speed. Turn it off to avoid storing sensitive details."}
+                    </FeedbackBlock>
+                  )}
+                </div>
+              </div>
+
+              <LevelCompleteRow
+                completed={levelCompletion[2]}
+                lockedPoints={levelScores[2]}
+                onClick={() => handleLevelComplete(2, level2Points)}
+                label="Mark Level 2 Complete"
+                note="30 pts max"
+              />
+            </LevelSection>
+            <LevelSection
+              id="level-3"
+              title="Level 3 – Build a Client Project Copilot"
+              subtitle="Turn ChatGPT into a saved assistant that scopes projects, writes briefs, and drafts client messages."
+              points="Max 20 pts"
+            >
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="rounded-3xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                  <label className="text-sm font-semibold" htmlFor="persona-select">
+                    Choose your field
+                  </label>
+                  <select
+                    id="persona-select"
+                    className="w-full rounded-2xl border p-3 text-sm"
+                    style={{ borderColor: palette.border, background: palette.surface }}
+                    value={personaChoice}
+                    onChange={(event) => setPersonaChoice(event.target.value)}
+                  >
+                    {LAB_PERSONA_OPTIONS.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="rounded-2xl border p-3" style={{ borderColor: palette.accentSecondary, background: palette.surface }}>
+                    <div className="text-sm font-semibold">{persona.heading}</div>
+                    <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>{persona.body}</p>
+                    <GlassButton variant="secondary" onClick={() => handleCopy("persona", `${persona.heading}\n${persona.body}`)} className="mt-3">
+                      {copiedKey === "persona" ? "Copied" : "Copy persona"}
+                    </GlassButton>
+                  </div>
+                </div>
+                <div className="rounded-3xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                  <p className="text-sm font-semibold">Command shortcuts</p>
+                  <div className="mt-3 grid gap-3">
+                    {LAB_COMMANDS.map((cmd) => (
+                      <div key={cmd.command} className="rounded-2xl border p-3" style={{ borderColor: palette.border, background: palette.surface }}>
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono font-semibold" style={{ color: palette.accentSecondary }}>{cmd.command}</span>
+                          <span className="text-sm font-semibold">{cmd.summary}</span>
+                        </div>
+                        <p className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{cmd.detail}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-4">
+                <div>
+                  <p className="font-semibold">Question 6</p>
+                  <p className="text-sm" style={{ color: palette.textSecondary }}>You pasted a long client email and want a clean brief. Which command?</p>
+                  <div className="grid gap-2 mt-2">
+                    {["A", "B", "C", "D"].map((option) => (
+                      <QuizOption
+                        key={option}
+                        label={option}
+                        text={{ A: "/scope", B: "/brief", C: "/plan", D: "/retro" }[option]}
+                        selected={level3Command === option}
+                        onSelect={() => setLevel3Command(option)}
+                      />
+                    ))}
+                  </div>
+                  {level3Command && (
+                    <FeedbackBlock success={level3Command === "B"}>
+                      {level3Command === "B"
+                        ? "Correct. /scope organises, /brief drafts the client-facing version."
+                        : "Use /brief for the polished client doc. /scope is for organising inputs."}
+                    </FeedbackBlock>
+                  )}
+                </div>
+
+                <div className="rounded-3xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                  <p className="font-semibold">Scenario practice</p>
+                  <p className="text-sm" style={{ color: palette.textSecondary }}>Paste a real or fake project description, then choose a starting command.</p>
+                  <textarea
+                    value={level3ScenarioText}
+                    onChange={(event) => setLevel3ScenarioText(event.target.value)}
+                    className="w-full rounded-2xl border p-3 text-sm"
+                    style={{ borderColor: palette.border, background: palette.surface }}
+                    rows={4}
+                  />
+                  <div className="flex flex-wrap gap-3">
+                    {[{ value: "scope", label: "Run /scope first" }, { value: "brief", label: "Run /brief first" }, { value: "plan", label: "Run /plan first" }].map((option) => (
+                      <GlassButton key={option.value} variant="secondary" onClick={() => handleScenarioChoice(option.value)}>
+                        {option.label}
+                      </GlassButton>
+                    ))}
+                  </div>
+                  {level3ScenarioChoice && (
+                    <FeedbackBlock success={level3ScenarioChoice.points === 10}>
+                      {level3ScenarioChoice.message}
+                    </FeedbackBlock>
+                  )}
+                </div>
+              </div>
+
+              <LevelCompleteRow
+                completed={levelCompletion[3]}
+                lockedPoints={levelScores[3]}
+                onClick={() => handleLevelComplete(3, level3Points)}
+                label="Mark Level 3 Complete"
+                note="20 pts max"
+              />
+            </LevelSection>
+            <LevelSection
+              id="level-4"
+              title="Level 4 – Tiny Tool Lab: Client Project Planner & Value Calculator"
+              subtitle="Move from chatting to tooling. Design a reusable prompt/template that scopes and prices work."
+              points="Max 20 pts"
+            >
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="rounded-3xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                  <p className="font-semibold">Input design</p>
+                  <p className="text-sm" style={{ color: palette.textSecondary }}>Tick at least 5 inputs.</p>
+                  <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                    {LAB_INPUT_OPTIONS.map((label) => (
+                      <label key={label} className="flex items-center gap-3 text-sm">
+                        <input type="checkbox" className="h-4 w-4" checked={selectedInputs.includes(label)} onChange={() => handleInputToggle(label)} />
+                        <span>{label}</span>
+                      </label>
+                    ))}
+                  </div>
+                  <FeedbackBlock success={selectedInputs.length >= 5}>
+                    {selectedInputs.length >= 5
+                      ? "Good. More structured inputs = more consistent outputs."
+                      : "This will work, but your tool will be blind in places. Capture at least 5 inputs."}
+                  </FeedbackBlock>
+                </div>
+                <div className="rounded-3xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surface }}>
+                  <p className="font-semibold">Output template</p>
+                  <div className="grid gap-3">
+                    {LAB_OUTPUT_TEMPLATES.map((template) => (
+                      <button
+                        key={template.value}
+                        type="button"
+                        onClick={() => setOutputTemplate(template.value)}
+                        className={`rounded-2xl border p-3 text-left ${outputTemplate === template.value ? "ring-2" : ""}`}
+                        style={{ borderColor: palette.border, background: outputTemplate === template.value ? palette.surfaceSoft : palette.surface }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="font-semibold">{template.title}</div>
+                          {outputTemplate === template.value && <span className="text-xs" style={{ color: palette.accentSecondary }}>Selected</span>}
+                        </div>
+                        <ul className="mt-2 text-xs list-disc pl-5" style={{ color: palette.textSecondary }}>
+                          {template.bullets.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                        <p className="mt-2 text-xs" style={{ color: palette.textMuted }}>{template.tip}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 rounded-3xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                <div className="flex flex-wrap items-center gap-3 justify-between">
+                  <div>
+                    <p className="font-semibold">Final tool prompt</p>
+                    <p className="text-xs" style={{ color: palette.textSecondary }}>Copy into ChatGPT or Canvas.</p>
+                  </div>
+                  <GlassButton variant="secondary" onClick={() => handleCopy("tool_prompt", CLIENT_TOOL_PROMPT)}>
+                    {copiedKey === "tool_prompt" ? "Copied" : "Copy prompt"}
+                  </GlassButton>
+                </div>
+                <pre className="mt-3 text-sm whitespace-pre-wrap" style={{ color: palette.textSecondary }}>{CLIENT_TOOL_PROMPT}</pre>
+                <SelfScoreButtons value={level4SelfScore} onChange={setLevel4SelfScore} max={10} />
+              </div>
+
+              <LevelCompleteRow
+                completed={levelCompletion[4]}
+                lockedPoints={levelScores[4]}
+                onClick={() => handleLevelComplete(4, level4Points)}
+                label="Mark Level 4 Complete"
+                note="20 pts max"
+              />
+            </LevelSection>
+
+            <LevelSection
+              id="level-5"
+              title="Level 5 – Safety, Limits & Strategy"
+              subtitle="Understand when AI is helpful, when it’s dangerous, and how to stay valuable."
+              points="Max 25 pts"
+            >
+              <div className="grid md:grid-cols-4 gap-4">
+                {LAB_RISKS.map((risk) => (
+                  <button
+                    key={risk.title}
+                    type="button"
+                    onClick={() => setActiveRisk(risk.title)}
+                    className="rounded-2xl border p-4 text-left"
+                    style={{ borderColor: palette.border, background: activeRisk === risk.title ? palette.surface : palette.surfaceSoft }}
+                  >
+                    <div className="font-semibold">{risk.title}</div>
+                    {activeRisk === risk.title && (
+                      <ul className="mt-2 text-xs list-disc pl-4" style={{ color: palette.textSecondary }}>
+                        {risk.bullets.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-6 space-y-4">
+                <div>
+                  <p className="font-semibold">Question 7</p>
+                  <p className="text-sm" style={{ color: palette.textSecondary }}>Which is the safest default rule?</p>
+                  <div className="grid gap-2 mt-2">
+                    {["A", "B", "C", "D"].map((option) => (
+                      <QuizOption
+                        key={option}
+                        label={option}
+                        text={{
+                          A: "AI is always right if it sounds confident.",
+                          B: "If AI says it’s up to date, trust it.",
+                          C: "Treat AI as a drafting assistant; you own the final call.",
+                          D: "Never use AI for anything serious.",
+                        }[option]}
+                        selected={level5Q7 === option}
+                        onSelect={() => setLevel5Q7(option)}
+                      />
+                    ))}
+                  </div>
+                  {level5Q7 && (
+                    <FeedbackBlock success={level5Q7 === "C"}>
+                      {level5Q7 === "C"
+                        ? "Exactly. It’s a drafting tool — you own the judgment."
+                        : "Treat AI as a drafting assistant, not the final authority."}
+                    </FeedbackBlock>
+                  )}
+                </div>
+                <div>
+                  <p className="font-semibold">Question 8</p>
+                  <p className="text-sm" style={{ color: palette.textSecondary }}>When is AI most appropriate?</p>
+                  <div className="grid gap-2 mt-2">
+                    {["A", "B", "C", "D"].map((option) => (
+                      <QuizOption
+                        key={option}
+                        label={option}
+                        text={{
+                          A: "Choosing medication",
+                          B: "Writing a final legal argument",
+                          C: "Drafting a first version you’ll review",
+                          D: "Sending client advice without reading it",
+                        }[option]}
+                        selected={level5Q8 === option}
+                        onSelect={() => setLevel5Q8(option)}
+                      />
+                    ))}
+                  </div>
+                  {level5Q8 && (
+                    <FeedbackBlock success={level5Q8 === "C"}>
+                      {level5Q8 === "C"
+                        ? "Yes. First drafts, summaries, and plans you review are the sweet spot."
+                        : "Use AI for first drafts that you double-check, not final high-risk decisions."}
+                    </FeedbackBlock>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-3">
+                <p className="font-semibold">Strategy reflection</p>
+                <p className="text-sm" style={{ color: palette.textSecondary }}>
+                  Answer with: 1 thing you’ll stop doing manually, 1 thing you’ll keep human-only, 1 skill you’ll build.
+                </p>
+                <textarea
+                  value={reflection}
+                  onChange={(event) => setReflection(event.target.value)}
+                  className="w-full rounded-2xl border p-3 text-sm"
+                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                  rows={4}
+                />
+                <SelfScoreButtons value={level5SelfScore} onChange={setLevel5SelfScore} max={5} />
+              </div>
+
+              <LevelCompleteRow
+                completed={levelCompletion[5]}
+                lockedPoints={levelScores[5]}
+                onClick={() => handleLevelComplete(5, level5Points)}
+                label="Mark Level 5 Complete"
+                note="25 pts max"
+              />
+            </LevelSection>
+            <section className="rounded-3xl border p-6 md:p-10" style={{ borderColor: palette.border, background: palette.surface }}>
+              <div className="flex flex-col lg:flex-row gap-6">
+                <div className="flex-1 space-y-3">
+                  <p className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>Final score</p>
+                  <div className="text-5xl font-semibold">{scorePercent}</div>
+                  <p className="text-sm" style={{ color: palette.textSecondary }}>
+                    Raw points: {cappedPoints} / 120
+                  </p>
+                  <div className={`rounded-3xl border p-4 space-y-2 ${showGlow ? "shadow-[0_0_40px_rgba(194,132,36,0.35)]" : ""}`} style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                    <div className="text-lg font-semibold">Badge: {badge.label}</div>
+                    <p className="text-sm" style={{ color: palette.textSecondary }}>{badge.description}</p>
+                  </div>
+                </div>
+                <div className="flex-1 space-y-3">
+                  <p className="text-sm font-semibold">Level breakdown</p>
+                  <div className="space-y-2">
+                    {[1, 2, 3, 4, 5].map((level) => (
+                      <div key={level} className="flex items-center justify-between rounded-2xl border px-4 py-2 text-sm" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                        <span>Level {level}</span>
+                        <span className="font-semibold">{levelScores[level]} pts</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="rounded-3xl border p-6 md:p-10" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+              <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <h2 className="text-2xl font-semibold">You’ve Built the Copilot. Now Put It To Work.</h2>
+                  <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
+                    Don’t stop at a clever prompt. Use your Copilot on the next real client, run the Planner & Value Calculator before quoting anyone, and revisit this lab monthly to see your score climb.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <GlassButton variant="secondary" onClick={() => window.open("https://starterclass.icuni.org/#resources", "_blank")}>Download Starter Prompts & Templates (PDF)</GlassButton>
+                  <GlassButton onClick={() => window.open("https://starterclass.icuni.org/", "_blank")}>Join the AI Starterclass Cohort</GlassButton>
+                  <GlassButton variant="secondary" onClick={() => window.open("https://starterclass.icuni.org/#contact", "_blank")}>Book a Corporate Workshop</GlassButton>
+                </div>
+              </div>
+            </section>
+
+            <section className="space-y-10">
+              <div>
+                <h2 className="text-2xl font-semibold">More tools to add</h2>
+                <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
+                  Copy these templates straight into Custom Instructions, Projects, or Canvas so the Starterclass continues past the live session.
+                </p>
+              </div>
+              <div className="grid lg:grid-cols-2 gap-6">
+                <LabResourceCard
+                  title="Custom Instructions – Universal AI Personality"
+                  description="Give ChatGPT the context, preferences, and boundaries it needs to act like a smart colleague."
+                  text={`${CUSTOM_INSTRUCTIONS_TEMPLATE}\n\n${CUSTOM_INSTRUCTIONS_STYLE}`}
+                  copied={copiedKey === "resource_custom"}
+                  onCopy={() => handleCopy("resource_custom", `${CUSTOM_INSTRUCTIONS_TEMPLATE}\n\n${CUSTOM_INSTRUCTIONS_STYLE}`)}
+                />
+                <LabResourceCard
+                  title="Project Prompt – Task Codes"
+                  description="Drop this into ChatGPT Projects so every conversation stays organised."
+                  text={PROJECT_PROMPT_TEMPLATE}
+                  copied={copiedKey === "resource_project"}
+                  onCopy={() => handleCopy("resource_project", PROJECT_PROMPT_TEMPLATE)}
+                />
+                <LabResourceCard
+                  title="Canvas Tool Prompt — Client Brief Generator"
+                  description="Spin up an interactive form that captures scope cleanly."
+                  text={INTERACTIVE_TOOL_PROMPT}
+                  copied={copiedKey === "resource_tool"}
+                  onCopy={() => handleCopy("resource_tool", INTERACTIVE_TOOL_PROMPT)}
+                />
+                <LabResourceCard
+                  title="Canvas Tool Prompt — Content Quality Analyzer"
+                  description="Paste any content and get structured feedback plus rewrites."
+                  text={ANALYZER_PROMPT}
+                  copied={copiedKey === "resource_analyzer"}
+                  onCopy={() => handleCopy("resource_analyzer", ANALYZER_PROMPT)}
+                />
+              </div>
+            </section>
+
+            <section className="space-y-6">
+              <LabResourceCard
+                title="Participant quick-start checklist"
+                description="Make sure you actually set everything up before you leave the session."
+                text={QUICK_START_CHECKLIST}
+                copied={copiedKey === "resource_checklist"}
+                onCopy={() => handleCopy("resource_checklist", QUICK_START_CHECKLIST)}
+              />
+              <LabResourceCard
+                title="Client Brief Generator – Custom GPT instructions"
+                description="Use this when you want ChatGPT to act like a proper brief architect."
+                text={CLIENT_BRIEF_INSTRUCTIONS}
+                copied={copiedKey === "resource_brief"}
+                onCopy={() => handleCopy("resource_brief", CLIENT_BRIEF_INSTRUCTIONS)}
+              />
+              <LabResourceCard
+                title="Follow-up email template"
+                description="Send the wrap-up email minutes after the session ends."
+                text={FOLLOW_UP_EMAIL_TEMPLATE}
+                copied={copiedKey === "resource_email"}
+                onCopy={() => handleCopy("resource_email", FOLLOW_UP_EMAIL_TEMPLATE)}
+              />
+            </section>
+          </div>
+        </div>
+        <div className="fixed right-4 bottom-6 z-40">
+          <GlassButton onClick={scrollToLevelOne} className="px-5 py-3">
+            Start Level 1
+          </GlassButton>
+        </div>
+      </div>
+    </ThemeProvider>
+  );
+}
+function LevelSection({ id, title, subtitle, points, children }) {
+  const { palette } = useTheme();
+  return (
+    <section id={id} className="rounded-3xl border p-6 md:p-10 space-y-6" style={{ borderColor: palette.border, background: palette.surface }}>
+      <div className="space-y-3">
+        <div className="flex flex-wrap items-center gap-3 justify-between">
+          <h2 className="text-2xl font-semibold">{title}</h2>
+          {points && <span className="text-xs uppercase tracking-[0.3em]" style={{ color: palette.textMuted }}>{points}</span>}
+        </div>
+        <p className="text-sm" style={{ color: palette.textSecondary }}>{subtitle}</p>
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function QuizOption({ label, text, selected, onSelect }) {
+  const { palette } = useTheme();
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={`flex items-center gap-3 rounded-2xl border px-4 py-3 text-left ${selected ? "ring-2" : ""}`}
+      style={{
+        borderColor: selected ? palette.accentSecondary : palette.border,
+        background: selected ? palette.surface : palette.surfaceSoft,
+        color: palette.textPrimary,
+      }}
+    >
+      <span className="h-8 w-8 rounded-full flex items-center justify-center font-semibold" style={{ background: selected ? palette.accentSecondary : palette.surface, color: selected ? "#fff" : palette.textSecondary }}>
+        {label}
+      </span>
+      <span className="text-sm">{text}</span>
+    </button>
+  );
+}
+
+function FeedbackBlock({ children, success }) {
+  const { palette } = useTheme();
+  return (
+    <div
+      className="rounded-2xl border px-4 py-3 text-sm"
+      style={{
+        borderColor: success ? palette.accentSecondary : palette.border,
+        background: success ? `${palette.accentSecondary}11` : palette.surfaceSoft,
+        color: palette.textSecondary,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function ToggleSwitch({ label, value, onChange }) {
+  const { palette } = useTheme();
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <span className="text-sm" style={{ color: palette.textSecondary }}>{label}</span>
+      <button
+        type="button"
+        onClick={onChange}
+        className={`relative inline-flex h-6 w-12 rounded-full transition ${value ? "justify-end" : "justify-start"}`}
+        style={{ background: value ? palette.accentSecondary : palette.surface }}
+      >
+        <span className="h-5 w-5 rounded-full bg-white shadow" />
+      </button>
+    </div>
+  );
+}
+
+function SelfScoreButtons({ value, onChange, max }) {
+  const { palette } = useTheme();
+  const options = [
+    { label: "✅ I nailed it", val: max },
+    { label: "⚠ I’m close", val: Math.max(0, Math.min(max, Math.round(max / 2))) },
+    { label: "❌ I need to redo", val: 0 },
+  ];
+  return (
+    <div className="flex flex-wrap gap-3">
+      {options.map((option) => (
+        <button
+          key={option.label}
+          type="button"
+          onClick={() => onChange(option.val)}
+          className={`rounded-2xl border px-4 py-2 text-sm ${value === option.val ? "ring-2" : ""}`}
+          style={{ borderColor: palette.border, background: value === option.val ? palette.surface : palette.surfaceSoft }}
+        >
+          {option.label} · +{option.val} pts
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function LevelCompleteRow({ completed, lockedPoints, onClick, label, note }) {
+  const { palette } = useTheme();
+  return (
+    <div className="mt-6 flex flex-wrap items-center gap-3">
+      <GlassButton onClick={onClick}>
+        {completed ? "Update level score" : label}
+      </GlassButton>
+      <div className="text-sm" style={{ color: palette.textSecondary }}>
+        {completed ? `Locked at ${lockedPoints} pts (${note})` : note}
+      </div>
+    </div>
+  );
+}
+
+function LabResourceCard({ title, description, text, copied, onCopy }) {
+  const { palette } = useTheme();
+  return (
+    <div className="rounded-3xl border p-5 space-y-3" style={{ borderColor: palette.border, background: palette.surface }}>
+      <div className="flex flex-wrap items-center gap-3 justify-between">
+        <div>
+          <p className="font-semibold">{title}</p>
+          <p className="text-sm" style={{ color: palette.textSecondary }}>{description}</p>
+        </div>
+        <GlassButton variant="secondary" onClick={onCopy}>
+          {copied ? "Copied" : "Copy"}
+        </GlassButton>
+      </div>
+      <pre className="text-sm whitespace-pre-wrap" style={{ color: palette.textSecondary }}>{text}</pre>
+    </div>
+  );
+}
+
+window.StarterclassLabPage = StarterclassLabPage;

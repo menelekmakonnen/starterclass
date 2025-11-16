@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href="https://starterclass.icuni.org/ai-starterclass-lab" />
+  <title>AI Starterclass Lab — Learn, Click, Score Yourself</title>
+  <meta
+    name="description"
+    content="Replay the 15 Nov 2025 AI Starterclass as an interactive lab. Complete five levels, score yourself, and leave with a reusable client project copilot."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AI Starterclass Lab — Learn, Click, Score Yourself" />
+  <meta
+    property="og:description"
+    content="Walk through prompt fluency, personalisation, copilot building, the tiny tool lab, and safety drills — all inside one luxury page."
+  />
+  <meta property="og:url" content="https://starterclass.icuni.org/ai-starterclass-lab" />
+  <meta property="og:image" content="https://cdn.starterclass.icuni.org/social/starterclass-preview.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI Starterclass Lab — Learn, Click, Score Yourself" />
+  <meta
+    name="twitter:description"
+    content="Click through five interactive levels, copy the templates, and build your client project copilot in under an hour."
+  />
+  <meta name="twitter:image" content="https://cdn.starterclass.icuni.org/social/starterclass-preview.png" />
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-black">
+  <div id="lab-root"></div>
+  <script src="./app.js"></script>
+  <script>
+    if (!window.StarterclassLabPage) {
+      console.error("StarterclassLabPage component failed to load");
+    } else {
+      ReactDOM.createRoot(document.getElementById("lab-root")).render(
+        React.createElement(window.StarterclassLabPage)
+      );
+    }
+  </script>
+</body>
+</html>
