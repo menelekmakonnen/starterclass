@@ -85,7 +85,6 @@ const GOOGLE_FORM_URL_EMBED =
 const INTRO_NAME = "Free Starterclass — Customisation, Projects & Applications";
 const INTRO_START_ISO = "2025-11-15T11:00:00Z"; // Sat 15 Nov 2025 11:00 AM UK (UTC)
 const INTRO_END_ISO = "2025-11-15T12:30:00Z";
-const EARLY_BIRD_DEADLINE_ISO = "2025-11-15T12:30:00Z";
 
 // Sessions (UK times in UTC) for the six-session track.
 const SESSIONS = [
@@ -192,7 +191,7 @@ const SESSIONS = [
     ],
     hero: {
       label: "Full-course lab — Canvas & vibe coding",
-      badge: "Full course · tuition applies",
+      badge: "Future lab · registration soon",
       audience: "For designers, founders, and operators ready to ship branded AI experiences fast.",
       highlights: [
         {
@@ -254,7 +253,7 @@ const SESSIONS = [
     ],
     hero: {
       label: "Agent systems sprint — Prompts & processes",
-      badge: "Full course · tuition applies",
+      badge: "Future lab · registration soon",
       audience: "For operators formalising ChatGPT agents with governance, logs, and safe hand-offs.",
       highlights: [
         {
@@ -316,7 +315,7 @@ const SESSIONS = [
     ],
     hero: {
       label: "Creative lab — AI short-film production",
-      badge: "Full course · tuition applies",
+      badge: "Future lab · registration soon",
       audience: "For storytellers and content teams crafting cinematic AI sequences end-to-end.",
       highlights: [
         {
@@ -378,7 +377,7 @@ const SESSIONS = [
     ],
     hero: {
       label: "Automation lab — Build your first AI assistant",
-      badge: "Full course · tuition applies",
+      badge: "Future lab · registration soon",
       audience: "For ops teams and builders turning prompt ideas into dependable automations.",
       highlights: [
         {
@@ -440,7 +439,7 @@ const SESSIONS = [
     ],
     hero: {
       label: "Automation mastery — Orchestrate the system",
-      badge: "Full course · tuition applies",
+      badge: "Future lab · registration soon",
       audience: "For teams scaling assistants into secure, multi-workflow operations.",
       highlights: [
         {
@@ -464,33 +463,9 @@ const SESSIONS = [
 ];
 
 const MONTH_BUNDLES = [
-  { key: "nov", label: "November momentum", priceUSD: 100, modules: ["starterclass", "canvas"] },
-  { key: "dec", label: "December agent systems", priceUSD: 100, modules: ["agents1", "agents2"] },
-  { key: "jan", label: "January automation labs", priceUSD: 100, modules: ["n8n_deep_dive", "n8n_mastery"] },
-];
-
-const CURRENCIES = {
-  USD: { symbol: "$", rate: 1, label: "USD" },
-  GBP: { symbol: "£", rate: 0.82, label: "GBP" },
-  GHS: { symbol: "₵", rate: 13.1, label: "GHS" },
-};
-
-const HERO_HIGHLIGHTS = [
-  {
-    icon: "🗂️",
-    title: "Projects tuned to you",
-    sub: "Design a Project workspace that remembers your tone, priorities, and approvals automatically.",
-  },
-  {
-    icon: "⚡",
-    title: "Vibe-coded mini build",
-    sub: "Co-create a tiny AI site or tool live so you leave with a working prototype you can share.",
-  },
-  {
-    icon: "🧠",
-    title: "Prompt systems mastered",
-    sub: "Practise conversational flows for business, creative, and personal wins you can run this week.",
-  },
+  { key: "nov", label: "November momentum", modules: ["starterclass", "canvas"] },
+  { key: "dec", label: "December agent systems", modules: ["agents1", "agents2"] },
+  { key: "jan", label: "January automation labs", modules: ["n8n_deep_dive", "n8n_mastery"] },
 ];
 
 const OVERVIEW_WINS = [
@@ -517,28 +492,21 @@ const OVERVIEW_WINS = [
   },
 ];
 
-const FULL_TRACK_OUTCOMES = [
-  "Personalised AI — calibrate ChatGPT to your brand with knowledge packs and prompt kits.",
-  "Vibe-coded web & app builds — design and deploy AI sites and mini-apps in your tone.",
-  "Agents for real use cases — integrate assistants into LinkedIn, sites, film, and more.",
-  "Orchestrated systems — launch an autonomous n8n pipeline with security and approvals.",
-];
-
 const FAQ_ITEMS = [
   {
-    question: "Do I need the Full Track to start?",
+    question: "Do I need the full lab sequence to start?",
     answer:
-      "No. The Starterclass is designed as a complete win on its own. When you’re ready for more, add the November, December, or January modules month by month.",
+      "No. The Starterclass Lab is designed as a complete win on its own. When you’re ready for more, add the November, December, or January labs one cycle at a time.",
   },
   {
     question: "Will there be a replay?",
     answer:
-      "Starterclass replays and annotated resources unlock for Full Track participants. Live attendance gives you the Q&A, and upgrading keeps everything on-demand.",
+      "Yes. As soon as the live session wraps, this page updates with the archived lab so you can keep studying.",
   },
   {
     question: "Is the Starterclass really free?",
     answer:
-      "Yes. The Starterclass costs $0. You only pay if you continue into the Full Track months after the live experience. No card is collected for the Starterclass.",
+      "Yes. The Starterclass, the on-demand lab, and every future session listed on this page are free to attend.",
   },
   {
     question: "Do I need to code?",
@@ -551,14 +519,14 @@ const FAQ_ITEMS = [
       "Business leaders, consultants, freelancers, and operators who want to put AI to work quickly without hiring a developer.",
   },
   {
-    question: "Can I join just one month of the Full Track?",
+    question: "Can I join just one month of the lab sequence?",
     answer:
-      "Yes. Each month is priced separately so you can focus on the modules that match your goals—pay for November, January, or both.",
+      "Yes. Treat each month as its own lab cycle. Join the ones that match your goals and revisit the others later—no payment needed.",
   },
   {
     question: "What tools will we touch?",
     answer:
-      "We work inside ChatGPT Projects, Custom GPTs, and our vibe-coding toolkit. The full course adds shared assets for AI film production and n8n automation. Everything is demoed live with no-code interfaces.",
+      "We work inside ChatGPT Projects, Custom GPTs, and our vibe-coding toolkit. The full lab sequence adds shared assets for AI film production and n8n automation. Everything is demoed live with no-code interfaces.",
   },
 ];
 
@@ -1300,6 +1268,37 @@ function BackToTop() {
   );
 }
 
+function SkipToBottom() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      setShow(window.scrollY < maxScroll - 400);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const { theme, palette } = useTheme();
+  const isDark = theme === "dark";
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })}
+      className={`fixed bottom-5 left-4 z-40 rounded-full p-3 transition ${show ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      style={{
+        border: `1px solid ${palette.border}`,
+        background: isDark ? palette.surface : palette.surfaceSoft,
+        color: palette.textPrimary,
+        boxShadow: palette.shadow,
+      }}
+      aria-label="Skip to bottom"
+      title="Skip to bottom"
+    >
+      ↓
+    </button>
+  );
+}
+
 function formatUKRange(startISO, endISO) {
   const opts = { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "Europe/London" };
   return `${new Date(startISO).toLocaleTimeString([], opts)}–${new Date(endISO).toLocaleTimeString([], opts)}`;
@@ -1309,12 +1308,6 @@ function formatLocalRange(startISO, endISO) {
   const opts = { hour: "2-digit", minute: "2-digit", hour12: false };
   return `${new Date(startISO).toLocaleTimeString([], opts)}–${new Date(endISO).toLocaleTimeString([], opts)} (${tz})`;
 }
-function formatCurrencyValue(amountUSD, currencyCode) {
-  const currency = CURRENCIES[currencyCode] || CURRENCIES.USD;
-  const formatter = new Intl.NumberFormat('en', { style: 'currency', currency: currency.label, minimumFractionDigits: 0, maximumFractionDigits: 0 });
-  return formatter.format(amountUSD * currency.rate);
-}
-
 function track(eventName, detail = {}) {
   if (typeof window === 'undefined') return;
   const payload = { event: eventName, detail, timestamp: new Date().toISOString() };
@@ -1536,7 +1529,7 @@ function Pie({ topics = PIE_TOPICS, activeIndex, onSelect }) {
 }
 
 // Client Value Calculator focused on a single participant
-function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onExplore, earlyBirdActive }) {
+function ClientValueCalculator({ onIntro, onExplore }) {
   const { palette } = useTheme();
   const [hours, setHours] = useState(2);
   const [focus, setFocus] = useState("foundation");
@@ -1548,45 +1541,43 @@ function ClientValueCalculator({ currency, formatCurrency, onIntro, onFull, onEx
   ];
 
   const results = useMemo(() => {
-    const monthlyUSD = earlyBirdActive ? 90 : 100;
-    const totalLabel = formatCurrency(monthlyUSD * 3, currency);
-    const monthlyLabel = formatCurrency(monthlyUSD, currency);
-    const standardMonthly = formatCurrency(100, currency);
     return {
       starterclass_only: {
-        badge: "Free Starterclass",
-        title: "Register for the free Starterclass",
+        badge: "Starterclass Lab",
+        title: "Open the AI Starterclass Lab",
         summary:
-          "Lock your seat for the 90-minute live build. You’ll tune Projects, co-build a vibe-coded mini app, and leave with prompt systems that work immediately.",
+          "Work through five interactive levels covering prompts, personalisation, copilots, tooling, and safety. Earn points as you go.",
         detail:
-          "Ideal when you’re validating fit or need a fast win before committing tuition. Submit the form to receive the Google Meet link and calendar invite.",
-        cta: "Register free",
-        action: () => onIntro?.(),
-        secondary: { label: `See the full six-session course (${totalLabel})`, action: () => onExplore?.({ months: 3 }) },
+          "Perfect when you want to learn immediately. The lab mirrors the live session with quizzes, templates, and self-scoring.",
+        cta: "Study the lab",
+        action: () => {
+          window.location.href = "/ai-starterclass-lab.html";
+        },
+        secondary: { label: "Register the next live sprint", action: () => onIntro?.() },
         focusNotes: {
-          foundation: "Start with the Starterclass to prove impact with zero spend.",
-          build: "Use the free session to finish your first vibe-coded prototype before upgrading.",
-          scale: "Benchmark outcomes, then decide if you need the full automation arc.",
+          foundation: "Use the lab to master the basics before the next live call.",
+          build: "Click through the interactive levels whenever you need a refresher.",
+          scale: "Share the lab with teammates so everyone levels up fast.",
         },
       },
       full_track: {
-        badge: "Full six-session course",
-        title: `Join the full course (${totalLabel})`,
+        badge: "Lab roadmap",
+        title: "Follow the entire lab sequence",
         summary:
-          `Three monthly payments of ${monthlyLabel} (standard ${standardMonthly}). Continue from the Starterclass into agents, AI short-film production, and n8n orchestration.`,
+          "November focuses on Starterclass fundamentals, December on agent systems, and January on automation labs.",
         detail:
-          "Perfect when you want the complete build system, accountability, and the final capstone deployment. Registration unlocks all six sessions and replay access.",
-        cta: "Join the full course",
-        action: () => onFull?.({ months: 3, plan: "full_track" }),
-        secondary: { label: "Register the free Starterclass first", action: () => onIntro?.() },
+          "Ideal when you want structure across several months. Add the roadmap to your calendar and you’ll get reminders when each lab unlocks.",
+        cta: "Explore upcoming labs",
+        action: () => onExplore?.({ months: 3 }),
+        secondary: { label: "Lock your seat for the next live build", action: () => onIntro?.() },
         focusNotes: {
-          foundation: "Commit now to secure every live seat and the 10% early-bird.",
-          build: "Keep momentum from your Starterclass mini build straight into agents and deployment.",
-          scale: "Best if you already know you’ll need agents, film workflows, and n8n mastery.",
+          foundation: "Plan the lab path now so momentum never drops.",
+          build: "Line up the Canvas, agents, and automation labs right after Starterclass.",
+          scale: "Use every lab to build a repeatable workflow for your team.",
         },
       },
     };
-  }, [currency, earlyBirdActive, formatCurrency, onExplore, onFull, onIntro]);
+  }, [onExplore, onIntro]);
 
   const resultKey = useMemo(() => {
     if (hours <= 2 && focus !== "scale") {
@@ -1781,14 +1772,7 @@ function StarterclassLuxuryV8() {
   const [formLoading, setFormLoading] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [altFormOpen, setAltFormOpen] = useState(false);
-  const [showPaid, setShowPaid] = useState(() => {
-    if (typeof window === "undefined") return false;
-    try {
-      return localStorage.getItem("sc_paid_reveal") === "1";
-    } catch {
-      return false;
-    }
-  });
+  const [showPaid, setShowPaid] = useState(true);
   const [activeModule, setActiveModule] = useState("canvas");
   const [heroGlowPoint, setHeroGlowPoint] = useState({ x: 0.5, y: 0.5 });
   const [isHeroGlowActive, setIsHeroGlowActive] = useState(false);
@@ -1800,14 +1784,6 @@ function StarterclassLuxuryV8() {
       return localStorage.getItem("sc_theme_pref") || "light";
     } catch {
       return "light";
-    }
-  });
-  const [currency, setCurrency] = useState(() => {
-    if (typeof window === "undefined") return "USD";
-    try {
-      return localStorage.getItem("sc_currency") || "USD";
-    } catch {
-      return "USD";
     }
   });
   const [announcementIndex, setAnnouncementIndex] = useState(0);
@@ -1846,42 +1822,28 @@ function StarterclassLuxuryV8() {
     : heroSession?.start;
   const countdown = useMemo(() => getCountdownParts(countdownTarget, now), [countdownTarget, now]);
   const { d, h, m, s, expired } = countdown;
-  const earlyBirdCountdown = useMemo(() => getCountdownParts(EARLY_BIRD_DEADLINE_ISO, now), [now]);
   const palette = useMemo(() => getPalette(activeTheme), [activeTheme]);
   const isDark = activeTheme === "dark";
-  const formatCurrency = useCallback((amountUSD, forced) => formatCurrencyValue(amountUSD, forced || currency), [currency]);
-  const earlyBirdActive = !earlyBirdCountdown.expired;
-  const heroHighlights = heroSession?.hero?.highlights || HERO_HIGHLIGHTS;
   const announcementMessages = useMemo(() => {
-    if (scheduleCompleted) {
-      return [
-        "All sessions completed",
-        "Replays and dossiers are being delivered",
-        "Join the waitlist for the next cohort",
-      ];
-    }
     if (!heroSession) {
       return ["Cohort timeline updating", "", ""];
     }
     const countdownHeadline = formatCountdownHeadline(countdown);
     const statusLine =
-      heroStatus === "live"
+      scheduleCompleted
+        ? "Starterclass Lab available on-demand"
+        : heroStatus === "live"
         ? "Session live now — check your inbox for the Meet link"
         : countdown.expired
         ? "Session starting now"
-        : `Next session in ${countdownHeadline}`;
-    const starterclassStatus = sessionTimeline.statusMap?.starterclass;
-    const earlyBirdLine = earlyBirdActive
-      ? "10% early-bird active until the Starterclass wraps"
-      : starterclassStatus === "completed"
-      ? "Starterclass archived — standard tuition applies"
-      : "Secure your seat before the Starterclass finishes";
+        : `Next live lab in ${countdownHeadline}`;
+    const labLine = "Explore the AI Starterclass Lab anytime";
     return [
       `${heroSession.title} · ${formatSessionDateLabel(heroSession)}`,
       statusLine,
-      earlyBirdLine,
+      labLine,
     ];
-  }, [countdown, earlyBirdActive, heroSession, heroStatus, scheduleCompleted, sessionTimeline.statusMap]);
+  }, [countdown, heroSession, heroStatus, scheduleCompleted]);
   const testimonials = TESTIMONIALS;
   const testimonial = testimonials[activeTestimonial] || testimonials[0];
   const heroAudienceLine = heroSession?.hero?.audience ||
@@ -1890,10 +1852,6 @@ function StarterclassLuxuryV8() {
   const heroChipLabel = heroSession?.hero?.label || heroSession?.title || "All sessions completed";
   const heroTitle = heroSession?.title || INTRO_NAME;
   const heroTimeDetail = heroSession ? formatSessionDateLabel(heroSession) : "Sessions completed";
-  const heroUkRange = heroSession ? formatUKRange(heroSession.start, heroSession.end) : formatUKRange(INTRO_START_ISO, INTRO_END_ISO);
-  const heroLocalRange = heroSession
-    ? formatLocalRange(heroSession.start, heroSession.end)
-    : formatLocalRange(INTRO_START_ISO, INTRO_END_ISO);
   const shareWhatsAppText = heroSession?.track === "starterclass"
     ? `🎓 Join me at the FREE ${heroTitle} by ICUNI!`
     : `🎓 Join me at ${heroTitle} by ICUNI!`;
@@ -1914,35 +1872,37 @@ function StarterclassLuxuryV8() {
     ? "What comes after the Starterclass"
     : "Upcoming cohort sessions";
   const heroTopics = useMemo(() => {
-    if (heroSession?.outline?.length) {
-      return heroSession.outline.map((topic) => ({
-        ...topic,
-        headline: topic.headline || topic.key,
-        outcome: topic.outcome || heroSession.outcome,
-        toolkit: topic.toolkit || heroSession.outcome,
-      }));
+    if (sessions?.length) {
+      const wedge = Math.floor(100 / sessions.length) || 16;
+      return sessions.map((session, idx) => {
+        const color = PIE_TOPICS[idx % PIE_TOPICS.length]?.color || "#C8A145";
+        return {
+          key: session.title,
+          value: wedge,
+          desc: session.desc,
+          headline: session.hero?.label || session.outcome,
+          outcome: session.outcome,
+          toolkit: session.hero?.audience,
+          color,
+        };
+      });
     }
     return PIE_TOPICS;
-  }, [heroSession]);
+  }, [sessions]);
   const activeCertificate = useMemo(
     () => CERTIFICATE_POINTS.find((point) => point.key === certificateFocus) || CERTIFICATE_POINTS[0],
     [certificateFocus]
   );
-  const fullTrackTotalUSD = earlyBirdActive ? 270 : 300;
-  const fullTrackMonthlyUSD = earlyBirdActive ? 90 : 100;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
         localStorage.setItem("sc_theme_pref", activeTheme);
       } catch {}
-      try {
-        localStorage.setItem("sc_currency", currency);
-      } catch {}
     }
     document.body.style.background = palette.simpleBackground;
     document.body.style.color = palette.textPrimary;
-  }, [activeTheme, palette, currency]);
+  }, [activeTheme, palette]);
 
   useEffect(() => {
     if (typeof document === "undefined") return undefined;
@@ -2115,7 +2075,7 @@ function StarterclassLuxuryV8() {
         const moduleTitles = bundleSessions.map((session) => session.title).join("; ");
         return {
           "@type": "CourseInstance",
-          "name": `${bundle.label} — ICUNI Full Track`,
+          "name": `${bundle.label} — ICUNI Lab Roadmap`,
           "startDate": startDate,
           "endDate": endDate,
           "courseMode": "https://schema.org/OnlineCourse",
@@ -2315,7 +2275,7 @@ function StarterclassLuxuryV8() {
                 </button>
               </div>
               <div className="ml-auto hidden md:flex items-center text-xs font-semibold uppercase tracking-[0.24em]" style={{ color: palette.textSecondary }}>
-                {scheduleCompleted ? "Cohort completed" : heroTimeDetail}
+                {scheduleCompleted ? "Labs archived" : "Starterclass Lab · live access"}
               </div>
             </div>
             <div
@@ -2331,7 +2291,12 @@ function StarterclassLuxuryV8() {
           <GlowCard className="p-6 md:p-10">
             <div className="grid lg:grid-cols-2 gap-10 items-center">
               <div>
-                <div
+                <button
+                  type="button"
+                  onClick={() => {
+                    track("hero_chip_lab", { source: "hero_chip" });
+                    window.location.href = "/ai-starterclass-lab.html";
+                  }}
                   className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold shadow-sm"
                   style={{
                     background: `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)`,
@@ -2341,10 +2306,10 @@ function StarterclassLuxuryV8() {
                 >
                   <span aria-hidden="true">🎟️</span>
                   {heroChipLabel}
-                </div>
-                <div className="mt-2 text-xs font-medium tracking-wide" style={{ color: palette.textSecondary }}>
-                  {heroTimeDetail}
-                </div>
+                  <span className="text-[0.65rem] uppercase tracking-[0.3em]" style={{ color: palette.textMuted }}>
+                    Open lab
+                  </span>
+                </button>
                 <div className="mt-3">
                   <Badge>{heroBadge}</Badge>
                 </div>
@@ -2364,7 +2329,7 @@ function StarterclassLuxuryV8() {
                   Make AI work like a teammate
                 </h1>
                 <p className="mt-4 text-lg max-w-2xl" style={{ color: palette.textSecondary }}>
-                  In one powerful session you’ll calibrate ChatGPT to match your tone, co-build a vibe-coded mini-app, and learn prompt systems you can run the same afternoon. Leave empowered to ship your own AI workflows immediately.
+                  The entire Starterclass experience now lives inside an on-demand lab. Click through interactive levels, collect points, and keep building alongside the live sessions that rotate every few weeks.
                 </p>
                 <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
                   {heroAudienceLine}
@@ -2372,48 +2337,35 @@ function StarterclassLuxuryV8() {
                 <p className="mt-2 text-xs" style={{ color: palette.textMuted }}>
                   Delivered live online via Google Meet. Access details arrive once you register.
                 </p>
-                <div className="mt-6 grid sm:grid-cols-3 gap-3">
-                  {heroHighlights.map((feature) => (
-                    <div
-                      key={feature.title}
-                      className="group relative overflow-hidden rounded-2xl border p-4 text-sm transition-transform duration-200 hover:-translate-y-1"
-                      style={{ borderColor: palette.border, background: palette.surfaceSoft }}
-                    >
-                      <div
-                        className="absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                        style={{ background: `linear-gradient(135deg, ${palette.accentPrimary}22, ${palette.accentSecondary}22)` }}
-                      />
-                      <div className="relative flex items-start gap-3">
-                        <span className="text-xl" aria-hidden="true">{feature.icon}</span>
-                        <div>
-                          <div className="font-semibold" style={{ color: palette.textPrimary }}>
-                            {feature.title}
-                          </div>
-                          <div className="mt-1 text-xs leading-relaxed" style={{ color: palette.textSecondary }}>
-                            {feature.sub}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="mt-6 flex flex-col gap-4">
+                  <GlassButton
+                    className="px-6 py-4 text-lg"
+                    onClick={() => {
+                      track("hero_lab_primary", { source: "hero_cta" });
+                      window.location.href = "/ai-starterclass-lab.html";
+                    }}
+                  >
+                    Enter the AI Starterclass Lab
+                  </GlassButton>
+                  <GlassButton
+                    id="register-free-cta"
+                    onClick={() => {
+                      if (scheduleCompleted) {
+                        triggerFullTrackForm("hero_waitlist", { intent: "waitlist" });
+                      } else if (heroSession?.track === "starterclass" && heroStatus !== "completed") {
+                        triggerIntroForm("hero_primary");
+                      } else {
+                        triggerFullTrackForm("hero_primary", { session: heroSession?.k });
+                      }
+                    }}
+                    variant="secondary"
+                  >
+                    {scheduleCompleted ? "Join the waitlist" : "Reserve a live seat"}
+                  </GlassButton>
+                  <p className="text-xs" style={{ color: palette.textMuted }}>
+                    Study the replay instantly, then join the next live sprint for Q&A.
+                  </p>
                 </div>
-                <div className="mt-5 text-sm space-y-1" style={{ color: palette.textSecondary }}>
-                  <div><span style={{ color: palette.textMuted }}>UK Time:</span> {heroUkRange}</div>
-                  <div><span style={{ color: palette.textMuted }}>Your Time:</span> {heroLocalRange}</div>
-                </div>
-                {earlyBirdActive ? (
-                  <p className="mt-3 text-sm" style={{ color: palette.textSecondary }}>
-                    10% early-bird discount if you enrol in the full course before the Starterclass ends.
-                  </p>
-                ) : scheduleCompleted ? (
-                  <p className="mt-3 text-sm" style={{ color: palette.textSecondary }}>
-                    This cohort has wrapped. Explore the completed sessions and join the waitlist for future dates.
-                  </p>
-                ) : (
-                  <p className="mt-3 text-sm" style={{ color: palette.textSecondary }}>
-                    Tuition is now at the standard rate — seats remain for upcoming sessions.
-                  </p>
-                )}
                 <div className="mt-8">
                   <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>{heroCountdownLabel}</div>
                   {scheduleCompleted ? (
@@ -2456,44 +2408,28 @@ function StarterclassLuxuryV8() {
                     </>
                   )}
                 </div>
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <GlassButton
-                    id="register-free-cta"
-                    onClick={() => {
-                      if (scheduleCompleted) {
-                        triggerFullTrackForm("hero_waitlist", { intent: "waitlist" });
-                      } else if (heroSession?.track === "starterclass" && heroStatus !== "completed") {
-                        triggerIntroForm("hero_primary");
-                      } else {
-                        triggerFullTrackForm("hero_primary", { session: heroSession?.k });
-                      }
-                    }}
+                <div className="mt-8 rounded-3xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Lab playlist</div>
+                  <div className="mt-3 grid sm:grid-cols-2 gap-3">
+                    {heroTopics.slice(0, 4).map((topic) => (
+                      <div key={topic.key} className="rounded-2xl border p-3" style={{ borderColor: `${topic.color}55`, background: palette.surface }}>
+                        <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>
+                          {topic.key}
+                        </div>
+                        <p className="mt-1 text-xs" style={{ color: palette.textSecondary }}>
+                          {topic.headline}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    className="mt-4 text-xs underline underline-offset-4"
+                    style={{ color: palette.accentSecondary }}
+                    onClick={() => handleNavClick("#overview-tab", "overview")}
                   >
-                    {scheduleCompleted
-                      ? "Join the waitlist"
-                      : heroSession?.track === "starterclass" && heroStatus !== "completed"
-                      ? "Register free"
-                      : "Join this session"}
-                  </GlassButton>
-                  <GlassButton
-                    variant="secondary"
-                    onClick={() => revealPaidAndGoCurriculum("hero_secondary")}
-                    className="px-5 py-3"
-                  >
-                    {heroSession?.track === "starterclass" ? "View the full course (6 sessions)" : "See the full curriculum"}
-                  </GlassButton>
-                  <GlassButton
-                    variant="secondary"
-                    className="px-5 py-3"
-                    onClick={() => {
-                      track("hero_lab_page", { source: "hero" });
-                      if (typeof window !== "undefined") {
-                        window.location.href = "/ai-starterclass-lab.html";
-                      }
-                    }}
-                  >
-                    Study the AI Starterclass lab
-                  </GlassButton>
+                    See the full session breakdown
+                  </button>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-3 items-center">
                   <span className="text-sm font-semibold" style={{ color: palette.textPrimary }}>Share this event:</span>
@@ -2543,7 +2479,6 @@ function StarterclassLuxuryV8() {
                   >
                     Alternative registration form
                   </button>
-                  <span style={{ color: palette.textMuted }}>Replays unlock for Full Track participants.</span>
                   <span className="basis-full" style={{ color: palette.textMuted }}>
                     Submit the registration form so we can email the invite and reminder.
                   </span>
@@ -2655,7 +2590,7 @@ function StarterclassLuxuryV8() {
                     <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
                       <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Thinking ahead</div>
                       <div className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
-                        The Starterclass counts toward the full course. When you’re ready, add the monthly bundles from {formatCurrency(fullTrackMonthlyUSD)} {earlyBirdActive ? "while the early-bird lasts." : "at the standard rate."}
+                        The Starterclass counts toward the full lab sequence. When you’re ready, add the monthly bundles to your calendar so you never miss a build.
                       </div>
                     </div>
                   </GlowCard>
@@ -2679,7 +2614,7 @@ function StarterclassLuxuryV8() {
                           <div className="mt-3 space-y-3">
                             {upcomingSchedule.map((s) => {
                               const isStarterclassSlot = s.track === "starterclass";
-                              const badgeLabel = isStarterclassSlot ? "Free Starterclass" : "Full course";
+                              const badgeLabel = isStarterclassSlot ? "Starterclass Lab" : "Future lab";
                               const statusLabel = sessionStatusLabel(s.status);
                               const statusColor = s.status === "live"
                                 ? palette.accentSecondary
@@ -2747,7 +2682,7 @@ function StarterclassLuxuryV8() {
                             })}
                           </div>
                           <div className="mt-4 text-xs" style={{ color: palette.textMuted }}>
-                            Ready for more after the Starterclass? Explore the curriculum tab to see how the full course expands these builds.
+                            Ready for more after the Starterclass? Explore the curriculum tab to see how the future labs expand these builds.
                           </div>
                         </>
                       ) : (
@@ -2757,7 +2692,7 @@ function StarterclassLuxuryV8() {
                       )
                     ) : (
                       <p className="mt-3 text-xs" style={{ color: palette.textSecondary }}>
-                        Tap to view the Starterclass time, local conversions, and the next full-course labs.
+                        Tap to view the Starterclass time, local conversions, and the next labs in the roadmap.
                       </p>
                     )}
                   </GlowCard>
@@ -2769,23 +2704,19 @@ function StarterclassLuxuryV8() {
                         className="flex w-full items-center justify-between gap-3 text-left"
                         aria-expanded={valueCalcOpen}
                       >
-                        <span className="text-xl font-semibold">Client Value Calculator</span>
+                        <span className="text-xl font-semibold">Lab Navigator</span>
                         <span className="text-xl" aria-hidden="true" style={{ color: palette.textSecondary }}>
                           {valueCalcOpen ? "–" : "+"}
                         </span>
                       </button>
                       {valueCalcOpen ? (
                         <ClientValueCalculator
-                          currency={currency}
-                          formatCurrency={formatCurrency}
-                          earlyBirdActive={earlyBirdActive}
                           onIntro={() => triggerIntroForm("cvc_intro")}
-                          onFull={(detail) => triggerFullTrackForm("cvc_full", detail || {})}
                           onExplore={() => revealPaidAndGoCurriculum("cvc_explore")}
                         />
                       ) : (
                         <p className="mt-3 text-xs" style={{ color: palette.textSecondary }}>
-                          Compare staying with the free Starterclass against committing to the full six-session course.
+                          Preview whether you should stay inside the on-demand lab or book every upcoming live sprint.
                         </p>
                       )}
                     </GlowCard>
@@ -2854,40 +2785,21 @@ function StarterclassLuxuryV8() {
           {tab === "curriculum" && (
             <div className="mt-10 space-y-8" id="curriculum-anchor">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <h3 className="text-lg font-semibold">Full course by month</h3>
-                <div
-                  className="flex rounded-full border"
-                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
-                >
-                  {Object.entries(CURRENCIES).map(([code, meta]) => (
-                    <button
-                      key={code}
-                      type="button"
-                      onClick={() => handleCurrencySwitch(code)}
-                      className={`px-3 py-2 text-sm transition ${currency === code ? "font-semibold" : ""}`}
-                      style={{
-                        color: currency === code ? palette.textPrimary : palette.textSecondary,
-                        background: currency === code ? `linear-gradient(135deg, ${palette.accentPrimary}33, ${palette.accentSecondary}33)` : "transparent",
-                        borderRadius: "9999px",
-                      }}
-                      aria-label={`Show pricing in ${meta.label}`}
-                    >
-                      {meta.symbol}
-                    </button>
-                  ))}
-                </div>
+                <h3 className="text-lg font-semibold">Lab roadmap by month</h3>
+                <p className="text-xs" style={{ color: palette.textSecondary }}>
+                  Three monthly focuses: Starterclass foundations, agent systems, and automation labs.
+                </p>
               </div>
               <div className="grid lg:grid-cols-12 gap-8">
                 <div className="lg:col-span-8 space-y-6">
                   {monthBundles.map((bundle) => {
                     const filtered = sessionTimeline.all.filter((s) => s.month === bundle.key && s.track !== "break");
-                    const monthPrice = earlyBirdActive ? Math.round(bundle.priceUSD * 0.9) : bundle.priceUSD;
-                    const monthLabel = `${bundle.label} · ${formatCurrency(monthPrice)}`;
+                    const monthLabel = `${bundle.label} · Lab cycle`;
                     return (
                     <div key={bundle.key} className="space-y-4">
                       <div className="flex items-center justify-between">
                         <h3 className="text-lg font-semibold">{monthLabel}</h3>
-                        <div className="text-xs" style={{ color: palette.textMuted }}>Weekly cadence · pay per month</div>
+                        <div className="text-xs" style={{ color: palette.textMuted }}>Weekly cadence · free live labs</div>
                       </div>
                       <div className="space-y-4">
                         {filtered.map((module) => {
@@ -2941,40 +2853,37 @@ function StarterclassLuxuryV8() {
                 </div>
                 <div className="lg:col-span-4 space-y-6">
                   <GlowCard className="p-6 space-y-4">
-                    <h3 className="text-lg font-semibold">Monthly investment</h3>
+                    <h3 className="text-lg font-semibold">What each month unlocks</h3>
                     <ul className="space-y-3 text-sm" style={{ color: palette.textSecondary }}>
                       {monthBundles.map((bundle) => (
-                        <li key={bundle.key} className="flex items-center justify-between">
-                          <span>{bundle.label}</span>
-                          <span style={{ color: palette.textPrimary }}>
-                            {formatCurrency(earlyBirdActive ? Math.round(bundle.priceUSD * 0.9) : bundle.priceUSD)}
+                        <li key={bundle.key} className="flex flex-col gap-1">
+                          <span className="font-semibold" style={{ color: palette.textPrimary }}>{bundle.label}</span>
+                          <span className="text-xs" style={{ color: palette.textMuted }}>
+                            {sessionTimeline.all
+                              .filter((module) => module.month === bundle.key && module.track !== "break")
+                              .map((module) => module.title)
+                              .join(" · ")}
                           </span>
                         </li>
                       ))}
                     </ul>
                     <div className="text-xs" style={{ color: palette.textMuted }}>
-                      {earlyBirdActive
-                        ? "10% early-bird active until the Starterclass ends"
-                        : "Early-bird wrapped · standard tuition applies"}
+                      Every lab remains free to attend. The roadmap simply keeps you organised.
                     </div>
                     <div className="text-xs" style={{ color: palette.textMuted }}>
-                      Taxes may apply based on your billing location.
+                      Sessions auto-mark as Archived after each live run so you always know what’s next.
                     </div>
                   </GlowCard>
                   <GlowCard className="p-6 space-y-3">
-                    <h3 className="text-lg font-semibold">Early-bird status</h3>
+                    <h3 className="text-lg font-semibold">Lab status</h3>
                     <div className="text-sm" style={{ color: palette.textSecondary }}>
-                      {earlyBirdActive
-                        ? `Secure the discount within ${earlyBirdCountdown.d}d ${String(earlyBirdCountdown.h).padStart(2, "0")}h ${String(earlyBirdCountdown.m).padStart(2, "0")}m.`
-                        : "The Starterclass window closed the early-bird. Tuition reverts to $300 equivalent."}
+                      {scheduleCompleted
+                        ? "All labs are archived. Join the waitlist to be notified when the next cycle opens."
+                        : `Next unlock: ${heroSession?.title || "Starterclass"} on ${heroSession ? formatSessionDateLabel(heroSession) : formatSessionDateLabel(SESSIONS[0])}.`}
                     </div>
                     <div className="flex flex-wrap gap-2 text-xs" style={{ color: palette.textMuted }}>
-                      <span>Pay $100 per month (or local equivalent).</span>
-                      {earlyBirdActive ? (
-                        <span>Early-bird drops each payment to {formatCurrency(90)}.</span>
-                      ) : (
-                        <span>Missed the early-bird? Tuition stays at {formatCurrency(100)} per month.</span>
-                      )}
+                      <span>Countdown updates automatically after each live lab.</span>
+                      <span>Hero, pie chart, and tabs refresh at 12:30 UK time the day of the next session.</span>
                     </div>
                   </GlowCard>
                 </div>
@@ -3178,7 +3087,7 @@ function StarterclassLuxuryV8() {
                     <ul className="space-y-2 text-xs" style={{ color: palette.textSecondary }}>
                       <li>Built for business leaders, consultants, and operators — no coding required.</li>
                       <li>One Starterclass win plus a clear path through the six-session course.</li>
-                      <li>{earlyBirdActive ? "10% early-bird discount when you enrol before the Starterclass ends." : "Standard tuition with archived Starterclass resources."}</li>
+                      <li>Every live session becomes an interactive lab you can revisit on this page.</li>
                     </ul>
                     <button
                       type="button"
@@ -3221,7 +3130,7 @@ function StarterclassLuxuryV8() {
               {upcomingModules.map((module) => (
                 <GlowCard key={module.k} className="p-4">
                   <div className="flex items-center justify-between text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
-                    <span>Included in full course</span>
+                    <span>Upcoming lab</span>
                     <span style={{ color: module.status === "completed" ? palette.textMuted : module.status === "live" ? palette.accentSecondary : palette.accentPrimary }}>
                       {sessionStatusLabel(module.status)}
                     </span>
@@ -3239,6 +3148,7 @@ function StarterclassLuxuryV8() {
         <>
 
           <BackToTop />
+          <SkipToBottom />
           <VeronicaChatbot />
 
           <footer className="mt-24 mb-16">
@@ -3322,7 +3232,7 @@ function StarterclassLuxuryV8() {
                       Close window
                     </button>
                     <p className="text-xs" style={{ color: palette.textMuted }}>
-                      Replays unlock for Full Track participants. You’ll receive confirmation and prep materials by email within a few minutes of submitting.
+                      Replays unlock automatically in the Lab. You’ll receive confirmation and prep materials by email within a few minutes of submitting.
                     </p>
                   </div>
                 </div>
@@ -3349,9 +3259,9 @@ function StarterclassLuxuryV8() {
               <p className="text-sm" style={{ color: palette.textSecondary }}>These terms govern enrollment in the ICUNI Starterclass.</p>
               <ul className="list-disc pl-5 text-sm space-y-2 mt-3" style={{ color: palette.textSecondary }}>
                 <li><span style={{ color: palette.textMuted }}>Scope:</span> The Starterclass Session provides live instruction, templates, and materials for personal or business use. Redistribution or resale is not permitted without written consent.</li>
-                <li><span style={{ color: palette.textMuted }}>Payments:</span> All payments are processed via Stripe. Taxes and fees may apply per region.</li>
-                <li><span style={{ color: palette.textMuted }}>Refunds:</span> Cancel up to 48 hours before the first paid session for a full refund. After that, we provide credit toward a future cohort.</li>
-                <li><span style={{ color: palette.textMuted }}>Recordings & materials:</span> Starterclass replay unlocks for Full Track participants and remains accessible for 60 days after the January capstone, alongside slide decks and prompt kits.</li>
+                  <li><span style={{ color: palette.textMuted }}>Payments:</span> Starterclass labs are free. Corporate workshops and private trainings use their own invoices.</li>
+                  <li><span style={{ color: palette.textMuted }}>Refunds:</span> Not applicable for the free lab experience. We’ll notify you if a future paid upgrade returns.</li>
+                <li><span style={{ color: palette.textMuted }}>Recordings & materials:</span> Starterclass labs live on this page indefinitely alongside slide decks and prompt kits.</li>
                 <li><span style={{ color: palette.textMuted }}>Conduct:</span> Be respectful in live sessions and forums. Disruptive behaviour may result in removal without refund.</li>
                 <li><span style={{ color: palette.textMuted }}>IP:</span> Your data remains yours. Course IP remains ICUNI’s and is licensed for your use.</li>
                 <li><span style={{ color: palette.textMuted }}>Changes:</span> We may adjust dates or contents for quality or operational reasons; you’ll be notified by email.</li>
@@ -3750,7 +3660,7 @@ function AlternativeRegistrationModal({ onClose, onCalendar }) {
 
   function handleSectionTwoNext() {
     if (!form.fullCourseIntent) {
-      setStepError("Let us know if you'd like the full course follow-up.");
+      setStepError("Let us know if you'd like lab-sequence follow-ups.");
       return;
     }
     if (form.fullCourseIntent === "yes" && !form.agreeFullCourse) {
@@ -4130,7 +4040,7 @@ function AlternativeRegistrationModal({ onClose, onCalendar }) {
                     <li>Master n8n for assistants, orchestration, and observability</li>
                   </ul>
                   <p className="mt-3 text-xs" style={{ color: palette.textMuted }}>
-                    Special pricing for Starterclass attendees — $300 total or $100/month across Nov, Dec, and Jan. Save 10% if you enrol before 15 November.
+                    Every session listed here is included for free. Use this summary to decide which labs to join live.
                   </p>
                 </div>
                 <div className="grid gap-2 text-xs" style={{ color: palette.textMuted }}>
@@ -4144,12 +4054,12 @@ function AlternativeRegistrationModal({ onClose, onCalendar }) {
 
               <div>
                 <div className="text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
-                  Would you like to enrol for the full course?
+                  Would you like updates about the full lab sequence?
                 </div>
                 <div className="mt-2 grid gap-2 md:grid-cols-3">
                   {[
-                    { value: 'yes', label: 'Yes — reserve my seat' },
-                    { value: 'maybe', label: 'Maybe — send details' },
+                    { value: 'yes', label: 'Yes — remind me for every lab' },
+                    { value: 'maybe', label: 'Maybe — send highlights' },
                     { value: 'no', label: 'Not this time' },
                   ].map((option) => {
                     const active = form.fullCourseIntent === option.value;
@@ -4286,7 +4196,7 @@ function AlternativeRegistrationModal({ onClose, onCalendar }) {
                 className="rounded-2xl border px-4 py-3 text-xs"
                 style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}
               >
-                We’ll keep you posted with reminder emails 24 hours before the session and any full-course follow-up you requested.
+                We’ll keep you posted with reminder emails 24 hours before the session and any lab-sequence follow-up you requested.
               </div>
               <div className="flex flex-wrap gap-3">
                 <GlassButton
@@ -4720,6 +4630,16 @@ function StarterclassLabPage() {
   const [levelCompletion, setLevelCompletion] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
   const [copiedKey, setCopiedKey] = useState("");
   const copyTimeoutRef = useRef(null);
+  const labNow = useNow(60000, prefersReducedMotion);
+  const labSessions = useMemo(() => {
+    return SESSIONS.map((session) => {
+      const start = new Date(session.start).getTime();
+      const end = new Date(session.end).getTime();
+      const status = labNow > end ? "Archived" : labNow >= start ? "Live" : "Upcoming";
+      return { ...session, status };
+    });
+  }, [labNow]);
+  const upcomingLabs = useMemo(() => labSessions.filter((session) => session.status !== "Archived"), [labSessions]);
 
   const [level1Card, setLevel1Card] = useState(null);
   const [level1Q1, setLevel1Q1] = useState("");
@@ -4879,12 +4799,44 @@ function StarterclassLabPage() {
     if (!target) return;
     target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
   }, [prefersReducedMotion]);
+  const scrollToRoadmap = useCallback(() => {
+    const target = document.getElementById("lab-roadmap");
+    if (!target) return;
+    target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+  }, [prefersReducedMotion]);
 
   const themeClass = activeTheme === "dark" ? "theme-dark" : "theme-light";
 
   return (
     <ThemeProvider theme={activeTheme} palette={palette}>
       <div className={`${themeClass} min-h-screen`} style={{ background: palette.background, color: palette.textPrimary }}>
+        <header
+          className="sticky top-0 z-40 backdrop-blur"
+          style={{ background: palette.headerBg, borderBottom: `1px solid ${palette.border}` }}
+        >
+          <div className="max-w-6xl mx-auto px-4 py-4 flex flex-wrap items-center gap-3 justify-between">
+            <button
+              type="button"
+              onClick={() => (window.location.href = "/")}
+              className="inline-flex items-center gap-2 text-sm font-semibold"
+              style={{ color: palette.textPrimary }}
+            >
+              <span aria-hidden="true">←</span>
+              Back to Starterclass
+            </button>
+            <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
+              AI Starterclass Lab
+            </div>
+            <button
+              type="button"
+              onClick={handleToggleTheme}
+              className="rounded-full border px-4 py-2 text-sm font-semibold"
+              style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+            >
+              Switch to {activeTheme === "dark" ? "light" : "dark"} mode
+            </button>
+          </div>
+        </header>
         <div className="relative overflow-hidden">
           <Sparkles />
           <div className="max-w-6xl mx-auto px-4 py-10 space-y-16 lg:space-y-20">
@@ -4895,15 +4847,20 @@ function StarterclassLabPage() {
                   <h1 className="text-3xl lg:text-4xl font-semibold">
                     AI Starterclass Lab – Learn by Clicking, Not Just Reading
                   </h1>
-                  <p className="text-lg" style={{ color: palette.textSecondary }}>
-                    Turn random prompts into a reusable AI assistant for your work. Click through the modules, answer the questions, build your own system, and score yourself as you go.
-                  </p>
-                  <div className="flex flex-wrap gap-3">
+                <p className="text-lg" style={{ color: palette.textSecondary }}>
+                  Turn random prompts into a reusable AI assistant for your work. Click through the modules, answer the questions, build your own system, and score yourself as you go.
+                </p>
+                <p className="text-sm" style={{ color: palette.textSecondary }}>
+                  {upcomingLabs.length
+                    ? `${upcomingLabs.length} more labs unlock after this replay. Track them below and return when each session goes live.`
+                    : "This entire cycle is archived—scroll down to relive every level at your own pace."}
+                </p>
+                <div className="flex flex-wrap gap-3">
                     <GlassButton onClick={scrollToLevelOne} className="px-6 py-3">
                       Start Level 1
                     </GlassButton>
-                    <GlassButton variant="secondary" onClick={handleToggleTheme} className="px-6 py-3">
-                      Switch to {activeTheme === "dark" ? "light" : "dark"} mode
+                    <GlassButton variant="secondary" onClick={scrollToRoadmap} className="px-6 py-3">
+                      View the lab roadmap
                     </GlassButton>
                   </div>
                 </div>
@@ -4924,6 +4881,38 @@ function StarterclassLabPage() {
                   <div className="text-xs" style={{ color: palette.textMuted }}>
                     Points lock when you mark each level complete.
                   </div>
+                </div>
+              </div>
+              <div
+                id="lab-roadmap"
+                className="mt-8 rounded-3xl border p-5 space-y-4"
+                style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>Lab roadmap</div>
+                  <span className="text-xs" style={{ color: palette.textSecondary }}>
+                    {upcomingLabs.length ? `${upcomingLabs.length} labs ahead` : "All labs archived"}
+                  </span>
+                </div>
+                <div className="grid md:grid-cols-2 gap-3">
+                  {labSessions.map((session) => {
+                    const statusColor =
+                      session.status === "Live"
+                        ? palette.accentSecondary
+                        : session.status === "Upcoming"
+                        ? palette.accentPrimary
+                        : palette.textMuted;
+                    return (
+                      <div key={session.k} className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surface }}>
+                        <div className="flex items-center justify-between text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
+                          <span>{(session.month || "lab").toUpperCase()}</span>
+                          <span style={{ color: statusColor }}>{session.status}</span>
+                        </div>
+                        <div className="mt-1 text-sm font-semibold" style={{ color: palette.textPrimary }}>{session.title}</div>
+                        <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{formatSessionDateLabel(session)}</div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </section>
@@ -5547,6 +5536,8 @@ function StarterclassLabPage() {
             Start Level 1
           </GlassButton>
         </div>
+        <BackToTop />
+        <SkipToBottom />
       </div>
     </ThemeProvider>
   );
