@@ -2148,9 +2148,6 @@ function StarterclassLuxuryV8() {
   }, [fullTrackPrimaryCtaRef]);
 
   const themeClass = activeTheme === "dark" ? "theme-dark" : "theme-light";
-  const labBackground = activeTheme === "dark"
-    ? "radial-gradient(circle at 20% 20%, rgba(123,61,240,0.25), transparent 55%), radial-gradient(circle at 80% 0%, rgba(16,185,129,0.25), transparent 65%), #050312"
-    : "linear-gradient(135deg, #FDF4E6, #F6F1FF 45%, #ECF8FF)";
   const themeOverrides = useMemo(() => {
     if (activeTheme !== "light") return "";
     return `
@@ -4809,6 +4806,15 @@ function StarterclassLabPage() {
   const [level5Q7, setLevel5Q7] = useState("");
   const [level5Q8, setLevel5Q8] = useState("");
   const [strategyChoices, setStrategyChoices] = useState({ stop: null, keep: null, skill: null });
+  const [announcementIndex, setAnnouncementIndex] = useState(0);
+  const announcementMessages = useMemo(
+    () => [
+      `Resume Level ${nextActiveLevel} to keep your score climbing`,
+      "Copy every template you unlock — zero typing required.",
+      "Open the tools hub to practise each build on a real project.",
+    ],
+    [nextActiveLevel]
+  );
 
   useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
@@ -4997,6 +5003,17 @@ function StarterclassLabPage() {
   }, [prefersReducedMotion]);
 
   const themeClass = activeTheme === "dark" ? "theme-dark" : "theme-light";
+  const labBackground = activeTheme === "dark"
+    ? "radial-gradient(circle at 18% 15%, rgba(123,61,240,0.25), transparent 60%), radial-gradient(circle at 80% 0%, rgba(16,185,129,0.2), transparent 70%), #030213"
+    : "linear-gradient(115deg, #FCF4EA, #F2EEFF 45%, #E7F9FF)";
+
+  useEffect(() => {
+    if (announcementMessages.length <= 1 || prefersReducedMotion) return undefined;
+    const id = setInterval(() => {
+      setAnnouncementIndex((idx) => (idx + 1) % announcementMessages.length);
+    }, 6000);
+    return () => clearInterval(id);
+  }, [announcementMessages.length, prefersReducedMotion]);
 
   return (
     <ThemeProvider theme={activeTheme} palette={palette}>
@@ -7690,10 +7707,16 @@ function ToolsYoutubeMp3Page() {
       title="YouTube to MP3 Studio"
       subtitle="Paste a link, fetch the cleanest audio, and leave with a 320 kbps MP3 in minutes."
       accent="#EF4444"
-      actions={[
-        { label: "Back to tools", href: "/tools.html" },
-        { label: "Study the Starterclass Lab", href: "/ai-starterclass-lab.html" },
-      ]}
+      actions={(
+        <div className="flex flex-wrap gap-3">
+          <GlassButton variant="secondary" onClick={() => (window.location.href = "/tools.html")}>
+            Back to tools
+          </GlassButton>
+          <GlassButton onClick={() => (window.location.href = "/ai-starterclass-lab.html")}>
+            Study the Starterclass Lab
+          </GlassButton>
+        </div>
+      )}
     >
       <YoutubeMp3Tool />
     </ToolPageShell>

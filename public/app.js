@@ -2425,7 +2425,6 @@ function StarterclassLuxuryV8() {
     };
   }, [fullTrackPrimaryCtaRef]);
   var themeClass = activeTheme === "dark" ? "theme-dark" : "theme-light";
-  var labBackground = activeTheme === "dark" ? "radial-gradient(circle at 20% 20%, rgba(123,61,240,0.25), transparent 55%), radial-gradient(circle at 80% 0%, rgba(16,185,129,0.25), transparent 65%), #050312" : "linear-gradient(135deg, #FDF4E6, #F6F1FF 45%, #ECF8FF)";
   var themeOverrides = useMemo(function () {
     if (activeTheme !== "light") return "";
     return "\n      .theme-light [class*=\"text-white\"] { color: ".concat(palette.textPrimary, " !important; }\n      .theme-light [class*=\"text-white/90\"] { color: ").concat(palette.textPrimary, " !important; }\n      .theme-light [class*=\"text-white/80\"] { color: ").concat(palette.textSecondary, " !important; }\n      .theme-light [class*=\"text-white/70\"] { color: ").concat(palette.textSecondary, " !important; }\n      .theme-light [class*=\"text-white/60\"] { color: ").concat(palette.textMuted, " !important; }\n      .theme-light [class*=\"text-white/50\"] { color: ").concat(palette.textMuted, " !important; }\n      .theme-light [class*=\"text-white/40\"] { color: ").concat(palette.textMuted, " !important; }\n      .theme-light [class*=\"bg-white/5\"] { background: ").concat(palette.surfaceSoft, " !important; }\n      .theme-light [class*=\"bg-white/10\"] { background: ").concat(palette.surfaceSoft, " !important; }\n      .theme-light [class*=\"bg-[#0B0B1A]\"] { background: ").concat(palette.surfaceSoft, " !important; }\n      .theme-light [class*=\"border-white/10\"] { border-color: ").concat(palette.border, " !important; }\n      .theme-light [class*=\"border-[#C8A145]/20\"] { border-color: ").concat(palette.border, " !important; }\n      .theme-light [class*=\"shadow-[0_0_0_1px_rgba(200,161,69,0.15)_inset]\"] { box-shadow: inset 0 0 0 1px ").concat(palette.border, " !important; }\n    ");
@@ -5531,6 +5530,13 @@ function StarterclassLabPage() {
     _useState144 = _slicedToArray(_useState143, 2),
     strategyChoices = _useState144[0],
     setStrategyChoices = _useState144[1];
+  var _useState145 = useState(0),
+    _useState146 = _slicedToArray(_useState145, 2),
+    announcementIndex = _useState146[0],
+    setAnnouncementIndex = _useState146[1];
+  var announcementMessages = useMemo(function () {
+    return ["Resume Level ".concat(nextActiveLevel, " to keep your score climbing"), "Copy every template you unlock — zero typing required.", "Open the tools hub to practise each build on a real project."];
+  }, [nextActiveLevel]);
   useEffect(function () {
     return function () {
       return clearTimeout(copyTimeoutRef.current);
@@ -5745,6 +5751,18 @@ function StarterclassLabPage() {
     });
   }, [prefersReducedMotion]);
   var themeClass = activeTheme === "dark" ? "theme-dark" : "theme-light";
+  var labBackground = activeTheme === "dark" ? "radial-gradient(circle at 18% 15%, rgba(123,61,240,0.25), transparent 60%), radial-gradient(circle at 80% 0%, rgba(16,185,129,0.2), transparent 70%), #030213" : "linear-gradient(115deg, #FCF4EA, #F2EEFF 45%, #E7F9FF)";
+  useEffect(function () {
+    if (announcementMessages.length <= 1 || prefersReducedMotion) return undefined;
+    var id = setInterval(function () {
+      setAnnouncementIndex(function (idx) {
+        return (idx + 1) % announcementMessages.length;
+      });
+    }, 6000);
+    return function () {
+      return clearInterval(id);
+    };
+  }, [announcementMessages.length, prefersReducedMotion]);
   return /*#__PURE__*/React.createElement(ThemeProvider, {
     theme: activeTheme,
     palette: palette
@@ -6958,10 +6976,10 @@ function EditablePromptPanel(_ref26) {
     onCopy = _ref26.onCopy;
   var _useTheme23 = useTheme(),
     palette = _useTheme23.palette;
-  var _useState145 = useState(initialValue),
-    _useState146 = _slicedToArray(_useState145, 2),
-    value = _useState146[0],
-    setValue = _useState146[1];
+  var _useState147 = useState(initialValue),
+    _useState148 = _slicedToArray(_useState147, 2),
+    value = _useState148[0],
+    setValue = _useState148[1];
   useEffect(function () {
     setValue(initialValue);
   }, [initialValue]);
@@ -7138,10 +7156,10 @@ function LabResourceCard(_ref32) {
     children = _ref32.children;
   var _useTheme27 = useTheme(),
     palette = _useTheme27.palette;
-  var _useState147 = useState(text || ""),
-    _useState148 = _slicedToArray(_useState147, 2),
-    value = _useState148[0],
-    setValue = _useState148[1];
+  var _useState149 = useState(text || ""),
+    _useState150 = _slicedToArray(_useState149, 2),
+    value = _useState150[0],
+    setValue = _useState150[1];
   useEffect(function () {
     setValue(text || "");
   }, [text]);
@@ -7196,7 +7214,7 @@ function buildPromptFromSelection(selection) {
 function QuickStartWorkshop() {
   var _useTheme28 = useTheme(),
     palette = _useTheme28.palette;
-  var _useState149 = useState(function () {
+  var _useState151 = useState(function () {
       var initial = {};
       QUICK_START_ACTIONS.forEach(function (action) {
         initial[action.id] = {
@@ -7208,9 +7226,9 @@ function QuickStartWorkshop() {
       });
       return initial;
     }),
-    _useState150 = _slicedToArray(_useState149, 2),
-    entries = _useState150[0],
-    setEntries = _useState150[1];
+    _useState152 = _slicedToArray(_useState151, 2),
+    entries = _useState152[0],
+    setEntries = _useState152[1];
   var completed = Object.values(entries).filter(function (entry) {
     return entry.done;
   }).length;
@@ -7390,7 +7408,7 @@ function ClientBriefGeneratorTool(_ref33) {
     communications: "",
     constraints: ""
   };
-  var _useState151 = useState(function () {
+  var _useState153 = useState(function () {
       if (typeof window === "undefined") return initialState;
       try {
         var stored = localStorage.getItem(storageKey);
@@ -7400,13 +7418,13 @@ function ClientBriefGeneratorTool(_ref33) {
       } catch (_unused9) {}
       return initialState;
     }),
-    _useState152 = _slicedToArray(_useState151, 2),
-    form = _useState152[0],
-    setForm = _useState152[1];
-  var _useState153 = useState(""),
     _useState154 = _slicedToArray(_useState153, 2),
-    message = _useState154[0],
-    setMessage = _useState154[1];
+    form = _useState154[0],
+    setForm = _useState154[1];
+  var _useState155 = useState(""),
+    _useState156 = _slicedToArray(_useState155, 2),
+    message = _useState156[0],
+    setMessage = _useState156[1];
   useEffect(function () {
     try {
       localStorage.setItem(storageKey, JSON.stringify(form));
@@ -7796,10 +7814,10 @@ function ToolsGalleryPage() {
     theme = _usePageTheme4.theme,
     palette = _usePageTheme4.palette,
     toggleTheme = _usePageTheme4.toggleTheme;
-  var _useState155 = useState("az"),
-    _useState156 = _slicedToArray(_useState155, 2),
-    sortOrder = _useState156[0],
-    setSortOrder = _useState156[1];
+  var _useState157 = useState("az"),
+    _useState158 = _slicedToArray(_useState157, 2),
+    sortOrder = _useState158[0],
+    setSortOrder = _useState158[1];
   var sortedTools = useMemo(function () {
     return sortByOrder(TOOL_DEFINITIONS, sortOrder, "title");
   }, [sortOrder]);
@@ -7940,14 +7958,14 @@ function UniversalAIPersonalityTool() {
     format: "- Use headings and bold sparingly\n- Write in paragraphs for explanations\n- Use lists only when comparing options\n- For deliverables, give the final version first, then notes",
     special: "- If I upload a document, treat it as source material\n- When I say \"build this\", create something I can deploy\n- Remember context in our conversation\n- Flag inefficient approaches\n- Challenge weak ideas with alternatives"
   };
-  var _useState157 = useState(initial),
-    _useState158 = _slicedToArray(_useState157, 2),
-    form = _useState158[0],
-    setForm = _useState158[1];
-  var _useState159 = useState(false),
+  var _useState159 = useState(initial),
     _useState160 = _slicedToArray(_useState159, 2),
-    copied = _useState160[0],
-    setCopied = _useState160[1];
+    form = _useState160[0],
+    setForm = _useState160[1];
+  var _useState161 = useState(false),
+    _useState162 = _slicedToArray(_useState161, 2),
+    copied = _useState162[0],
+    setCopied = _useState162[1];
   var instructions = useMemo(function () {
     return ["WHAT TO KNOW ABOUT ME:", form.about, "", "WORK CONTEXT:", form.workContext, "", "MY PREFERENCES:", form.preferences, "", "WHAT I DON'T WANT:", form.dontWant, "", "DEPTH LEVELS:", form.quick, form.deep, form.defaultMode, "", "HOW TO RESPOND:", "Tone: ".concat(form.tone), "Structure:\n".concat(form.structure), "Format:\n".concat(form.format), "", "SPECIAL INSTRUCTIONS:", form.special].filter(Boolean).join("\n");
   }, [form]);
@@ -8177,22 +8195,22 @@ var TASK_CODE_DEFINITIONS = [{
 function TaskCodesTool() {
   var _useTheme31 = useTheme(),
     palette = _useTheme31.palette;
-  var _useState161 = useState(TASK_CODE_DEFINITIONS[0].code),
-    _useState162 = _slicedToArray(_useState161, 2),
-    selectedCode = _useState162[0],
-    setSelectedCode = _useState162[1];
-  var _useState163 = useState(""),
+  var _useState163 = useState(TASK_CODE_DEFINITIONS[0].code),
     _useState164 = _slicedToArray(_useState163, 2),
-    taskDescription = _useState164[0],
-    setTaskDescription = _useState164[1];
+    selectedCode = _useState164[0],
+    setSelectedCode = _useState164[1];
   var _useState165 = useState(""),
     _useState166 = _slicedToArray(_useState165, 2),
-    context = _useState166[0],
-    setContext = _useState166[1];
+    taskDescription = _useState166[0],
+    setTaskDescription = _useState166[1];
   var _useState167 = useState(""),
     _useState168 = _slicedToArray(_useState167, 2),
-    constraints = _useState168[0],
-    setConstraints = _useState168[1];
+    context = _useState168[0],
+    setContext = _useState168[1];
+  var _useState169 = useState(""),
+    _useState170 = _slicedToArray(_useState169, 2),
+    constraints = _useState170[0],
+    setConstraints = _useState170[1];
   var promptText = useMemo(function () {
     var detailLines = ["".concat(selectedCode, " ").concat(taskDescription || "Describe the task clearly"), context && "Context: ".concat(context), constraints && "Constraints: ".concat(constraints), "Remember: maintain project memory, reference previous deliverables, and call out assumptions before answering."].filter(Boolean).join("\n");
     return detailLines;
@@ -8317,18 +8335,18 @@ function ContentQualityAnalyzerTool() {
   var _analysis$strengths, _analysis$needsWork, _analysis$suggestions;
   var _useTheme32 = useTheme(),
     palette = _useTheme32.palette;
-  var _useState169 = useState(""),
-    _useState170 = _slicedToArray(_useState169, 2),
-    input = _useState170[0],
-    setInput = _useState170[1];
-  var _useState171 = useState(null),
+  var _useState171 = useState(""),
     _useState172 = _slicedToArray(_useState171, 2),
-    analysis = _useState172[0],
-    setAnalysis = _useState172[1];
-  var _useState173 = useState(false),
+    input = _useState172[0],
+    setInput = _useState172[1];
+  var _useState173 = useState(null),
     _useState174 = _slicedToArray(_useState173, 2),
-    copied = _useState174[0],
-    setCopied = _useState174[1];
+    analysis = _useState174[0],
+    setAnalysis = _useState174[1];
+  var _useState175 = useState(false),
+    _useState176 = _slicedToArray(_useState175, 2),
+    copied = _useState176[0],
+    setCopied = _useState176[1];
   var analyze = function analyze() {
     if (!input.trim()) {
       setAnalysis(null);
@@ -8491,11 +8509,11 @@ function ContentQualityAnalyzerTool() {
 function ClientProjectPlannerTool() {
   var _useTheme33 = useTheme(),
     palette = _useTheme33.palette;
-  var _useState175 = useState(LAB_INPUT_OPTIONS.slice(0, 5)),
-    _useState176 = _slicedToArray(_useState175, 2),
-    selectedInputs = _useState176[0],
-    setSelectedInputs = _useState176[1];
-  var _useState177 = useState({
+  var _useState177 = useState(LAB_INPUT_OPTIONS.slice(0, 5)),
+    _useState178 = _slicedToArray(_useState177, 2),
+    selectedInputs = _useState178[0],
+    setSelectedInputs = _useState178[1];
+  var _useState179 = useState({
       industry: "Creative",
       clientType: "Startup",
       description: "Brand refresh with lightweight automation",
@@ -8506,17 +8524,17 @@ function ClientProjectPlannerTool() {
       risks: "Scope creep around content volume",
       timeline: "Discovery → Build → Launch"
     }),
-    _useState178 = _slicedToArray(_useState177, 2),
-    form = _useState178[0],
-    setForm = _useState178[1];
-  var _useState179 = useState(null),
     _useState180 = _slicedToArray(_useState179, 2),
-    plan = _useState180[0],
-    setPlan = _useState180[1];
-  var _useState181 = useState(""),
+    form = _useState180[0],
+    setForm = _useState180[1];
+  var _useState181 = useState(null),
     _useState182 = _slicedToArray(_useState181, 2),
-    message = _useState182[0],
-    setMessage = _useState182[1];
+    plan = _useState182[0],
+    setPlan = _useState182[1];
+  var _useState183 = useState(""),
+    _useState184 = _slicedToArray(_useState183, 2),
+    message = _useState184[0],
+    setMessage = _useState184[1];
   var toggleInput = function toggleInput(label) {
     setSelectedInputs(function (prev) {
       if (prev.includes(label)) {
@@ -8832,38 +8850,38 @@ function ClientProjectPlannerTool() {
 function YoutubeMp3Tool() {
   var _useTheme34 = useTheme(),
     palette = _useTheme34.palette;
-  var _useState183 = useState(""),
-    _useState184 = _slicedToArray(_useState183, 2),
-    link = _useState184[0],
-    setLink = _useState184[1];
-  var _useState185 = useState("idle"),
+  var _useState185 = useState(""),
     _useState186 = _slicedToArray(_useState185, 2),
-    status = _useState186[0],
-    setStatus = _useState186[1];
-  var _useState187 = useState(0),
+    link = _useState186[0],
+    setLink = _useState186[1];
+  var _useState187 = useState("idle"),
     _useState188 = _slicedToArray(_useState187, 2),
-    progress = _useState188[0],
-    setProgress = _useState188[1];
-  var _useState189 = useState(""),
+    status = _useState188[0],
+    setStatus = _useState188[1];
+  var _useState189 = useState(0),
     _useState190 = _slicedToArray(_useState189, 2),
-    error = _useState190[0],
-    setError = _useState190[1];
-  var _useState191 = useState(null),
+    progress = _useState190[0],
+    setProgress = _useState190[1];
+  var _useState191 = useState(""),
     _useState192 = _slicedToArray(_useState191, 2),
-    result = _useState192[0],
-    setResult = _useState192[1];
-  var _useState193 = useState(""),
+    error = _useState192[0],
+    setError = _useState192[1];
+  var _useState193 = useState(null),
     _useState194 = _slicedToArray(_useState193, 2),
-    downloadUrl = _useState194[0],
-    setDownloadUrl = _useState194[1];
-  var _useState195 = useState([]),
+    result = _useState194[0],
+    setResult = _useState194[1];
+  var _useState195 = useState(""),
     _useState196 = _slicedToArray(_useState195, 2),
-    history = _useState196[0],
-    setHistory = _useState196[1];
-  var _useState197 = useState(false),
+    downloadUrl = _useState196[0],
+    setDownloadUrl = _useState196[1];
+  var _useState197 = useState([]),
     _useState198 = _slicedToArray(_useState197, 2),
-    busy = _useState198[0],
-    setBusy = _useState198[1];
+    history = _useState198[0],
+    setHistory = _useState198[1];
+  var _useState199 = useState(false),
+    _useState200 = _slicedToArray(_useState199, 2),
+    busy = _useState200[0],
+    setBusy = _useState200[1];
   useEffect(function () {
     return function () {
       if (downloadUrl) {
@@ -9227,13 +9245,18 @@ function ToolsYoutubeMp3Page() {
     title: "YouTube to MP3 Studio",
     subtitle: "Paste a link, fetch the cleanest audio, and leave with a 320 kbps MP3 in minutes.",
     accent: "#EF4444",
-    actions: [{
-      label: "Back to tools",
-      href: "/tools.html"
-    }, {
-      label: "Study the Starterclass Lab",
-      href: "/ai-starterclass-lab.html"
-    }]
+    actions: /*#__PURE__*/React.createElement("div", {
+      className: "flex flex-wrap gap-3"
+    }, /*#__PURE__*/React.createElement(GlassButton, {
+      variant: "secondary",
+      onClick: function onClick() {
+        return window.location.href = "/tools.html";
+      }
+    }, "Back to tools"), /*#__PURE__*/React.createElement(GlassButton, {
+      onClick: function onClick() {
+        return window.location.href = "/ai-starterclass-lab.html";
+      }
+    }, "Study the Starterclass Lab"))
   }, /*#__PURE__*/React.createElement(YoutubeMp3Tool, null));
 }
 function PromptsGalleryPage() {
@@ -9241,34 +9264,34 @@ function PromptsGalleryPage() {
     theme = _usePageTheme5.theme,
     palette = _usePageTheme5.palette,
     toggleTheme = _usePageTheme5.toggleTheme;
-  var _useState199 = useState(assignPromptImages(PROMPT_FALLBACKS)),
-    _useState200 = _slicedToArray(_useState199, 2),
-    prompts = _useState200[0],
-    setPrompts = _useState200[1];
-  var _useState201 = useState(true),
+  var _useState201 = useState(assignPromptImages(PROMPT_FALLBACKS)),
     _useState202 = _slicedToArray(_useState201, 2),
-    loading = _useState202[0],
-    setLoading = _useState202[1];
-  var _useState203 = useState(""),
+    prompts = _useState202[0],
+    setPrompts = _useState202[1];
+  var _useState203 = useState(true),
     _useState204 = _slicedToArray(_useState203, 2),
-    error = _useState204[0],
-    setError = _useState204[1];
-  var _useState205 = useState(null),
+    loading = _useState204[0],
+    setLoading = _useState204[1];
+  var _useState205 = useState(""),
     _useState206 = _slicedToArray(_useState205, 2),
-    selectedPrompt = _useState206[0],
-    setSelectedPrompt = _useState206[1];
-  var _useState207 = useState(""),
+    error = _useState206[0],
+    setError = _useState206[1];
+  var _useState207 = useState(null),
     _useState208 = _slicedToArray(_useState207, 2),
-    editablePrompt = _useState208[0],
-    setEditablePrompt = _useState208[1];
-  var _useState209 = useState(false),
+    selectedPrompt = _useState208[0],
+    setSelectedPrompt = _useState208[1];
+  var _useState209 = useState(""),
     _useState210 = _slicedToArray(_useState209, 2),
-    copied = _useState210[0],
-    setCopied = _useState210[1];
-  var _useState211 = useState("random"),
+    editablePrompt = _useState210[0],
+    setEditablePrompt = _useState210[1];
+  var _useState211 = useState(false),
     _useState212 = _slicedToArray(_useState211, 2),
-    sortOrder = _useState212[0],
-    setSortOrder = _useState212[1];
+    copied = _useState212[0],
+    setCopied = _useState212[1];
+  var _useState213 = useState("random"),
+    _useState214 = _slicedToArray(_useState213, 2),
+    sortOrder = _useState214[0],
+    setSortOrder = _useState214[1];
   var displayPrompts = useMemo(function () {
     return sortByOrder(prompts, sortOrder, "action");
   }, [prompts, sortOrder]);
