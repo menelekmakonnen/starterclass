@@ -7975,16 +7975,38 @@ function shuffleArray(list) {
 }
 
 async function fetchYoutubeManifest(videoId) {
-  const endpoints = [
-    `https://piped.video/api/v1/streams/${videoId}?hl=en`,
-    `https://piped.video/api/v1/streams/${videoId}?region=us`,
-    `https://piped.video/api/v1/streams/${videoId}?local=true`,
+  const instances = [
+    "https://piped.video",
+    "https://piped.mha.fi",
+    "https://piped.video",
+    "https://piped.video",
   ];
+  const proxify = (url) => `https://r.jina.ai/http://${url.replace(/^https?:\/\//, "")}`;
+  const endpoints = instances.flatMap((instance) => [
+    `${instance}/api/v1/streams/${videoId}?hl=en`,
+    `${instance}/api/v1/streams/${videoId}?region=us`,
+    `${instance}/api/v1/streams/${videoId}?local=true`,
+    `${proxify(instance)}/api/v1/streams/${videoId}?hl=en`,
+  ]);
   for (const endpoint of endpoints) {
     try {
-      const response = await fetch(endpoint);
-      if (response.ok) {
-        return response.json();
+      const response = await fetch(endpoint, {
+        headers: {
+          Accept: "application/json,text/plain;q=0.9",
+        },
+      });
+      if (!response.ok) {
+        continue;
+      }
+      const contentType = response.headers.get("content-type") || "";
+      const text = await response.text();
+      const looksJson = /json/i.test(contentType) || text.trim().startsWith("{");
+      if (!looksJson) {
+        continue;
+      }
+      const data = JSON.parse(text);
+      if (data && (data.audioStreams?.length || data.hls)) {
+        return data;
       }
     } catch (error) {
       // try next endpoint
