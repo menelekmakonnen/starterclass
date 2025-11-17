@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Starterclass Prompt Library</title>
+  <meta name="description" content="Browse the live Starterclass prompt grid pulled straight from Google Sheets. Edit before copying." />
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-black">
+  <div id="prompt-root"></div>
+  <script src="./app.js"></script>
+  <script>
+    if (!window.PromptsGalleryPage) {
+      console.error("PromptsGalleryPage component failed to load");
+    } else {
+      ReactDOM.createRoot(document.getElementById("prompt-root")).render(
+        React.createElement(window.PromptsGalleryPage)
+      );
+    }
+  </script>
+</body>
+</html>

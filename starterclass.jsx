@@ -462,6 +462,80 @@ const SESSIONS = [
   },
 ];
 
+const TOOL_DEFINITIONS = [
+  {
+    slug: "universal-ai-personality",
+    title: "Universal AI Personality",
+    tagline: "Design Custom Instructions that make ChatGPT feel like it works for you.",
+    accent: "#C28424",
+    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=60",
+  },
+  {
+    slug: "task-codes",
+    title: "Task Codes Workspace",
+    tagline: "Organise every AI request with consistent project codes.",
+    accent: "#8B5CF6",
+    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=60",
+  },
+  {
+    slug: "client-brief-generator",
+    title: "Client Brief Generator",
+    tagline: "Capture every requirement, auto-save it, and export a polished brief.",
+    accent: "#3B82F6",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=60",
+  },
+  {
+    slug: "content-quality-analyzer",
+    title: "Content Quality Analyzer",
+    tagline: "Paste anything, get a structured critique plus a rewritten version.",
+    accent: "#F59E0B",
+    image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=600&q=60",
+  },
+  {
+    slug: "client-project-planner",
+    title: "Client Project Planner & Value Calculator",
+    tagline: "Scope projects, estimate value, and package a client-facing summary.",
+    accent: "#10B981",
+    image: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=600&q=60",
+  },
+];
+
+const PROMPT_SHEET_CSV =
+  "https://docs.google.com/spreadsheets/d/1_P4Pkf8lprKff6doEjFj2uT-qScI1_CSwGDWVj1cU-M/export?format=csv";
+
+const PROMPT_IMAGE_POOL = [
+  "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=60",
+  "https://images.unsplash.com/photo-1500534314209-43a1cd3b84b9?auto=format&fit=crop&w=800&q=60",
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=60",
+  "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=800&q=60",
+  "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=800&q=60",
+  "https://images.unsplash.com/photo-1472289065668-ce650ac443d2?auto=format&fit=crop&w=800&q=60",
+];
+
+const PROMPT_FALLBACKS = [
+  {
+    action: "Win a hesitant client",
+    prompt:
+      "[STRATEGY] Review this proposal and highlight 3 risks plus one stronger angle to pitch.",
+  },
+  {
+    action: "Prep a kickoff call",
+    prompt:
+      "[PLAN] Build a 30-minute agenda with probing questions for a new automation client.",
+  },
+  {
+    action: "Ship research faster",
+    prompt: "[RESEARCH] Summarise the top 5 AI trends for boutique consultancies with proof points.",
+  },
+];
+
+const GLOBAL_NAV_LINKS = [
+  { key: "home", label: "Home", href: "/" },
+  { key: "lab", label: "Starterclass Lab", href: "/ai-starterclass-lab.html" },
+  { key: "tools", label: "Tools", href: "/tools.html" },
+  { key: "prompts", label: "Prompt Library", href: "/prompts.html" },
+];
+
 const MONTH_BUNDLES = [
   { key: "nov", label: "November momentum", modules: ["starterclass", "canvas"] },
   { key: "dec", label: "December agent systems", modules: ["agents1", "agents2"] },
@@ -1240,40 +1314,15 @@ function VeronicaChatbot() {
   );
 }
 
-function BackToTop() {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setShow(window.scrollY > 400);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  const { theme, palette } = useTheme();
-  const isDark = theme === "dark";
-  return (
-    <button
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`fixed bottom-5 right-4 z-40 rounded-full p-3 transition ${show ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-      style={{
-        border: `1px solid ${palette.border}`,
-        background: isDark ? palette.surface : palette.surfaceSoft,
-        color: palette.textPrimary,
-        boxShadow: palette.shadow,
-      }}
-      aria-label="Back to top"
-      title="Back to top"
-    >
-      ↑
-    </button>
-  );
-}
-
-function SkipToBottom() {
-  const [show, setShow] = useState(false);
+function ScrollControls() {
+  const [showTop, setShowTop] = useState(false);
+  const [showBottom, setShowBottom] = useState(false);
   useEffect(() => {
     const onScroll = () => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      setShow(window.scrollY < maxScroll - 400);
+      const y = window.scrollY;
+      setShowTop(y > 320);
+      setShowBottom(y < maxScroll - 320);
     };
     onScroll();
     window.addEventListener("scroll", onScroll);
@@ -1281,21 +1330,121 @@ function SkipToBottom() {
   }, []);
   const { theme, palette } = useTheme();
   const isDark = theme === "dark";
+  const dockVisible = showTop || showBottom;
   return (
-    <button
-      onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })}
-      className={`fixed bottom-5 left-4 z-40 rounded-full p-3 transition ${show ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-      style={{
-        border: `1px solid ${palette.border}`,
-        background: isDark ? palette.surface : palette.surfaceSoft,
-        color: palette.textPrimary,
-        boxShadow: palette.shadow,
-      }}
-      aria-label="Skip to bottom"
-      title="Skip to bottom"
+    <div
+      className={`fixed bottom-5 right-4 z-40 flex flex-col gap-2 sm:flex-row transition ${dockVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      style={{ filter: dockVisible ? "none" : "blur(0.5px)" }}
     >
-      ↓
-    </button>
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="rounded-full px-4 py-3 text-sm font-semibold"
+        style={{
+          border: `1px solid ${palette.border}`,
+          background: isDark ? palette.surface : palette.surfaceSoft,
+          color: palette.textPrimary,
+          boxShadow: palette.shadow,
+          opacity: showTop ? 1 : 0.4,
+          pointerEvents: showTop ? "auto" : "none",
+        }}
+        aria-label="Back to top"
+      >
+        ↑ Top
+      </button>
+      <button
+        onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })}
+        className="rounded-full px-4 py-3 text-sm font-semibold"
+        style={{
+          border: `1px solid ${palette.border}`,
+          background: isDark ? palette.surface : palette.surfaceSoft,
+          color: palette.textPrimary,
+          boxShadow: palette.shadow,
+          opacity: showBottom ? 1 : 0.4,
+          pointerEvents: showBottom ? "auto" : "none",
+        }}
+        aria-label="Skip to bottom"
+      >
+        ↓ Bottom
+      </button>
+    </div>
+  );
+}
+
+function FooterMenu({ onShowTerms, onShowPrivacy, onShowContact }) {
+  const { palette } = useTheme();
+  const footerLinks = [
+    { label: "Home", href: "/" },
+    { label: "Starterclass Lab", href: "/ai-starterclass-lab.html" },
+    { label: "Tools", href: "/tools.html" },
+    { label: "Prompt Library", href: "/prompts.html" },
+  ];
+  const legalLinks = [
+    onShowTerms && { label: "Terms", onClick: onShowTerms },
+    onShowPrivacy && { label: "Privacy", onClick: onShowPrivacy },
+    onShowContact && { label: "Contact", onClick: onShowContact },
+  ].filter(Boolean);
+  return (
+    <footer className="mt-24 mb-16">
+      <Section>
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-4 text-sm" style={{ color: palette.textMuted }}>
+            <div>© {new Date().getFullYear()} ICUNI — Starterclass</div>
+            <div className="flex flex-wrap gap-4">
+              {footerLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="underline-offset-4"
+                  style={{ color: palette.textSecondary }}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+          {legalLinks.length > 0 && (
+            <div className="flex flex-wrap gap-4 text-xs" style={{ color: palette.textSecondary }}>
+              {legalLinks.map((link) => (
+                <button
+                  key={link.label}
+                  type="button"
+                  className="underline underline-offset-4"
+                  onClick={link.onClick}
+                  style={{ color: palette.textSecondary }}
+                >
+                  {link.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </Section>
+    </footer>
+  );
+}
+
+function GlobalNavRow({ activeKey }) {
+  const { palette } = useTheme();
+  return (
+    <nav className="flex flex-wrap gap-2" aria-label="Site">
+      {GLOBAL_NAV_LINKS.map((link) => {
+        const isActive = link.key === activeKey;
+        return (
+          <a
+            key={link.href}
+            href={link.href}
+            className="rounded-full px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.2em]"
+            style={{
+              background: isActive ? palette.accentSecondary : palette.surfaceSoft,
+              color: isActive ? "#fff" : palette.textSecondary,
+              border: `1px solid ${isActive ? palette.accentSecondary : palette.border}`,
+            }}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+    </nav>
   );
 }
 
@@ -1379,6 +1528,28 @@ function useNow(tick = 1000, prefersReducedMotionArg) {
   }, [prefersReducedMotion, tick]);
 
   return now;
+}
+
+function usePageTheme(storageKey = "sc_theme_pref", fallback = "light") {
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") return fallback;
+    try {
+      return localStorage.getItem(storageKey) || fallback;
+    } catch {
+      return fallback;
+    }
+  });
+  const palette = useMemo(() => getPalette(theme), [theme]);
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      try {
+        localStorage.setItem(storageKey, next);
+      } catch {}
+      return next;
+    });
+  }, [storageKey]);
+  return { theme, palette, toggleTheme };
 }
 
 function getCountdownParts(targetISO, nowMs) {
@@ -2284,6 +2455,9 @@ function StarterclassLuxuryV8() {
             >
               {announcementMessages[announcementIndex]}
             </div>
+            <div className="pt-2 flex justify-center">
+              <GlobalNavRow activeKey="home" />
+            </div>
           </Section>
         </header>
 
@@ -3147,22 +3321,14 @@ function StarterclassLuxuryV8() {
         </Section>
         <>
 
-          <BackToTop />
-          <SkipToBottom />
+          <ScrollControls />
           <VeronicaChatbot />
 
-          <footer className="mt-24 mb-16">
-            <Section>
-              <div className="flex flex-wrap items-center justify-between gap-3 text-sm" style={{ color: palette.textMuted }}>
-                <div>© {new Date().getFullYear()} ICUNI — Starterclass</div>
-                <div className="flex gap-4">
-                  <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#terms" onClick={(e) => { e.preventDefault(); setShowTerms(true); }}>Terms</a>
-                  <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#privacy" onClick={(e) => { e.preventDefault(); setShowPrivacy(true); }}>Privacy</a>
-                  <a className="underline-offset-4" style={{ color: palette.textSecondary }} href="#contact" onClick={(e) => { e.preventDefault(); setShowContact(true); }}>Contact</a>
-                </div>
-              </div>
-            </Section>
-          </footer>
+          <FooterMenu
+            onShowTerms={() => setShowTerms(true)}
+            onShowPrivacy={() => setShowPrivacy(true)}
+            onShowContact={() => setShowContact(true)}
+          />
 
           {modalOpen && (
             <div className="fixed inset-0 z-50 grid place-items-center p-4">
@@ -4495,25 +4661,6 @@ Your job:
 Format your answer with clear headings and bullet points.
 If information is missing, clearly state your assumptions before giving recommendations.`;
 
-const INTERACTIVE_TOOL_PROMPT = `Build an interactive Client Brief Generator in Canvas.
-
-Sections to include:
-1. Client & Project Overview (company name, project name, contact person, date)
-2. Project Goals (success definition, objectives, metrics)
-3. Scope & Deliverables (what’s in / out, delivery format)
-4. Timeline & Milestones (start, key deadlines, final delivery)
-5. Budget & Resources (budget range, payment terms, resource needs)
-6. Stakeholders & Approvals (decision makers, approval process, comms preferences)
-7. Constraints & Considerations (technical limits, brand rules, known challenges)
-
-Requirements:
-- Clean layout with prompts per field
-- Copy-all and Download-as-PDF buttons
-- Works on desktop + mobile
-- Auto-save to browser storage
-- Validate required fields before download
-- Output formatted for easy copy/paste.`;
-
 const ANALYZER_PROMPT = `Build a Content Quality Analyzer in Canvas.
 
 Features:
@@ -4529,36 +4676,75 @@ Features:
 5. Use green for strengths, amber for improvements
 6. Keep the interface clean and focus-friendly.`;
 
-const QUICK_START_CHECKLIST = `AI STARTERCLASS - ACTION CHECKLIST
+const QUICK_START_ACTIONS = [
+  {
+    id: "custom_instructions",
+    title: "Set up Custom Instructions",
+    steps: [
+      "Settings → Personalization → Custom Instructions.",
+      "Paste the Universal AI Personality, then personalise tone, depth, and guardrails.",
+      "Ask a fast question to confirm every reply now matches your style.",
+    ],
+    resource: { label: "Personalise now", href: "/tools-universal-ai-personality.html" },
+    placeholder: "Note the lines you edited so you can reuse them everywhere.",
+  },
+  {
+    id: "custom_gpt",
+    title: "Create Your First Custom GPT",
+    steps: [
+      "ChatGPT → Explore GPTs → Create.",
+      "Use the Client Brief Architect instructions or remix them for your industry.",
+      "Test with a real scenario and save the GPT so it’s ready for Monday.",
+    ],
+    resource: { label: "Open task codes", href: "/tools-task-codes.html" },
+    placeholder: "What did you name it? Jot the use case so you keep iterating.",
+  },
+  {
+    id: "canvas_tool",
+    title: "Build One Canvas Tool",
+    steps: [
+      "Start a new chat and request the Client Brief Generator or Content Quality Analyzer.",
+      "Test it with a real client scenario.",
+      "Save the chat (and the artifact) so you can reopen it instantly.",
+    ],
+    resource: { label: "Launch tools", href: "/tools.html" },
+    placeholder: "Which tool did you ship? Capture the link or notes here.",
+  },
+  {
+    id: "project_setup",
+    title: "Set Up a Project",
+    steps: [
+      "ChatGPT → Projects → New Project.",
+      "Drop in the Task Codes prompt so every request stays organised.",
+      "Run at least one [TASK CODE] request to confirm it sticks.",
+    ],
+    resource: { label: "Use Project prompt", href: "/tools-task-codes.html" },
+    placeholder: "Which project did you create? Note the focus or client here.",
+  },
+];
 
-□ SET UP CUSTOM INSTRUCTIONS
-  Settings → Personalization → Custom Instructions
-  Paste the template, customise, save, and test
-
-□ CREATE YOUR FIRST CUSTOM GPT
-  ChatGPT → Explore GPTs → Create
-  Name it, add instructions, test with real work, save
-
-□ BUILD ONE CANVAS TOOL
-  Start a chat → Request a build
-  Use the provided prompt or tweak
-  Test with real content and save the chat
-
-□ SET UP A PROJECT
-  ChatGPT → Projects → New Project
-  Name it, add the Project Prompt, run your first [TASK CODE]
-
-AFTER TODAY:
-□ Build another Custom GPT this week
-□ Create one Canvas tool you’ll reuse
-□ Share a win in the group chat (when live)
-□ Leave a review if valuable
-□ Sign up for the newsletter
-
-HAVING TROUBLE?
-- Not seeing Canvas? Ask “Create this in Canvas”
-- GPT acting up? Tighten your instructions
-- Tool broken? Say “Debug this and fix errors”`;
+const QUICK_START_FOLLOWUPS = [
+  {
+    title: "Build another Custom GPT this week",
+    detail: "Clone the workflow for a second workflow or client so the habit sticks.",
+  },
+  {
+    title: "Create one Canvas tool you’ll reuse",
+    detail: "Turn a messy doc into a form, planner, or analyzer that lives in Canvas.",
+  },
+  {
+    title: "Share a win in the group chat",
+    detail: "Once the cohort space opens, post a screenshot or lesson so others copy you.",
+  },
+  {
+    title: "Leave a fast review",
+    detail: "Two sentences help us keep the Starterclass free and evolving.",
+  },
+  {
+    title: "Sign up for the newsletter",
+    detail: "Get fresh prompts, tools, and automation drops every week.",
+  },
+];
 
 const CLIENT_BRIEF_INSTRUCTIONS = `You are the Client Brief Architect.
 
@@ -4573,48 +4759,6 @@ How you work:
 
 Kick off with: “What project are we briefing today?”`;
 
-const FOLLOW_UP_EMAIL_TEMPLATE = `Subject: Your AI Starterclass Resources + Next Steps
-
-Thanks for joining today’s AI Starterclass! Here’s everything you need to keep building:
-
-WHAT YOU BUILT TODAY:
-✓ Custom Instructions for personalisation
-✓ Your first Custom GPT
-✓ An interactive Canvas tool
-✓ A Project workspace
-
-ACCESS YOUR WORK:
-- Custom GPTs: ChatGPT → Explore GPTs → Your GPTs
-- Canvas Tools: Saved in your chat history
-- Projects: ChatGPT → Projects
-
-YOUR HOMEWORK (THIS WEEK):
-1. Build one more Custom GPT for real work
-2. Create one Canvas tool you’ll reuse
-3. Set up a Project and run 3 tasks with task codes
-
-FREE RESOURCES:
-→ Prompt Library: [LINK]
-→ Custom GPT Templates: [LINK]
-→ Tool Building Examples: [LINK]
-→ AI Group Chat (coming soon): [LINK]
-
-WHAT’S NEXT:
-Session 2: Deep Research
-Session 3-4: Automation with N8N
-Session 5-9: Full AI systems
-
-Full 9-Session Course: [LIMITED SPOTS - LINK]
-
-HELP US IMPROVE:
-If today was valuable, leave a quick review: [LINK]
-Reply with any questions.
-
-See you in the next session,
-[Your Name]
-ICUNI AI Training
-
-P.S. The best way to learn AI is to use it. Build something this week.`;
 function StarterclassLabPage() {
   const [activeTheme, setActiveTheme] = useState(() => {
     if (typeof window === "undefined") return "light";
@@ -4814,27 +4958,32 @@ function StarterclassLabPage() {
           className="sticky top-0 z-40 backdrop-blur"
           style={{ background: palette.headerBg, borderBottom: `1px solid ${palette.border}` }}
         >
-          <div className="max-w-6xl mx-auto px-4 py-4 flex flex-wrap items-center gap-3 justify-between">
-            <button
-              type="button"
-              onClick={() => (window.location.href = "/")}
-              className="inline-flex items-center gap-2 text-sm font-semibold"
-              style={{ color: palette.textPrimary }}
-            >
-              <span aria-hidden="true">←</span>
-              Back to Starterclass
-            </button>
-            <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
-              AI Starterclass Lab
+          <div className="max-w-6xl mx-auto px-4 py-4 space-y-3">
+            <div className="flex flex-wrap items-center gap-3 justify-between">
+              <button
+                type="button"
+                onClick={() => (window.location.href = "/")}
+                className="inline-flex items-center gap-2 text-sm font-semibold"
+                style={{ color: palette.textPrimary }}
+              >
+                <span aria-hidden="true">←</span>
+                Back to Starterclass
+              </button>
+              <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
+                AI Starterclass Lab
+              </div>
+              <button
+                type="button"
+                onClick={handleToggleTheme}
+                className="rounded-full border px-4 py-2 text-sm font-semibold"
+                style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+              >
+                Switch to {activeTheme === "dark" ? "light" : "dark"} mode
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={handleToggleTheme}
-              className="rounded-full border px-4 py-2 text-sm font-semibold"
-              style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
-            >
-              Switch to {activeTheme === "dark" ? "light" : "dark"} mode
-            </button>
+            <div className="flex justify-center">
+              <GlobalNavRow activeKey="lab" />
+            </div>
           </div>
         </header>
         <div className="relative overflow-hidden">
@@ -5471,7 +5620,7 @@ function StarterclassLabPage() {
               <div>
                 <h2 className="text-2xl font-semibold">More tools to add</h2>
                 <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
-                  Copy these templates straight into Custom Instructions, Projects, or Canvas so the Starterclass continues past the live session.
+                  Copy these templates straight into Custom Instructions, Projects, or Canvas — then launch the full luxury tools page to keep building.
                 </p>
               </div>
               <div className="grid lg:grid-cols-2 gap-6">
@@ -5481,6 +5630,7 @@ function StarterclassLabPage() {
                   text={`${CUSTOM_INSTRUCTIONS_TEMPLATE}\n\n${CUSTOM_INSTRUCTIONS_STYLE}`}
                   copied={copiedKey === "resource_custom"}
                   onCopy={() => handleCopy("resource_custom", `${CUSTOM_INSTRUCTIONS_TEMPLATE}\n\n${CUSTOM_INSTRUCTIONS_STYLE}`)}
+                  linkHref="/tools-universal-ai-personality.html"
                 />
                 <LabResourceCard
                   title="Project Prompt – Task Codes"
@@ -5488,13 +5638,7 @@ function StarterclassLabPage() {
                   text={PROJECT_PROMPT_TEMPLATE}
                   copied={copiedKey === "resource_project"}
                   onCopy={() => handleCopy("resource_project", PROJECT_PROMPT_TEMPLATE)}
-                />
-                <LabResourceCard
-                  title="Canvas Tool Prompt — Client Brief Generator"
-                  description="Spin up an interactive form that captures scope cleanly."
-                  text={INTERACTIVE_TOOL_PROMPT}
-                  copied={copiedKey === "resource_tool"}
-                  onCopy={() => handleCopy("resource_tool", INTERACTIVE_TOOL_PROMPT)}
+                  linkHref="/tools-task-codes.html"
                 />
                 <LabResourceCard
                   title="Canvas Tool Prompt — Content Quality Analyzer"
@@ -5502,31 +5646,33 @@ function StarterclassLabPage() {
                   text={ANALYZER_PROMPT}
                   copied={copiedKey === "resource_analyzer"}
                   onCopy={() => handleCopy("resource_analyzer", ANALYZER_PROMPT)}
+                  linkHref="/tools-content-quality-analyzer.html"
                 />
               </div>
             </section>
 
+            <section className="space-y-6" id="client-brief-tool">
+              <div className="space-y-3">
+                <h2 className="text-2xl font-semibold">Client Brief Generator</h2>
+                <p className="text-sm" style={{ color: palette.textSecondary }}>
+                  You asked for the real tool — here it is. Capture every section, auto-save it, and export before you leave the lab.
+                </p>
+              </div>
+              <ClientBriefGeneratorTool compact />
+              <div className="flex justify-end">
+                <GlassButton onClick={() => (window.location.href = "/tools-client-brief-generator.html")}>Open full tool</GlassButton>
+              </div>
+            </section>
+
             <section className="space-y-6">
-              <LabResourceCard
-                title="Participant quick-start checklist"
-                description="Make sure you actually set everything up before you leave the session."
-                text={QUICK_START_CHECKLIST}
-                copied={copiedKey === "resource_checklist"}
-                onCopy={() => handleCopy("resource_checklist", QUICK_START_CHECKLIST)}
-              />
+              <QuickStartWorkshop />
               <LabResourceCard
                 title="Client Brief Generator – Custom GPT instructions"
                 description="Use this when you want ChatGPT to act like a proper brief architect."
                 text={CLIENT_BRIEF_INSTRUCTIONS}
                 copied={copiedKey === "resource_brief"}
                 onCopy={() => handleCopy("resource_brief", CLIENT_BRIEF_INSTRUCTIONS)}
-              />
-              <LabResourceCard
-                title="Follow-up email template"
-                description="Send the wrap-up email minutes after the session ends."
-                text={FOLLOW_UP_EMAIL_TEMPLATE}
-                copied={copiedKey === "resource_email"}
-                onCopy={() => handleCopy("resource_email", FOLLOW_UP_EMAIL_TEMPLATE)}
+                linkHref="/tools-client-brief-generator.html"
               />
             </section>
           </div>
@@ -5536,8 +5682,8 @@ function StarterclassLabPage() {
             Start Level 1
           </GlassButton>
         </div>
-        <BackToTop />
-        <SkipToBottom />
+        <FooterMenu />
+        <ScrollControls />
       </div>
     </ThemeProvider>
   );
@@ -5650,7 +5796,7 @@ function LevelCompleteRow({ completed, lockedPoints, onClick, label, note }) {
   );
 }
 
-function LabResourceCard({ title, description, text, copied, onCopy }) {
+function LabResourceCard({ title, description, text, copied, onCopy, linkHref, linkLabel = "Launch tool", children }) {
   const { palette } = useTheme();
   return (
     <div className="rounded-3xl border p-5 space-y-3" style={{ borderColor: palette.border, background: palette.surface }}>
@@ -5659,13 +5805,1516 @@ function LabResourceCard({ title, description, text, copied, onCopy }) {
           <p className="font-semibold">{title}</p>
           <p className="text-sm" style={{ color: palette.textSecondary }}>{description}</p>
         </div>
-        <GlassButton variant="secondary" onClick={onCopy}>
-          {copied ? "Copied" : "Copy"}
-        </GlassButton>
+        <div className="flex flex-wrap gap-2">
+          {onCopy && (
+            <GlassButton variant="secondary" onClick={onCopy}>
+              {copied ? "Copied" : "Copy"}
+            </GlassButton>
+          )}
+          {linkHref && (
+            <GlassButton onClick={() => (window.location.href = linkHref)}>{linkLabel}</GlassButton>
+          )}
+        </div>
       </div>
-      <pre className="text-sm whitespace-pre-wrap" style={{ color: palette.textSecondary }}>{text}</pre>
+      {text && <pre className="text-sm whitespace-pre-wrap" style={{ color: palette.textSecondary }}>{text}</pre>}
+      {children}
     </div>
   );
 }
 
+function QuickStartWorkshop() {
+  const { palette } = useTheme();
+  const [entries, setEntries] = useState(() => {
+    const initial = {};
+    QUICK_START_ACTIONS.forEach((action) => {
+      initial[action.id] = { notes: "", done: false };
+    });
+    return initial;
+  });
+  const completed = Object.values(entries).filter((entry) => entry.done).length;
+  const progress = Math.round((completed / QUICK_START_ACTIONS.length) * 100);
+
+  const toggleDone = (id) => {
+    setEntries((prev) => ({ ...prev, [id]: { ...prev[id], done: !prev[id].done } }));
+  };
+
+  const updateNotes = (id, notes) => {
+    setEntries((prev) => ({ ...prev, [id]: { ...prev[id], notes } }));
+  };
+
+  return (
+    <div className="rounded-3xl border p-6 md:p-10 space-y-6" style={{ borderColor: palette.border, background: palette.surface }}>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="text-xs uppercase tracking-[0.3em]" style={{ color: palette.textMuted }}>
+            Participant quick-start workshop
+          </p>
+          <h3 className="text-2xl font-semibold">Ship the four actions before you close the browser.</h3>
+        </div>
+        <div className="text-right">
+          <p className="text-sm font-semibold">Progress</p>
+          <p className="text-3xl font-semibold">{progress}%</p>
+          <p className="text-xs" style={{ color: palette.textSecondary }}>
+            {completed} of {QUICK_START_ACTIONS.length} locked in
+          </p>
+        </div>
+      </div>
+      <div className="w-full h-2 rounded-full" style={{ background: palette.surfaceSoft }}>
+        <div
+          className="h-full rounded-full"
+          style={{ width: `${progress}%`, background: palette.accentSecondary, transition: "width 300ms ease" }}
+        />
+      </div>
+      <div className="space-y-6">
+        {QUICK_START_ACTIONS.map((action) => {
+          const entry = entries[action.id];
+          const done = entry?.done;
+          return (
+            <div
+              key={action.id}
+              className="rounded-3xl border p-5 space-y-4"
+              style={{
+                borderColor: done ? palette.accentSecondary : palette.border,
+                background: done ? `${palette.accentSecondary}15` : palette.surfaceSoft,
+              }}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm uppercase tracking-[0.2em]" style={{ color: palette.textMuted }}>
+                    {done ? "Completed" : "In progress"}
+                  </p>
+                  <h4 className="text-lg font-semibold">{action.title}</h4>
+                </div>
+                <GlassButton onClick={() => toggleDone(action.id)}>
+                  {done ? "Undo" : "Mark complete"}
+                </GlassButton>
+              </div>
+              <ol className="list-decimal pl-5 space-y-1 text-sm" style={{ color: palette.textSecondary }}>
+                {action.steps.map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ol>
+              {action.resource && (
+                <GlassButton
+                  variant="secondary"
+                  onClick={() => (window.location.href = action.resource.href)}
+                  className="px-4 py-2"
+                >
+                  {action.resource.label}
+                </GlassButton>
+              )}
+              <textarea
+                value={entry?.notes || ""}
+                onChange={(event) => updateNotes(action.id, event.target.value)}
+                placeholder={action.placeholder}
+                className="w-full rounded-2xl border p-3 text-sm"
+                style={{ borderColor: palette.border, background: palette.surface }}
+                rows={3}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className="rounded-3xl border p-5" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+        <p className="text-sm font-semibold uppercase tracking-[0.2em]" style={{ color: palette.textMuted }}>
+          After today
+        </p>
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
+          {QUICK_START_FOLLOWUPS.map((item) => (
+            <div key={item.title} className="rounded-2xl border p-4" style={{ borderColor: palette.border }}>
+              <p className="text-sm font-semibold">{item.title}</p>
+              <p className="text-xs mt-1" style={{ color: palette.textSecondary }}>
+                {item.detail}
+              </p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-xs" style={{ color: palette.textSecondary }}>
+          Trouble? Ask for Canvas explicitly, tighten instructions, or say “Debug this and fix errors” and the assistant will
+          rerun the tool.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function ClientBriefGeneratorTool({ compact = false }) {
+  const { palette } = useTheme();
+  const storageKey = compact ? "client_brief_tool_lab" : "client_brief_tool_full";
+  const initialState = {
+    company: "",
+    projectName: "",
+    contact: "",
+    date: "",
+    goals: "",
+    metrics: "",
+    scope: "",
+    outOfScope: "",
+    format: "",
+    timeline: "",
+    budget: "",
+    payment: "",
+    resources: "",
+    stakeholders: "",
+    approvals: "",
+    communications: "",
+    constraints: "",
+  };
+  const [form, setForm] = useState(() => {
+    if (typeof window === "undefined") return initialState;
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored) {
+        return { ...initialState, ...JSON.parse(stored) };
+      }
+    } catch {}
+    return initialState;
+  });
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(form));
+    } catch {}
+  }, [form, storageKey]);
+
+  const handleChange = (field, value) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const formattedBrief = useMemo(() => {
+    const lines = [
+      `Client & Project Overview`,
+      `Company: ${form.company || ""}`,
+      `Project: ${form.projectName || ""}`,
+      `Contact: ${form.contact || ""}`,
+      `Date: ${form.date || ""}`,
+      "",
+      `Project Goals`,
+      form.goals,
+      form.metrics ? `Success metrics: ${form.metrics}` : "",
+      "",
+      `Scope & Deliverables`,
+      form.scope,
+      form.outOfScope ? `Out of scope: ${form.outOfScope}` : "",
+      form.format ? `Delivery format: ${form.format}` : "",
+      "",
+      `Timeline & Milestones`,
+      form.timeline,
+      "",
+      `Budget & Resources`,
+      form.budget,
+      form.payment ? `Payment terms: ${form.payment}` : "",
+      form.resources ? `Resources needed: ${form.resources}` : "",
+      "",
+      `Stakeholders & Approvals`,
+      form.stakeholders,
+      form.approvals ? `Approval process: ${form.approvals}` : "",
+      form.communications ? `Communication preferences: ${form.communications}` : "",
+      "",
+      `Constraints & Considerations`,
+      form.constraints,
+    ]
+      .filter(Boolean)
+      .join("\n");
+    return lines;
+  }, [form]);
+
+  const requiredFields = ["company", "projectName", "goals", "scope", "timeline", "budget", "stakeholders"];
+
+  const validate = () => {
+    const missing = requiredFields.filter((field) => !form[field]?.trim());
+    if (missing.length) {
+      setMessage(`Add: ${missing.map((field) => field.replace(/([A-Z])/g, " $1")).join(", ")}`);
+      return false;
+    }
+    setMessage("Ready to export");
+    return true;
+  };
+
+  const copyAll = () => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(formattedBrief);
+      setMessage("Copied to clipboard");
+    }
+  };
+
+  const downloadPDF = () => {
+    if (!validate()) return;
+    const safeHtml = formattedBrief.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br/>");
+    const doc = window.open("", "_blank");
+    if (!doc) return;
+    doc.document.write(`<html><head><title>Client Brief</title></head><body style="font-family: 'Inter', sans-serif; padding: 40px;">${safeHtml}</body></html>`);
+    doc.document.close();
+    doc.focus();
+    doc.print();
+  };
+
+  const inputClass = "w-full rounded-2xl border p-3 text-sm";
+
+  return (
+    <div
+      className={`rounded-3xl border ${compact ? "p-5" : "p-6 md:p-10"} space-y-6`}
+      style={{ borderColor: palette.border, background: palette.surface }}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="text-xs uppercase tracking-[0.3em]" style={{ color: palette.textMuted }}>
+            Client Brief Generator
+          </p>
+          <h3 className="text-2xl font-semibold">Capture requirements, auto-save them, and export in seconds.</h3>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <GlassButton variant="secondary" onClick={copyAll}>
+            Copy all content
+          </GlassButton>
+          <GlassButton onClick={downloadPDF}>Download as PDF</GlassButton>
+        </div>
+      </div>
+      {message && (
+        <div className="rounded-2xl border px-4 py-3 text-sm" style={{ borderColor: palette.border, color: palette.textSecondary }}>
+          {message}
+        </div>
+      )}
+      <div className="grid gap-5 md:grid-cols-2">
+        <div className="space-y-3">
+          <p className="text-sm font-semibold">Client & Project Overview</p>
+          <input
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Company name"
+            value={form.company}
+            onChange={(event) => handleChange("company", event.target.value)}
+          />
+          <input
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Project name"
+            value={form.projectName}
+            onChange={(event) => handleChange("projectName", event.target.value)}
+          />
+          <input
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Primary contact"
+            value={form.contact}
+            onChange={(event) => handleChange("contact", event.target.value)}
+          />
+          <input
+            type="date"
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            value={form.date}
+            onChange={(event) => handleChange("date", event.target.value)}
+          />
+        </div>
+        <div className="space-y-3">
+          <p className="text-sm font-semibold">Project Goals</p>
+          <textarea
+            rows={4}
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="What does success look like?"
+            value={form.goals}
+            onChange={(event) => handleChange("goals", event.target.value)}
+          />
+          <textarea
+            rows={3}
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Key metrics or objectives"
+            value={form.metrics}
+            onChange={(event) => handleChange("metrics", event.target.value)}
+          />
+        </div>
+      </div>
+      <div className="grid gap-5 md:grid-cols-2">
+        <div className="space-y-3">
+          <p className="text-sm font-semibold">Scope & Deliverables</p>
+          <textarea
+            rows={5}
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="What’s included?"
+            value={form.scope}
+            onChange={(event) => handleChange("scope", event.target.value)}
+          />
+          <textarea
+            rows={3}
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="What’s explicitly out?"
+            value={form.outOfScope}
+            onChange={(event) => handleChange("outOfScope", event.target.value)}
+          />
+          <input
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Delivery format (deck, doc, site, etc.)"
+            value={form.format}
+            onChange={(event) => handleChange("format", event.target.value)}
+          />
+        </div>
+        <div className="space-y-3">
+          <p className="text-sm font-semibold">Timeline & Milestones</p>
+          <textarea
+            rows={6}
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Start date, checkpoints, final delivery"
+            value={form.timeline}
+            onChange={(event) => handleChange("timeline", event.target.value)}
+          />
+        </div>
+      </div>
+      <div className="grid gap-5 md:grid-cols-2">
+        <div className="space-y-3">
+          <p className="text-sm font-semibold">Budget & Resources</p>
+          <textarea
+            rows={4}
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Budget range or investment band"
+            value={form.budget}
+            onChange={(event) => handleChange("budget", event.target.value)}
+          />
+          <input
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Payment terms"
+            value={form.payment}
+            onChange={(event) => handleChange("payment", event.target.value)}
+          />
+          <textarea
+            rows={3}
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Resources or tools required"
+            value={form.resources}
+            onChange={(event) => handleChange("resources", event.target.value)}
+          />
+        </div>
+        <div className="space-y-3">
+          <p className="text-sm font-semibold">Stakeholders & Approvals</p>
+          <textarea
+            rows={4}
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Decision makers and responsibilities"
+            value={form.stakeholders}
+            onChange={(event) => handleChange("stakeholders", event.target.value)}
+          />
+          <input
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Approval process"
+            value={form.approvals}
+            onChange={(event) => handleChange("approvals", event.target.value)}
+          />
+          <input
+            className={inputClass}
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Communication preferences"
+            value={form.communications}
+            onChange={(event) => handleChange("communications", event.target.value)}
+          />
+        </div>
+      </div>
+      <div>
+        <p className="text-sm font-semibold">Constraints & Considerations</p>
+        <textarea
+          rows={4}
+          className={`${inputClass} mt-3`}
+          style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+          placeholder="Technical limits, brand rules, known risks"
+          value={form.constraints}
+          onChange={(event) => handleChange("constraints", event.target.value)}
+        />
+      </div>
+    </div>
+  );
+}
+
+function ToolPageShell({ slug, title, subtitle, accent, heroBadge = "Starterclass Tools", actions, children }) {
+  const { theme, palette, toggleTheme } = usePageTheme(`sc_tool_${slug}_theme`);
+  return (
+    <ThemeProvider theme={theme} palette={palette}>
+      <div className="min-h-screen" style={{ background: palette.background, color: palette.textPrimary }}>
+        <header className="sticky top-0 z-40 backdrop-blur" style={{ background: palette.headerBg, borderBottom: `1px solid ${palette.border}` }}>
+          <div className="max-w-6xl mx-auto px-4 py-4 space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={() => (window.location.href = "/tools.html")}
+                className="inline-flex items-center gap-2 text-sm font-semibold"
+                style={{ color: palette.textPrimary }}
+              >
+                <span aria-hidden="true">←</span>
+                Back to tools
+              </button>
+              <div className="text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
+                {title}
+              </div>
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="rounded-full border px-4 py-2 text-sm font-semibold"
+                style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+              >
+                Switch to {theme === "dark" ? "light" : "dark"} mode
+              </button>
+            </div>
+            <div className="flex justify-center">
+              <GlobalNavRow activeKey="tools" />
+            </div>
+          </div>
+        </header>
+        <main className="max-w-6xl mx-auto px-4 py-10 space-y-10">
+          <section className="rounded-3xl border p-6 md:p-10 space-y-4" style={{ borderColor: palette.border, background: palette.surface }}>
+            <Badge>{heroBadge}</Badge>
+            <h1 className="text-3xl md:text-4xl font-semibold">{title}</h1>
+            <p className="text-sm md:text-base" style={{ color: palette.textSecondary }}>
+              {subtitle}
+            </p>
+            {actions}
+          </section>
+          {children}
+        </main>
+        <FooterMenu />
+        <ScrollControls />
+      </div>
+    </ThemeProvider>
+  );
+}
+
+function ToolsGalleryPage() {
+  const { theme, palette, toggleTheme } = usePageTheme("sc_tools_theme");
+  return (
+    <ThemeProvider theme={theme} palette={palette}>
+      <div className="min-h-screen" style={{ background: palette.background, color: palette.textPrimary }}>
+        <header className="sticky top-0 z-40 backdrop-blur" style={{ background: palette.headerBg, borderBottom: `1px solid ${palette.border}` }}>
+          <div className="max-w-6xl mx-auto px-4 py-4 space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>
+                Starterclass Tools Lab
+              </div>
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="rounded-full border px-4 py-2 text-sm font-semibold"
+                style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+              >
+                Switch to {theme === "dark" ? "light" : "dark"} mode
+              </button>
+            </div>
+            <div className="flex justify-center">
+              <GlobalNavRow activeKey="tools" />
+            </div>
+          </div>
+        </header>
+        <main className="max-w-6xl mx-auto px-4 py-10 space-y-10">
+          <section className="rounded-3xl border p-6 md:p-10" style={{ borderColor: palette.border, background: palette.surface }}>
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div className="space-y-3">
+                <Badge>Interactive collection</Badge>
+                <h1 className="text-3xl md:text-4xl font-semibold">Pick a luxury tool, make it yours, keep building.</h1>
+                <p className="text-sm" style={{ color: palette.textSecondary }}>
+                  Every tool mirrors the live Starterclass build — auto-save, responsive layouts, and Canvas-ready prompts included.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <GlassButton onClick={() => (window.location.href = "/ai-starterclass-lab.html")}>Return to the lab</GlassButton>
+                <GlassButton variant="secondary" onClick={() => (window.location.href = "/prompts.html")}>Browse prompts</GlassButton>
+              </div>
+            </div>
+          </section>
+          <section className="grid gap-6 md:grid-cols-2">
+            {TOOL_DEFINITIONS.map((tool) => (
+              <button
+                key={tool.slug}
+                type="button"
+                onClick={() => (window.location.href = `/tools-${tool.slug}.html`)}
+                className="group rounded-3xl overflow-hidden border text-left"
+                style={{ borderColor: palette.border, background: palette.surface }}
+              >
+                <div className="relative aspect-square overflow-hidden">
+                  <img src={tool.image} alt={tool.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4 text-white space-y-1">
+                    <p className="text-sm uppercase tracking-[0.28em]">{tool.title}</p>
+                    <p className="text-lg font-semibold">{tool.tagline}</p>
+                  </div>
+                </div>
+                <div className="p-5 flex items-center justify-between text-sm" style={{ color: palette.textSecondary }}>
+                  <span>Tap to launch</span>
+                  <span className="text-lg" aria-hidden="true">
+                    →
+                  </span>
+                </div>
+              </button>
+            ))}
+          </section>
+        </main>
+        <FooterMenu />
+        <ScrollControls />
+      </div>
+    </ThemeProvider>
+  );
+}
+
+function UniversalAIPersonalityTool() {
+  const { palette } = useTheme();
+  const initial = {
+    about: "I'm a professional who uses AI to amplify my work, not replace my thinking. I value efficiency, clarity, and outputs I can actually use.",
+    workContext: "I work across multiple projects that require research, content creation, strategic planning, and execution.",
+    preferences: "- Give me actionable outputs, not just information\n- Show your work when reasoning matters\n- Format for real use so I can copy/paste",
+    dontWant: "- Overly formal corporate speak unless I ask\n- Apologies for being AI\n- Generic advice\n- Lists when prose would work better",
+    quick: "Quick version = essentials only",
+    deep: "Deep dive = comprehensive with examples and context",
+    defaultMode: "Default = balanced, practical, ready to use",
+    tone: "Professional but conversational. Like a smart colleague who gets things done.",
+    structure: "- Lead with the answer or key insight\n- Provide context after\n- End with next steps or implications when relevant",
+    format: "- Use headings and bold sparingly\n- Write in paragraphs for explanations\n- Use lists only when comparing options\n- For deliverables, give the final version first, then notes",
+    special: "- If I upload a document, treat it as source material\n- When I say \"build this\", create something I can deploy\n- Remember context in our conversation\n- Flag inefficient approaches\n- Challenge weak ideas with alternatives",
+  };
+  const [form, setForm] = useState(initial);
+  const [copied, setCopied] = useState(false);
+
+  const instructions = useMemo(() => {
+    return [
+      "WHAT TO KNOW ABOUT ME:",
+      form.about,
+      "",
+      "WORK CONTEXT:",
+      form.workContext,
+      "",
+      "MY PREFERENCES:",
+      form.preferences,
+      "",
+      "WHAT I DON'T WANT:",
+      form.dontWant,
+      "",
+      "DEPTH LEVELS:",
+      form.quick,
+      form.deep,
+      form.defaultMode,
+      "",
+      "HOW TO RESPOND:",
+      `Tone: ${form.tone}`,
+      `Structure:\n${form.structure}`,
+      `Format:\n${form.format}`,
+      "",
+      "SPECIAL INSTRUCTIONS:",
+      form.special,
+    ]
+      .filter(Boolean)
+      .join("\n");
+  }, [form]);
+
+  const handleChange = (field, value) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleCopy = () => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(instructions).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+    }
+  };
+
+  const inputClass = "w-full rounded-2xl border p-3 text-sm";
+
+  return (
+    <div className="space-y-6">
+      <div className="rounded-3xl border p-6 md:p-10 space-y-6" style={{ borderColor: palette.border, background: palette.surface }}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em]" style={{ color: palette.textMuted }}>
+              Personalise
+            </p>
+            <h2 className="text-2xl font-semibold">Tell ChatGPT how to behave by default.</h2>
+          </div>
+          <GlassButton onClick={handleCopy}>{copied ? "Copied" : "Copy instructions"}</GlassButton>
+        </div>
+        <div className="grid gap-5 md:grid-cols-2">
+          <div className="space-y-3">
+            <label className="text-sm font-semibold">About you</label>
+            <textarea
+              rows={4}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.about}
+              onChange={(event) => handleChange("about", event.target.value)}
+            />
+            <label className="text-sm font-semibold">Work context</label>
+            <textarea
+              rows={4}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.workContext}
+              onChange={(event) => handleChange("workContext", event.target.value)}
+            />
+            <label className="text-sm font-semibold">Preferences</label>
+            <textarea
+              rows={5}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.preferences}
+              onChange={(event) => handleChange("preferences", event.target.value)}
+            />
+          </div>
+          <div className="space-y-3">
+            <label className="text-sm font-semibold">What you don't want</label>
+            <textarea
+              rows={4}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.dontWant}
+              onChange={(event) => handleChange("dontWant", event.target.value)}
+            />
+            <label className="text-sm font-semibold">Depth cues</label>
+            <input
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.quick}
+              onChange={(event) => handleChange("quick", event.target.value)}
+              placeholder="Quick version"
+            />
+            <input
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.deep}
+              onChange={(event) => handleChange("deep", event.target.value)}
+              placeholder="Deep dive"
+            />
+            <input
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.defaultMode}
+              onChange={(event) => handleChange("defaultMode", event.target.value)}
+              placeholder="Default mode"
+            />
+            <label className="text-sm font-semibold">Tone</label>
+            <input
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.tone}
+              onChange={(event) => handleChange("tone", event.target.value)}
+            />
+            <label className="text-sm font-semibold">Structure</label>
+            <textarea
+              rows={3}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.structure}
+              onChange={(event) => handleChange("structure", event.target.value)}
+            />
+            <label className="text-sm font-semibold">Format preferences</label>
+            <textarea
+              rows={3}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.format}
+              onChange={(event) => handleChange("format", event.target.value)}
+            />
+            <label className="text-sm font-semibold">Special instructions</label>
+            <textarea
+              rows={4}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.special}
+              onChange={(event) => handleChange("special", event.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="rounded-3xl border p-5" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+        <p className="text-sm font-semibold">Generated instructions</p>
+        <pre className="mt-3 whitespace-pre-wrap text-sm" style={{ color: palette.textSecondary }}>{instructions}</pre>
+      </div>
+    </div>
+  );
+}
+
+const TASK_CODE_DEFINITIONS = [
+  {
+    code: "[RESEARCH]",
+    description: "Deep dive investigation",
+    output: "Synthesis with credible sources, trends, contradictions",
+  },
+  {
+    code: "[DRAFT]",
+    description: "Create usable content",
+    output: "Polished draft with one alternative approach",
+  },
+  {
+    code: "[STRATEGY]",
+    description: "Think through approach",
+    output: "Recommendation with reasoning and trade-offs",
+  },
+  {
+    code: "[BUILD]",
+    description: "Create a tool or system",
+    output: "Functional template, workflow, or calculator",
+  },
+  {
+    code: "[ANALYZE]",
+    description: "Break down what I provide",
+    output: "Key findings, patterns, gaps, implications",
+  },
+  {
+    code: "[REFINE]",
+    description: "Improve existing work",
+    output: "Enhanced version with change notes",
+  },
+  {
+    code: "[IDEATE]",
+    description: "Generate possibilities",
+    output: "Options with quick pros/cons",
+  },
+];
+
+function TaskCodesTool() {
+  const { palette } = useTheme();
+  const [selectedCode, setSelectedCode] = useState(TASK_CODE_DEFINITIONS[0].code);
+  const [taskDescription, setTaskDescription] = useState("");
+  const [context, setContext] = useState("");
+  const [constraints, setConstraints] = useState("");
+  const promptText = useMemo(() => {
+    const detailLines = [
+      `${selectedCode} ${taskDescription || "Describe the task clearly"}`,
+      context && `Context: ${context}`,
+      constraints && `Constraints: ${constraints}`,
+      "Remember: maintain project memory, reference previous deliverables, and call out assumptions before answering.",
+    ]
+      .filter(Boolean)
+      .join("\n");
+    return detailLines;
+  }, [selectedCode, taskDescription, context, constraints]);
+
+  const handleCopy = () => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(promptText);
+    }
+  };
+
+  const inputClass = "w-full rounded-2xl border p-3 text-sm";
+
+  return (
+    <div className="space-y-6">
+      <div className="rounded-3xl border p-6 md:p-10 space-y-6" style={{ borderColor: palette.border, background: palette.surface }}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em]" style={{ color: palette.textMuted }}>
+              Project operating system
+            </p>
+            <h2 className="text-2xl font-semibold">Pick a task code and generate the perfect ask.</h2>
+          </div>
+          <GlassButton onClick={handleCopy}>Copy prompt</GlassButton>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {TASK_CODE_DEFINITIONS.map((entry) => (
+            <button
+              key={entry.code}
+              type="button"
+              onClick={() => setSelectedCode(entry.code)}
+              className={`rounded-2xl border p-4 text-left ${selectedCode === entry.code ? "ring-2" : ""}`}
+              style={{ borderColor: selectedCode === entry.code ? palette.accentSecondary : palette.border }}
+            >
+              <p className="font-semibold">{entry.code}</p>
+              <p className="text-sm" style={{ color: palette.textSecondary }}>
+                {entry.description}
+              </p>
+              <p className="text-xs mt-2" style={{ color: palette.textMuted }}>
+                {entry.output}
+              </p>
+            </button>
+          ))}
+        </div>
+        <div className="grid gap-5 md:grid-cols-3">
+          <div className="space-y-2">
+            <label className="text-sm font-semibold">Task</label>
+            <textarea
+              rows={4}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              placeholder="What do you need?"
+              value={taskDescription}
+              onChange={(event) => setTaskDescription(event.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-semibold">Context</label>
+            <textarea
+              rows={4}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              placeholder="Links, goals, blockers"
+              value={context}
+              onChange={(event) => setContext(event.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-semibold">Constraints or extras</label>
+            <textarea
+              rows={4}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              placeholder="Tone, length, format"
+              value={constraints}
+              onChange={(event) => setConstraints(event.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="rounded-3xl border p-5" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+        <p className="text-sm font-semibold">Preview prompt</p>
+        <pre className="mt-3 whitespace-pre-wrap text-sm" style={{ color: palette.textSecondary }}>{promptText}</pre>
+      </div>
+    </div>
+  );
+}
+
+function ContentQualityAnalyzerTool() {
+  const { palette } = useTheme();
+  const [input, setInput] = useState("");
+  const [analysis, setAnalysis] = useState(null);
+  const [copied, setCopied] = useState(false);
+
+  const analyze = () => {
+    if (!input.trim()) {
+      setAnalysis(null);
+      return;
+    }
+    const sentences = input.trim().split(/(?<=[.!?])\s+/).filter(Boolean);
+    const wordCount = input.trim().split(/\s+/).filter(Boolean).length;
+    const paragraphCount = input.trim().split(/\n+/).filter(Boolean).length;
+    const clarityScore = Math.max(3, 10 - Math.max(0, Math.round(wordCount / Math.max(1, sentences.length)) - 18));
+    const structureScore = paragraphCount > 1 ? 8 : 5;
+    const toneScore = /sorry|apolog/i.test(input) ? 5 : 8;
+    const quickScore = Math.min(10, Math.round((clarityScore + structureScore + toneScore) / 3));
+    const strengths = [];
+    if (wordCount < 220) strengths.push("Tight length keeps readers moving.");
+    if (/[0-9%]/.test(input)) strengths.push("Specific numbers build credibility.");
+    if (paragraphCount > 1) strengths.push("Paragraph breaks improve scan-ability.");
+    const needsWork = [];
+    if (paragraphCount === 1) needsWork.push("Break the text into smaller paragraphs for easier reading.");
+    if (!/[0-9%]/.test(input)) needsWork.push("Add concrete metrics or examples.");
+    if (!/[A-Z]/.test(input.split("\n")[0] || "")) needsWork.push("Lead with a headline or hook that states the promise.");
+    const suggestions = [
+      "State the main outcome in the first sentence.",
+      "Group related thoughts and use transitions between sections.",
+      "End with a clear next step or CTA.",
+    ];
+    const rewrite = input
+      .split(/\n+/)
+      .map((para) => para.trim())
+      .filter(Boolean)
+      .map((para, idx) => {
+        if (idx === 0) {
+          return `**Key takeaway:** ${para}`;
+        }
+        if (!para.startsWith("-")) {
+          return `- ${para}`;
+        }
+        return para;
+      })
+      .join("\n\n");
+    setAnalysis({ quickScore, strengths, needsWork, suggestions, rewrite });
+  };
+
+  const handleCopy = () => {
+    if (!analysis) return;
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(analysis.rewrite);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const panelStyle = (color) => ({ borderColor: palette.border, background: color });
+
+  return (
+    <div className="rounded-3xl border p-6 md:p-10 space-y-6" style={{ borderColor: palette.border, background: palette.surface }}>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="space-y-3">
+          <p className="text-sm font-semibold">Original content</p>
+          <textarea
+            rows={16}
+            className="w-full rounded-2xl border p-4 text-sm"
+            style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+            placeholder="Paste an email, proposal, article, or script."
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+          />
+          <GlassButton onClick={analyze} className="w-full justify-center">
+            Analyze
+          </GlassButton>
+        </div>
+        <div className="space-y-4">
+          <div className="rounded-3xl border p-4" style={panelStyle("rgba(16,185,129,0.08)")}>
+            <p className="text-sm font-semibold">Quick score</p>
+            <p className="text-4xl font-semibold">{analysis ? `${analysis.quickScore}/10` : "—"}</p>
+            <p className="text-xs" style={{ color: palette.textSecondary }}>
+              {analysis ? "Higher score = publish-ready." : "Paste content and run the analyzer."}
+            </p>
+          </div>
+          <div className="rounded-3xl border p-4 space-y-2" style={panelStyle("rgba(16,185,129,0.08)")}>
+            <p className="text-sm font-semibold">What’s working</p>
+            <ul className="list-disc pl-5 text-sm" style={{ color: palette.textSecondary }}>
+              {analysis?.strengths?.length
+                ? analysis.strengths.map((item) => <li key={item}>{item}</li>)
+                : <li>Strengths will appear here.</li>}
+            </ul>
+          </div>
+          <div className="rounded-3xl border p-4 space-y-2" style={panelStyle("rgba(249,115,22,0.12)")}>
+            <p className="text-sm font-semibold">What needs work</p>
+            <ul className="list-disc pl-5 text-sm" style={{ color: palette.textSecondary }}>
+              {analysis?.needsWork?.length
+                ? analysis.needsWork.map((item) => <li key={item}>{item}</li>)
+                : <li>Issues appear after analysis.</li>}
+            </ul>
+          </div>
+          <div className="rounded-3xl border p-4 space-y-2" style={panelStyle(palette.surfaceSoft)}>
+            <p className="text-sm font-semibold">Suggested edits</p>
+            <ul className="list-disc pl-5 text-sm" style={{ color: palette.textSecondary }}>
+              {analysis?.suggestions?.length
+                ? analysis.suggestions.map((item) => <li key={item}>{item}</li>)
+                : <li>Suggestions appear here.</li>}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="rounded-3xl border p-5 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm font-semibold">Rewritten version</p>
+          <GlassButton variant="secondary" onClick={handleCopy}>
+            {copied ? "Copied" : "Copy improved version"}
+          </GlassButton>
+        </div>
+        <pre className="whitespace-pre-wrap text-sm" style={{ color: palette.textSecondary }}>
+          {analysis ? analysis.rewrite : "Run the analyzer to get a rewritten version."}
+        </pre>
+      </div>
+    </div>
+  );
+}
+
+function ClientProjectPlannerTool() {
+  const { palette } = useTheme();
+  const [selectedInputs, setSelectedInputs] = useState(LAB_INPUT_OPTIONS.slice(0, 5));
+  const [form, setForm] = useState({
+    industry: "Creative",
+    clientType: "Startup",
+    description: "Brand refresh with lightweight automation",
+    urgency: "Medium",
+    effort: "M",
+    value: 3,
+    baseRate: 1800,
+    risks: "Scope creep around content volume",
+    timeline: "Discovery → Build → Launch",
+  });
+  const [plan, setPlan] = useState(null);
+  const [message, setMessage] = useState("");
+
+  const toggleInput = (label) => {
+    setSelectedInputs((prev) => {
+      if (prev.includes(label)) {
+        return prev.filter((item) => item !== label);
+      }
+      return [...prev, label];
+    });
+  };
+
+  const handleChange = (field, value) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const formatCurrency = (value) =>
+    new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(value);
+
+  const generatePlan = () => {
+    if (selectedInputs.length < 5) {
+      setMessage("Select at least five inputs so the tool has context.");
+      return;
+    }
+    const effortMap = { S: 1, M: 1.8, L: 2.6 };
+    const urgencyMap = { Low: 0.9, Medium: 1, High: 1.35 };
+    const base = Number(form.baseRate) || 1500;
+    const priceLow = Math.round(base * (effortMap[form.effort] || 1.6) * (urgencyMap[form.urgency] || 1) * (1 + Number(form.value || 3) * 0.05));
+    const priceHigh = Math.round(priceLow * 1.4);
+    const phases = [
+      {
+        name: "Discovery & scope",
+        detail: "Clarify goals, surface risks, lock success metrics.",
+      },
+      {
+        name: "Build & iterate",
+        detail: "Co-create assets, run checkpoints, log decisions.",
+      },
+      {
+        name: "Launch & handover",
+        detail: "QA deliverables, prepare comms, document next steps.",
+      },
+    ];
+    const email = `Hi team,\n\nHere’s how we’ll approach ${form.description || "the project"}:\n- ${phases
+      .map((phase) => `${phase.name}: ${phase.detail}`)
+      .join("\n- ")}\n\nRecommended investment: ${formatCurrency(priceLow)} – ${formatCurrency(priceHigh)} based on effort (${form.effort}) and urgency (${form.urgency}). Let me know if you want to adjust scope before we lock it in.`;
+    setPlan({
+      summary: `You’re helping a ${form.clientType} in ${form.industry} move from idea to delivery. The project description focuses on ${form.description}.`,
+      priceBand: `${formatCurrency(priceLow)} – ${formatCurrency(priceHigh)}`,
+      phases,
+      risks: form.risks || "Capture approvals in writing and document every assumption.",
+      email,
+    });
+    setMessage("Planner updated — copy or share it immediately.");
+  };
+
+  const copyPlan = () => {
+    if (!plan) return;
+    const text = [
+      "CLIENT PROJECT PLANNER",
+      plan.summary,
+      "",
+      `Recommended investment: ${plan.priceBand}`,
+      "",
+      "Phases:",
+      ...plan.phases.map((phase) => `- ${phase.name}: ${phase.detail}`),
+      "",
+      `Risks & watch-outs: ${plan.risks}`,
+      "",
+      "Client email:",
+      plan.email,
+    ].join("\n");
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+    }
+  };
+
+  const inputClass = "w-full rounded-2xl border p-3 text-sm";
+
+  return (
+    <div className="space-y-6">
+      <div className="rounded-3xl border p-6 md:p-10 space-y-6" style={{ borderColor: palette.border, background: palette.surface }}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em]" style={{ color: palette.textMuted }}>
+              Inputs first
+            </p>
+            <h2 className="text-2xl font-semibold">Select the data your tool collects.</h2>
+          </div>
+          <GlassButton onClick={generatePlan}>Generate plan</GlassButton>
+        </div>
+        <div className="grid gap-3 md:grid-cols-2">
+          {LAB_INPUT_OPTIONS.map((label) => (
+            <button
+              key={label}
+              type="button"
+              onClick={() => toggleInput(label)}
+              className={`rounded-2xl border px-4 py-3 text-left text-sm ${selectedInputs.includes(label) ? "ring-2" : ""}`}
+              style={{ borderColor: selectedInputs.includes(label) ? palette.accentSecondary : palette.border }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <div className="grid gap-5 md:grid-cols-2">
+          <div className="space-y-3">
+            <label className="text-sm font-semibold">Industry / Field</label>
+            <input
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.industry}
+              onChange={(event) => handleChange("industry", event.target.value)}
+            />
+            <label className="text-sm font-semibold">Client type</label>
+            <input
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.clientType}
+              onChange={(event) => handleChange("clientType", event.target.value)}
+            />
+            <label className="text-sm font-semibold">Project description</label>
+            <textarea
+              rows={4}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.description}
+              onChange={(event) => handleChange("description", event.target.value)}
+            />
+          </div>
+          <div className="space-y-3">
+            <label className="text-sm font-semibold">Urgency</label>
+            <select
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.urgency}
+              onChange={(event) => handleChange("urgency", event.target.value)}
+            >
+              {['Low','Medium','High'].map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            <label className="text-sm font-semibold">Estimated effort</label>
+            <select
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.effort}
+              onChange={(event) => handleChange("effort", event.target.value)}
+            >
+              {['S','M','L'].map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            <label className="text-sm font-semibold">Strategic value (1-5)</label>
+            <input
+              type="number"
+              min="1"
+              max="5"
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.value}
+              onChange={(event) => handleChange("value", event.target.value)}
+            />
+            <label className="text-sm font-semibold">Base day rate</label>
+            <input
+              type="number"
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.baseRate}
+              onChange={(event) => handleChange("baseRate", event.target.value)}
+            />
+          </div>
+        </div>
+        <div className="grid gap-5 md:grid-cols-2">
+          <div className="space-y-3">
+            <label className="text-sm font-semibold">Risks / constraints</label>
+            <textarea
+              rows={4}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.risks}
+              onChange={(event) => handleChange("risks", event.target.value)}
+            />
+          </div>
+          <div className="space-y-3">
+            <label className="text-sm font-semibold">Timeline notes</label>
+            <textarea
+              rows={4}
+              className={inputClass}
+              style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+              value={form.timeline}
+              onChange={(event) => handleChange("timeline", event.target.value)}
+            />
+          </div>
+        </div>
+        {message && (
+          <div className="rounded-2xl border px-4 py-3 text-sm" style={{ borderColor: palette.border, color: palette.textSecondary }}>
+            {message}
+          </div>
+        )}
+      </div>
+      {plan && (
+        <div className="rounded-3xl border p-6 space-y-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold">Output</p>
+              <p className="text-xl font-semibold">{plan.priceBand}</p>
+              <p className="text-xs" style={{ color: palette.textSecondary }}>
+                Investment band based on your inputs
+              </p>
+            </div>
+            <GlassButton variant="secondary" onClick={copyPlan}>
+              Copy planner
+            </GlassButton>
+          </div>
+          <p className="text-sm" style={{ color: palette.textSecondary }}>
+            {plan.summary}
+          </p>
+          <div className="grid gap-3 md:grid-cols-3">
+            {plan.phases.map((phase) => (
+              <div key={phase.name} className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surface }}>
+                <p className="font-semibold text-sm">{phase.name}</p>
+                <p className="text-xs mt-2" style={{ color: palette.textSecondary }}>
+                  {phase.detail}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div className="rounded-2xl border p-4" style={{ borderColor: palette.border }}>
+            <p className="text-sm font-semibold">Risks & watch-outs</p>
+            <p className="text-sm" style={{ color: palette.textSecondary }}>
+              {plan.risks}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm font-semibold mb-2">Client-ready email</p>
+            <pre className="whitespace-pre-wrap text-sm" style={{ color: palette.textSecondary }}>{plan.email}</pre>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ToolsUniversalAIPersonalityPage() {
+  return (
+    <ToolPageShell
+      slug="universal-ai-personality"
+      title="Universal AI Personality"
+      subtitle="Design Custom Instructions that stick across every chat, GPT, and Project."
+    >
+      <UniversalAIPersonalityTool />
+    </ToolPageShell>
+  );
+}
+
+function ToolsTaskCodesPage() {
+  return (
+    <ToolPageShell
+      slug="task-codes"
+      title="Task Codes Workspace"
+      subtitle="Keep every AI request organised with battle-tested project codes."
+    >
+      <TaskCodesTool />
+    </ToolPageShell>
+  );
+}
+
+function ToolsClientBriefGeneratorPage() {
+  return (
+    <ToolPageShell
+      slug="client-brief-generator"
+      title="Client Brief Generator"
+      subtitle="Auto-save detailed briefs, validate required inputs, and export a PDF-ready report."
+    >
+      <ClientBriefGeneratorTool />
+    </ToolPageShell>
+  );
+}
+
+function ToolsContentQualityAnalyzerPage() {
+  return (
+    <ToolPageShell
+      slug="content-quality-analyzer"
+      title="Content Quality Analyzer"
+      subtitle="Paste anything and get instant strengths, fixes, and a rewritten version."
+    >
+      <ContentQualityAnalyzerTool />
+    </ToolPageShell>
+  );
+}
+
+function ToolsClientProjectPlannerPage() {
+  return (
+    <ToolPageShell
+      slug="client-project-planner"
+      title="Client Project Planner & Value Calculator"
+      subtitle="Scope projects, price them confidently, and send a client-ready email in minutes."
+    >
+      <ClientProjectPlannerTool />
+    </ToolPageShell>
+  );
+}
+
+function PromptsGalleryPage() {
+  const { theme, palette, toggleTheme } = usePageTheme("sc_prompts_theme");
+  const [prompts, setPrompts] = useState(assignPromptImages(PROMPT_FALLBACKS));
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [selectedPrompt, setSelectedPrompt] = useState(null);
+  const [editablePrompt, setEditablePrompt] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const fetchPrompts = async () => {
+      try {
+        const response = await fetch(PROMPT_SHEET_CSV);
+        const text = await response.text();
+        if (cancelled) return;
+        const parsed = parsePromptCsv(text);
+        setPrompts(assignPromptImages(parsed));
+        setError("");
+      } catch (err) {
+        setError("Couldn’t load Google Sheet — showing starter prompts.");
+        setPrompts(assignPromptImages(PROMPT_FALLBACKS));
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+    fetchPrompts();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const openPrompt = (prompt) => {
+    setSelectedPrompt(prompt);
+    setEditablePrompt(prompt.prompt);
+    setCopied(false);
+  };
+
+  const closePrompt = () => {
+    setSelectedPrompt(null);
+    setCopied(false);
+  };
+
+  const copyPrompt = () => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(editablePrompt);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  return (
+    <ThemeProvider theme={theme} palette={palette}>
+      <div className="min-h-screen" style={{ background: palette.background, color: palette.textPrimary }}>
+        <header className="sticky top-0 z-40 backdrop-blur" style={{ background: palette.headerBg, borderBottom: `1px solid ${palette.border}` }}>
+          <div className="max-w-6xl mx-auto px-4 py-4 space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="text-sm font-semibold">Starterclass Prompt Library</div>
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="rounded-full border px-4 py-2 text-sm font-semibold"
+                style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+              >
+                Switch to {theme === "dark" ? "light" : "dark"} mode
+              </button>
+            </div>
+            <div className="flex justify-center">
+              <GlobalNavRow activeKey="prompts" />
+            </div>
+          </div>
+        </header>
+        <main className="max-w-6xl mx-auto px-4 py-10 space-y-8">
+          <section className="rounded-3xl border p-6 md:p-10 space-y-3" style={{ borderColor: palette.border, background: palette.surface }}>
+            <Badge>Prompt grid</Badge>
+            <h1 className="text-3xl font-semibold">Tap a card, edit the prompt, copy it instantly.</h1>
+            <p className="text-sm" style={{ color: palette.textSecondary }}>
+              Data flows from the shared Google Sheet, so every refresh can reveal fresh angles.
+            </p>
+          </section>
+          {error && (
+            <div className="rounded-3xl border p-4 text-sm" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+              {error}
+            </div>
+          )}
+          {loading ? (
+            <p className="text-sm" style={{ color: palette.textSecondary }}>
+              Loading prompts…
+            </p>
+          ) : (
+            <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {prompts.map((prompt) => (
+                <button
+                  key={`${prompt.action}-${prompt.image}`}
+                  type="button"
+                  onClick={() => openPrompt(prompt)}
+                  className="relative aspect-square overflow-hidden rounded-3xl border text-left"
+                  style={{ borderColor: palette.border }}
+                >
+                  <img src={prompt.image} alt={prompt.action} className="absolute inset-0 h-full w-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="relative h-full w-full p-4 flex flex-col justify-end text-white">
+                    <p className="text-xs uppercase tracking-[0.3em]">Prompt</p>
+                    <p className="text-lg font-semibold">{prompt.action}</p>
+                  </div>
+                </button>
+              ))}
+            </section>
+          )}
+        </main>
+        <FooterMenu />
+        <ScrollControls />
+        {selectedPrompt && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.55)" }} onClick={closePrompt} />
+            <div className="relative w-full max-w-2xl rounded-3xl border p-6 space-y-4" style={{ borderColor: palette.border, background: palette.surface }}>
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.3em]" style={{ color: palette.textMuted }}>
+                    Prompt
+                  </p>
+                  <h3 className="text-xl font-semibold">{selectedPrompt.action}</h3>
+                </div>
+                <button type="button" onClick={closePrompt} className="text-2xl" style={{ color: palette.textSecondary }}>
+                  ×
+                </button>
+              </div>
+              <textarea
+                rows={8}
+                className="w-full rounded-2xl border p-4 text-sm"
+                style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+                value={editablePrompt}
+                onChange={(event) => setEditablePrompt(event.target.value)}
+              />
+              <div className="flex flex-wrap gap-3 justify-end">
+                <GlassButton variant="secondary" onClick={copyPrompt}>
+                  {copied ? "Copied" : "Copy"}
+                </GlassButton>
+                <GlassButton onClick={closePrompt}>Close</GlassButton>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </ThemeProvider>
+  );
+}
+
+function parsePromptCsv(text) {
+  const rows = text.trim().split(/\r?\n/);
+  const [header, ...data] = rows;
+  const columns = header.split(",").map((col) => col.trim().toLowerCase());
+  return data
+    .map((line) => {
+      const values = [];
+      let current = "";
+      let inQuotes = false;
+      for (let char of line) {
+        if (char === '"') {
+          inQuotes = !inQuotes;
+          continue;
+        }
+        if (char === "," && !inQuotes) {
+          values.push(current.trim());
+          current = "";
+        } else {
+          current += char;
+        }
+      }
+      values.push(current.trim());
+      const record = {};
+      columns.forEach((col, idx) => {
+        record[col] = values[idx] || "";
+      });
+      return { action: record.action || "Untitled", prompt: record.prompt || "" };
+    })
+    .filter((row) => row.prompt);
+}
+
+function assignPromptImages(list) {
+  const seed = Math.floor(Math.random() * PROMPT_IMAGE_POOL.length);
+  return list.map((item, index) => ({
+    ...item,
+    image: PROMPT_IMAGE_POOL[(seed + index) % PROMPT_IMAGE_POOL.length],
+  }));
+}
+
+window.ToolsGalleryPage = ToolsGalleryPage;
+window.ToolsUniversalAIPersonalityPage = ToolsUniversalAIPersonalityPage;
+window.ToolsTaskCodesPage = ToolsTaskCodesPage;
+window.ToolsClientBriefGeneratorPage = ToolsClientBriefGeneratorPage;
+window.ToolsContentQualityAnalyzerPage = ToolsContentQualityAnalyzerPage;
+window.ToolsClientProjectPlannerPage = ToolsClientProjectPlannerPage;
+window.PromptsGalleryPage = PromptsGalleryPage;
 window.StarterclassLabPage = StarterclassLabPage;

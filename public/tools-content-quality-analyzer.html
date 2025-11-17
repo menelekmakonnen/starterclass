@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Content Quality Analyzer — Starterclass</title>
+  <meta name="description" content="Paste any draft and get instant strengths, fixes, and a rewritten version powered by Starterclass." />
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-black">
+  <div id="tool-analyzer"></div>
+  <script src="./app.js"></script>
+  <script>
+    if (!window.ToolsContentQualityAnalyzerPage) {
+      console.error("ToolsContentQualityAnalyzerPage component failed to load");
+    } else {
+      ReactDOM.createRoot(document.getElementById("tool-analyzer")).render(
+        React.createElement(window.ToolsContentQualityAnalyzerPage)
+      );
+    }
+  </script>
+</body>
+</html>
