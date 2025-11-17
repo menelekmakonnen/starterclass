@@ -82,7 +82,7 @@ function useTheme() {
 const GOOGLE_FORM_URL_EMBED =
   "https://docs.google.com/forms/d/e/1FAIpQLScmdBVzUHMAhe2hX7bW3ns6EeOw4D7RTyMDBT_C8XGemzjs-w/viewform?embedded=true";
 
-const INTRO_NAME = "Free Starterclass — Customisation, Projects & Applications";
+const INTRO_NAME = "Essentials and Customisations";
 const INTRO_START_ISO = "2025-11-15T11:00:00Z"; // Sat 15 Nov 2025 11:00 AM UK (UTC)
 const INTRO_END_ISO = "2025-11-15T12:30:00Z";
 
@@ -529,6 +529,38 @@ const PROMPT_FALLBACKS = [
   },
 ];
 
+const LAB_LEVEL_LABELS = {
+  starterclass: "Level 1",
+  canvas: "Level 2",
+  agents1: "Level 3",
+  agents2: "Level 4",
+  n8n_deep_dive: "Level 5",
+  n8n_mastery: "Level 6",
+};
+
+const LAB_LEVEL_ACCENTS = {
+  1: {
+    border: "rgba(194,132,36,0.45)",
+    background: "linear-gradient(135deg, rgba(255,233,208,0.8), rgba(255,255,255,0.9))",
+  },
+  2: {
+    border: "rgba(123,61,240,0.45)",
+    background: "linear-gradient(135deg, rgba(233,223,255,0.85), rgba(255,255,255,0.92))",
+  },
+  3: {
+    border: "rgba(59,92,204,0.45)",
+    background: "linear-gradient(135deg, rgba(209,230,255,0.85), rgba(246,249,255,0.95))",
+  },
+  4: {
+    border: "rgba(16,185,129,0.35)",
+    background: "linear-gradient(135deg, rgba(209,251,235,0.9), rgba(255,255,255,0.96))",
+  },
+  5: {
+    border: "rgba(248,113,113,0.4)",
+    background: "linear-gradient(135deg, rgba(255,228,230,0.92), rgba(255,255,255,0.95))",
+  },
+};
+
 const GLOBAL_NAV_LINKS = [
   { key: "home", label: "Home", href: "/" },
   { key: "lab", label: "Starterclass Lab", href: "/ai-starterclass-lab.html" },
@@ -537,9 +569,9 @@ const GLOBAL_NAV_LINKS = [
 ];
 
 const MONTH_BUNDLES = [
-  { key: "nov", label: "November momentum", modules: ["starterclass", "canvas"] },
-  { key: "dec", label: "December agent systems", modules: ["agents1", "agents2"] },
-  { key: "jan", label: "January automation labs", modules: ["n8n_deep_dive", "n8n_mastery"] },
+  { key: "nov", label: "November momentum", modules: ["starterclass", "canvas"], priceUSD: 0 },
+  { key: "dec", label: "December agent systems", modules: ["agents1", "agents2"], priceUSD: 0 },
+  { key: "jan", label: "January automation labs", modules: ["n8n_deep_dive", "n8n_mastery"], priceUSD: 0 },
 ];
 
 const OVERVIEW_WINS = [
@@ -675,24 +707,6 @@ const TESTIMONIALS = [
 const TRUST_BADGES = [
   { label: "Six-session cohort · Nov to Jan", icon: "📆" },
   { label: "Trusted by 50+ professionals", icon: "🤝" },
-];
-
-const CERTIFICATE_POINTS = [
-  {
-    key: "completion",
-    title: "Complete all six sessions",
-    detail: "We log attendance and deliverables so your certificate reflects the full Starterclass journey.",
-  },
-  {
-    key: "recognition",
-    title: "Show your capability",
-    detail: "Share the certificate with clients or employers to prove you ship vibe-coded builds and real automations.",
-  },
-  {
-    key: "portfolio",
-    title: "Bring proof to reviews",
-    detail: "Your mini-app, agent system, and n8n workflows double as evidence for appraisals and performance conversations.",
-  },
 ];
 
 const ALTERNATIVE_FORM_ENDPOINT = "https://ainerd.app.n8n.cloud/webhook/starterclass-registration";
@@ -1333,7 +1347,7 @@ function ScrollControls() {
   const dockVisible = showTop || showBottom;
   return (
     <div
-      className={`fixed bottom-5 right-4 z-40 flex flex-col gap-2 sm:flex-row transition ${dockVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      className={`fixed bottom-5 right-4 z-40 flex flex-row flex-wrap gap-3 transition ${dockVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       style={{ filter: dockVisible ? "none" : "blur(0.5px)" }}
     >
       <button
@@ -1540,11 +1554,31 @@ function usePageTheme(storageKey = "sc_theme_pref", fallback = "light") {
     }
   });
   const palette = useMemo(() => getPalette(theme), [theme]);
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+    const handleStorage = (event) => {
+      if (event.key === storageKey && event.newValue) {
+        setTheme(event.newValue);
+      }
+    };
+    const handleBroadcast = (event) => {
+      if (event.detail?.theme) {
+        setTheme(event.detail.theme);
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+    window.addEventListener("sc-theme-change", handleBroadcast);
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("sc-theme-change", handleBroadcast);
+    };
+  }, [storageKey]);
   const toggleTheme = useCallback(() => {
     setTheme((prev) => {
       const next = prev === "dark" ? "light" : "dark";
       try {
         localStorage.setItem(storageKey, next);
+        window.dispatchEvent(new CustomEvent("sc-theme-change", { detail: { theme: next } }));
       } catch {}
       return next;
     });
@@ -1620,12 +1654,12 @@ function formatCountdownHeadline(parts) {
   return `${parts.d}d ${pad(parts.h)}h ${pad(parts.m)}m`;
 }
 
-function sessionStatusLabel(status) {
+function sessionStatusLabel(status, sessionKey) {
   switch (status) {
     case "live":
       return "Live now";
     case "completed":
-      return "Archived";
+      return LAB_LEVEL_LABELS[sessionKey] || "Level complete";
     default:
       return "Upcoming";
   }
@@ -1949,14 +1983,7 @@ function StarterclassLuxuryV8() {
   const [isHeroGlowActive, setIsHeroGlowActive] = useState(false);
   const [siteGlowPoint, setSiteGlowPoint] = useState({ x: 0.5, y: 0.5 });
   const [isSiteGlowActive, setIsSiteGlowActive] = useState(false);
-  const [activeTheme, setActiveTheme] = useState(() => {
-    if (typeof window === "undefined") return "light";
-    try {
-      return localStorage.getItem("sc_theme_pref") || "light";
-    } catch {
-      return "light";
-    }
-  });
+  const { theme: activeTheme, palette, toggleTheme } = usePageTheme();
   const [announcementIndex, setAnnouncementIndex] = useState(0);
   const [overviewFocus, setOverviewFocus] = useState(() => OVERVIEW_WINS[0]?.key || "projects");
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -1965,7 +1992,6 @@ function StarterclassLuxuryV8() {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showContact, setShowContact] = useState(false);
   const [fullTrackExpanded, setFullTrackExpanded] = useState(false);
-  const [certificateFocus, setCertificateFocus] = useState(CERTIFICATE_POINTS[0]?.key || "evidence");
   const [nextLiveOpen, setNextLiveOpen] = useState(false);
   const [valueCalcOpen, setValueCalcOpen] = useState(false);
   const [activeRegistrationSession, setActiveRegistrationSession] = useState(() => SESSIONS[0] || null);
@@ -1993,7 +2019,6 @@ function StarterclassLuxuryV8() {
     : heroSession?.start;
   const countdown = useMemo(() => getCountdownParts(countdownTarget, now), [countdownTarget, now]);
   const { d, h, m, s, expired } = countdown;
-  const palette = useMemo(() => getPalette(activeTheme), [activeTheme]);
   const isDark = activeTheme === "dark";
   const announcementMessages = useMemo(() => {
     if (!heroSession) {
@@ -2060,10 +2085,6 @@ function StarterclassLuxuryV8() {
     }
     return PIE_TOPICS;
   }, [sessions]);
-  const activeCertificate = useMemo(
-    () => CERTIFICATE_POINTS.find((point) => point.key === certificateFocus) || CERTIFICATE_POINTS[0],
-    [certificateFocus]
-  );
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -2120,6 +2141,9 @@ function StarterclassLuxuryV8() {
   }, [fullTrackPrimaryCtaRef]);
 
   const themeClass = activeTheme === "dark" ? "theme-dark" : "theme-light";
+  const labBackground = activeTheme === "dark"
+    ? "radial-gradient(circle at 20% 20%, rgba(123,61,240,0.25), transparent 55%), radial-gradient(circle at 80% 0%, rgba(16,185,129,0.25), transparent 65%), #050312"
+    : "linear-gradient(135deg, #FDF4E6, #F6F1FF 45%, #ECF8FF)";
   const themeOverrides = useMemo(() => {
     if (activeTheme !== "light") return "";
     return `
@@ -2138,10 +2162,6 @@ function StarterclassLuxuryV8() {
       .theme-light [class*="shadow-[0_0_0_1px_rgba(200,161,69,0.15)_inset]"] { box-shadow: inset 0 0 0 1px ${palette.border} !important; }
     `;
   }, [activeTheme, palette]);
-
-  const toggleTheme = useCallback(() => {
-    setActiveTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  }, []);
 
   const updateGlow = useCallback((event, ref, setter) => {
     const node = ref.current;
@@ -2256,7 +2276,7 @@ function StarterclassLuxuryV8() {
           },
           "offers": {
             "@type": "Offer",
-            "price": String(bundle.priceUSD),
+            "price": String(bundle.priceUSD ?? 0),
             "priceCurrency": "USD",
             "availability": "https://schema.org/InStock",
             "url": "https://starterclass.icuni.org/#full-track-panel",
@@ -2440,7 +2460,7 @@ function StarterclassLuxuryV8() {
                   onClick={toggleTheme}
                   className="rounded-full border p-2 text-xl"
                   style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
-                  aria-label={activeTheme === "dark" ? "Switch to bright mode" : "Switch to dark mode"}
+                  aria-label={`Switch to ${activeTheme === "dark" ? "light" : "dark"} mode`}
                 >
                   {activeTheme === "dark" ? "☀️" : "🌙"}
                 </button>
@@ -2448,12 +2468,6 @@ function StarterclassLuxuryV8() {
               <div className="ml-auto hidden md:flex items-center text-xs font-semibold uppercase tracking-[0.24em]" style={{ color: palette.textSecondary }}>
                 {scheduleCompleted ? "Labs archived" : "Starterclass Lab · live access"}
               </div>
-            </div>
-            <div
-              className="text-xs uppercase tracking-[0.28em]"
-              style={{ color: palette.textMuted }}
-            >
-              {announcementMessages[announcementIndex]}
             </div>
             <div className="pt-2 flex justify-center">
               <GlobalNavRow activeKey="home" />
@@ -2789,7 +2803,7 @@ function StarterclassLuxuryV8() {
                             {upcomingSchedule.map((s) => {
                               const isStarterclassSlot = s.track === "starterclass";
                               const badgeLabel = isStarterclassSlot ? "Starterclass Lab" : "Future lab";
-                              const statusLabel = sessionStatusLabel(s.status);
+                              const statusLabel = sessionStatusLabel(s.status, s.k);
                               const statusColor = s.status === "live"
                                 ? palette.accentSecondary
                                 : s.status === "completed"
@@ -2978,7 +2992,7 @@ function StarterclassLuxuryV8() {
                       <div className="space-y-4">
                         {filtered.map((module) => {
                           const open = activeModule === module.k;
-                          const statusText = sessionStatusLabel(module.status);
+                          const statusText = sessionStatusLabel(module.status, module.k);
                           const statusColor = module.status === "completed" ? palette.textMuted : module.status === "live" ? palette.accentSecondary : palette.accentPrimary;
                           return (
                             <div key={module.k} className="rounded-3xl border" style={{ borderColor: palette.border, background: palette.surface }}>
@@ -3063,116 +3077,7 @@ function StarterclassLuxuryV8() {
                 </div>
               </div>
               <div className="space-y-8" id="full-track-panel" ref={fullTrackSectionAnchorRef}>
-                <GlowCard className="p-6 md:p-8" id="certificate">
-                  <div className="grid lg:grid-cols-[1fr_1fr] gap-6 items-start">
-                    <div
-                      className="rounded-3xl border overflow-hidden"
-                      style={{
-                        borderColor: palette.border,
-                        background:
-                          activeTheme === "dark"
-                            ? "linear-gradient(160deg, rgba(18,18,38,0.92), rgba(30,24,60,0.88))"
-                            : "linear-gradient(160deg, rgba(255,255,255,0.95), rgba(245,240,255,0.92))",
-                      }}
-                    >
-                      <div className="flex h-full flex-col gap-5 p-6 md:p-8">
-                        <div>
-                          <span
-                            className="text-xs uppercase tracking-[0.32em]"
-                            style={{ color: palette.textMuted }}
-                          >
-                            ICUNI credential
-                          </span>
-                          <div
-                            className="mt-3 text-2xl font-semibold leading-snug"
-                            style={{ color: palette.textPrimary }}
-                          >
-                            Your completion dossier
-                          </div>
-                          <p className="mt-3 text-sm leading-relaxed" style={{ color: palette.textSecondary }}>
-                            Instead of a static certificate image, you receive a polished dossier capturing the work you ship
-                            across the Starterclass. It is built to share with stakeholders who need proof you can deliver.
-                          </p>
-                        </div>
-                        <div className="grid gap-3">
-                          {[
-                            {
-                              icon: "🪶",
-                              label: "Signed welcome note",
-                              text: "Personal message from the programme lead summarising the focus areas you mastered.",
-                            },
-                            {
-                              icon: "🧾",
-                              label: "Evidence timeline",
-                              text: "Chronological log of projects, submissions, and reviews that backed your final credential.",
-                            },
-                            {
-                              icon: "🔗",
-                              label: "Verification link",
-                              text: "Private, shareable link so teams can instantly verify attendance and deliverables.",
-                            },
-                          ].map(({ icon, label, text }) => (
-                            <div
-                              key={label}
-                              className="flex items-start gap-3 rounded-2xl border px-4 py-3"
-                              style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}
-                            >
-                              <span className="text-xl" aria-hidden="true">
-                                {icon}
-                              </span>
-                              <div>
-                                <div className="text-sm font-semibold" style={{ color: palette.textPrimary }}>
-                                  {label}
-                                </div>
-                                <div className="mt-1 text-xs">{text}</div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                        <div
-                          className="mt-auto rounded-2xl border px-4 py-3 text-xs leading-relaxed"
-                          style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}
-                        >
-                          Delivered within 72 hours of the final January session as both a PDF dossier and a live verification page.
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-4 text-sm" style={{ color: palette.textSecondary }}>
-                      <p>
-                        Complete all six sessions and we issue an ICUNI certificate that documents the builds you shipped across the programme. Every live sprint, submission, and review contributes to the evidence file you keep.
-                      </p>
-                      <div className="grid gap-3">
-                        {CERTIFICATE_POINTS.map((point) => {
-                          const active = point.key === activeCertificate.key;
-                          return (
-                            <button
-                              key={point.key}
-                              type="button"
-                              onMouseEnter={() => setCertificateFocus(point.key)}
-                              onFocus={() => setCertificateFocus(point.key)}
-                              onClick={() => setCertificateFocus(point.key)}
-                              className="rounded-2xl border p-4 text-left transition"
-                              style={{
-                                borderColor: palette.border,
-                                background: active ? palette.surface : palette.surfaceSoft,
-                                color: palette.textPrimary,
-                              }}
-                            >
-                              <div className="font-semibold text-sm">{point.title}</div>
-                              <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>
-                                {point.detail}
-                              </div>
-                            </button>
-                          );
-                        })}
-                      </div>
-                      <div className="rounded-2xl border p-4 text-xs" style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textSecondary }}>
-                        <span style={{ color: palette.textPrimary, fontWeight: 600 }}>Current focus:</span> {activeCertificate.title}
-                        <div className="mt-1">{activeCertificate.detail}</div>
-                      </div>
-                    </div>
-                  </div>
-                </GlowCard>
+                {/* Reserved for future roadmap highlights */}
               </div>
             </div>
           )}
@@ -3306,7 +3211,7 @@ function StarterclassLuxuryV8() {
                   <div className="flex items-center justify-between text-xs uppercase tracking-[0.28em]" style={{ color: palette.textMuted }}>
                     <span>Upcoming lab</span>
                     <span style={{ color: module.status === "completed" ? palette.textMuted : module.status === "live" ? palette.accentSecondary : palette.accentPrimary }}>
-                      {sessionStatusLabel(module.status)}
+                      {sessionStatusLabel(module.status, module.k)}
                     </span>
                   </div>
                   <div className="mt-2 text-sm font-semibold" style={{ color: palette.textPrimary }}>{module.title}</div>
@@ -3425,10 +3330,10 @@ function StarterclassLuxuryV8() {
               <p className="text-sm" style={{ color: palette.textSecondary }}>These terms govern enrollment in the ICUNI Starterclass.</p>
               <ul className="list-disc pl-5 text-sm space-y-2 mt-3" style={{ color: palette.textSecondary }}>
                 <li><span style={{ color: palette.textMuted }}>Scope:</span> The Starterclass Session provides live instruction, templates, and materials for personal or business use. Redistribution or resale is not permitted without written consent.</li>
-                  <li><span style={{ color: palette.textMuted }}>Payments:</span> Starterclass labs are free. Corporate workshops and private trainings use their own invoices.</li>
-                  <li><span style={{ color: palette.textMuted }}>Refunds:</span> Not applicable for the free lab experience. We’ll notify you if a future paid upgrade returns.</li>
+                <li><span style={{ color: palette.textMuted }}>Access:</span> Starterclass labs are free. Corporate workshops and private trainings use their own agreements.</li>
+                <li><span style={{ color: palette.textMuted }}>Changes:</span> Not applicable for the free lab experience. Optional add-ons will publish their own policies if needed.</li>
                 <li><span style={{ color: palette.textMuted }}>Recordings & materials:</span> Starterclass labs live on this page indefinitely alongside slide decks and prompt kits.</li>
-                <li><span style={{ color: palette.textMuted }}>Conduct:</span> Be respectful in live sessions and forums. Disruptive behaviour may result in removal without refund.</li>
+                <li><span style={{ color: palette.textMuted }}>Conduct:</span> Be respectful in live sessions and forums. Disruptive behaviour may result in removal from the live lab.</li>
                 <li><span style={{ color: palette.textMuted }}>IP:</span> Your data remains yours. Course IP remains ICUNI’s and is licensed for your use.</li>
                 <li><span style={{ color: palette.textMuted }}>Changes:</span> We may adjust dates or contents for quality or operational reasons; you’ll be notified by email.</li>
                 <li><span style={{ color: palette.textMuted }}>Governing law:</span> England & Wales.</li>
@@ -3441,7 +3346,7 @@ function StarterclassLuxuryV8() {
               <ul className="list-disc pl-5 text-sm space-y-2 mt-3" style={{ color: palette.textSecondary }}>
                 <li><span style={{ color: palette.textMuted }}>Data collected:</span> Name, email, form responses, attendance, and homework links.</li>
                 <li><span style={{ color: palette.textMuted }}>Use:</span> Enrollment, reminders, certification, and support. Optional marketing with explicit opt-in.</li>
-                <li><span style={{ color: palette.textMuted }}>Processors:</span> Google (Forms/Sheets/Drive), Stripe (payments), email provider (Postmark/SendGrid). We use N8N to automate notifications.</li>
+                <li><span style={{ color: palette.textMuted }}>Processors:</span> Google (Forms/Sheets/Drive), our email provider (Postmark/SendGrid), and n8n automations for reminders.</li>
                 <li><span style={{ color: palette.textMuted }}>Security:</span> Access is limited to ICUNI admins on a need-to-know basis. We use least-privilege accounts and audit access periodically.</li>
                 <li><span style={{ color: palette.textMuted }}>Retention:</span> Enrollment records are retained for up to 24 months; you may request deletion anytime.</li>
                 <li><span style={{ color: palette.textMuted }}>Your rights:</span> Access, correction, deletion. Email <a className="underline" href="mailto:starterclass@icuni.org">starterclass@icuni.org</a>.</li>
@@ -4262,7 +4167,7 @@ function AlternativeRegistrationModal({ onClose, onCalendar }) {
                   style={{ accentColor: palette.accentSecondary }}
                 />
                 <span>
-                  I agree to the Terms & Privacy and understand the refund policy (cancel up to 48 hours before the first paid session for a full refund).
+                  I agree to the Terms & Privacy and understand this lab is free; you’ll send reminders before each live session.
                 </span>
               </label>
 
@@ -4564,6 +4469,96 @@ const LAB_BADGES = [
   { min: 0, label: "Prompt Tourist", description: "You're still visiting. Re-run the lab with a live project." },
 ];
 
+const PROMPT_ASSEMBLY_PARTS = [
+  {
+    key: "role",
+    label: "Role",
+    options: [
+      "You are my project assistant.",
+      "You are my client success lead.",
+      "You are my strategic advisor.",
+    ],
+  },
+  {
+    key: "context",
+    label: "Context",
+    options: [
+      "We are starting a 6-week branding project for a boutique e-commerce brand.",
+      "We just wrapped discovery for a fintech workflow overhaul.",
+      "We are pitching a content retainer for a healthcare startup.",
+    ],
+  },
+  {
+    key: "goal",
+    label: "Goal",
+    options: [
+      "Confirm scope, timeline, and next steps.",
+      "Turn messy notes into a concise update.",
+      "Highlight decisions and ask for approval by Friday.",
+    ],
+  },
+  {
+    key: "format",
+    label: "Format",
+    options: [
+      "Use sections: Greeting, Summary, Bullet list, CTA.",
+      "Use sections: Situation, Actions, Next steps.",
+      "Use sections: Recap, Timeline, Questions, CTA.",
+    ],
+  },
+];
+
+const LAB_SCENARIOS = [
+  {
+    id: "brand_sprint",
+    title: "Brand sprint kickoff",
+    detail: "Client sent a stream-of-consciousness email with hopes, fears, and random inspo links.",
+    best: "scope",
+  },
+  {
+    id: "email_rescue",
+    title: "Email rescue",
+    detail: "You need to send a clear plan back to a client who keeps changing requirements.",
+    best: "brief",
+  },
+  {
+    id: "implementation",
+    title: "Implementation push",
+    detail: "You already have a brief and just received the green light to execute.",
+    best: "plan",
+  },
+];
+
+const STRATEGY_GAMIFIED_CHOICES = {
+  stop: [
+    "Manual status emails",
+    "Formatting research by hand",
+    "Guessing project scope",
+    "Rewriting the same prompt",
+  ],
+  keep: [
+    "Final client approval",
+    "Budget sign-off",
+    "Risk decisions",
+    "Team coaching moments",
+  ],
+  skill: [
+    "Agent orchestration",
+    "Automation design",
+    "AI-native storytelling",
+    "Data instrumentation",
+  ],
+};
+
+const CUSTOM_TWEAK_OPTIONS = [
+  "Tone and personality",
+  "Structure preferences",
+  "Clarifying question rules",
+  "How to handle uncertainty",
+  "Default deliverable format",
+  "Depth cues (quick vs deep)",
+];
+
 const PROMPT_BLUEPRINT_TEXT = `Prompt Blueprint
 
 Role: "You are my [X] assistant…"
@@ -4760,15 +4755,7 @@ How you work:
 Kick off with: “What project are we briefing today?”`;
 
 function StarterclassLabPage() {
-  const [activeTheme, setActiveTheme] = useState(() => {
-    if (typeof window === "undefined") return "light";
-    try {
-      return localStorage.getItem("sc_theme_pref") || "light";
-    } catch {
-      return "light";
-    }
-  });
-  const palette = useMemo(() => getPalette(activeTheme), [activeTheme]);
+  const { theme: activeTheme, palette, toggleTheme } = usePageTheme();
   const prefersReducedMotion = usePrefersReducedMotion();
   const [levelScores, setLevelScores] = useState({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 });
   const [levelCompletion, setLevelCompletion] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
@@ -4780,7 +4767,8 @@ function StarterclassLabPage() {
       const start = new Date(session.start).getTime();
       const end = new Date(session.end).getTime();
       const status = labNow > end ? "Archived" : labNow >= start ? "Live" : "Upcoming";
-      return { ...session, status };
+      const statusLabel = status === "Archived" ? LAB_LEVEL_LABELS[session.k] || "Level complete" : status;
+      return { ...session, status, statusLabel };
     });
   }, [labNow]);
   const upcomingLabs = useMemo(() => labSessions.filter((session) => session.status !== "Archived"), [labSessions]);
@@ -4788,18 +4776,23 @@ function StarterclassLabPage() {
   const [level1Card, setLevel1Card] = useState(null);
   const [level1Q1, setLevel1Q1] = useState("");
   const [level1Q2, setLevel1Q2] = useState("");
-  const [level1Rewrite, setLevel1Rewrite] = useState("");
-  const [level1SelfScore, setLevel1SelfScore] = useState(0);
+  const [promptAssembly, setPromptAssembly] = useState(() => {
+    const base = {};
+    PROMPT_ASSEMBLY_PARTS.forEach((part) => {
+      base[part.key] = null;
+    });
+    return base;
+  });
 
   const [toggles, setToggles] = useState({ clarify: true, structure: true, concise: false });
-  const [level2SelfScore, setLevel2SelfScore] = useState(0);
+  const [tweakSelections, setTweakSelections] = useState([]);
   const [level2Q4, setLevel2Q4] = useState("");
   const [level2Q5, setLevel2Q5] = useState("");
 
   const [personaChoice, setPersonaChoice] = useState(LAB_PERSONA_OPTIONS[0].value);
   const [level3Command, setLevel3Command] = useState("");
   const [level3ScenarioChoice, setLevel3ScenarioChoice] = useState(null);
-  const [level3ScenarioText, setLevel3ScenarioText] = useState("");
+  const [activeScenario, setActiveScenario] = useState(LAB_SCENARIOS[0]);
 
   const [selectedInputs, setSelectedInputs] = useState([]);
   const [outputTemplate, setOutputTemplate] = useState("standard");
@@ -4808,8 +4801,7 @@ function StarterclassLabPage() {
   const [activeRisk, setActiveRisk] = useState(LAB_RISKS[0].title);
   const [level5Q7, setLevel5Q7] = useState("");
   const [level5Q8, setLevel5Q8] = useState("");
-  const [reflection, setReflection] = useState("");
-  const [level5SelfScore, setLevel5SelfScore] = useState(0);
+  const [strategyChoices, setStrategyChoices] = useState({ stop: null, keep: null, skill: null });
 
   useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
@@ -4821,16 +4813,6 @@ function StarterclassLabPage() {
         copyTimeoutRef.current = setTimeout(() => setCopiedKey(""), 2000);
       });
     }
-  }, []);
-
-  const handleToggleTheme = useCallback(() => {
-    setActiveTheme((prev) => {
-      const next = prev === "dark" ? "light" : "dark";
-      try {
-        localStorage.setItem("sc_theme_pref", next);
-      } catch {}
-      return next;
-    });
   }, []);
 
   const handleLevelComplete = useCallback((level, points) => {
@@ -4847,22 +4829,49 @@ function StarterclassLabPage() {
     return LAB_BADGES.find((entry) => scorePercent >= entry.min) || LAB_BADGES[LAB_BADGES.length - 1];
   }, [scorePercent]);
   const showGlow = scorePercent >= 70;
+  const level1AssemblyScore = useMemo(() => {
+    const filled = Object.values(promptAssembly).filter(Boolean).length;
+    if (filled === PROMPT_ASSEMBLY_PARTS.length) return 5;
+    if (filled >= PROMPT_ASSEMBLY_PARTS.length - 1) return 3;
+    return 0;
+  }, [promptAssembly]);
+  const assembledPrompt = useMemo(() => buildPromptFromSelection(promptAssembly), [promptAssembly]);
+  const level2TweakScore = useMemo(() => {
+    if (tweakSelections.length >= 4) return 10;
+    if (tweakSelections.length >= 2) return 5;
+    return 0;
+  }, [tweakSelections.length]);
+  const reflectionScore = useMemo(() => {
+    const filled = Object.values(strategyChoices).filter(Boolean).length;
+    if (filled === 3) return 5;
+    if (filled === 2) return 3;
+    return 0;
+  }, [strategyChoices]);
+
+  const nextActiveLevel = useMemo(() => {
+    const orderedLevels = Object.keys(levelCompletion)
+      .map((level) => Number(level))
+      .sort((a, b) => a - b);
+    const pending = orderedLevels.find((level) => !levelCompletion[level]);
+    return pending || orderedLevels[0] || 1;
+  }, [levelCompletion]);
+  const allLevelsComplete = useMemo(() => Object.values(levelCompletion).every(Boolean), [levelCompletion]);
 
   const level1Points = useMemo(() => {
     let pts = 0;
     if (level1Q1 === "B") pts += 10;
     if (level1Q2 === "C") pts += 10;
-    pts += level1SelfScore;
+    pts += level1AssemblyScore;
     return pts;
-  }, [level1Q1, level1Q2, level1SelfScore]);
+  }, [level1AssemblyScore, level1Q1, level1Q2]);
 
   const level2Points = useMemo(() => {
     let pts = 0;
-    pts += level2SelfScore;
+    pts += level2TweakScore;
     if (level2Q4 === "B") pts += 10;
     if (level2Q5 === "C") pts += 10;
     return pts;
-  }, [level2SelfScore, level2Q4, level2Q5]);
+  }, [level2Q4, level2Q5, level2TweakScore]);
 
   const level3Points = useMemo(() => {
     let pts = 0;
@@ -4883,15 +4892,61 @@ function StarterclassLabPage() {
     let pts = 0;
     if (level5Q7 === "C") pts += 10;
     if (level5Q8 === "C") pts += 10;
-    pts += level5SelfScore;
+    pts += reflectionScore;
     return pts;
-  }, [level5Q7, level5Q8, level5SelfScore]);
+  }, [level5Q7, level5Q8, reflectionScore]);
 
   const persona = LAB_PERSONA_OPTIONS.find((option) => option.value === personaChoice) || LAB_PERSONA_OPTIONS[0];
+  const personaPrompt = useMemo(() => `${persona.heading}\n${persona.body}`, [persona]);
 
   const toggleBehavior = (key) => {
     setToggles((prev) => ({ ...prev, [key]: !prev[key] }));
   };
+
+  const handleAssemblySelect = useCallback((partKey, option) => {
+    setPromptAssembly((prev) => ({ ...prev, [partKey]: option }));
+  }, []);
+
+  const handleTweakToggle = useCallback((label) => {
+    setTweakSelections((prev) => (prev.includes(label) ? prev.filter((entry) => entry !== label) : [...prev, label]));
+  }, []);
+
+  const handleScenarioShuffle = useCallback(() => {
+    setLevel3ScenarioChoice(null);
+    setActiveScenario((prev) => {
+      const currentIndex = LAB_SCENARIOS.findIndex((scenario) => scenario.id === prev.id);
+      const nextIndex = (currentIndex + 1) % LAB_SCENARIOS.length;
+      return LAB_SCENARIOS[nextIndex];
+    });
+  }, []);
+
+  const handleScenarioDecision = useCallback(
+    (command) => {
+      const best = activeScenario.best;
+      let points = 0;
+      let message = "";
+      if (command === best) {
+        points = 10;
+        message = "Perfect — you picked the command that sets this scenario up for a win.";
+      } else if (
+        (best === "scope" && command === "brief") ||
+        (best === "brief" && command === "scope") ||
+        (best === "plan" && command === "brief")
+      ) {
+        points = 5;
+        message = "Close. You picked a command that can work, but there’s a stronger order to follow.";
+      } else {
+        points = 0;
+        message = "That command skips a vital step. Revisit the order: scope → brief → plan.";
+      }
+      setLevel3ScenarioChoice({ choice: command, points, message });
+    },
+    [activeScenario]
+  );
+
+  const handleStrategySelect = useCallback((category, option) => {
+    setStrategyChoices((prev) => ({ ...prev, [category]: prev[category] === option ? null : option }));
+  }, []);
 
   const sampleResponse = useMemo(() => {
     const parts = [];
@@ -4922,27 +4977,12 @@ function StarterclassLabPage() {
     });
   };
 
-  const handleScenarioChoice = (choice) => {
-    let points = 0;
-    let message = "";
-    if (choice === "scope") {
-      points = 10;
-      message = "Nice. You scope before you write.";
-    } else if (choice === "brief") {
-      points = 5;
-      message = "You can do this, but you might bake assumptions into the brief.";
-    } else {
-      points = 0;
-      message = "Planning before understanding is how projects go sideways.";
-    }
-    setLevel3ScenarioChoice({ choice, points, message });
-  };
-
-  const scrollToLevelOne = useCallback(() => {
-    const target = document.getElementById("level-1");
+  const scrollToActiveLevel = useCallback(() => {
+    const targetId = `level-${nextActiveLevel}`;
+    const target = document.getElementById(targetId);
     if (!target) return;
     target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
-  }, [prefersReducedMotion]);
+  }, [nextActiveLevel, prefersReducedMotion]);
   const scrollToRoadmap = useCallback(() => {
     const target = document.getElementById("lab-roadmap");
     if (!target) return;
@@ -4953,7 +4993,7 @@ function StarterclassLabPage() {
 
   return (
     <ThemeProvider theme={activeTheme} palette={palette}>
-      <div className={`${themeClass} min-h-screen`} style={{ background: palette.background, color: palette.textPrimary }}>
+      <div className={`${themeClass} min-h-screen`} style={{ background: labBackground, color: palette.textPrimary }}>
         <header
           className="sticky top-0 z-40 backdrop-blur"
           style={{ background: palette.headerBg, borderBottom: `1px solid ${palette.border}` }}
@@ -4974,11 +5014,12 @@ function StarterclassLabPage() {
               </div>
               <button
                 type="button"
-                onClick={handleToggleTheme}
-                className="rounded-full border px-4 py-2 text-sm font-semibold"
+                onClick={toggleTheme}
+                className="rounded-full border p-2 text-xl"
                 style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+                aria-label={`Switch to ${activeTheme === "dark" ? "light" : "dark"} mode`}
               >
-                Switch to {activeTheme === "dark" ? "light" : "dark"} mode
+                {activeTheme === "dark" ? "🌞" : "🌙"}
               </button>
             </div>
             <div className="flex justify-center">
@@ -4989,7 +5030,18 @@ function StarterclassLabPage() {
         <div className="relative overflow-hidden">
           <Sparkles />
           <div className="max-w-6xl mx-auto px-4 py-10 space-y-16 lg:space-y-20">
-            <section className="relative rounded-3xl border p-6 md:p-10" style={{ borderColor: palette.border, background: palette.surface }}>
+            <section className="relative rounded-3xl border p-6 md:p-10 overflow-hidden" style={{ borderColor: palette.border, background: palette.surface }}>
+              <div
+                className="absolute inset-0 rounded-[2.5rem] opacity-80"
+                style={{
+                  background:
+                    activeTheme === "dark"
+                      ? "linear-gradient(135deg, rgba(123,61,240,0.25), rgba(16,185,129,0.2))"
+                      : "linear-gradient(135deg, rgba(194,132,36,0.15), rgba(59,92,204,0.12))",
+                }}
+                aria-hidden="true"
+              />
+              <div className="relative">
               <div className="flex flex-col lg:flex-row gap-8">
                 <div className="flex-1 space-y-6">
                   <Badge>Estimated time: 45–60 mins</Badge>
@@ -5004,14 +5056,18 @@ function StarterclassLabPage() {
                     ? `${upcomingLabs.length} more labs unlock after this replay. Track them below and return when each session goes live.`
                     : "This entire cycle is archived—scroll down to relive every level at your own pace."}
                 </p>
+                <div className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[0.6rem] font-semibold uppercase tracking-[0.3em]" style={{ borderColor: palette.border, color: palette.textSecondary }}>
+                  <span className="text-xs" aria-hidden="true">⚡</span>
+                  {announcementMessages[announcementIndex]}
+                </div>
                 <div className="flex flex-wrap gap-3">
-                    <GlassButton onClick={scrollToLevelOne} className="px-6 py-3">
-                      Start Level 1
-                    </GlassButton>
-                    <GlassButton variant="secondary" onClick={scrollToRoadmap} className="px-6 py-3">
-                      View the lab roadmap
-                    </GlassButton>
-                  </div>
+                  <GlassButton onClick={scrollToActiveLevel} className="px-6 py-3">
+                    {allLevelsComplete ? "Replay Level 1" : `Resume Level ${nextActiveLevel}`}
+                  </GlassButton>
+                  <GlassButton variant="secondary" onClick={scrollToRoadmap} className="px-6 py-3">
+                    View the lab roadmap
+                  </GlassButton>
+                </div>
                 </div>
                 <div className="w-full max-w-sm rounded-3xl border p-5 space-y-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
                   <div className="flex items-center justify-between">
@@ -5055,7 +5111,7 @@ function StarterclassLabPage() {
                       <div key={session.k} className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surface }}>
                         <div className="flex items-center justify-between text-xs uppercase tracking-[0.24em]" style={{ color: palette.textMuted }}>
                           <span>{(session.month || "lab").toUpperCase()}</span>
-                          <span style={{ color: statusColor }}>{session.status}</span>
+                          <span style={{ color: statusColor }}>{session.statusLabel}</span>
                         </div>
                         <div className="mt-1 text-sm font-semibold" style={{ color: palette.textPrimary }}>{session.title}</div>
                         <div className="mt-1 text-xs" style={{ color: palette.textSecondary }}>{formatSessionDateLabel(session)}</div>
@@ -5064,12 +5120,14 @@ function StarterclassLabPage() {
                   })}
                 </div>
               </div>
+              </div>
             </section>
             <LevelSection
               id="level-1"
               title="Level 1 – Talk to AI Like a Pro, Not a Tourist"
               subtitle="Learn how to structure prompts so ChatGPT stops giving mid answers. Spot bad prompts, fix them, and get scored for it."
               points="Max 25 pts"
+              level={1}
             >
               <div className="grid md:grid-cols-2 gap-4">
                 {["A", "B"].map((card) => (
@@ -5134,20 +5192,15 @@ function StarterclassLabPage() {
                 )}
               </div>
 
-              <div className="mt-6">
-                <div className="rounded-3xl border p-4 md:p-6" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                  <div className="flex flex-wrap items-center gap-3 justify-between">
-                    <div>
-                      <div className="text-sm font-semibold">Prompt Blueprint</div>
-                      <p className="text-xs" style={{ color: palette.textSecondary }}>Use it to rewrite any prompt instantly.</p>
-                    </div>
-                    <GlassButton variant="secondary" onClick={() => handleCopy("blueprint", PROMPT_BLUEPRINT_TEXT)}>
-                      {copiedKey === "blueprint" ? "Copied" : "Copy blueprint"}
-                    </GlassButton>
-                  </div>
-                  <pre className="mt-4 text-sm whitespace-pre-wrap" style={{ color: palette.textSecondary }}>{PROMPT_BLUEPRINT_TEXT}</pre>
-                </div>
-              </div>
+              <EditablePromptPanel
+                id="blueprint"
+                title="Prompt Blueprint"
+                description="Use it to rewrite any prompt instantly."
+                initialValue={PROMPT_BLUEPRINT_TEXT}
+                copiedKey={copiedKey}
+                onCopy={(key, value) => handleCopy(key, value)}
+                rows={8}
+              />
 
               <div className="mt-6 space-y-2">
                 <p className="font-semibold">Question 2</p>
@@ -5174,20 +5227,13 @@ function StarterclassLabPage() {
                 )}
               </div>
 
-              <div className="mt-6 space-y-3">
-                <p className="font-semibold">Question 3</p>
-                <p className="text-sm" style={{ color: palette.textSecondary }}>
-                  Rewrite the prompt using the blueprint. Then score yourself.
-                </p>
-                <textarea
-                  value={level1Rewrite}
-                  onChange={(event) => setLevel1Rewrite(event.target.value)}
-                  className="w-full rounded-2xl border p-3 text-sm"
-                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
-                  rows={4}
-                />
-                <SelfScoreButtons value={level1SelfScore} onChange={setLevel1SelfScore} max={5} />
-              </div>
+              <PromptAssemblyGame
+                selection={promptAssembly}
+                onSelect={handleAssemblySelect}
+                assembledPrompt={assembledPrompt}
+                copied={copiedKey === "level1_builder"}
+                onCopy={(text) => handleCopy("level1_builder", text)}
+              />
 
               <LevelCompleteRow
                 completed={levelCompletion[1]}
@@ -5202,6 +5248,7 @@ function StarterclassLabPage() {
               title="Level 2 – Make ChatGPT Feel Like It’s Hired By You"
               subtitle="Design how ChatGPT behaves by default: tone, structure, and how it handles confusion."
               points="Max 30 pts"
+              level={2}
             >
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="rounded-3xl border p-4 space-y-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
@@ -5216,21 +5263,16 @@ function StarterclassLabPage() {
                 </div>
               </div>
 
-              <div className="mt-6 rounded-3xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                <div className="flex flex-wrap items-center gap-3 justify-between">
-                  <div>
-                    <p className="font-semibold">Custom Instructions template</p>
-                    <p className="text-xs" style={{ color: palette.textSecondary }}>Paste into ChatGPT, then personalise.</p>
-                  </div>
-                  <GlassButton variant="secondary" onClick={() => handleCopy("custom_instructions", `${CUSTOM_INSTRUCTIONS_TEMPLATE}\n\n${CUSTOM_INSTRUCTIONS_STYLE}`)}>
-                    {copiedKey === "custom_instructions" ? "Copied" : "Copy template"}
-                  </GlassButton>
-                </div>
-                <pre className="text-sm whitespace-pre-wrap" style={{ color: palette.textSecondary }}>{CUSTOM_INSTRUCTIONS_TEMPLATE}
-
-{CUSTOM_INSTRUCTIONS_STYLE}</pre>
-                <SelfScoreButtons value={level2SelfScore} onChange={setLevel2SelfScore} max={10} />
-              </div>
+              <EditablePromptPanel
+                id="custom_instructions"
+                title="Custom Instructions template"
+                description="Paste into ChatGPT, then personalise before you copy."
+                initialValue={`${CUSTOM_INSTRUCTIONS_TEMPLATE}\n\n${CUSTOM_INSTRUCTIONS_STYLE}`}
+                copiedKey={copiedKey}
+                onCopy={(key, value) => handleCopy(key, value)}
+                rows={10}
+              />
+              <TweakChecklist selections={tweakSelections} onToggle={handleTweakToggle} />
 
               <div className="mt-6 space-y-4">
                 <div>
@@ -5292,6 +5334,7 @@ function StarterclassLabPage() {
               title="Level 3 – Build a Client Project Copilot"
               subtitle="Turn ChatGPT into a saved assistant that scopes projects, writes briefs, and drafts client messages."
               points="Max 20 pts"
+              level={3}
             >
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="rounded-3xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
@@ -5311,13 +5354,15 @@ function StarterclassLabPage() {
                       </option>
                     ))}
                   </select>
-                  <div className="rounded-2xl border p-3" style={{ borderColor: palette.accentSecondary, background: palette.surface }}>
-                    <div className="text-sm font-semibold">{persona.heading}</div>
-                    <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>{persona.body}</p>
-                    <GlassButton variant="secondary" onClick={() => handleCopy("persona", `${persona.heading}\n${persona.body}`)} className="mt-3">
-                      {copiedKey === "persona" ? "Copied" : "Copy persona"}
-                    </GlassButton>
-                  </div>
+                  <EditablePromptPanel
+                    id="persona"
+                    title={persona.heading}
+                    description={persona.body}
+                    initialValue={personaPrompt}
+                    copiedKey={copiedKey}
+                    onCopy={(key, value) => handleCopy(key, value)}
+                    rows={5}
+                  />
                 </div>
                 <div className="rounded-3xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
                   <p className="text-sm font-semibold">Command shortcuts</p>
@@ -5360,18 +5405,22 @@ function StarterclassLabPage() {
                 </div>
 
                 <div className="rounded-3xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                  <p className="font-semibold">Scenario practice</p>
-                  <p className="text-sm" style={{ color: palette.textSecondary }}>Paste a real or fake project description, then choose a starting command.</p>
-                  <textarea
-                    value={level3ScenarioText}
-                    onChange={(event) => setLevel3ScenarioText(event.target.value)}
-                    className="w-full rounded-2xl border p-3 text-sm"
-                    style={{ borderColor: palette.border, background: palette.surface }}
-                    rows={4}
-                  />
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <p className="font-semibold">Scenario practice</p>
+                      <p className="text-sm" style={{ color: palette.textSecondary }}>Shuffle a scenario, then pick the first command you’d run.</p>
+                    </div>
+                    <GlassButton variant="secondary" onClick={handleScenarioShuffle} className="px-4 py-2">
+                      Shuffle scenario
+                    </GlassButton>
+                  </div>
+                  <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surface }}>
+                    <p className="text-sm font-semibold">{activeScenario.title}</p>
+                    <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>{activeScenario.detail}</p>
+                  </div>
                   <div className="flex flex-wrap gap-3">
                     {[{ value: "scope", label: "Run /scope first" }, { value: "brief", label: "Run /brief first" }, { value: "plan", label: "Run /plan first" }].map((option) => (
-                      <GlassButton key={option.value} variant="secondary" onClick={() => handleScenarioChoice(option.value)}>
+                      <GlassButton key={option.value} variant="secondary" onClick={() => handleScenarioDecision(option.value)}>
                         {option.label}
                       </GlassButton>
                     ))}
@@ -5397,6 +5446,7 @@ function StarterclassLabPage() {
               title="Level 4 – Tiny Tool Lab: Client Project Planner & Value Calculator"
               subtitle="Move from chatting to tooling. Design a reusable prompt/template that scopes and prices work."
               points="Max 20 pts"
+              level={4}
             >
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="rounded-3xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
@@ -5443,19 +5493,16 @@ function StarterclassLabPage() {
                 </div>
               </div>
 
-              <div className="mt-6 rounded-3xl border p-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
-                <div className="flex flex-wrap items-center gap-3 justify-between">
-                  <div>
-                    <p className="font-semibold">Final tool prompt</p>
-                    <p className="text-xs" style={{ color: palette.textSecondary }}>Copy into ChatGPT or Canvas.</p>
-                  </div>
-                  <GlassButton variant="secondary" onClick={() => handleCopy("tool_prompt", CLIENT_TOOL_PROMPT)}>
-                    {copiedKey === "tool_prompt" ? "Copied" : "Copy prompt"}
-                  </GlassButton>
-                </div>
-                <pre className="mt-3 text-sm whitespace-pre-wrap" style={{ color: palette.textSecondary }}>{CLIENT_TOOL_PROMPT}</pre>
-                <SelfScoreButtons value={level4SelfScore} onChange={setLevel4SelfScore} max={10} />
-              </div>
+              <EditablePromptPanel
+                id="tool_prompt"
+                title="Final tool prompt"
+                description="Copy into ChatGPT or Canvas."
+                initialValue={CLIENT_TOOL_PROMPT}
+                copiedKey={copiedKey}
+                onCopy={(key, value) => handleCopy(key, value)}
+                rows={10}
+              />
+              <SelfScoreButtons value={level4SelfScore} onChange={setLevel4SelfScore} max={10} />
 
               <LevelCompleteRow
                 completed={levelCompletion[4]}
@@ -5471,6 +5518,7 @@ function StarterclassLabPage() {
               title="Level 5 – Safety, Limits & Strategy"
               subtitle="Understand when AI is helpful, when it’s dangerous, and how to stay valuable."
               points="Max 25 pts"
+              level={5}
             >
               <div className="grid md:grid-cols-4 gap-4">
                 {LAB_RISKS.map((risk) => (
@@ -5550,20 +5598,7 @@ function StarterclassLabPage() {
                 </div>
               </div>
 
-              <div className="mt-6 space-y-3">
-                <p className="font-semibold">Strategy reflection</p>
-                <p className="text-sm" style={{ color: palette.textSecondary }}>
-                  Answer with: 1 thing you’ll stop doing manually, 1 thing you’ll keep human-only, 1 skill you’ll build.
-                </p>
-                <textarea
-                  value={reflection}
-                  onChange={(event) => setReflection(event.target.value)}
-                  className="w-full rounded-2xl border p-3 text-sm"
-                  style={{ borderColor: palette.border, background: palette.surfaceSoft }}
-                  rows={4}
-                />
-                <SelfScoreButtons value={level5SelfScore} onChange={setLevel5SelfScore} max={5} />
-              </div>
+              <StrategyReflectionBoard selections={strategyChoices} onSelect={handleStrategySelect} />
 
               <LevelCompleteRow
                 completed={levelCompletion[5]}
@@ -5629,7 +5664,7 @@ function StarterclassLabPage() {
                   description="Give ChatGPT the context, preferences, and boundaries it needs to act like a smart colleague."
                   text={`${CUSTOM_INSTRUCTIONS_TEMPLATE}\n\n${CUSTOM_INSTRUCTIONS_STYLE}`}
                   copied={copiedKey === "resource_custom"}
-                  onCopy={() => handleCopy("resource_custom", `${CUSTOM_INSTRUCTIONS_TEMPLATE}\n\n${CUSTOM_INSTRUCTIONS_STYLE}`)}
+                  onCopy={(value) => handleCopy("resource_custom", value)}
                   linkHref="/tools-universal-ai-personality.html"
                 />
                 <LabResourceCard
@@ -5637,7 +5672,7 @@ function StarterclassLabPage() {
                   description="Drop this into ChatGPT Projects so every conversation stays organised."
                   text={PROJECT_PROMPT_TEMPLATE}
                   copied={copiedKey === "resource_project"}
-                  onCopy={() => handleCopy("resource_project", PROJECT_PROMPT_TEMPLATE)}
+                  onCopy={(value) => handleCopy("resource_project", value)}
                   linkHref="/tools-task-codes.html"
                 />
                 <LabResourceCard
@@ -5645,7 +5680,7 @@ function StarterclassLabPage() {
                   description="Paste any content and get structured feedback plus rewrites."
                   text={ANALYZER_PROMPT}
                   copied={copiedKey === "resource_analyzer"}
-                  onCopy={() => handleCopy("resource_analyzer", ANALYZER_PROMPT)}
+                  onCopy={(value) => handleCopy("resource_analyzer", value)}
                   linkHref="/tools-content-quality-analyzer.html"
                 />
               </div>
@@ -5671,27 +5706,28 @@ function StarterclassLabPage() {
                 description="Use this when you want ChatGPT to act like a proper brief architect."
                 text={CLIENT_BRIEF_INSTRUCTIONS}
                 copied={copiedKey === "resource_brief"}
-                onCopy={() => handleCopy("resource_brief", CLIENT_BRIEF_INSTRUCTIONS)}
+                onCopy={(value) => handleCopy("resource_brief", value)}
                 linkHref="/tools-client-brief-generator.html"
               />
             </section>
           </div>
         </div>
-        <div className="fixed right-4 bottom-6 z-40">
-          <GlassButton onClick={scrollToLevelOne} className="px-5 py-3">
-            Start Level 1
-          </GlassButton>
-        </div>
         <FooterMenu />
         <ScrollControls />
+        <FloatingLabProgress progress={progressPercent} score={scorePercent} completed={completedLevels} />
       </div>
     </ThemeProvider>
   );
 }
-function LevelSection({ id, title, subtitle, points, children }) {
+function LevelSection({ id, title, subtitle, points, level, children }) {
   const { palette } = useTheme();
+  const accent = level ? LAB_LEVEL_ACCENTS[level] : null;
   return (
-    <section id={id} className="rounded-3xl border p-6 md:p-10 space-y-6" style={{ borderColor: palette.border, background: palette.surface }}>
+    <section
+      id={id}
+      className="rounded-3xl border p-6 md:p-10 space-y-6"
+      style={{ borderColor: accent?.border || palette.border, background: accent?.background || palette.surface }}
+    >
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-3 justify-between">
           <h2 className="text-2xl font-semibold">{title}</h2>
@@ -5796,8 +5832,204 @@ function LevelCompleteRow({ completed, lockedPoints, onClick, label, note }) {
   );
 }
 
+function PromptAssemblyGame({ selection, onSelect, assembledPrompt, onCopy, copied }) {
+  const { palette } = useTheme();
+  return (
+    <div className="mt-6 rounded-3xl border p-4 space-y-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="font-semibold">Prompt Assembly</p>
+          <p className="text-sm" style={{ color: palette.textSecondary }}>
+            Click through each part to build a reusable prompt without typing.
+          </p>
+        </div>
+      </div>
+      <div className="grid md:grid-cols-2 gap-4">
+        {PROMPT_ASSEMBLY_PARTS.map((part) => (
+          <div key={part.key} className="rounded-2xl border p-4 space-y-2" style={{ borderColor: palette.border, background: palette.surface }}>
+            <p className="text-sm font-semibold">{part.label}</p>
+            <div className="flex flex-wrap gap-2">
+              {part.options.map((option) => {
+                const active = selection[part.key] === option;
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => onSelect(part.key, option)}
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${active ? "shadow" : ""}`}
+                    style={{
+                      border: `1px solid ${active ? palette.accentSecondary : palette.border}`,
+                      background: active ? `${palette.accentSecondary}15` : palette.surfaceSoft,
+                      color: active ? palette.accentSecondary : palette.textSecondary,
+                    }}
+                  >
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="rounded-2xl border p-4" style={{ borderColor: palette.border, background: palette.surface }}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="font-semibold">Prompt preview</p>
+          <GlassButton variant="secondary" onClick={() => onCopy(assembledPrompt || PROMPT_BLUEPRINT_TEXT)}>
+            {copied ? "Copied" : "Copy prompt"}
+          </GlassButton>
+        </div>
+        <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
+          {assembledPrompt || "Choose a role, context, goal, and format above to see the full prompt."}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function EditablePromptPanel({ id, title, description, initialValue, rows = 8, copiedKey, onCopy }) {
+  const { palette } = useTheme();
+  const [value, setValue] = useState(initialValue);
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+  return (
+    <div className="rounded-3xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="font-semibold">{title}</p>
+          {description && (
+            <p className="text-sm" style={{ color: palette.textSecondary }}>
+              {description}
+            </p>
+          )}
+        </div>
+        <GlassButton variant="secondary" onClick={() => onCopy(id, value)}>
+          {copiedKey === id ? "Copied" : "Copy"}
+        </GlassButton>
+      </div>
+      <textarea
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+        rows={rows}
+        className="w-full rounded-2xl border p-3 text-sm"
+        style={{ borderColor: palette.border, background: palette.surface }}
+      />
+    </div>
+  );
+}
+
+function TweakChecklist({ selections, onToggle }) {
+  const { palette } = useTheme();
+  return (
+    <div className="rounded-3xl border p-4 space-y-3" style={{ borderColor: palette.border, background: palette.surface }}>
+      <p className="text-sm font-semibold">Mark the custom tweaks you applied</p>
+      <div className="flex flex-wrap gap-2">
+        {CUSTOM_TWEAK_OPTIONS.map((option) => {
+          const active = selections.includes(option);
+          return (
+            <button
+              key={option}
+              type="button"
+              onClick={() => onToggle(option)}
+              className={`rounded-full px-3 py-1 text-xs font-semibold ${active ? "shadow" : ""}`}
+              style={{
+                border: `1px solid ${active ? palette.accentSecondary : palette.border}`,
+                background: active ? `${palette.accentSecondary}15` : palette.surfaceSoft,
+                color: active ? palette.accentSecondary : palette.textSecondary,
+              }}
+            >
+              {active ? "✓ " : ""}
+              {option}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function StrategyReflectionBoard({ selections, onSelect }) {
+  const { palette } = useTheme();
+  const labels = {
+    stop: "Stop doing manually",
+    keep: "Keep human-only",
+    skill: "Skill to invest in",
+  };
+  return (
+    <div className="rounded-3xl border p-4 space-y-4" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
+      <div>
+        <p className="font-semibold">Strategy reflection</p>
+        <p className="text-sm" style={{ color: palette.textSecondary }}>
+          Tap one tile per row to lock in your choices.
+        </p>
+      </div>
+      <div className="space-y-4">
+        {Object.entries(STRATEGY_GAMIFIED_CHOICES).map(([category, options]) => (
+          <div key={category} className="space-y-2">
+            <p className="text-xs uppercase tracking-[0.3em]" style={{ color: palette.textMuted }}>
+              {labels[category]}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {options.map((option) => {
+                const active = selections[category] === option;
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => onSelect(category, option)}
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${active ? "shadow" : ""}`}
+                    style={{
+                      border: `1px solid ${active ? palette.accentPrimary : palette.border}`,
+                      background: active ? `${palette.accentPrimary}20` : palette.surface,
+                      color: active ? palette.accentPrimary : palette.textSecondary,
+                    }}
+                  >
+                    {active ? "Selected · " : ""}
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FloatingLabProgress({ progress, score, completed }) {
+  const { palette } = useTheme();
+  return (
+    <div
+      className="pointer-events-none fixed left-4 right-4 bottom-28 sm:bottom-10 sm:left-6 sm:right-auto sm:w-72 rounded-3xl border px-4 py-3 shadow-lg backdrop-blur"
+      style={{ borderColor: palette.border, background: palette.surface }}
+    >
+      <div className="flex items-center justify-between text-xs uppercase tracking-[0.2em]" style={{ color: palette.textMuted }}>
+        <span>Lab progress</span>
+        <span>{completed}/5</span>
+      </div>
+      <div className="mt-2 flex items-center justify-between">
+        <p className="text-xl font-semibold">{progress}%</p>
+        <p className="text-sm" style={{ color: palette.textSecondary }}>
+          Score {score}%
+        </p>
+      </div>
+      <div className="mt-2 h-1.5 w-full rounded-full" style={{ background: palette.surfaceSoft }}>
+        <div
+          className="h-full rounded-full"
+          style={{ width: `${progress}%`, background: `linear-gradient(90deg, ${palette.accentPrimary}, ${palette.accentSecondary})` }}
+        />
+      </div>
+    </div>
+  );
+}
+
 function LabResourceCard({ title, description, text, copied, onCopy, linkHref, linkLabel = "Launch tool", children }) {
   const { palette } = useTheme();
+  const [value, setValue] = useState(text || "");
+  useEffect(() => {
+    setValue(text || "");
+  }, [text]);
   return (
     <div className="rounded-3xl border p-5 space-y-3" style={{ borderColor: palette.border, background: palette.surface }}>
       <div className="flex flex-wrap items-center gap-3 justify-between">
@@ -5807,7 +6039,7 @@ function LabResourceCard({ title, description, text, copied, onCopy, linkHref, l
         </div>
         <div className="flex flex-wrap gap-2">
           {onCopy && (
-            <GlassButton variant="secondary" onClick={onCopy}>
+            <GlassButton variant="secondary" onClick={() => onCopy(value)}>
               {copied ? "Copied" : "Copy"}
             </GlassButton>
           )}
@@ -5816,10 +6048,28 @@ function LabResourceCard({ title, description, text, copied, onCopy, linkHref, l
           )}
         </div>
       </div>
-      {text && <pre className="text-sm whitespace-pre-wrap" style={{ color: palette.textSecondary }}>{text}</pre>}
+      {text && (
+        <textarea
+          className="w-full rounded-2xl border p-3 text-sm"
+          style={{ borderColor: palette.border, background: palette.surfaceSoft }}
+          value={value}
+          rows={6}
+          onChange={(event) => setValue(event.target.value)}
+        />
+      )}
       {children}
     </div>
   );
+}
+
+function buildPromptFromSelection(selection) {
+  if (!selection) return "";
+  const parts = [];
+  if (selection.role) parts.push(selection.role);
+  if (selection.context) parts.push(`Context: ${selection.context}`);
+  if (selection.goal) parts.push(`Goal: ${selection.goal}`);
+  if (selection.format) parts.push(selection.format);
+  return parts.join("\n\n");
 }
 
 function QuickStartWorkshop() {
@@ -5827,7 +6077,7 @@ function QuickStartWorkshop() {
   const [entries, setEntries] = useState(() => {
     const initial = {};
     QUICK_START_ACTIONS.forEach((action) => {
-      initial[action.id] = { notes: "", done: false };
+      initial[action.id] = { done: false, steps: action.steps.map(() => false) };
     });
     return initial;
   });
@@ -5835,11 +6085,21 @@ function QuickStartWorkshop() {
   const progress = Math.round((completed / QUICK_START_ACTIONS.length) * 100);
 
   const toggleDone = (id) => {
-    setEntries((prev) => ({ ...prev, [id]: { ...prev[id], done: !prev[id].done } }));
+    setEntries((prev) => {
+      const entry = prev[id];
+      const nextDone = !entry.done;
+      return { ...prev, [id]: { done: nextDone, steps: entry.steps.map(() => nextDone) } };
+    });
   };
 
-  const updateNotes = (id, notes) => {
-    setEntries((prev) => ({ ...prev, [id]: { ...prev[id], notes } }));
+  const toggleStep = (id, index) => {
+    setEntries((prev) => {
+      const entry = prev[id];
+      const steps = [...entry.steps];
+      steps[index] = !steps[index];
+      const done = steps.every(Boolean);
+      return { ...prev, [id]: { done, steps } };
+    });
   };
 
   return (
@@ -5889,11 +6149,27 @@ function QuickStartWorkshop() {
                   {done ? "Undo" : "Mark complete"}
                 </GlassButton>
               </div>
-              <ol className="list-decimal pl-5 space-y-1 text-sm" style={{ color: palette.textSecondary }}>
-                {action.steps.map((step) => (
-                  <li key={step}>{step}</li>
-                ))}
-              </ol>
+              <div className="space-y-2">
+                {action.steps.map((step, stepIndex) => {
+                  const stepDone = entry?.steps?.[stepIndex];
+                  return (
+                    <button
+                      key={step}
+                      type="button"
+                      onClick={() => toggleStep(action.id, stepIndex)}
+                      className="flex w-full items-center gap-2 rounded-2xl border px-3 py-2 text-left"
+                      style={{
+                        borderColor: palette.border,
+                        background: stepDone ? `${palette.accentSecondary}15` : palette.surface,
+                        color: palette.textSecondary,
+                      }}
+                    >
+                      <span className="text-lg" aria-hidden="true">{stepDone ? "✓" : "○"}</span>
+                      <span>{step}</span>
+                    </button>
+                  );
+                })}
+              </div>
               {action.resource && (
                 <GlassButton
                   variant="secondary"
@@ -5903,14 +6179,6 @@ function QuickStartWorkshop() {
                   {action.resource.label}
                 </GlassButton>
               )}
-              <textarea
-                value={entry?.notes || ""}
-                onChange={(event) => updateNotes(action.id, event.target.value)}
-                placeholder={action.placeholder}
-                className="w-full rounded-2xl border p-3 text-sm"
-                style={{ borderColor: palette.border, background: palette.surface }}
-                rows={3}
-              />
             </div>
           );
         })}
@@ -6236,10 +6504,13 @@ function ClientBriefGeneratorTool({ compact = false }) {
 }
 
 function ToolPageShell({ slug, title, subtitle, accent, heroBadge = "Starterclass Tools", actions, children }) {
-  const { theme, palette, toggleTheme } = usePageTheme(`sc_tool_${slug}_theme`);
+  const { theme, palette, toggleTheme } = usePageTheme();
+  const toolBackground = theme === "dark"
+    ? "radial-gradient(circle at 15% 20%, rgba(139,92,246,0.25), transparent 60%), radial-gradient(circle at 85% 0%, rgba(16,185,129,0.2), transparent 70%), #040312"
+    : "linear-gradient(120deg, #FDF4E8, #F4F0FF 45%, #E7F8FF)";
   return (
     <ThemeProvider theme={theme} palette={palette}>
-      <div className="min-h-screen" style={{ background: palette.background, color: palette.textPrimary }}>
+      <div className="min-h-screen" style={{ background: toolBackground, color: palette.textPrimary }}>
         <header className="sticky top-0 z-40 backdrop-blur" style={{ background: palette.headerBg, borderBottom: `1px solid ${palette.border}` }}>
           <div className="max-w-6xl mx-auto px-4 py-4 space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -6258,10 +6529,11 @@ function ToolPageShell({ slug, title, subtitle, accent, heroBadge = "Starterclas
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="rounded-full border px-4 py-2 text-sm font-semibold"
+                className="rounded-full border p-2 text-xl"
                 style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
               >
-                Switch to {theme === "dark" ? "light" : "dark"} mode
+                {theme === "dark" ? "🌞" : "🌙"}
               </button>
             </div>
             <div className="flex justify-center">
@@ -6288,10 +6560,15 @@ function ToolPageShell({ slug, title, subtitle, accent, heroBadge = "Starterclas
 }
 
 function ToolsGalleryPage() {
-  const { theme, palette, toggleTheme } = usePageTheme("sc_tools_theme");
+  const { theme, palette, toggleTheme } = usePageTheme();
+  const [sortOrder, setSortOrder] = useState("az");
+  const sortedTools = useMemo(() => sortByOrder(TOOL_DEFINITIONS, sortOrder, "title"), [sortOrder]);
+  const galleryBackground = theme === "dark"
+    ? "radial-gradient(circle at 20% 20%, rgba(139,92,246,0.25), transparent 55%), radial-gradient(circle at 80% 0%, rgba(16,185,129,0.2), transparent 65%), #03020f"
+    : "linear-gradient(120deg, #FCF1E7, #F2EFFF 45%, #E6F9FF)";
   return (
     <ThemeProvider theme={theme} palette={palette}>
-      <div className="min-h-screen" style={{ background: palette.background, color: palette.textPrimary }}>
+      <div className="min-h-screen" style={{ background: galleryBackground, color: palette.textPrimary }}>
         <header className="sticky top-0 z-40 backdrop-blur" style={{ background: palette.headerBg, borderBottom: `1px solid ${palette.border}` }}>
           <div className="max-w-6xl mx-auto px-4 py-4 space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -6301,10 +6578,11 @@ function ToolsGalleryPage() {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="rounded-full border px-4 py-2 text-sm font-semibold"
+                className="rounded-full border p-2 text-xl"
                 style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
               >
-                Switch to {theme === "dark" ? "light" : "dark"} mode
+                {theme === "dark" ? "🌞" : "🌙"}
               </button>
             </div>
             <div className="flex justify-center">
@@ -6328,31 +6606,43 @@ function ToolsGalleryPage() {
               </div>
             </div>
           </section>
-          <section className="grid gap-6 md:grid-cols-2">
-            {TOOL_DEFINITIONS.map((tool) => (
-              <button
-                key={tool.slug}
-                type="button"
-                onClick={() => (window.location.href = `/tools-${tool.slug}.html`)}
-                className="group rounded-3xl overflow-hidden border text-left"
-                style={{ borderColor: palette.border, background: palette.surface }}
-              >
-                <div className="relative aspect-square overflow-hidden">
-                  <img src={tool.image} alt={tool.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 text-white space-y-1">
-                    <p className="text-sm uppercase tracking-[0.28em]">{tool.title}</p>
-                    <p className="text-lg font-semibold">{tool.tagline}</p>
+          <section className="space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="text-sm font-semibold" style={{ color: palette.textSecondary }}>
+                Tap a tool to launch the full-screen build.
+              </p>
+              <SortControl value={sortOrder} onChange={setSortOrder} />
+            </div>
+            <div className="grid gap-3 grid-cols-3 lg:grid-cols-4">
+              {sortedTools.map((tool) => (
+                <button
+                  key={tool.slug}
+                  type="button"
+                  onClick={() => (window.location.href = `/tools-${tool.slug}.html`)}
+                  className="group rounded-[1.75rem] overflow-hidden border text-left relative"
+                  style={{
+                    borderColor: tool.accent,
+                    background: `linear-gradient(160deg, ${tool.accent}22, ${palette.surface})`,
+                    boxShadow: `0 20px 45px ${tool.accent}22`,
+                  }}
+                >
+                  <div className="relative aspect-[5/6] overflow-hidden">
+                    <img src={tool.image} alt={tool.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 text-white space-y-1">
+                      <p className="text-[0.65rem] uppercase tracking-[0.3em]">{tool.title}</p>
+                      <p className="text-sm font-semibold md:text-lg">{tool.tagline}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="p-5 flex items-center justify-between text-sm" style={{ color: palette.textSecondary }}>
-                  <span>Tap to launch</span>
-                  <span className="text-lg" aria-hidden="true">
-                    →
-                  </span>
-                </div>
-              </button>
-            ))}
+                  <div className="p-4 flex items-center justify-between text-xs" style={{ color: palette.textSecondary }}>
+                    <span>Tap to launch</span>
+                    <span className="text-lg" aria-hidden="true">
+                      →
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
           </section>
         </main>
         <FooterMenu />
@@ -7124,13 +7414,15 @@ function ToolsClientProjectPlannerPage() {
 }
 
 function PromptsGalleryPage() {
-  const { theme, palette, toggleTheme } = usePageTheme("sc_prompts_theme");
+  const { theme, palette, toggleTheme } = usePageTheme();
   const [prompts, setPrompts] = useState(assignPromptImages(PROMPT_FALLBACKS));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedPrompt, setSelectedPrompt] = useState(null);
   const [editablePrompt, setEditablePrompt] = useState("");
   const [copied, setCopied] = useState(false);
+  const [sortOrder, setSortOrder] = useState("random");
+  const displayPrompts = useMemo(() => sortByOrder(prompts, sortOrder, "action"), [prompts, sortOrder]);
 
   useEffect(() => {
     let cancelled = false;
@@ -7173,10 +7465,13 @@ function PromptsGalleryPage() {
       setTimeout(() => setCopied(false), 2000);
     }
   };
+  const promptBackground = theme === "dark"
+    ? "radial-gradient(circle at 20% 15%, rgba(139,92,246,0.25), transparent 60%), radial-gradient(circle at 80% 0%, rgba(59,130,246,0.2), transparent 70%), #030212"
+    : "linear-gradient(125deg, #FCF1E9, #F1EEFF 45%, #E5F8FF)";
 
   return (
     <ThemeProvider theme={theme} palette={palette}>
-      <div className="min-h-screen" style={{ background: palette.background, color: palette.textPrimary }}>
+      <div className="min-h-screen" style={{ background: promptBackground, color: palette.textPrimary }}>
         <header className="sticky top-0 z-40 backdrop-blur" style={{ background: palette.headerBg, borderBottom: `1px solid ${palette.border}` }}>
           <div className="max-w-6xl mx-auto px-4 py-4 space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -7184,10 +7479,11 @@ function PromptsGalleryPage() {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="rounded-full border px-4 py-2 text-sm font-semibold"
+                className="rounded-full border p-2 text-xl"
                 style={{ borderColor: palette.border, background: palette.surfaceSoft, color: palette.textPrimary }}
+                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
               >
-                Switch to {theme === "dark" ? "light" : "dark"} mode
+                {theme === "dark" ? "🌞" : "🌙"}
               </button>
             </div>
             <div className="flex justify-center">
@@ -7202,6 +7498,7 @@ function PromptsGalleryPage() {
             <p className="text-sm" style={{ color: palette.textSecondary }}>
               Data flows from the shared Google Sheet, so every refresh can reveal fresh angles.
             </p>
+            <SortControl value={sortOrder} onChange={setSortOrder} />
           </section>
           {error && (
             <div className="rounded-3xl border p-4 text-sm" style={{ borderColor: palette.border, background: palette.surfaceSoft }}>
@@ -7213,8 +7510,8 @@ function PromptsGalleryPage() {
               Loading prompts…
             </p>
           ) : (
-            <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {prompts.map((prompt) => (
+            <section className="grid gap-3 grid-cols-3 lg:grid-cols-4">
+              {displayPrompts.map((prompt) => (
                 <button
                   key={`${prompt.action}-${prompt.image}`}
                   type="button"
@@ -7225,8 +7522,8 @@ function PromptsGalleryPage() {
                   <img src={prompt.image} alt={prompt.action} className="absolute inset-0 h-full w-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="relative h-full w-full p-4 flex flex-col justify-end text-white">
-                    <p className="text-xs uppercase tracking-[0.3em]">Prompt</p>
-                    <p className="text-lg font-semibold">{prompt.action}</p>
+                    <p className="text-[0.55rem] uppercase tracking-[0.35em]">Prompt</p>
+                    <p className="text-sm font-semibold md:text-lg">{prompt.action}</p>
                   </div>
                 </button>
               ))}
@@ -7308,6 +7605,63 @@ function assignPromptImages(list) {
     ...item,
     image: PROMPT_IMAGE_POOL[(seed + index) % PROMPT_IMAGE_POOL.length],
   }));
+}
+
+function SortControl({ value, onChange }) {
+  const { palette } = useTheme();
+  const options = [
+    { value: "az", label: "A → Z" },
+    { value: "za", label: "Z → A" },
+    { value: "random", label: "Shuffle" },
+  ];
+  return (
+    <div className="flex items-center gap-2 text-xs" style={{ color: palette.textSecondary }}>
+      <span className="uppercase tracking-[0.3em]">Sort</span>
+      <div className="flex gap-1">
+        {options.map((option) => {
+          const active = value === option.value;
+          return (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => onChange(option.value)}
+              className={`rounded-full px-3 py-1 font-semibold ${active ? "shadow" : ""}`}
+              style={{
+                border: `1px solid ${active ? palette.accentSecondary : palette.border}`,
+                background: active ? `${palette.accentSecondary}20` : palette.surface,
+                color: active ? palette.accentSecondary : palette.textSecondary,
+              }}
+            >
+              {option.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function sortByOrder(list, order, key = "title") {
+  const arr = [...list];
+  if (order === "az") {
+    return arr.sort((a, b) => (a[key] || "").localeCompare(b[key] || ""));
+  }
+  if (order === "za") {
+    return arr.sort((a, b) => (b[key] || "").localeCompare(a[key] || ""));
+  }
+  if (order === "random") {
+    return shuffleArray(arr);
+  }
+  return arr;
+}
+
+function shuffleArray(list) {
+  const arr = [...list];
+  for (let i = arr.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
 
 window.ToolsGalleryPage = ToolsGalleryPage;
