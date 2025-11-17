@@ -498,6 +498,13 @@ const TOOL_DEFINITIONS = [
     accent: "#10B981",
     image: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=600&q=60",
   },
+  {
+    slug: "youtube-mp3",
+    title: "YouTube to MP3 Studio",
+    tagline: "Pull the cleanest audio from any lecture or talk in seconds.",
+    accent: "#EF4444",
+    image: "https://images.unsplash.com/photo-1485579149621-3123dd979885?auto=format&fit=crop&w=600&q=60",
+  },
 ];
 
 const PROMPT_SHEET_CSV =
@@ -7353,6 +7360,269 @@ function ClientProjectPlannerTool() {
   );
 }
 
+function YoutubeMp3Tool() {
+  const { palette } = useTheme();
+  const [link, setLink] = useState("");
+  const [status, setStatus] = useState("idle");
+  const [progress, setProgress] = useState(0);
+  const [error, setError] = useState("");
+  const [result, setResult] = useState(null);
+  const [downloadUrl, setDownloadUrl] = useState("");
+  const [history, setHistory] = useState([]);
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      if (downloadUrl) {
+        URL.revokeObjectURL(downloadUrl);
+      }
+    };
+  }, [downloadUrl]);
+
+  const handleConvert = useCallback(async () => {
+    if (busy) {
+      return;
+    }
+    setError("");
+    const videoId = extractYouTubeId(link);
+    if (!videoId) {
+      setError("Enter a valid YouTube URL or video ID.");
+      return;
+    }
+    setBusy(true);
+    setStatus("fetching");
+    setProgress(10);
+    try {
+      const manifest = await fetchYoutubeManifest(videoId);
+      const audioStream = pickBestAudioStream(manifest.audioStreams || []);
+      if (!audioStream) {
+        throw new Error("No downloadable audio stream was returned.");
+      }
+      const meta = {
+        title: manifest.title || "Untitled video",
+        channel: manifest.uploader || manifest.channel?.name || "Unknown creator",
+        duration: manifest.duration,
+        thumbnail:
+          manifest.thumbnailUrl ||
+          manifest.thumbnailUrlSet?.[0]?.url ||
+          manifest.thumbnail?.[0]?.url,
+        id: videoId,
+        originalFormat: audioStream.mimeType,
+      };
+      setResult({ ...meta });
+      setStatus("converting");
+      setProgress(45);
+      if (downloadUrl) {
+        URL.revokeObjectURL(downloadUrl);
+        setDownloadUrl("");
+      }
+      const blob = await convertStreamToMp3(audioStream.url, (value) => setProgress(Math.min(95, value)));
+      const safeName = `${sanitizeFileName(meta.title)}.mp3`;
+      setResult((prev) => ({ ...prev, fileName: safeName, fileSize: blob.size }));
+      setDownloadUrl(URL.createObjectURL(blob));
+      setProgress(100);
+      setStatus("ready");
+      setHistory((prev) =>
+        [
+          {
+            title: meta.title,
+            channel: meta.channel,
+            timestamp: new Date().toISOString(),
+            size: blob.size,
+          },
+          ...prev,
+        ].slice(0, 4)
+      );
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+      setError(err.message || "Unable to convert this link right now.");
+    } finally {
+      setBusy(false);
+    }
+  }, [busy, downloadUrl, link]);
+
+  const downloadFile = useCallback(() => {
+    if (!downloadUrl || !result?.fileName) {
+      return;
+    }
+    const anchor = document.createElement("a");
+    anchor.href = downloadUrl;
+    anchor.download = result.fileName;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+  }, [downloadUrl, result]);
+
+  const statusMap = {
+    idle: "Ready when you are.",
+    fetching: "Fetching the cleanest stream…",
+    converting: "Transcoding to 320 kbps MP3…",
+    ready: "MP3 ready to download.",
+    error: "Something went wrong.",
+  };
+
+  const formatSeconds = (value) => {
+    if (!value && value !== 0) {
+      return "—";
+    }
+    const total = Number(value);
+    const minutes = Math.floor(total / 60);
+    const seconds = Math.round(total % 60)
+      .toString()
+      .padStart(2, "0");
+    return `${minutes}:${seconds}`;
+  };
+
+  const formatBytes = (bytes) => {
+    if (!bytes && bytes !== 0) {
+      return "—";
+    }
+    const units = ["B", "KB", "MB", "GB"];
+    let value = bytes;
+    let unitIndex = 0;
+    while (value >= 1024 && unitIndex < units.length - 1) {
+      value /= 1024;
+      unitIndex += 1;
+    }
+    return `${value.toFixed(1)} ${units[unitIndex]}`;
+  };
+
+  return (
+    <div className="space-y-8">
+      <div
+        className="rounded-3xl border p-6 space-y-6"
+        style={{ borderColor: palette.border, background: palette.surfaceSoft, boxShadow: "0 40px 120px rgba(0,0,0,0.25)" }}
+      >
+        <div>
+          <p className="text-xs uppercase tracking-[0.4em]" style={{ color: palette.textSecondary }}>
+            Step 1 · Paste link
+          </p>
+          <div className="mt-3 flex flex-col gap-3 md:flex-row">
+            <input
+              type="text"
+              placeholder="https://www.youtube.com/watch?v=…"
+              className="flex-1 rounded-2xl border px-4 py-3 text-sm"
+              style={{ borderColor: palette.border, background: palette.surface }}
+              value={link}
+              onChange={(event) => setLink(event.target.value)}
+            />
+            <GlassButton onClick={handleConvert} disabled={busy}>
+              {busy ? "Processing" : "Convert"}
+            </GlassButton>
+          </div>
+        </div>
+        <div>
+          <p className="text-xs uppercase tracking-[0.4em] mb-2" style={{ color: palette.textSecondary }}>
+            Progress
+          </p>
+          <div className="h-3 rounded-full overflow-hidden" style={{ background: palette.surface }}>
+            <div
+              className="h-full rounded-full"
+              style={{
+                width: `${progress}%`,
+                background: `linear-gradient(90deg, ${palette.accentPrimary}, ${palette.accentSecondary})`,
+                transition: "width 0.3s ease",
+              }}
+            />
+          </div>
+          <p className="mt-2 text-sm" style={{ color: palette.textSecondary }}>
+            {statusMap[status]}
+          </p>
+        </div>
+        {error && (
+          <div className="rounded-2xl border px-4 py-3 text-sm" style={{ borderColor: "#F87171", color: "#F87171" }}>
+            {error}
+          </div>
+        )}
+        {result && (
+          <div className="rounded-3xl border p-4 flex flex-col gap-4 md:flex-row" style={{ borderColor: palette.border }}>
+            {result.thumbnail && (
+              <img src={result.thumbnail} alt="Video thumbnail" className="w-full md:w-56 rounded-2xl object-cover" />
+            )}
+            <div className="flex-1 space-y-3">
+              <div>
+                <p className="text-xs uppercase tracking-[0.4em]" style={{ color: palette.textSecondary }}>
+                  Track info
+                </p>
+                <p className="text-2xl font-semibold mt-1">{result.title}</p>
+                <p className="text-sm" style={{ color: palette.textSecondary }}>
+                  {result.channel} · {formatSeconds(result.duration)}
+                </p>
+              </div>
+              <div className="grid gap-3 md:grid-cols-3">
+                <div className="rounded-2xl border p-3" style={{ borderColor: palette.border }}>
+                  <p className="text-xs" style={{ color: palette.textSecondary }}>
+                    Encoder
+                  </p>
+                  <p className="font-semibold">LAME · 320 kbps</p>
+                </div>
+                <div className="rounded-2xl border p-3" style={{ borderColor: palette.border }}>
+                  <p className="text-xs" style={{ color: palette.textSecondary }}>
+                    Size
+                  </p>
+                  <p className="font-semibold">{formatBytes(result.fileSize)}</p>
+                </div>
+                <div className="rounded-2xl border p-3" style={{ borderColor: palette.border }}>
+                  <p className="text-xs" style={{ color: palette.textSecondary }}>
+                    Original stream
+                  </p>
+                  <p className="font-semibold truncate">{result.originalFormat || "—"}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <GlassButton onClick={downloadFile} disabled={!downloadUrl}>
+                  Download MP3
+                </GlassButton>
+                <GlassButton
+                  variant="secondary"
+                  onClick={() => navigator.clipboard.writeText(result.fileName || `${result.id}.mp3`)}
+                >
+                  Copy filename
+                </GlassButton>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="rounded-3xl border p-5" style={{ borderColor: palette.border }}>
+          <p className="text-xs uppercase tracking-[0.4em]" style={{ color: palette.textSecondary }}>
+            Quality protocol
+          </p>
+          <ul className="mt-4 space-y-3 text-sm" style={{ color: palette.textSecondary }}>
+            <li>We request the Piped manifest to pick the highest bitrate audio stream.</li>
+            <li>Audio is decoded locally so source links never leave your browser.</li>
+            <li>LAME encoder runs at 320 kbps CBR for studio-grade MP3 output.</li>
+          </ul>
+        </div>
+        <div className="rounded-3xl border p-5" style={{ borderColor: palette.border }}>
+          <p className="text-xs uppercase tracking-[0.4em]" style={{ color: palette.textSecondary }}>
+            Recent renders
+          </p>
+          <div className="mt-4 space-y-3">
+            {history.length === 0 && (
+              <p className="text-sm" style={{ color: palette.textSecondary }}>
+                Your conversions will show up here with timestamps and file sizes.
+              </p>
+            )}
+            {history.map((item) => (
+              <div key={item.timestamp} className="rounded-2xl border px-3 py-2" style={{ borderColor: palette.border }}>
+                <p className="text-sm font-semibold">{item.title}</p>
+                <p className="text-xs" style={{ color: palette.textSecondary }}>
+                  {item.channel} · {formatBytes(item.size)} ·
+                  {" "}
+                  {new Date(item.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ToolsUniversalAIPersonalityPage() {
   return (
     <ToolPageShell
@@ -7409,6 +7679,23 @@ function ToolsClientProjectPlannerPage() {
       subtitle="Scope projects, price them confidently, and send a client-ready email in minutes."
     >
       <ClientProjectPlannerTool />
+    </ToolPageShell>
+  );
+}
+
+function ToolsYoutubeMp3Page() {
+  return (
+    <ToolPageShell
+      slug="youtube-mp3"
+      title="YouTube to MP3 Studio"
+      subtitle="Paste a link, fetch the cleanest audio, and leave with a 320 kbps MP3 in minutes."
+      accent="#EF4444"
+      actions={[
+        { label: "Back to tools", href: "/tools.html" },
+        { label: "Study the Starterclass Lab", href: "/ai-starterclass-lab.html" },
+      ]}
+    >
+      <YoutubeMp3Tool />
     </ToolPageShell>
   );
 }
@@ -7664,11 +7951,176 @@ function shuffleArray(list) {
   return arr;
 }
 
+async function fetchYoutubeManifest(videoId) {
+  const endpoints = [
+    `https://piped.video/api/v1/streams/${videoId}?hl=en`,
+    `https://piped.video/api/v1/streams/${videoId}?region=us`,
+    `https://piped.video/api/v1/streams/${videoId}?local=true`,
+  ];
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint);
+      if (response.ok) {
+        return response.json();
+      }
+    } catch (error) {
+      // try next endpoint
+    }
+  }
+  throw new Error("Unable to reach the audio manifest right now.");
+}
+
+function pickBestAudioStream(streams) {
+  if (!Array.isArray(streams) || streams.length === 0) {
+    return null;
+  }
+  const sorted = [...streams].sort((a, b) => (b.bitrate || 0) - (a.bitrate || 0));
+  return (
+    sorted.find((stream) => /audio\/(mp4|mpeg|webm)/i.test(stream.mimeType || "")) ||
+    sorted[0]
+  );
+}
+
+async function convertStreamToMp3(url, onProgress) {
+  if (!url) {
+    throw new Error("Missing audio stream URL.");
+  }
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("Unable to download the audio stream.");
+  }
+  onProgress?.(60);
+  const arrayBuffer = await response.arrayBuffer();
+  const AudioContextClass = typeof window !== "undefined" ? window.AudioContext || window.webkitAudioContext : null;
+  if (!AudioContextClass) {
+    throw new Error("Audio conversion is not supported in this browser.");
+  }
+  const audioContext = new AudioContextClass();
+  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer.slice(0));
+  onProgress?.(75);
+  await ensureLameEncoder();
+  const monoData = downmixToMono(audioBuffer);
+  const int16Data = floatTo16BitPCM(monoData);
+  const mp3Blob = encodeMp3(int16Data, audioBuffer.sampleRate, onProgress);
+  audioContext.close?.();
+  onProgress?.(95);
+  return mp3Blob;
+}
+
+let lameScriptPromise = null;
+function ensureLameEncoder() {
+  if (typeof window === "undefined") {
+    return Promise.reject(new Error("Encoder unavailable in this environment."));
+  }
+  if (window.lamejs) {
+    return Promise.resolve(window.lamejs);
+  }
+  if (!lameScriptPromise) {
+    lameScriptPromise = new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-lame="true"]');
+      if (existing) {
+        existing.addEventListener("load", () => resolve(window.lamejs));
+        existing.addEventListener("error", () => reject(new Error("Failed to load MP3 encoder.")));
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/lamejs@1.2.0/lame.min.js";
+      script.async = true;
+      script.dataset.lame = "true";
+      script.onload = () => resolve(window.lamejs);
+      script.onerror = () => reject(new Error("Failed to load MP3 encoder."));
+      document.body.appendChild(script);
+    });
+  }
+  return lameScriptPromise;
+}
+
+function downmixToMono(audioBuffer) {
+  if (audioBuffer.numberOfChannels === 1) {
+    return audioBuffer.getChannelData(0);
+  }
+  const length = audioBuffer.length;
+  const mono = new Float32Array(length);
+  for (let channel = 0; channel < audioBuffer.numberOfChannels; channel += 1) {
+    const channelData = audioBuffer.getChannelData(channel);
+    for (let i = 0; i < length; i += 1) {
+      mono[i] += channelData[i] / audioBuffer.numberOfChannels;
+    }
+  }
+  return mono;
+}
+
+function floatTo16BitPCM(float32Array) {
+  const buffer = new Int16Array(float32Array.length);
+  for (let i = 0; i < float32Array.length; i += 1) {
+    const sample = Math.max(-1, Math.min(1, float32Array[i]));
+    buffer[i] = sample < 0 ? sample * 0x8000 : sample * 0x7fff;
+  }
+  return buffer;
+}
+
+function encodeMp3(int16Array, sampleRate, onProgress) {
+  if (!window.lamejs) {
+    throw new Error("MP3 encoder missing.");
+  }
+  const mp3Encoder = new window.lamejs.Mp3Encoder(1, sampleRate, 320);
+  const chunkSize = 1152;
+  const mp3Data = [];
+  for (let i = 0; i < int16Array.length; i += chunkSize) {
+    const chunk = int16Array.subarray(i, i + chunkSize);
+    const mp3buf = mp3Encoder.encodeBuffer(chunk);
+    if (mp3buf.length > 0) {
+      mp3Data.push(mp3buf);
+    }
+    if (onProgress) {
+      const percent = 80 + Math.round((i / int16Array.length) * 15);
+      onProgress(Math.min(95, percent));
+    }
+  }
+  const flushed = mp3Encoder.flush();
+  if (flushed.length > 0) {
+    mp3Data.push(flushed);
+  }
+  return new Blob(mp3Data, { type: "audio/mpeg" });
+}
+
+function sanitizeFileName(text) {
+  return (text || "starterclass-track")
+    .replace(/[\s]+/g, "-")
+    .replace(/[^a-z0-9-_]/gi, "")
+    .slice(0, 80) || "starterclass-track";
+}
+
+function extractYouTubeId(value) {
+  if (!value) {
+    return "";
+  }
+  const trimmed = value.trim();
+  const direct = trimmed.match(/^[a-zA-Z0-9_-]{11}$/);
+  if (direct) {
+    return direct[0];
+  }
+  const patterns = [
+    /v=([a-zA-Z0-9_-]{11})/, // watch?v=
+    /youtu\.be\/([a-zA-Z0-9_-]{11})/, // youtu.be/
+    /shorts\/([a-zA-Z0-9_-]{11})/, // shorts
+    /embed\/([a-zA-Z0-9_-]{11})/, // embed
+  ];
+  for (const pattern of patterns) {
+    const match = trimmed.match(pattern);
+    if (match && match[1]) {
+      return match[1];
+    }
+  }
+  return "";
+}
+
 window.ToolsGalleryPage = ToolsGalleryPage;
 window.ToolsUniversalAIPersonalityPage = ToolsUniversalAIPersonalityPage;
 window.ToolsTaskCodesPage = ToolsTaskCodesPage;
 window.ToolsClientBriefGeneratorPage = ToolsClientBriefGeneratorPage;
 window.ToolsContentQualityAnalyzerPage = ToolsContentQualityAnalyzerPage;
 window.ToolsClientProjectPlannerPage = ToolsClientProjectPlannerPage;
+window.ToolsYoutubeMp3Page = ToolsYoutubeMp3Page;
 window.PromptsGalleryPage = PromptsGalleryPage;
 window.StarterclassLabPage = StarterclassLabPage;
