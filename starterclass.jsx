@@ -1562,6 +1562,22 @@ function usePageTheme(storageKey = "sc_theme_pref", fallback = "light") {
   });
   const palette = useMemo(() => getPalette(theme), [theme]);
   useEffect(() => {
+    if (typeof document === "undefined") return undefined;
+    const root = document.documentElement;
+    const body = document.body;
+    const themeClass = theme === "dark" ? "theme-dark" : "theme-light";
+    const otherClass = theme === "dark" ? "theme-light" : "theme-dark";
+    const backgroundColor = theme === "dark" ? "#030213" : "#FCFBFF";
+    root.classList.remove(otherClass);
+    root.classList.add(themeClass);
+    root.dataset.theme = theme;
+    body.dataset.theme = theme;
+    root.style.backgroundColor = backgroundColor;
+    body.style.backgroundColor = backgroundColor;
+    body.style.color = palette.textPrimary;
+    return () => {};
+  }, [palette.textPrimary, theme]);
+  useEffect(() => {
     if (typeof window === "undefined") return undefined;
     const handleStorage = (event) => {
       if (event.key === storageKey && event.newValue) {
@@ -7975,44 +7991,102 @@ function shuffleArray(list) {
 }
 
 async function fetchYoutubeManifest(videoId) {
-  const instances = [
+  const pipedInstances = [
     "https://piped.video",
     "https://piped.mha.fi",
-    "https://piped.video",
-    "https://piped.video",
+    "https://piped.garudalinux.org",
+    "https://piped.adminforge.de",
+    "https://piped.projectsegfau.lt",
+    "https://piped.lunar.icu",
+    "https://watch.leptons.xyz",
+    "https://piped.privacy.com.de",
+  ];
+  const invidiousInstances = [
+    "https://yewtu.be",
+    "https://inv.nadeko.net",
+    "https://vid.puffyan.us",
   ];
   const proxify = (url) => `https://r.jina.ai/http://${url.replace(/^https?:\/\//, "")}`;
-  const endpoints = instances.flatMap((instance) => [
-    `${instance}/api/v1/streams/${videoId}?hl=en`,
-    `${instance}/api/v1/streams/${videoId}?region=us`,
-    `${instance}/api/v1/streams/${videoId}?local=true`,
-    `${proxify(instance)}/api/v1/streams/${videoId}?hl=en`,
-  ]);
+  const pipedEndpoints = pipedInstances.flatMap((instance) => {
+    const base = `${instance}/api/v1/streams/${videoId}`;
+    return [
+      `${base}?hl=en`,
+      `${base}?region=us`,
+      `${base}?local=true`,
+      proxify(`${base}?hl=en`),
+      proxify(`${base}?region=us`),
+    ];
+  });
+  const invidiousEndpoints = invidiousInstances.flatMap((instance) => {
+    const base = `${instance}/api/v1/videos/${videoId}`;
+    return [base, proxify(base)];
+  });
+  const endpoints = Array.from(new Set([...pipedEndpoints, ...invidiousEndpoints]));
+  let lastError = null;
   for (const endpoint of endpoints) {
     try {
-      const response = await fetch(endpoint, {
-        headers: {
-          Accept: "application/json,text/plain;q=0.9",
-        },
-      });
-      if (!response.ok) {
+      const payload = await fetchJsonSafe(endpoint);
+      if (!payload) {
         continue;
       }
-      const contentType = response.headers.get("content-type") || "";
-      const text = await response.text();
-      const looksJson = /json/i.test(contentType) || text.trim().startsWith("{");
-      if (!looksJson) {
+      if (endpoint.includes("/api/v1/videos/")) {
+        const normalized = normalizeInvidiousManifest(payload);
+        if (normalized) {
+          return normalized;
+        }
         continue;
       }
-      const data = JSON.parse(text);
-      if (data && (data.audioStreams?.length || data.hls)) {
-        return data;
+      if (payload.audioStreams?.length || payload.hls) {
+        return payload;
       }
     } catch (error) {
-      // try next endpoint
+      lastError = error;
     }
   }
-  throw new Error("Unable to reach the audio manifest right now.");
+  throw new Error(lastError?.message || "Unable to reach the audio manifest right now.");
+}
+
+async function fetchJsonSafe(endpoint) {
+  const response = await fetch(endpoint, {
+    headers: {
+      Accept: "application/json,text/plain;q=0.9",
+    },
+  });
+  if (!response.ok) {
+    return null;
+  }
+  const text = await response.text();
+  const trimmed = text.trim();
+  if (!trimmed.startsWith("{") && !trimmed.startsWith("[")) {
+    return null;
+  }
+  try {
+    return JSON.parse(trimmed);
+  } catch (error) {
+    return null;
+  }
+}
+
+function normalizeInvidiousManifest(data) {
+  if (!data) return null;
+  const candidateStreams = data?.adaptiveFormats || data?.formatStreams || [];
+  const audioStreams = candidateStreams
+    .filter((stream) => /audio\//i.test(stream.type || "") && stream.url)
+    .map((stream) => ({
+      url: stream.url,
+      bitrate: stream.bitrate || stream.bitrate_value || stream.avgBitrate,
+      mimeType: stream.type,
+    }));
+  if (!audioStreams.length) {
+    return null;
+  }
+  return {
+    title: data.title,
+    uploader: data.author,
+    duration: Number(data.lengthSeconds || data.duration) || undefined,
+    thumbnailUrl: data.videoThumbnails?.[0]?.url,
+    audioStreams,
+  };
 }
 
 function pickBestAudioStream(streams) {

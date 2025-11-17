@@ -1627,6 +1627,22 @@ function usePageTheme() {
     return getPalette(theme);
   }, [theme]);
   useEffect(function () {
+    if (typeof document === "undefined") return undefined;
+    var root = document.documentElement;
+    var body = document.body;
+    var themeClass = theme === "dark" ? "theme-dark" : "theme-light";
+    var otherClass = theme === "dark" ? "theme-light" : "theme-dark";
+    var backgroundColor = theme === "dark" ? "#030213" : "#FCFBFF";
+    root.classList.remove(otherClass);
+    root.classList.add(themeClass);
+    root.dataset.theme = theme;
+    body.dataset.theme = theme;
+    root.style.backgroundColor = backgroundColor;
+    body.style.backgroundColor = backgroundColor;
+    body.style.color = palette.textPrimary;
+    return function () {};
+  }, [palette.textPrimary, theme]);
+  useEffect(function () {
     if (typeof window === "undefined") return undefined;
     var handleStorage = function handleStorage(event) {
       if (event.key === storageKey && event.newValue) {
@@ -9633,87 +9649,150 @@ function fetchYoutubeManifest(_x) {
 }
 function _fetchYoutubeManifest() {
   _fetchYoutubeManifest = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(videoId) {
-    var instances, proxify, endpoints, _iterator2, _step2, endpoint, _data$audioStreams, response, contentType, text, looksJson, data, _t5, _t6;
+    var _lastError;
+    var pipedInstances, invidiousInstances, proxify, pipedEndpoints, invidiousEndpoints, endpoints, lastError, _i2, _endpoints, endpoint, _payload$audioStreams, payload, normalized, _t5;
     return _regenerator().w(function (_context5) {
       while (1) switch (_context5.p = _context5.n) {
         case 0:
-          instances = ["https://piped.video", "https://piped.mha.fi", "https://piped.video", "https://piped.video"];
+          pipedInstances = ["https://piped.video", "https://piped.mha.fi", "https://piped.garudalinux.org", "https://piped.adminforge.de", "https://piped.projectsegfau.lt", "https://piped.lunar.icu", "https://watch.leptons.xyz", "https://piped.privacy.com.de"];
+          invidiousInstances = ["https://yewtu.be", "https://inv.nadeko.net", "https://vid.puffyan.us"];
           proxify = function proxify(url) {
             return "https://r.jina.ai/http://".concat(url.replace(/^https?:\/\//, ""));
           };
-          endpoints = instances.flatMap(function (instance) {
-            return ["".concat(instance, "/api/v1/streams/").concat(videoId, "?hl=en"), "".concat(instance, "/api/v1/streams/").concat(videoId, "?region=us"), "".concat(instance, "/api/v1/streams/").concat(videoId, "?local=true"), "".concat(proxify(instance), "/api/v1/streams/").concat(videoId, "?hl=en")];
+          pipedEndpoints = pipedInstances.flatMap(function (instance) {
+            var base = "".concat(instance, "/api/v1/streams/").concat(videoId);
+            return ["".concat(base, "?hl=en"), "".concat(base, "?region=us"), "".concat(base, "?local=true"), proxify("".concat(base, "?hl=en")), proxify("".concat(base, "?region=us"))];
           });
-          _iterator2 = _createForOfIteratorHelper(endpoints);
-          _context5.p = 1;
-          _iterator2.s();
-        case 2:
-          if ((_step2 = _iterator2.n()).done) {
-            _context5.n = 11;
+          invidiousEndpoints = invidiousInstances.flatMap(function (instance) {
+            var base = "".concat(instance, "/api/v1/videos/").concat(videoId);
+            return [base, proxify(base)];
+          });
+          endpoints = Array.from(new Set([].concat(_toConsumableArray(pipedEndpoints), _toConsumableArray(invidiousEndpoints))));
+          lastError = null;
+          _i2 = 0, _endpoints = endpoints;
+        case 1:
+          if (!(_i2 < _endpoints.length)) {
+            _context5.n = 10;
             break;
           }
-          endpoint = _step2.value;
-          _context5.p = 3;
-          _context5.n = 4;
+          endpoint = _endpoints[_i2];
+          _context5.p = 2;
+          _context5.n = 3;
+          return fetchJsonSafe(endpoint);
+        case 3:
+          payload = _context5.v;
+          if (payload) {
+            _context5.n = 4;
+            break;
+          }
+          return _context5.a(3, 9);
+        case 4:
+          if (!endpoint.includes("/api/v1/videos/")) {
+            _context5.n = 6;
+            break;
+          }
+          normalized = normalizeInvidiousManifest(payload);
+          if (!normalized) {
+            _context5.n = 5;
+            break;
+          }
+          return _context5.a(2, normalized);
+        case 5:
+          return _context5.a(3, 9);
+        case 6:
+          if (!((_payload$audioStreams = payload.audioStreams) !== null && _payload$audioStreams !== void 0 && _payload$audioStreams.length || payload.hls)) {
+            _context5.n = 7;
+            break;
+          }
+          return _context5.a(2, payload);
+        case 7:
+          _context5.n = 9;
+          break;
+        case 8:
+          _context5.p = 8;
+          _t5 = _context5.v;
+          lastError = _t5;
+        case 9:
+          _i2++;
+          _context5.n = 1;
+          break;
+        case 10:
+          throw new Error(((_lastError = lastError) === null || _lastError === void 0 ? void 0 : _lastError.message) || "Unable to reach the audio manifest right now.");
+        case 11:
+          return _context5.a(2);
+      }
+    }, _callee5, null, [[2, 8]]);
+  }));
+  return _fetchYoutubeManifest.apply(this, arguments);
+}
+function fetchJsonSafe(_x2) {
+  return _fetchJsonSafe.apply(this, arguments);
+}
+function _fetchJsonSafe() {
+  _fetchJsonSafe = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(endpoint) {
+    var response, text, trimmed, _t6;
+    return _regenerator().w(function (_context6) {
+      while (1) switch (_context6.p = _context6.n) {
+        case 0:
+          _context6.n = 1;
           return fetch(endpoint, {
             headers: {
               Accept: "application/json,text/plain;q=0.9"
             }
           });
-        case 4:
-          response = _context5.v;
+        case 1:
+          response = _context6.v;
           if (response.ok) {
-            _context5.n = 5;
+            _context6.n = 2;
             break;
           }
-          return _context5.a(3, 10);
-        case 5:
-          contentType = response.headers.get("content-type") || "";
-          _context5.n = 6;
+          return _context6.a(2, null);
+        case 2:
+          _context6.n = 3;
           return response.text();
-        case 6:
-          text = _context5.v;
-          looksJson = /json/i.test(contentType) || text.trim().startsWith("{");
-          if (looksJson) {
-            _context5.n = 7;
+        case 3:
+          text = _context6.v;
+          trimmed = text.trim();
+          if (!(!trimmed.startsWith("{") && !trimmed.startsWith("["))) {
+            _context6.n = 4;
             break;
           }
-          return _context5.a(3, 10);
-        case 7:
-          data = JSON.parse(text);
-          if (!(data && ((_data$audioStreams = data.audioStreams) !== null && _data$audioStreams !== void 0 && _data$audioStreams.length || data.hls))) {
-            _context5.n = 8;
-            break;
-          }
-          return _context5.a(2, data);
-        case 8:
-          _context5.n = 10;
-          break;
-        case 9:
-          _context5.p = 9;
-          _t5 = _context5.v;
-        case 10:
-          _context5.n = 2;
-          break;
-        case 11:
-          _context5.n = 13;
-          break;
-        case 12:
-          _context5.p = 12;
-          _t6 = _context5.v;
-          _iterator2.e(_t6);
-        case 13:
-          _context5.p = 13;
-          _iterator2.f();
-          return _context5.f(13);
-        case 14:
-          throw new Error("Unable to reach the audio manifest right now.");
-        case 15:
-          return _context5.a(2);
+          return _context6.a(2, null);
+        case 4:
+          _context6.p = 4;
+          return _context6.a(2, JSON.parse(trimmed));
+        case 5:
+          _context6.p = 5;
+          _t6 = _context6.v;
+          return _context6.a(2, null);
       }
-    }, _callee5, null, [[3, 9], [1, 12, 13, 14]]);
+    }, _callee6, null, [[4, 5]]);
   }));
-  return _fetchYoutubeManifest.apply(this, arguments);
+  return _fetchJsonSafe.apply(this, arguments);
+}
+function normalizeInvidiousManifest(data) {
+  var _data$videoThumbnails;
+  if (!data) return null;
+  var candidateStreams = (data === null || data === void 0 ? void 0 : data.adaptiveFormats) || (data === null || data === void 0 ? void 0 : data.formatStreams) || [];
+  var audioStreams = candidateStreams.filter(function (stream) {
+    return /audio\//i.test(stream.type || "") && stream.url;
+  }).map(function (stream) {
+    return {
+      url: stream.url,
+      bitrate: stream.bitrate || stream.bitrate_value || stream.avgBitrate,
+      mimeType: stream.type
+    };
+  });
+  if (!audioStreams.length) {
+    return null;
+  }
+  return {
+    title: data.title,
+    uploader: data.author,
+    duration: Number(data.lengthSeconds || data.duration) || undefined,
+    thumbnailUrl: (_data$videoThumbnails = data.videoThumbnails) === null || _data$videoThumbnails === void 0 || (_data$videoThumbnails = _data$videoThumbnails[0]) === null || _data$videoThumbnails === void 0 ? void 0 : _data$videoThumbnails.url,
+    audioStreams: audioStreams
+  };
 }
 function pickBestAudioStream(streams) {
   if (!Array.isArray(streams) || streams.length === 0) {
@@ -9726,51 +9805,51 @@ function pickBestAudioStream(streams) {
     return /audio\/(mp4|mpeg|webm)/i.test(stream.mimeType || "");
   }) || sorted[0];
 }
-function convertStreamToMp3(_x2, _x3) {
+function convertStreamToMp3(_x3, _x4) {
   return _convertStreamToMp.apply(this, arguments);
 }
 function _convertStreamToMp() {
-  _convertStreamToMp = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(url, onProgress) {
+  _convertStreamToMp = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(url, onProgress) {
     var _audioContext$close;
     var response, arrayBuffer, AudioContextClass, audioContext, audioBuffer, monoData, int16Data, mp3Blob;
-    return _regenerator().w(function (_context6) {
-      while (1) switch (_context6.n) {
+    return _regenerator().w(function (_context7) {
+      while (1) switch (_context7.n) {
         case 0:
           if (url) {
-            _context6.n = 1;
+            _context7.n = 1;
             break;
           }
           throw new Error("Missing audio stream URL.");
         case 1:
-          _context6.n = 2;
+          _context7.n = 2;
           return fetch(url);
         case 2:
-          response = _context6.v;
+          response = _context7.v;
           if (response.ok) {
-            _context6.n = 3;
+            _context7.n = 3;
             break;
           }
           throw new Error("Unable to download the audio stream.");
         case 3:
           onProgress === null || onProgress === void 0 || onProgress(60);
-          _context6.n = 4;
+          _context7.n = 4;
           return response.arrayBuffer();
         case 4:
-          arrayBuffer = _context6.v;
+          arrayBuffer = _context7.v;
           AudioContextClass = typeof window !== "undefined" ? window.AudioContext || window.webkitAudioContext : null;
           if (AudioContextClass) {
-            _context6.n = 5;
+            _context7.n = 5;
             break;
           }
           throw new Error("Audio conversion is not supported in this browser.");
         case 5:
           audioContext = new AudioContextClass();
-          _context6.n = 6;
+          _context7.n = 6;
           return audioContext.decodeAudioData(arrayBuffer.slice(0));
         case 6:
-          audioBuffer = _context6.v;
+          audioBuffer = _context7.v;
           onProgress === null || onProgress === void 0 || onProgress(75);
-          _context6.n = 7;
+          _context7.n = 7;
           return ensureLameEncoder();
         case 7:
           monoData = downmixToMono(audioBuffer);
@@ -9778,9 +9857,9 @@ function _convertStreamToMp() {
           mp3Blob = encodeMp3(int16Data, audioBuffer.sampleRate, onProgress);
           (_audioContext$close = audioContext.close) === null || _audioContext$close === void 0 || _audioContext$close.call(audioContext);
           onProgress === null || onProgress === void 0 || onProgress(95);
-          return _context6.a(2, mp3Blob);
+          return _context7.a(2, mp3Blob);
       }
-    }, _callee6);
+    }, _callee7);
   }));
   return _convertStreamToMp.apply(this, arguments);
 }
