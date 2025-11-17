@@ -9644,28 +9644,33 @@ function shuffleArray(list) {
   }
   return arr;
 }
+function buildProxyUrls(url) {
+  if (!url) {
+    return [];
+  }
+  var sanitized = url.replace(/^https?:\/\//, "");
+  var proxies = ["https://r.jina.ai/http://".concat(sanitized), "https://r.jina.ai/https://".concat(sanitized), "https://cors.isomorphic-git.org/".concat(url)];
+  return Array.from(new Set(proxies));
+}
 function fetchYoutubeManifest(_x) {
   return _fetchYoutubeManifest.apply(this, arguments);
 }
 function _fetchYoutubeManifest() {
   _fetchYoutubeManifest = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(videoId) {
     var _lastError;
-    var pipedInstances, invidiousInstances, proxify, pipedEndpoints, invidiousEndpoints, endpoints, lastError, _i2, _endpoints, endpoint, _payload$audioStreams, payload, normalized, _t5;
+    var pipedInstances, invidiousInstances, pipedEndpoints, invidiousEndpoints, endpoints, lastError, _i2, _endpoints, endpoint, _payload$audioStreams, payload, normalized, _t5;
     return _regenerator().w(function (_context5) {
       while (1) switch (_context5.p = _context5.n) {
         case 0:
           pipedInstances = ["https://piped.video", "https://piped.mha.fi", "https://piped.garudalinux.org", "https://piped.adminforge.de", "https://piped.projectsegfau.lt", "https://piped.lunar.icu", "https://watch.leptons.xyz", "https://piped.privacy.com.de"];
           invidiousInstances = ["https://yewtu.be", "https://inv.nadeko.net", "https://vid.puffyan.us"];
-          proxify = function proxify(url) {
-            return "https://r.jina.ai/http://".concat(url.replace(/^https?:\/\//, ""));
-          };
           pipedEndpoints = pipedInstances.flatMap(function (instance) {
             var base = "".concat(instance, "/api/v1/streams/").concat(videoId);
-            return ["".concat(base, "?hl=en"), "".concat(base, "?region=us"), "".concat(base, "?local=true"), proxify("".concat(base, "?hl=en")), proxify("".concat(base, "?region=us"))];
+            return ["".concat(base, "?hl=en"), "".concat(base, "?region=us"), "".concat(base, "?local=true")].concat(_toConsumableArray(buildProxyUrls("".concat(base, "?hl=en"))), _toConsumableArray(buildProxyUrls("".concat(base, "?region=us"))));
           });
           invidiousEndpoints = invidiousInstances.flatMap(function (instance) {
             var base = "".concat(instance, "/api/v1/videos/").concat(videoId);
-            return [base, proxify(base)];
+            return [base].concat(_toConsumableArray(buildProxyUrls(base)));
           });
           endpoints = Array.from(new Set([].concat(_toConsumableArray(pipedEndpoints), _toConsumableArray(invidiousEndpoints))));
           lastError = null;
@@ -9805,61 +9810,112 @@ function pickBestAudioStream(streams) {
     return /audio\/(mp4|mpeg|webm)/i.test(stream.mimeType || "");
   }) || sorted[0];
 }
-function convertStreamToMp3(_x3, _x4) {
+function fetchAudioStream(_x3) {
+  return _fetchAudioStream.apply(this, arguments);
+}
+function _fetchAudioStream() {
+  _fetchAudioStream = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(url) {
+    var endpoints, lastError, _i3, _endpoints2, endpoint, response, _t7;
+    return _regenerator().w(function (_context7) {
+      while (1) switch (_context7.p = _context7.n) {
+        case 0:
+          endpoints = Array.from(new Set([url].concat(_toConsumableArray(buildProxyUrls(url)))));
+          lastError = null;
+          _i3 = 0, _endpoints2 = endpoints;
+        case 1:
+          if (!(_i3 < _endpoints2.length)) {
+            _context7.n = 8;
+            break;
+          }
+          endpoint = _endpoints2[_i3];
+          if (endpoint) {
+            _context7.n = 2;
+            break;
+          }
+          return _context7.a(3, 7);
+        case 2:
+          _context7.p = 2;
+          _context7.n = 3;
+          return fetch(endpoint, {
+            headers: {
+              Accept: "audio/*;q=0.9,application/octet-stream;q=0.8"
+            }
+          });
+        case 3:
+          response = _context7.v;
+          if (response.ok) {
+            _context7.n = 4;
+            break;
+          }
+          lastError = new Error("Stream responded with status ".concat(response.status));
+          return _context7.a(3, 7);
+        case 4:
+          _context7.n = 5;
+          return response.arrayBuffer();
+        case 5:
+          return _context7.a(2, _context7.v);
+        case 6:
+          _context7.p = 6;
+          _t7 = _context7.v;
+          lastError = _t7;
+        case 7:
+          _i3++;
+          _context7.n = 1;
+          break;
+        case 8:
+          throw lastError || new Error("Unable to download the audio stream.");
+        case 9:
+          return _context7.a(2);
+      }
+    }, _callee7, null, [[2, 6]]);
+  }));
+  return _fetchAudioStream.apply(this, arguments);
+}
+function convertStreamToMp3(_x4, _x5) {
   return _convertStreamToMp.apply(this, arguments);
 }
 function _convertStreamToMp() {
-  _convertStreamToMp = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(url, onProgress) {
+  _convertStreamToMp = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(url, onProgress) {
     var _audioContext$close;
-    var response, arrayBuffer, AudioContextClass, audioContext, audioBuffer, monoData, int16Data, mp3Blob;
-    return _regenerator().w(function (_context7) {
-      while (1) switch (_context7.n) {
+    var arrayBuffer, AudioContextClass, audioContext, audioBuffer, monoData, int16Data, mp3Blob;
+    return _regenerator().w(function (_context8) {
+      while (1) switch (_context8.n) {
         case 0:
           if (url) {
-            _context7.n = 1;
+            _context8.n = 1;
             break;
           }
           throw new Error("Missing audio stream URL.");
         case 1:
-          _context7.n = 2;
-          return fetch(url);
+          _context8.n = 2;
+          return fetchAudioStream(url);
         case 2:
-          response = _context7.v;
-          if (response.ok) {
-            _context7.n = 3;
-            break;
-          }
-          throw new Error("Unable to download the audio stream.");
-        case 3:
+          arrayBuffer = _context8.v;
           onProgress === null || onProgress === void 0 || onProgress(60);
-          _context7.n = 4;
-          return response.arrayBuffer();
-        case 4:
-          arrayBuffer = _context7.v;
           AudioContextClass = typeof window !== "undefined" ? window.AudioContext || window.webkitAudioContext : null;
           if (AudioContextClass) {
-            _context7.n = 5;
+            _context8.n = 3;
             break;
           }
           throw new Error("Audio conversion is not supported in this browser.");
-        case 5:
+        case 3:
           audioContext = new AudioContextClass();
-          _context7.n = 6;
+          _context8.n = 4;
           return audioContext.decodeAudioData(arrayBuffer.slice(0));
-        case 6:
-          audioBuffer = _context7.v;
+        case 4:
+          audioBuffer = _context8.v;
           onProgress === null || onProgress === void 0 || onProgress(75);
-          _context7.n = 7;
+          _context8.n = 5;
           return ensureLameEncoder();
-        case 7:
+        case 5:
           monoData = downmixToMono(audioBuffer);
           int16Data = floatTo16BitPCM(monoData);
           mp3Blob = encodeMp3(int16Data, audioBuffer.sampleRate, onProgress);
           (_audioContext$close = audioContext.close) === null || _audioContext$close === void 0 || _audioContext$close.call(audioContext);
           onProgress === null || onProgress === void 0 || onProgress(95);
-          return _context7.a(2, mp3Blob);
+          return _context8.a(2, mp3Blob);
       }
-    }, _callee7);
+    }, _callee8);
   }));
   return _convertStreamToMp.apply(this, arguments);
 }

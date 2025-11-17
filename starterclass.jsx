@@ -7990,6 +7990,19 @@ function shuffleArray(list) {
   return arr;
 }
 
+function buildProxyUrls(url) {
+  if (!url) {
+    return [];
+  }
+  const sanitized = url.replace(/^https?:\/\//, "");
+  const proxies = [
+    `https://r.jina.ai/http://${sanitized}`,
+    `https://r.jina.ai/https://${sanitized}`,
+    `https://cors.isomorphic-git.org/${url}`,
+  ];
+  return Array.from(new Set(proxies));
+}
+
 async function fetchYoutubeManifest(videoId) {
   const pipedInstances = [
     "https://piped.video",
@@ -8006,20 +8019,19 @@ async function fetchYoutubeManifest(videoId) {
     "https://inv.nadeko.net",
     "https://vid.puffyan.us",
   ];
-  const proxify = (url) => `https://r.jina.ai/http://${url.replace(/^https?:\/\//, "")}`;
   const pipedEndpoints = pipedInstances.flatMap((instance) => {
     const base = `${instance}/api/v1/streams/${videoId}`;
     return [
       `${base}?hl=en`,
       `${base}?region=us`,
       `${base}?local=true`,
-      proxify(`${base}?hl=en`),
-      proxify(`${base}?region=us`),
+      ...buildProxyUrls(`${base}?hl=en`),
+      ...buildProxyUrls(`${base}?region=us`),
     ];
   });
   const invidiousEndpoints = invidiousInstances.flatMap((instance) => {
     const base = `${instance}/api/v1/videos/${videoId}`;
-    return [base, proxify(base)];
+    return [base, ...buildProxyUrls(base)];
   });
   const endpoints = Array.from(new Set([...pipedEndpoints, ...invidiousEndpoints]));
   let lastError = null;
@@ -8100,16 +8112,37 @@ function pickBestAudioStream(streams) {
   );
 }
 
+async function fetchAudioStream(url) {
+  const endpoints = Array.from(new Set([url, ...buildProxyUrls(url)]));
+  let lastError = null;
+  for (const endpoint of endpoints) {
+    if (!endpoint) {
+      continue;
+    }
+    try {
+      const response = await fetch(endpoint, {
+        headers: {
+          Accept: "audio/*;q=0.9,application/octet-stream;q=0.8",
+        },
+      });
+      if (!response.ok) {
+        lastError = new Error(`Stream responded with status ${response.status}`);
+        continue;
+      }
+      return await response.arrayBuffer();
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  throw lastError || new Error("Unable to download the audio stream.");
+}
+
 async function convertStreamToMp3(url, onProgress) {
   if (!url) {
     throw new Error("Missing audio stream URL.");
   }
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error("Unable to download the audio stream.");
-  }
+  const arrayBuffer = await fetchAudioStream(url);
   onProgress?.(60);
-  const arrayBuffer = await response.arrayBuffer();
   const AudioContextClass = typeof window !== "undefined" ? window.AudioContext || window.webkitAudioContext : null;
   if (!AudioContextClass) {
     throw new Error("Audio conversion is not supported in this browser.");
